@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><mappings><mapping><name>vMachineInit</name><object-name>vm</object-name><class-name>vendingMachine</class-name><code>vendingMachine vm = new vendingMachine();</code></mapping></mappings>
