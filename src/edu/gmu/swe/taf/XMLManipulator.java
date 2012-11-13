@@ -1,6 +1,8 @@
 package edu.gmu.swe.taf;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -31,48 +33,55 @@ import org.xml.sax.SAXParseException;
  */
 public class XMLManipulator {
 
-	public void test() throws Exception {
+	public static void main() throws Exception {
 		//String path = "src/edu/gmu/swe/account.xml";
 		String path = "data/vendingMachineMappings.xml";
 		createXMLFile("data/", "vendingMachineMappings");
-		Document doc = readXMLFile(path);
+		XMLManipulator xm = new XMLManipulator();
+		Document doc = xm.readXMLFile(path);
 		System.out.println(doc);
-		createObjectMapping(doc, "vMachineInit", "vm", "vendingMachine", "vendingMachine vm = new vendingMachine();", path);
+		
+		String mappingName = "vMachineInit";
+		String identifiedElementName = "vm";
+		IdentifiableElementType type = IdentifiableElementType.CLASSOBJECT;
+		String testCode = "vendingMachine vm = new vendingMachine();";
+		List<String> mappings = new ArrayList<String>();
+		List<Parameter> parameters = new ArrayList<Parameter>();
+		
+		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters);
+		xm.createObjectMapping(doc, mapping, path);
 	}
 	
 	/**
 	 * Creates an XML file named after the parameter "fileName" in the specified directory. 
 	 * The directory can be absolute or relative.
-	 * e.g. src/edu/gmu/swe/
 	 * 
-	 * fileName e.g. vendingMachineMappings
-	 * No need to add .xml at the end of 
 	 * 
-	 * @param directory
-	 * @param fileName
+	 * @param directory							a string representation of the directory e.g. "data/"
+	 * @param fileName							a string representation of the file name e.g. "vendingMachineMappings" do not add .xml at the end of the file name
 	 * @throws ParserConfigurationException
 	 * @throws TransformerException
 	 */
 	public static void createXMLFile(String directory, String fileName) throws ParserConfigurationException, TransformerException{
+		
 		File file = new File(directory + fileName + ".xml");
+		
 		if(!file.exists()){
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 	 
-			// root elements
+			//root elements
 			Document doc = docBuilder.newDocument();
 			Element rootElement = doc.createElement("mappings");
 			doc.appendChild(rootElement);
 			
-			// write the content into xml file
+			//write the content into xml file
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
 			StreamResult result = new StreamResult(file);
 			 
-			// Output to console for testing
-			// StreamResult result = new StreamResult(System.out);
-			 
+			//Output to console for testing			 
 			transformer.transform(source, result);
 			 
 			System.out.println("File saved!");
@@ -83,24 +92,23 @@ public class XMLManipulator {
 	}
 	
 	/**
-	 * read an XML file and return an XML Document object
-	 * @param path
-	 * @return
+	 * Reads an XML file and returns an XML Document object
+	 * @param path	a String representation of the path of an XML file
+	 * @return an {@link org.w3c.dom.Document} object of an XML file specified by the path e.g. data/vendingMachineMappings.xml
 	 * @throws Exception
 	 */
-	public Document readXMLFile(String path) throws Exception{
+	public static Document readXMLFile(String path) throws Exception{
 		if(path == null){
 			throw new Exception("No path for reading XML");
 		}
 		
-		//Document doc;
+		Document doc = null;
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			//	dbf.setAttribute(path, schema);
+
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			//used for absolutepath
-			//String uri = "file:" + new File(path).getAbsolutePath();
-			Document doc = db.parse(path);
+
+			doc = db.parse(path);
 			doc.normalize();
 			return doc;
 		}
@@ -117,53 +125,56 @@ public class XMLManipulator {
 	}
 	
 	/**
+	 * Inserts a {@link Mapping} to an {@link org.w3c.dom.Document} object and writes the {@link org.w3c.dom.Document} object 
+	 * to an XML file specified by the argument path
 	 * 
-	 * @param doc - a Document
-	 * @param userName
-	 * @param digest
-	 * @param salt
+	 * @param doc		an {@link org.w3c.dom.Document} object in which a new mapping will be inserted
+	 * @param mapping	a {@link Mapping} object that will be inserted in an {@link org.w3c.dom.Document} object specified by doc 	
 	 * @throws TransformerException
 	 */
-	public boolean createObjectMapping(Document doc, String mappingName, String objectName, String className, String testCode, String path) throws TransformerException{
+	public boolean createObjectMapping(Document doc, Mapping mapping, String path) throws TransformerException{
 		
-		//Check whether the user has existed in the database
+		//Check whether the user has existed in the XML files
 		boolean isExisted = false;
 		NodeList sectionUserName = doc.getElementsByTagName("name");
 		for(int i = 0; i < sectionUserName.getLength();i++){
 			System.out.println(sectionUserName.item(i).getFirstChild().getNodeValue());
-			if(sectionUserName.item(i).getFirstChild().getNodeValue().equalsIgnoreCase(mappingName)){
+			if(sectionUserName.item(i).getFirstChild().getNodeValue().equalsIgnoreCase(mapping.getMappingName())){
 				isExisted = true;
 				break;
 			}
 		}
+		
 		if(!isExisted){
 			Element root = doc.getDocumentElement();
 			Element accountNode = doc.createElement("mapping");
-			//Node lastNode = doc.getLastChild();
+
 			//add user name node
 			Element nameNode = doc.createElement("name");
-			Text nameText = doc.createTextNode(mappingName);
+			Text nameText = doc.createTextNode(mapping.getMappingName());
 			nameNode.appendChild(nameText);
 			accountNode.appendChild(nameNode);
 			//add password node
 			Element objectNameNode = doc.createElement("object-name");
-			Text objectNameText = doc.createTextNode(objectName);
+			Text objectNameText = doc.createTextNode(mapping.getIdentifiableElementName());
 			objectNameNode.appendChild(objectNameText);
 			accountNode.appendChild(objectNameNode);
+			
 			//add salt node
+			/*
 			Element classNameNode = doc.createElement("class-name");
 			Text classNameText = doc.createTextNode(className);
 			classNameNode.appendChild(classNameText);
 			accountNode.appendChild(classNameNode);
-			
+			*/
 			//add salt node
 			Element codeNode = doc.createElement("code");
-			Text codeText = doc.createTextNode(testCode);
+			Text codeText = doc.createTextNode(mapping.getTestCode());
 			codeNode.appendChild(codeText);
 			accountNode.appendChild(codeNode);
 			
 			root.appendChild(accountNode);
-			//root.insertBefore(accountNode, lastNode);
+
 			rewriteXml(doc,path);
 			return true;
 		}
@@ -172,17 +183,17 @@ public class XMLManipulator {
 	}
 	
 	/**
-	 * Rewrite the XML file based on the new DOM tree
-	 * @param sourceDocument
-	 * @param destinationXml
+	 * Fills the XML file with 
+	 * @param sourceDocument	the {@link org.w3c.dom.Document} object that will be written in the XML file specified 
+	 * @param destinationXML	the target XML file specified by destinationXML
 	 * @throws TransformerException
 	 */
-	private void rewriteXml(Document sourceDocument, String destinationXml) throws TransformerException{
-		//write the new child nodes to the xml file
+	private void rewriteXml(Document sourceDocument, String destinationXML) throws TransformerException{
+		//write the new child nodes to the XML file
 		TransformerFactory tFactory =TransformerFactory.newInstance();
 		Transformer transformer = tFactory.newTransformer();
 		DOMSource source = new DOMSource(sourceDocument);
-		StreamResult result = new StreamResult(new File(destinationXml));
+		StreamResult result = new StreamResult(new File(destinationXML));
 		transformer.transform(source, result);
 	}
 
