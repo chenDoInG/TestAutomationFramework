@@ -1,13 +1,8 @@
-package edu.gmu.swe.taf.test;
 
-import static org.junit.Assert.*;
+package edu.gmu.swe.taf;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.acceleo.common.IAcceleoConstants;
@@ -15,24 +10,16 @@ import org.eclipse.acceleo.common.internal.utils.AcceleoPackageRegistry;
 import org.eclipse.acceleo.common.internal.utils.workspace.AcceleoWorkspaceUtil;
 import org.eclipse.acceleo.common.internal.utils.workspace.BundleURLConverter;
 import org.eclipse.acceleo.common.utils.ModelUtils;
-import org.eclipse.acceleo.model.mtl.Module;
 import org.eclipse.acceleo.model.mtl.MtlPackage;
 import org.eclipse.acceleo.model.mtl.resource.AcceleoResourceSetImpl;
 import org.eclipse.acceleo.model.mtl.resource.EMtlBinaryResourceFactoryImpl;
 import org.eclipse.acceleo.model.mtl.resource.EMtlResourceFactoryImpl;
-import org.eclipse.acceleo.module.sample.main.GenerateFSM;
 import org.eclipse.emf.common.EMFPlugin;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
@@ -41,41 +28,32 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.ecore.EcoreEnvironmentFactory;
 import org.eclipse.ocl.expressions.ExpressionsPackage;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.FinalState;
-import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.Package;
-import org.eclipse.uml2.uml.Pseudostate;
-import org.eclipse.uml2.uml.Region;
-import org.eclipse.uml2.uml.StateMachine;
-import org.eclipse.uml2.uml.Transition;
-import org.eclipse.uml2.uml.Vertex;
 
-import coverage.graph.Graph;
-import coverage.graph.GraphUtil;
-import coverage.graph.InvalidGraphException;
-import coverage.graph.Path;
-import coverage.web.InvalidInputException;
+/**
+ * A class that provides functions to access UML models. Classes in Acceleo are used to be helpers to access the models.
+ * 
+ * @author Nan Li
+ * @version 1.0 Nov 14, 2012
+ *
+ */
+public class ModelAccessor {
 
-public class AccessingModelsTest {
-
-	@Before
-	public void setUp() throws Exception {
+	/**
+	 * 
+	 */
+	public ModelAccessor() {
+		
 	}
+	
+	/**
+	 * Gets the {@link org.eclipse.emf.ecore.EObject} object of a UML model specified by path
+	 * @param path	a String representation of the path of a UML model
+	 * @return an {@link org.eclipse.emf.ecore.EObject} object
+	 * @throws IOException
+	 */
+	public static EObject getModelObject(String path) throws IOException{
 
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void accessingModelstest() throws IOException, InvalidInputException, InvalidGraphException {
-		//String path = "C:\\Users\\nanli\\Desktop\\temp\\VendingMachine";
-		String path = "E:\\eclipseDataJuno\\VendingMachine";
-		//String path = "E:\\EclipseDataModeling\\VendingMachine";
-		String path1 = path + "/VendingMachineFSM.uml";
-
-		URI modelURI = URI.createFileURI(path1);	
-		//GenerateFSM generator = new GenerateFSM(modelURI, targetFolder, new ArrayList<Object>());
+		URI modelURI = URI.createFileURI(path);	
 
 		URIConverter uriConverter = createURIConverter();
 		
@@ -96,95 +74,12 @@ public class AccessingModelsTest {
 		
 		URI newModelURI = URI.createURI(modelURI.toString(), true);
 		EObject model = ModelUtils.load(newModelURI, modelResourceSet);
-		System.out.println(newModelURI + "....." + model);
-		System.out.println((model instanceof Model) + ((Model) model).getName());
-		
-		EList<Package> packages = ((Model) model).getNestedPackages();
-		for(Package packageObject: packages){
-			System.out.println(packageObject.getName());
-		}
-		
-		EList<Element> elements = ((Model) model).getOwnedElements();
-		
-		for(Element elementObject: elements){
-			System.out.println(elementObject.toString());
-			if(elementObject instanceof StateMachine){
-				EList<Region> regions = ((StateMachine)elementObject).getRegions();
-				for(Region region: regions){
-					System.out.println(region.getName());
-
-					EList<Transition> transitions = region.getTransitions();
-					EList<Vertex> vertexes = region.getSubvertices();
-					String edges = "";
-					HashMap<String, String> map = new HashMap<String, String>();
-					map.put("State1", "1");
-					map.put("State2", "2");
-					map.put("State3", "3");
-					map.put("State4", "4");
-					map.put("State5", "5");
-					map.put("State6", "6");
-					map.put("State7", "7");
-					map.put("State8", "8");
-					map.put("State9", "9");
-					//map.put("FinalState1", "10");
-					for(Vertex vertex: vertexes){
-						System.out.println(vertex.getName());
-						if(vertex instanceof FinalState)
-							map.put(vertex.getName(), "10");
-						if(vertex instanceof Pseudostate){
-							map.put(vertex.getName(), "0");
-							System.out.println(vertex.getOutgoings().size());
-						}
-					}
-					String sourceNumber = "0";
-					String targetNumber = "10";
-					for(Transition transition: transitions){
-						//transitions may not have a source or target because some of them are leftover
-						//they do not appear in the UML diagram but they do exist in the UML model
-						if(transition.getSource() != null && transition.getTarget() != null){
-							System.out.println(transition.getSource().getName() + "; " + transition.getTarget().getName());
-	
-							if(transition.getSource().getName().indexOf("[0-10]") != -1){						
-							}
-							if(map.containsKey(transition.getSource().getName())){
-								edges = edges + map.get(transition.getSource().getName());
-							}
-							if(map.containsKey(transition.getTarget().getName())){
-								edges = edges + " " + map.get(transition.getTarget().getName());
-							}
-							edges = edges + "\n"; 
-						}
-					}
-					System.out.println(map);
-					System.out.println(edges);
-					System.out.println(getTestPaths(edges, sourceNumber, targetNumber));
-				}
-			}
-		}
-		//Resource resource = modelResourceSet.getResource(newModelURI, true);
-		//resource.getContents();
-		/*
-		final TreeIterator<EObject> targetElements = model.eAllContents();
-		while (targetElements.hasNext()) {
-			final EObject potentialTarget = targetElements.next();
-			System.out.println(potentialTarget.toString());
-
-		}
-		 */	
-
+		return model;
 	}
 	
-	public List<Path> getTestPaths(String edges, String initialNodes, String finalNodes) throws InvalidInputException, InvalidGraphException{
-		Graph g = GraphUtil.readGraph(edges, initialNodes, finalNodes);
-		try {
-			g.validate();
-		} catch (InvalidGraphException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return g.findEdgeCoverage();
-		
-	}
+	/**
+	 * The methods below are copied from Acceleo.
+	 */
 	
 	/**
 	 * Creates the URI Converter we'll use to load our modules. Take note that this should never be used out
@@ -193,7 +88,7 @@ public class AccessingModelsTest {
 	 * @return The created URI Converter.
 	 * @since 3.0
 	 */
-	protected URIConverter createURIConverter() {
+	protected static URIConverter createURIConverter() {
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			return null;
 		}
@@ -228,7 +123,7 @@ public class AccessingModelsTest {
 	 * @param resourceSet
 	 *            The resource set which registry has to be updated.
 	 */
-	public void registerPackages(ResourceSet resourceSet) {
+	public static void registerPackages(ResourceSet resourceSet) {
 		resourceSet.getPackageRegistry().put(EcorePackage.eINSTANCE.getNsURI(), EcorePackage.eINSTANCE);
 
 		resourceSet.getPackageRegistry().put(org.eclipse.ocl.ecore.EcorePackage.eINSTANCE.getNsURI(),
@@ -252,7 +147,7 @@ public class AccessingModelsTest {
 	 * @param resourceSet
 	 *            The resource set which registry has to be updated.
 	 */
-	public void registerResourceFactories(ResourceSet resourceSet) {
+	public static void registerResourceFactories(ResourceSet resourceSet) {
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", //$NON-NLS-1$
 				new EcoreResourceFactoryImpl());
 		resourceSet.getResourceFactoryRegistry().getContentTypeToFactoryMap().put(
@@ -266,7 +161,7 @@ public class AccessingModelsTest {
 	 * 
 	 * @return The package containing the OCL standard library.
 	 */
-	protected EPackage getOCLStdLibPackage() {
+	protected static EPackage getOCLStdLibPackage() {
 		EcoreEnvironmentFactory factory = new EcoreEnvironmentFactory();
 		EcoreEnvironment environment = (EcoreEnvironment)factory.createEnvironment();
 		EPackage oclStdLibPackage = (EPackage)EcoreUtil.getRootContainer(environment.getOCLStandardLibrary()
@@ -322,9 +217,7 @@ public class AccessingModelsTest {
 	 *         <code>false</code> otherwise.
 	 * @since 3.1
 	 */
-	public boolean isInWorkspace(Class<? extends EPackage> ePackageClass) {
+	public static boolean isInWorkspace(Class<? extends EPackage> ePackageClass) {
 		return EMFPlugin.IS_ECLIPSE_RUNNING && AcceleoWorkspaceUtil.INSTANCE.isInDynamicBundle(ePackageClass);
 	}
-	
-
 }

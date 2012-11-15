@@ -42,7 +42,7 @@ public class MappingTest {
 	public void testConstructorAndGettersAndSetters() {
 		String mappingName = "vMachineInit";
 		String identifiedElementName = "vm";
-		IdentifiableElementType type = IdentifiableElementType.CLASSOBJECT;
+		IdentifiableElementType type = IdentifiableElementType.CLASS;
 		String testCode = "vendingMachine vm = new vendingMachine();";
 		List<String> mappings = new ArrayList<String>();
 		List<Parameter> parameters = new ArrayList<Parameter>();
@@ -51,7 +51,7 @@ public class MappingTest {
 		
 		assertEquals(mapping.getMappingName(), "vMachineInit");
 		assertEquals(mapping.getIdentifiableElementName(), "vm");
-		assertEquals(mapping.getType(), IdentifiableElementType.CLASSOBJECT);
+		assertEquals(mapping.getType(), IdentifiableElementType.CLASS);
 		assertEquals(mapping.getTestCode(), "vendingMachine vm = new vendingMachine();");
 		assertEquals(mapping.getRequiredMappings().size(), 0);
 		assertEquals(mapping.getParameters().size(), 0);

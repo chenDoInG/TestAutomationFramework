@@ -33,6 +33,7 @@ import org.xml.sax.SAXParseException;
  */
 public class XMLManipulator {
 
+	/*
 	public static void main() throws Exception {
 		//String path = "src/edu/gmu/swe/account.xml";
 		String path = "data/vendingMachineMappings.xml";
@@ -43,14 +44,15 @@ public class XMLManipulator {
 		
 		String mappingName = "vMachineInit";
 		String identifiedElementName = "vm";
-		IdentifiableElementType type = IdentifiableElementType.CLASSOBJECT;
+		IdentifiableElementType type = IdentifiableElementType.CLASS;
 		String testCode = "vendingMachine vm = new vendingMachine();";
 		List<String> mappings = new ArrayList<String>();
 		List<Parameter> parameters = new ArrayList<Parameter>();
 		
 		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters);
-		xm.createObjectMapping(doc, mapping, path);
+		xm.createMapping(doc, mapping, path);
 	}
+	*/
 	
 	/**
 	 * Creates an XML file named after the parameter "fileName" in the specified directory. 
@@ -92,7 +94,7 @@ public class XMLManipulator {
 	}
 	
 	/**
-	 * Reads an XML file and returns an XML Document object
+	 * Reads an XML file and returns an XML Document object.
 	 * @param path	a String representation of the path of an XML file
 	 * @return an {@link org.w3c.dom.Document} object of an XML file specified by the path e.g. data/vendingMachineMappings.xml
 	 * @throws Exception
@@ -126,48 +128,38 @@ public class XMLManipulator {
 	
 	/**
 	 * Inserts a {@link Mapping} to an {@link org.w3c.dom.Document} object and writes the {@link org.w3c.dom.Document} object 
-	 * to an XML file specified by the argument path
+	 * to an XML file specified by the argument path.
 	 * 
 	 * @param doc		an {@link org.w3c.dom.Document} object in which a new mapping will be inserted
-	 * @param mapping	a {@link Mapping} object that will be inserted in an {@link org.w3c.dom.Document} object specified by doc 	
+	 * @param mapping	a {@link ClassMapping} object that will be inserted in an {@link org.w3c.dom.Document} object specified by doc 	
 	 * @throws TransformerException
 	 */
-	public boolean createObjectMapping(Document doc, Mapping mapping, String path) throws TransformerException{
+	public boolean createClassMapping(Document doc, ClassMapping mapping, String path) throws TransformerException{
 		
-		//Check whether the user has existed in the XML files
-		boolean isExisted = false;
-		NodeList sectionUserName = doc.getElementsByTagName("name");
-		for(int i = 0; i < sectionUserName.getLength();i++){
-			System.out.println(sectionUserName.item(i).getFirstChild().getNodeValue());
-			if(sectionUserName.item(i).getFirstChild().getNodeValue().equalsIgnoreCase(mapping.getMappingName())){
-				isExisted = true;
-				break;
-			}
-		}
 		
-		if(!isExisted){
+		if(!isMappingExisted(doc, mapping)){
 			Element root = doc.getDocumentElement();
 			Element accountNode = doc.createElement("mapping");
 
-			//add user name node
+			//add mapping name node
 			Element nameNode = doc.createElement("name");
 			Text nameText = doc.createTextNode(mapping.getMappingName());
 			nameNode.appendChild(nameText);
 			accountNode.appendChild(nameNode);
-			//add password node
-			Element objectNameNode = doc.createElement("object-name");
+			
+			//add class name node
+			Element objectNameNode = doc.createElement("class-name");
 			Text objectNameText = doc.createTextNode(mapping.getIdentifiableElementName());
 			objectNameNode.appendChild(objectNameText);
 			accountNode.appendChild(objectNameNode);
 			
-			//add salt node
-			/*
-			Element classNameNode = doc.createElement("class-name");
-			Text classNameText = doc.createTextNode(className);
+			//add object name node			
+			Element classNameNode = doc.createElement("object-name");
+			Text classNameText = doc.createTextNode(mapping.getObjectName());
 			classNameNode.appendChild(classNameText);
 			accountNode.appendChild(classNameNode);
-			*/
-			//add salt node
+			
+			//add test code node
 			Element codeNode = doc.createElement("code");
 			Text codeText = doc.createTextNode(mapping.getTestCode());
 			codeNode.appendChild(codeText);
@@ -183,7 +175,116 @@ public class XMLManipulator {
 	}
 	
 	/**
-	 * Fills the XML file with 
+	 * Inserts a {@link Mapping} to an {@link org.w3c.dom.Document} object and writes the {@link org.w3c.dom.Document} object 
+	 * to an XML file specified by the argument path.
+	 * 
+	 * @param doc		an {@link org.w3c.dom.Document} object in which a new mapping will be inserted
+	 * @param mapping	a {@link Mapping} object that will be inserted in an {@link org.w3c.dom.Document} object specified by doc 	
+	 * @throws TransformerException
+	 */
+	public boolean createMapping(Document doc, Mapping mapping, String path) throws TransformerException{
+		
+		if(!isMappingExisted(doc, mapping)){
+			Element root = doc.getDocumentElement();
+			Element accountNode = doc.createElement("mapping");
+
+			//add mapping name node
+			Element nameNode = doc.createElement("name");
+			Text nameText = doc.createTextNode(mapping.getMappingName());
+			nameNode.appendChild(nameText);
+			accountNode.appendChild(nameNode);
+			
+			//add type node
+			String type = "";
+			type = getTypeName(mapping.getType());
+			
+			Element typeNode = doc.createElement(type);
+			Text typeText = doc.createTextNode(mapping.getIdentifiableElementName());
+			typeNode.appendChild(typeText);
+			accountNode.appendChild(typeNode);
+
+			//add test code node
+			Element codeNode = doc.createElement("code");
+			Text codeText = doc.createTextNode(mapping.getTestCode());
+			codeNode.appendChild(codeText);
+			accountNode.appendChild(codeNode);
+			
+			//add required mappings node
+			if(mapping.getRequiredMappings() != null && mapping.getRequiredMappings().size() > 0){
+				Element requiredMappingsNode = doc.createElement("required-mappings");
+				
+				String requiredMappings = "";
+				for(String s: mapping.getRequiredMappings()){
+					//add comma if there are more than one required mapping
+					if(!requiredMappings.equals(""))
+						requiredMappings = ", ";
+					
+					requiredMappings += s;
+				}
+				
+				Text requiredMappingsText = doc.createTextNode(requiredMappings);
+				requiredMappingsNode.appendChild(requiredMappingsText);
+				accountNode.appendChild(requiredMappingsNode);
+			}
+			
+			//add parameters node
+			if(mapping.getParameters() != null && mapping.getParameters().size() > 0){
+				Element parametersNode = doc.createElement("parameters");
+				
+				String parameters = "";
+				for(Parameter p: mapping.getParameters()){
+					//add comma if there are more than one parameter
+					if(!parameters.equals(""))
+						parameters = ", ";
+					
+					parameters += p.getType() + " " + p.getName();
+				}
+				
+				Text parametersText = doc.createTextNode(parameters);
+				parametersNode.appendChild(parametersText);
+				accountNode.appendChild(parametersNode);
+			}
+			
+			root.appendChild(accountNode);
+
+			rewriteXml(doc,path);
+			return true;
+		}
+		System.out.println("The user account has existed");
+		return false;
+	}
+	
+	/**
+	 * Returns the name of an XML node specified by elementType
+	 * 
+	 * @param elementType	type of an identifiable element from a model
+	 * @return the name of an XML node that represents the type of an identifiable element. This is not the content of an XML node.
+	 */
+	private String getTypeName(IdentifiableElementType elementType){
+		String type = "";
+		
+		switch(elementType){
+		case CLASS:
+			type = "class-name";
+		case TRANSITION:
+			type = "transition-name";
+		case STATE:
+			type = "state-name";
+		case GUARD:
+			type = "guard-name";
+		case CONSTRAINT:
+			type = "constraint-name";
+		case PARAMETER:
+			type = "parameter-name";
+		case FIELD:
+			type = "field-name";
+		}
+		
+		return type;
+	}
+	
+	/**
+	 * Fills the XML file with an {@link org.w3c.dom.Document} object.
 	 * @param sourceDocument	the {@link org.w3c.dom.Document} object that will be written in the XML file specified 
 	 * @param destinationXML	the target XML file specified by destinationXML
 	 * @throws TransformerException
@@ -195,6 +296,28 @@ public class XMLManipulator {
 		DOMSource source = new DOMSource(sourceDocument);
 		StreamResult result = new StreamResult(new File(destinationXML));
 		transformer.transform(source, result);
+	}
+	
+	/**
+	 * Checks the name of the mapping and decides if the mapping has existed in the {@link org.w3c.dom.Document} object specified by doc. 
+	 * @param doc		an {@link org.w3c.dom.Document} object 
+	 * @param mapping	a {@link Mapping} object that will be inserted in an {@link org.w3c.dom.Document} object specified by doc 	
+	 * @return	true if the mapping has existed by name in the doc; otherwise return false
+	 */
+	private boolean isMappingExisted(Document doc, Mapping mapping){
+		
+		//Check whether the user has existed in the XML files
+		boolean isExisted = false;
+		
+		NodeList sectionUserName = doc.getElementsByTagName("name");
+		for(int i = 0; i < sectionUserName.getLength();i++){
+			System.out.println(sectionUserName.item(i).getFirstChild().getNodeValue());
+			if(sectionUserName.item(i).getFirstChild().getNodeValue().equalsIgnoreCase(mapping.getMappingName())){
+				isExisted = true;
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

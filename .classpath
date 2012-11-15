@@ -5,19 +5,19 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.acceleo.ide.ui.ACCELEO_RUNTIME/RUNTIME"/>
 	<classpathentry kind="output" path="bin"/>
-	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32-x86_64/eclipse/plugins/org.eclipse.ocl.common_1.0.0.v20120516-1543.jar"/>
-	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32-x86_64/eclipse/plugins/org.eclipse.osgi_3.8.0.v20120529-1548.jar"/>
-	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32-x86_64/eclipse/plugins/org.eclipse.uml2.types_1.0.0.v20120913-1441.jar"/>
-	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32-x86_64/eclipse/plugins/com.google.guava_10.0.1.v201203051515.jar"/>
-	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32-x86_64/eclipse/plugins/org.eclipse.uml2.common_1.7.0.v20120913-1441.jar"/>
-	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32-x86_64/eclipse/plugins/org.eclipse.uml2.uml_4.0.1.v20120913-1441.jar"/>
-	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32-x86_64/eclipse/plugins/org.eclipse.core.resources_3.8.0.v20120522-2034.jar"/>
-	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32-x86_64/eclipse/plugins/org.eclipse.emf.codegen.ecore_2.8.0.v20120608-0554.jar"/>
-	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32-x86_64/eclipse/plugins/org.eclipse.emf.codegen_2.8.0.v20120608-0554.jar"/>
-	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32-x86_64/eclipse/plugins/org.eclipse.emf.mapping.ecore2xml_2.7.0.v20120608-0554.jar"/>
-	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32-x86_64/eclipse/plugins/org.eclipse.emf.validation_1.4.0.v20100428-2315.jar"/>
-	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32-x86_64/eclipse/plugins/org.eclipse.equinox.common_3.6.100.v20120522-1841.jar"/>
-	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32-x86_64/eclipse/plugins/org.eclipse.equinox.registry_3.5.200.v20120522-1841.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32/eclipse/plugins/org.eclipse.ocl.common_1.0.0.v20120516-1543.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32/eclipse/plugins/org.eclipse.osgi_3.8.0.v20120529-1548.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32/eclipse/plugins/org.eclipse.uml2.types_1.0.0.v20120913-1441.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32/eclipse/plugins/com.google.guava_10.0.1.v201203051515.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32/eclipse/plugins/org.eclipse.uml2.common_1.7.0.v20120913-1441.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32/eclipse/plugins/org.eclipse.uml2.uml_4.0.1.v20120913-1441.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32/eclipse/plugins/org.eclipse.core.resources_3.8.0.v20120522-2034.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32/eclipse/plugins/org.eclipse.emf.codegen.ecore_2.8.0.v20120608-0554.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32/eclipse/plugins/org.eclipse.emf.codegen_2.8.0.v20120608-0554.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32/eclipse/plugins/org.eclipse.emf.mapping.ecore2xml_2.7.0.v20120608-0554.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32/eclipse/plugins/org.eclipse.emf.validation_1.4.0.v20100428-2315.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32/eclipse/plugins/org.eclipse.equinox.common_3.6.100.v20120522-1841.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse-jee-juno-win32/eclipse/plugins/org.eclipse.equinox.registry_3.5.200.v20120522-1841.jar"/>
 	<classpathentry kind="lib" path="E:/EclipseData/CoverageWebApplication/dist/graph.jar"/>
 	<classpathentry kind="lib" path="/org.eclipse.acceleo.module.sample/bin"/>
 </classpath>

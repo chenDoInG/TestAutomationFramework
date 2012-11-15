@@ -11,11 +11,15 @@ package edu.gmu.swe.taf;
  * @version 1.0 Nov 12, 2012
  */
 public enum IdentifiableElementType {
-	CLASSOBJECT, 
+	CLASS, 
+	
+	//state machine
 	TRANSITION, 
 	STATE, 
 	GUARD, 
 	CONSTRAINT, 
+	
+	//arguments and variables checking for test oracle
 	PARAMETER, 
-	VARIABLE;
+	FIELD;
 }
