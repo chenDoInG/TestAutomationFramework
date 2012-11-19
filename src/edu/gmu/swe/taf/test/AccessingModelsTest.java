@@ -134,6 +134,10 @@ public class AccessingModelsTest {
 						if(vertex instanceof Pseudostate){
 							map.put(vertex.getName(), "0");
 							System.out.println(vertex.getOutgoings().size());
+							EList<Transition> outgoings = vertex.getOutgoings();
+							for(Transition t: outgoings){
+								System.out.println("transiiton: " + t.getName());
+							}
 						}
 					}
 					String sourceNumber = "0";

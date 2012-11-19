@@ -13,6 +13,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import edu.gmu.swe.taf.ClassMapping;
@@ -239,6 +240,92 @@ public class XMLManipulatorTest {
 		XMLManipulator xm = new XMLManipulator();
 
 		xm.createClassMapping(doc, mapping, path);
+	}
+	
+	@Test
+	public void testRemoveMapping() throws Exception{
+		String path = "data/vendingMachineMappings.xml";
+		Document doc = XMLManipulator.readXMLFile(path);
+		
+		String mappingName = "vMachineInit";
+		String identifiedElementName = "VendingMachine";
+		String objectName = "vm";
+		IdentifiableElementType type = IdentifiableElementType.CLASS;
+		String testCode = "vendingMachine vm = new vendingMachine();";
+		List<String> mappings = new ArrayList<String>();
+		List<Parameter> parameters = new ArrayList<Parameter>();
+		
+		ClassMapping mapping = new ClassMapping(mappingName, type, identifiedElementName, objectName, testCode, mappings, parameters);
+		
+		NodeList mappingNames = doc.getElementsByTagName("mapping");
+		for(int i = 0; i < mappingNames.getLength(); i++){
+			Node node = mappingNames.item(i);
+			NodeList allFields = node.getChildNodes();
+			
+			for(int j = 0; j < allFields.getLength();j++){
+				if(allFields.item(j).getNodeName().equalsIgnoreCase("name")){
+					if(allFields.item(j).getTextContent().equalsIgnoreCase(mapping.getMappingName())){
+						
+						node.getParentNode().removeChild(node);
+						doc.normalize();
+						XMLManipulator.rewriteXML(doc, path);
+						
+						break;
+					}	
+				}
+				else{
+					break;
+				}
+			}
+		}
+	}
+	
+	@Test
+	public void testUpdateMapping() throws Exception{
+		String path = "data/vendingMachineMappings.xml";
+		Document doc = XMLManipulator.readXMLFile(path);
+		
+		String mappingName = "vMachineInit";
+		String identifiedElementName = "VendingMachine";
+		String objectName = "vm";
+		IdentifiableElementType type = IdentifiableElementType.CLASS;
+		String testCode = "vendingMachine vm = new vendingMachine();";
+		List<String> mappings = new ArrayList<String>();
+		List<Parameter> parameters = new ArrayList<Parameter>();
+		
+		ClassMapping mapping = new ClassMapping(mappingName, type, identifiedElementName, objectName, testCode, mappings, parameters);
+		
+		//String mappingName = mapping.getMappingName();
+		NodeList mappingNames = doc.getElementsByTagName("mapping");
+		System.out.println("size: " + mappingNames.getLength());
+		for(int i = 0; i < mappingNames.getLength(); i++){
+			Node node = mappingNames.item(i);
+			System.out.println("child size: " + node.getChildNodes().getLength());
+			NodeList allFields = node.getChildNodes();
+			boolean flag = false;
+			for(int j = 0; j < allFields.getLength();j++){
+				System.out.println(allFields.item(j).getNodeName() + ": " + allFields.item(j).getTextContent());
+				
+				if(allFields.item(j).getNodeName().equalsIgnoreCase("name")){
+					if(allFields.item(j).getTextContent().equalsIgnoreCase(mapping.getMappingName())){
+						flag = true;
+					}
+					else{
+						break;
+					}
+				}
+				
+				if(flag == true){
+					node.getParentNode().removeChild(node);
+					doc.normalize();
+					XMLManipulator.rewriteXML(doc, path);
+					
+					break;
+				}
+				
+				
+			}
+		}
 	}
 
 }

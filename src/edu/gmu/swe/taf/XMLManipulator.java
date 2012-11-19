@@ -54,6 +54,9 @@ public class XMLManipulator {
 	}
 	*/
 	
+	public XMLManipulator(){
+		
+	}
 	/**
 	 * Creates an XML file named after the parameter "fileName" in the specified directory. 
 	 * The directory can be absolute or relative.
@@ -167,7 +170,7 @@ public class XMLManipulator {
 			
 			root.appendChild(accountNode);
 
-			rewriteXml(doc,path);
+			rewriteXML(doc,path);
 			return true;
 		}
 		System.out.println("The user account has existed");
@@ -247,12 +250,27 @@ public class XMLManipulator {
 			
 			root.appendChild(accountNode);
 
-			rewriteXml(doc,path);
+			rewriteXML(doc,path);
 			return true;
 		}
 		System.out.println("The user account has existed");
 		return false;
 	}
+	
+	/*
+	public boolean updateMapping(Document doc, Mapping mapping, String path) throws TransformerException{
+		if(!isMappingExisted(doc, mapping)){
+			createMapping(doc, mapping, path);
+		}
+		else{
+			String mappingName = mapping.getMappingName();
+			NodeList mappingNames = doc.getElementsByTagName("mapping");
+			
+			for(int i = 0; i < mappingNames.item(i).getFirstChild().getNodeValue().equalsIgnoreCase(mappingName)){
+				Element element1 = (Element)doc.getElementsByTagName("")
+			}
+		}
+	}*/
 	
 	/**
 	 * Returns the name of an XML node specified by elementType
@@ -289,7 +307,7 @@ public class XMLManipulator {
 	 * @param destinationXML	the target XML file specified by destinationXML
 	 * @throws TransformerException
 	 */
-	private void rewriteXml(Document sourceDocument, String destinationXML) throws TransformerException{
+	public static void rewriteXML(Document sourceDocument, String destinationXML) throws TransformerException{
 		//write the new child nodes to the XML file
 		TransformerFactory tFactory =TransformerFactory.newInstance();
 		Transformer transformer = tFactory.newTransformer();
