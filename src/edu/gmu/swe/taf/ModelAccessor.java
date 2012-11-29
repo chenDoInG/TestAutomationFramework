@@ -31,14 +31,8 @@ import org.eclipse.ocl.ecore.EcoreEnvironment;
 import org.eclipse.ocl.ecore.EcoreEnvironmentFactory;
 import org.eclipse.ocl.expressions.ExpressionsPackage;
 import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.FinalState;
 import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.Pseudostate;
-import org.eclipse.uml2.uml.Region;
-import org.eclipse.uml2.uml.State;
 import org.eclipse.uml2.uml.StateMachine;
-import org.eclipse.uml2.uml.Transition;
-import org.eclipse.uml2.uml.Vertex;
 
 /**
  * A class that provides functions to access UML models. Classes in Acceleo are used to be helpers to access the models.
@@ -108,78 +102,11 @@ public class ModelAccessor {
 		return result;
 	}
 	
-	/**
-	 * Gets all objects of {@link org.eclipse.uml2.uml.Region} in the stateMachine
-	 * @param stateMachine
-	 * @return a list of {@link org.eclipse.uml2.uml.Region} in the stateMachine
-	 */
-	public static List<Region> getRegions(StateMachine stateMachine){
-		List<Region> result = new ArrayList<Region>();
-		EList<Region> regions = stateMachine.getRegions();
-		
-		for(Region region: regions){
-			result.add(region);
-		}
-		
-		return result;
-	}
 	
-	/**
-	 * all all objects of {@link org.eclipse.uml2.uml.Pseudostate} in the region
-	 * @param region
-	 * @return a list of {@link org.eclipse.uml2.uml.Pseudostate} in the region
-	 */
-	public static List<Pseudostate> getInitialStates(Region region){
-		List<Pseudostate> result = new ArrayList<Pseudostate>();
-		
-		EList<Vertex> vertexes = region.getSubvertices();
-		for(Vertex vertex: vertexes){
-			if(vertex instanceof Pseudostate){
-				EList<Transition> outgoings = vertex.getOutgoings();
-				if(outgoings.size() > 0){
-					result.add(((Pseudostate)vertex));
-				}
-			}
-		}
-		
-		return result;
-	}
 	
-	/**
-	 * all all objects of {@link org.eclipse.uml2.uml.FinalState} in the region
-	 * @param region
-	 * @return a list of {@link org.eclipse.uml2.uml.FinalState} in the region
-	 */
-	public static List<FinalState> getFinalStates(Region region){
-		List<FinalState> result = new ArrayList<FinalState>();
-		
-		EList<Vertex> vertexes = region.getSubvertices();
-		for(Vertex vertex: vertexes){
-			if(vertex instanceof FinalState){			
-				result.add(((FinalState)vertex));			
-			}
-		}
-		
-		return result;
-	}
 	
-	/**
-	 * all all objects of {@link org.eclipse.uml2.uml.State} except {@link org.eclipse.uml2.uml.FinalState} and {@link org.eclipse.uml2.uml.Pseudostate} in the region
-	 * @param region
-	 * @return a list of {@link org.eclipse.uml2.uml.State} in the region
-	 */
-	public static List<State> getStates(Region region){
-		List<State> result = new ArrayList<State>();
-		
-		EList<Vertex> vertexes = region.getSubvertices();
-		for(Vertex vertex: vertexes){
-			if(!(vertex instanceof FinalState) && !(vertex instanceof Pseudostate)){			
-				result.add(((State)vertex));			
-			}
-		}
-		
-		return result;
-	}
+	
+	
 	
 	/**
 	 * The methods below are copied from Acceleo.

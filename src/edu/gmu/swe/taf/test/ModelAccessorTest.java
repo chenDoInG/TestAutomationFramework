@@ -18,10 +18,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.gmu.swe.taf.Mapping;
 import edu.gmu.swe.taf.ModelAccessor;
 
 /**
- * @author Nan
+ * A JUnit test case for class {@link ModelAccessor}
+ * @author Nan Li
+ * @version 1.0 Nov 14, 2012
  *
  */
 public class ModelAccessorTest {
@@ -42,6 +45,7 @@ public class ModelAccessorTest {
 
 	@Test
 	public void testGetModelObject() throws IOException {
+		//String path = "C:\\Users\\nanli\\Desktop\\temp\\VendingMachine";
 		String path = "testData/model/VendingMachineFSM.uml";
 		EObject object = ModelAccessor.getModelObject(path);
 		assertNotNull(object);
@@ -54,43 +58,5 @@ public class ModelAccessorTest {
 		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
 		assertEquals(1, statemachines.size());
 	}
-	
-	@Test
-	public void testGetRegions() throws IOException{
-		String path = "testData/model/VendingMachineFSM.uml";
-		EObject object = ModelAccessor.getModelObject(path);
-		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
-		List<Region> regions = ModelAccessor.getRegions(statemachines.get(0));
-		assertEquals(1, regions.size());
-	}
-	
-	@Test
-	public void testGetInitialStates() throws IOException{
-		String path = "testData/model/VendingMachineFSM.uml";
-		EObject object = ModelAccessor.getModelObject(path);
-		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
-		List<Region> regions = ModelAccessor.getRegions(statemachines.get(0));
-		List<Pseudostate> initialStates = ModelAccessor.getInitialStates(regions.get(0));
-		assertEquals(1, initialStates.size());
-	}
-	
-	@Test
-	public void testGetFinalStates() throws IOException{
-		String path = "testData/model/VendingMachineFSM.uml";
-		EObject object = ModelAccessor.getModelObject(path);
-		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
-		List<Region> regions = ModelAccessor.getRegions(statemachines.get(0));
-		List<FinalState> finalStates = ModelAccessor.getFinalStates(regions.get(0));
-		assertEquals(1, finalStates.size());
-	}
-	
-	@Test
-	public void testGetStates() throws IOException{
-		String path = "testData/model/VendingMachineFSM.uml";
-		EObject object = ModelAccessor.getModelObject(path);
-		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
-		List<Region> regions = ModelAccessor.getRegions(statemachines.get(0));
-		List<State> states = ModelAccessor.getStates(regions.get(0));
-		assertEquals(9, states.size());
-	}
+
 }
