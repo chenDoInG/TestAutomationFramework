@@ -12,6 +12,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Region;
 import org.eclipse.uml2.uml.StateMachine;
+import org.eclipse.uml2.uml.Vertex;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,10 +54,22 @@ public class AbstractTestGeneratorTest {
 		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
-		//HashMap<String, String> stateMappings = stateMachine.getStateMappings();
+		
 		List<Path> paths = AbstractTestGenerator.getTestPathsForEdgeCoverage(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates());
 		assertNotNull(paths);
 		System.out.println(paths);
+	}
+	
+	@Test
+	public void testGetPathByVertex() throws IOException, InvalidInputException, InvalidGraphException{
+		String path = "testData/model/VendingMachineFSM.uml";
+		EObject object = StateMachineAccessor.getModelObject(path);
+		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
+		List<Path> paths = AbstractTestGenerator.getTestPathsForEdgeCoverage(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates());
+		List<Vertex> vertexes = AbstractTestGenerator.getPathByVertex(paths.get(0), stateMachine);
+		assertEquals(vertexes.size(), 3);
 	}
 
 }

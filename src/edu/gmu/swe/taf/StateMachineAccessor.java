@@ -22,15 +22,22 @@ import org.eclipse.uml2.uml.Vertex;
  */
 
 public class StateMachineAccessor extends ModelAccessor {
-
-	private static HashMap<String, String> stateMappings = new HashMap<String, String>();
-	private static String initialStates = "";
-	private static String finalStates = "";
+	/**
+	 * the key is a state; the value is an integer number used in {@link coverage.web.Path}
+	 */
+	private HashMap<Vertex, String> stateMappings = new HashMap<Vertex, String>();
+	/**
+	 * the key is an integer number used in {@link coverage.web.Path}; the value is a state
+	 */
+	private HashMap<String, Vertex> reversedStateMappings = new HashMap<String, Vertex>();
+	private String initialStates = "";
+	private String finalStates = "";
+	
 	//transitions in a String format
 	//1, 2
 	//2, 3
 	//... etc.
-	private static String edges = "";
+	private String edges = "";
 	
 	public StateMachineAccessor(Region region) {
 		createStateMappings(region);	
@@ -38,7 +45,7 @@ public class StateMachineAccessor extends ModelAccessor {
 	}
 	
 	/**
-	 * Creates the mapping between state names and numbers
+	 * Creates the one mapping from vertexes to integers and another mapping from integers to vertexes.
 	 * @param region
 	 */
 	private void createStateMappings(Region region){
@@ -49,16 +56,19 @@ public class StateMachineAccessor extends ModelAccessor {
 			if(vertex instanceof Pseudostate){
 				EList<Transition> outgoings = vertex.getOutgoings();
 				if(outgoings.size() > 0){
-					getStateMappings().put(vertex.getName(), new Integer(stateNumber).toString());
+					getStateMappings().put(vertex, new Integer(stateNumber).toString());
+					getReversedStateMappings().put(new Integer(stateNumber).toString(), vertex);
 					setInitialStates(getInitialStates() + new Integer(stateNumber).toString());
 				}
 			}
 			else if(vertex instanceof FinalState){
-				getStateMappings().put(vertex.getName(), new Integer(stateNumber).toString());	
+				getStateMappings().put(vertex, new Integer(stateNumber).toString());	
+				getReversedStateMappings().put(new Integer(stateNumber).toString(), vertex);
 				setFinalStates(getFinalStates() + new Integer(stateNumber).toString());
 			}
 			else{
-				getStateMappings().put(vertex.getName(), new Integer(stateNumber).toString());	
+				getStateMappings().put(vertex, new Integer(stateNumber).toString());	
+				getReversedStateMappings().put(new Integer(stateNumber).toString(), vertex);
 			}
 		
 			stateNumber++;
@@ -80,13 +90,13 @@ public class StateMachineAccessor extends ModelAccessor {
 			//transitions may not have a source or target because some of them are leftover
 			//they do not appear in the UML diagram but they do exist in the UML model
 			if(transition.getSource() != null && transition.getTarget() != null){
-				System.out.println(transition.getSource().getName() + "; " + transition.getTarget().getName());
+				//System.out.println(transition.getSource().getName() + "; " + transition.getTarget().getName());
 
-				if(stateMappings.containsKey(transition.getSource().getName())){
-					edges = edges + stateMappings.get(transition.getSource().getName());
+				if(stateMappings.containsKey(transition.getSource())){
+					edges = edges + stateMappings.get(transition.getSource());
 				}
-				if(stateMappings.containsKey(transition.getTarget().getName())){
-					edges = edges + " " + stateMappings.get(transition.getTarget().getName());
+				if(stateMappings.containsKey(transition.getTarget())){
+					edges = edges + " " + stateMappings.get(transition.getTarget());
 				}
 				edges = edges + "\n"; 
 			}
@@ -173,22 +183,22 @@ public class StateMachineAccessor extends ModelAccessor {
 	 * Gets the mappings of states to numbers
 	 * @return the state-number mappings
 	 */
-	public static HashMap<String, String> getStateMappings() {
+	public HashMap<Vertex, String> getStateMappings() {
 		return stateMappings;
 	}
 
 	/**
 	 * Sets a new state-number mapping to the field of this class: stateMapping
 	 */
-	public static void setStateMappings(HashMap<String, String> stateMappings) {
-		StateMachineAccessor.stateMappings = stateMappings;
+	public void setStateMappings(HashMap<Vertex, String> stateMappings) {
+		this.stateMappings = stateMappings;
 	}
 
 	/**
 	 * Gets the edges in a String format
 	 * @return edges
 	 */
-	public static String getEdges() {
+	public String getEdges() {
 		return edges;
 	}
 
@@ -196,32 +206,46 @@ public class StateMachineAccessor extends ModelAccessor {
 	 * Sets new edges
 	 * @param edges
 	 */
-	public static void setEdges(String edges) {
-		StateMachineAccessor.edges = edges;
+	public void setEdges(String edges) {
+		this.edges = edges;
 	}
 
 	/**
 	 * Gets the final states in a String format
 	 * @return a String representation of final states
 	 */
-	public static String getFinalStates() {
+	public String getFinalStates() {
 		return finalStates;
 	}
 
-	public static void setFinalStates(String finalStates) {
-		StateMachineAccessor.finalStates = finalStates;
+	public void setFinalStates(String finalStates) {
+		this.finalStates = finalStates;
 	}
 
 	/**
 	 * Gets the initial states in a String format
 	 * @return a String representation of initial states
 	 */
-	public static String getInitialStates() {
+	public String getInitialStates() {
 		return initialStates;
 	}
 
-	public static void setInitialStates(String initialStates) {
-		StateMachineAccessor.initialStates = initialStates;
+	public void setInitialStates(String initialStates) {
+		this.initialStates = initialStates;
+	}
+	
+	/**
+	 * Gets the mappings from integers to vertexes
+	 * @return the number-state mappings
+	 */
+	public HashMap<String, Vertex> getReversedStateMappings() {
+		return reversedStateMappings;
+	}
+	/**
+	 * Sets a new number-state mapping to the field of this class: reversedStateMapping
+	 */
+	public void setReversedStateMappings(HashMap<String, Vertex> reversedStateMappings) {
+		this.reversedStateMappings = reversedStateMappings;
 	}
 
 }
