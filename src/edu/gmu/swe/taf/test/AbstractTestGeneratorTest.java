@@ -12,6 +12,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Region;
 import org.eclipse.uml2.uml.StateMachine;
+import org.eclipse.uml2.uml.Transition;
 import org.eclipse.uml2.uml.Vertex;
 import org.junit.After;
 import org.junit.Before;
@@ -22,6 +23,7 @@ import coverage.graph.Path;
 import coverage.web.InvalidInputException;
 
 import edu.gmu.swe.taf.AbstractTestGenerator;
+import edu.gmu.swe.taf.Mapping;
 import edu.gmu.swe.taf.ModelAccessor;
 import edu.gmu.swe.taf.StateMachineAccessor;
 
@@ -32,12 +34,16 @@ import edu.gmu.swe.taf.StateMachineAccessor;
  *
  */
 public class AbstractTestGeneratorTest {
-
+	
+	String path;
+	String xmlPath;
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
+		path = "testData/model/VendingMachineFSM.uml";
+		xmlPath = "testData/xml/vendingMachineMappings.xml";
 	}
 
 	/**
@@ -49,7 +55,7 @@ public class AbstractTestGeneratorTest {
 
 	@Test
 	public void testGetTestPathsForEdgeCoverage() throws IOException, InvalidInputException, InvalidGraphException {
-		String path = "testData/model/VendingMachineFSM.uml";
+		
 		EObject object = StateMachineAccessor.getModelObject(path);
 		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
@@ -62,14 +68,47 @@ public class AbstractTestGeneratorTest {
 	
 	@Test
 	public void testGetPathByVertex() throws IOException, InvalidInputException, InvalidGraphException{
-		String path = "testData/model/VendingMachineFSM.uml";
+		
 		EObject object = StateMachineAccessor.getModelObject(path);
 		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
 		List<Path> paths = AbstractTestGenerator.getTestPathsForEdgeCoverage(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates());
-		List<Vertex> vertexes = AbstractTestGenerator.getPathByVertex(paths.get(0), stateMachine);
+		List<Vertex> vertexes = AbstractTestGenerator.getPathByState(paths.get(0), stateMachine);
+		System.out.println(vertexes);
 		assertEquals(vertexes.size(), 3);
 	}
 
+	@Test
+	public void testConvertToTransitions() throws IOException, InvalidInputException, InvalidGraphException{
+		
+		EObject object = StateMachineAccessor.getModelObject(path);
+		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
+		List<Path> paths = AbstractTestGenerator.getTestPathsForEdgeCoverage(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates());
+		List<Vertex> vertexes = AbstractTestGenerator.getPathByState(paths.get(0), stateMachine);
+		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
+		AbstractTestGenerator.constraintSolver constraintSolver = abstractTestGenerator. new constraintSolver();
+		List<Transition> mappings = constraintSolver.convertToTransitions(vertexes, stateMachine);
+		assertEquals(mappings.size(), 2);
+	}
+	
+	@Test
+	public void testSolveConstraints() throws Exception{
+		
+		EObject object = StateMachineAccessor.getModelObject(path);
+		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
+		List<Path> paths = AbstractTestGenerator.getTestPathsForEdgeCoverage(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates());
+		System.out.println(paths.get(0));
+		System.out.println(stateMachine.getStateMappings());
+		List<Vertex> vertexes = AbstractTestGenerator.getPathByState(paths.get(0), stateMachine);
+		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
+		AbstractTestGenerator.constraintSolver constraintSolver = abstractTestGenerator. new constraintSolver();
+		List<Transition> mappings = constraintSolver.convertToTransitions(vertexes, stateMachine);
+		constraintSolver.solveConstraints(mappings, xmlPath);
+		assertEquals(mappings.size(), 2);
+	}
 }

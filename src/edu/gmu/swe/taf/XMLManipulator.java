@@ -16,6 +16,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
@@ -142,33 +143,33 @@ public class XMLManipulator {
 		
 		if(!isMappingExisted(doc, mapping)){
 			Element root = doc.getDocumentElement();
-			Element accountNode = doc.createElement("mapping");
+			Element mappingNode = doc.createElement("mapping");
 
 			//add mapping name node
 			Element nameNode = doc.createElement("name");
 			Text nameText = doc.createTextNode(mapping.getMappingName());
 			nameNode.appendChild(nameText);
-			accountNode.appendChild(nameNode);
+			mappingNode.appendChild(nameNode);
 			
 			//add class name node
 			Element objectNameNode = doc.createElement("class-name");
 			Text objectNameText = doc.createTextNode(mapping.getIdentifiableElementName());
 			objectNameNode.appendChild(objectNameText);
-			accountNode.appendChild(objectNameNode);
+			mappingNode.appendChild(objectNameNode);
 			
 			//add object name node			
 			Element classNameNode = doc.createElement("object-name");
 			Text classNameText = doc.createTextNode(mapping.getObjectName());
 			classNameNode.appendChild(classNameText);
-			accountNode.appendChild(classNameNode);
+			mappingNode.appendChild(classNameNode);
 			
 			//add test code node
 			Element codeNode = doc.createElement("code");
 			Text codeText = doc.createTextNode(mapping.getTestCode());
 			codeNode.appendChild(codeText);
-			accountNode.appendChild(codeNode);
+			mappingNode.appendChild(codeNode);
 			
-			root.appendChild(accountNode);
+			root.appendChild(mappingNode);
 
 			rewriteXML(doc,path);
 			return true;
@@ -189,13 +190,13 @@ public class XMLManipulator {
 		
 		if(!isMappingExisted(doc, mapping)){
 			Element root = doc.getDocumentElement();
-			Element accountNode = doc.createElement("mapping");
+			Element mappingNode = doc.createElement("mapping");
 
 			//add mapping name node
 			Element nameNode = doc.createElement("name");
 			Text nameText = doc.createTextNode(mapping.getMappingName());
 			nameNode.appendChild(nameText);
-			accountNode.appendChild(nameNode);
+			mappingNode.appendChild(nameNode);
 			
 			//add type node
 			String type = "";
@@ -204,13 +205,13 @@ public class XMLManipulator {
 			Element typeNode = doc.createElement(type);
 			Text typeText = doc.createTextNode(mapping.getIdentifiableElementName());
 			typeNode.appendChild(typeText);
-			accountNode.appendChild(typeNode);
+			mappingNode.appendChild(typeNode);
 
 			//add test code node
 			Element codeNode = doc.createElement("code");
 			Text codeText = doc.createTextNode(mapping.getTestCode());
 			codeNode.appendChild(codeText);
-			accountNode.appendChild(codeNode);
+			mappingNode.appendChild(codeNode);
 			
 			//add required mappings node
 			if(mapping.getRequiredMappings() != null && mapping.getRequiredMappings().size() > 0){
@@ -227,7 +228,7 @@ public class XMLManipulator {
 				
 				Text requiredMappingsText = doc.createTextNode(requiredMappings);
 				requiredMappingsNode.appendChild(requiredMappingsText);
-				accountNode.appendChild(requiredMappingsNode);
+				mappingNode.appendChild(requiredMappingsNode);
 			}
 			
 			//add parameters node
@@ -245,10 +246,10 @@ public class XMLManipulator {
 				
 				Text parametersText = doc.createTextNode(parameters);
 				parametersNode.appendChild(parametersText);
-				accountNode.appendChild(parametersNode);
+				mappingNode.appendChild(parametersNode);
 			}
 			
-			root.appendChild(accountNode);
+			root.appendChild(mappingNode);
 
 			rewriteXML(doc,path);
 			return true;
@@ -284,18 +285,25 @@ public class XMLManipulator {
 		switch(elementType){
 		case CLASS:
 			type = "class-name";
+			break;
 		case TRANSITION:
 			type = "transition-name";
+			break;
 		case STATE:
 			type = "state-name";
+			break;
 		case GUARD:
 			type = "guard-name";
+			break;
 		case CONSTRAINT:
 			type = "constraint-name";
+			break;
 		case PARAMETER:
 			type = "parameter-name";
+			break;
 		case FIELD:
 			type = "field-name";
+			break;
 		}
 		
 		return type;
@@ -329,13 +337,40 @@ public class XMLManipulator {
 		
 		NodeList sectionUserName = doc.getElementsByTagName("name");
 		for(int i = 0; i < sectionUserName.getLength();i++){
-			System.out.println(sectionUserName.item(i).getFirstChild().getNodeValue());
+			//System.out.println(sectionUserName.item(i).getFirstChild().getNodeValue());
 			if(sectionUserName.item(i).getFirstChild().getNodeValue().equalsIgnoreCase(mapping.getMappingName())){
 				isExisted = true;
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Returns the mappings created for the identifiable element, specified by name
+	 * @param path a String representation of the path of an XML file
+	 * @param name a String representation of the name of an element in an XML model
+	 * @return     a list of {@link org.w3c.dom.Node} objects of
+	 * @throws Exception 
+	 */
+	public static List<Node> getMatchedTransitionMappings(String path, String name) throws Exception{
+		List<Node> matchedNodes = new ArrayList<Node>();
+		Document doc = readXMLFile(path);
+		NodeList mappings = doc.getElementsByTagName("mapping");
+		//System.out.println("size mapping: " + mappings.getLength());
+		//System.out.println("path: " + path);
+		//System.out.println("name: " + name);
+		
+		for(int i = 0; i < mappings.getLength();i++){
+			NodeList nodes = mappings.item(i).getChildNodes();
+			for(int j = 0; j < nodes.getLength();j++){
+				if(nodes.item(j).getNodeName().equals("transition-name") && nodes.item(j).getFirstChild().getNodeValue().equalsIgnoreCase(name)){
+					matchedNodes.add(mappings.item(i));
+				}
+			}
+			
+		}
+		return matchedNodes;
 	}
 
 }
