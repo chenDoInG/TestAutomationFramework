@@ -11,10 +11,15 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.tools.Diagnostic;
+import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
+import javax.tools.JavaFileObject;
+import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
 import org.eclipse.uml2.uml.Transition;
@@ -28,6 +33,7 @@ import coverage.graph.InvalidGraphException;
 import coverage.graph.Node;
 import coverage.graph.Path;
 import coverage.web.InvalidInputException;
+import edu.gmu.swe.taf.util.JavaSupporter;
 
 /**
  * A class that generates abstract tests (that is, test paths) based on UML models
@@ -37,21 +43,30 @@ import coverage.web.InvalidInputException;
  *
  */
 public class AbstractTestGenerator {
+	String globalDirectory = "Users/nli/Documents/workspace/github/TestAutomationFramework/";
 	String tempTestDirectory = "testData/test/temp/";
 	String tempTestName = "tempTest";
+	
 	/**
-	 * 
+	 * Constructs an AbstractTestGenerator with no detailed directories
 	 */
 	public AbstractTestGenerator() {
-
+		this.globalDirectory = globalDirectory;
+	}
+	
+	/**
+	 * Constructs an AbstractTestGenerator with the global directory
+	 */
+	public AbstractTestGenerator(String globalDirectory) {
+		this.globalDirectory = globalDirectory;
 	}
 	
 	/**
 	 * Generates test paths to satisfy the edge coverage criterion
 	 * 
-	 * @param edges
-	 * @param initialNodes
-	 * @param finalNodes
+	 * @param edges				edges of a control flow graph in a String format "1 2 \n 2 3 \n"
+	 * @param initialNodes		initial nodes of a control flow graph in a String format "1 2 ... etc."
+	 * @param finalNodes		final nodes of a control flow graph in a String format "1 2 ... etc."
 	 * @return a list of {@link coverage.graph.Path} objects that satisfy edge coverage
 	 * @throws InvalidInputException
 	 * @throws InvalidGraphException
@@ -71,8 +86,8 @@ public class AbstractTestGenerator {
 	/**
 	 * Transforms a {@link coverage.graph.Path} to a list of {@link org.eclipse.uml2.uml.Vertex} in a UML state machine
 	 * 
-	 * @param path
-	 * @param stateMachine
+	 * @param path			a path of a control flow graph in a String format "1, 2, 3, ... etc."
+	 * @param stateMachine	a StateMachineAccessor object
 	 * @return a list of {@link org.eclipse.uml2.uml.Vertex}
 	 */
 	public static List<Vertex> getPathByState(Path path, StateMachineAccessor stateMachine){
@@ -98,10 +113,10 @@ public class AbstractTestGenerator {
 	public class constraintSolver{
 		
 		/**
-		 * Transforms a list of {@link org.eclipse.uml2.uml.Vertex} to a list of {@link org.eclipse.uml2.uml.Transition} in a UML state machine
-		 * @param vertexes
-		 * @param stateMachine
-		 * @return
+		 * Transforms a list of {@link org.eclipse.uml2.uml.Vertex} to a list of {@link org.eclipse.uml2.uml.Transition}s in a UML state machine
+		 * @param vertexes		a list of {@link org.eclipse.uml2.uml.Vertex}
+		 * @param stateMachine	a {@link StateMachineAccessor} object
+		 * @return	a list of {@link org.eclipse.uml2.uml.Transition}s
 		 */
 		public List<Transition> convertToTransitions(List<Vertex> vertexes, StateMachineAccessor stateMachine){
 			List<Mapping> mappings = new ArrayList<Mapping>();
@@ -124,15 +139,27 @@ public class AbstractTestGenerator {
 			return transitions;
 		}
 
-		public void solveConstraints(List<Transition> transitions, String path) throws Exception{
+		/**
+		 * 
+		 * @param transitions
+		 * @param path
+		 * @throws Exception
+		 */
+		public String solveConstraints(List<Transition> transitions, String path) throws Exception{			
+			//return concrete test code that are mapped to each transition
+			
+			//a list of nodes that keeps concrete test code in an order of transitions
 			List<org.w3c.dom.Node> result_nodes = new ArrayList<org.w3c.dom.Node>();
 			for(Transition transition: transitions){
 				List<org.w3c.dom.Node> nodes = null;
-				System.out.println("transition name: " + transition.getName());
+				//System.out.println("transition name: " + transition.getName());
 				if(transition.getName() != null && !transition.getName().equals("")){
 					nodes = XMLManipulator.getMatchedTransitionMappings(path, transition.getName());
-					System.out.println("size: " + nodes.size());
+					//System.out.println("size: " + nodes.size());
 					
+					//if more mappings exist for one transition, pick one
+					//if only one mapping exists, add this one to the list of concrete test code
+					//otherwise, throw "No mapping found" exception
 					if(nodes.size() > 1)
 						//this section will be updated later for picking one out of many mappings
 						result_nodes.add(nodes.get(0));
@@ -140,9 +167,10 @@ public class AbstractTestGenerator {
 						result_nodes.add(nodes.get(0));
 					else
 						throw new Exception("No mapping found");	
-				}			
-										
+				}												
 			}
+			
+			//retrieve the test code from the XML nodes
 			String methodContent = "";
 			for(int i = 0; i < result_nodes.size(); i++){
 				NodeList nodes = result_nodes.get(i).getChildNodes();
@@ -153,56 +181,7 @@ public class AbstractTestGenerator {
 					}
 				}
 			}
-			
-			createConcreteTest(tempTestDirectory, tempTestName, methodContent);
-			compileJavaFile(tempTestDirectory, tempTestName);
-			
-		}
-		
-		public boolean createConcreteTest(String directory, String fileName, String content) throws IOException{
-			File file = new File(directory + fileName + ".java");
-			FileOutputStream fop = new FileOutputStream(file);
-			String result = "";
-			String imports = "import java.io.*;\n";
-			String packageName = "\n";
-			String className = "public class " + fileName + " {\n";
-			String firstMethod = "public void test" + fileName + "(){\n";
-			
-			result = packageName + imports + className + firstMethod + content + "}\n}\n";
-			byte[] contentInBytes = result.getBytes();
-			fop.write(contentInBytes);
-			fop.flush();
-			fop.close();
-			
-			System.out.println("Done");
-			
-			return false;
-		}
-		
-		public void compileJavaFile(String directory, String fileName) throws Exception{
-			JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-			compiler.run(null, null, null, directory + "vendingMachine" + ".java");
-			addURL(directory);
-			compiler.run(null, null, null, directory + fileName + ".java");
-			
-		}
-		
-		   /**
-		    * add the class path dynamically
-		    * @param classPath
-		    * @throws Exception
-		    */
-		   
-		public  void addURL(String classPath) throws Exception {
-				  Method addClass = null;
-				  ClassLoader cl = null;
-				  File f = null;
-
-				  addClass = URLClassLoader.class.getDeclaredMethod("addURL", new Class[] {URL.class});
-				  addClass.setAccessible(true);
-				  f = new File(classPath);
-				  cl = ClassLoader.getSystemClassLoader();
-				  addClass.invoke(cl, new Object[] { f.toURL() });
+			return methodContent;
 		}
 	}
 

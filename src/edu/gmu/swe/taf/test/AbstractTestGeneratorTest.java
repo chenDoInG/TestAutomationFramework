@@ -104,10 +104,13 @@ public class AbstractTestGeneratorTest {
 		List<Path> paths = AbstractTestGenerator.getTestPathsForEdgeCoverage(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates());
 		System.out.println(paths.get(0));
 		System.out.println(stateMachine.getStateMappings());
+		
+		//get the vertices from a path and return a list of transitions based on the vertices
 		List<Vertex> vertexes = AbstractTestGenerator.getPathByState(paths.get(0), stateMachine);
 		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
 		AbstractTestGenerator.constraintSolver constraintSolver = abstractTestGenerator. new constraintSolver();
 		List<Transition> mappings = constraintSolver.convertToTransitions(vertexes, stateMachine);
+		
 		constraintSolver.solveConstraints(mappings, xmlPath);
 		assertEquals(mappings.size(), 2);
 	}

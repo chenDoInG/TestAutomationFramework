@@ -34,8 +34,8 @@ public class StateMachineAccessor extends ModelAccessor {
 	private String finalStates = "";
 	
 	//transitions in a String format
-	//1, 2
-	//2, 3
+	//1 2
+	//2 3
 	//... etc.
 	private String edges = "";
 	
@@ -78,8 +78,8 @@ public class StateMachineAccessor extends ModelAccessor {
 	/**
 	 * Creates the edges based on the transitions
 	 * edges are in a String format
-	 * 1, 2
-	 * 2, 3
+	 * 1 2
+	 * 2 3
 	 * ...
 	 * @param region
 	 */

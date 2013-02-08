@@ -63,7 +63,8 @@ public class GeneratorsTest {
 	
 		//String path = "C:\\Users\\nanli\\Desktop\\temp\\VendingMachine";
 		//String path = "E:\\eclipseDataJuno\\VendingMachine";
-		String path = "E:\\EclipseDataModeling\\VendingMachine";
+		//String path = "E:\\EclipseDataModeling\\VendingMachine";
+		String path = "/Users/nli/Documents/workspace/eclipseJuno/VendingMachine";
 		String path1 = path + "/VendingMachineFSM.uml";
 
 		URI modelURI = URI.createFileURI(path1);

@@ -20,7 +20,6 @@ import org.eclipse.acceleo.model.mtl.MtlPackage;
 import org.eclipse.acceleo.model.mtl.resource.AcceleoResourceSetImpl;
 import org.eclipse.acceleo.model.mtl.resource.EMtlBinaryResourceFactoryImpl;
 import org.eclipse.acceleo.model.mtl.resource.EMtlResourceFactoryImpl;
-import org.eclipse.acceleo.module.sample.main.GenerateFSM;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -70,8 +69,9 @@ public class AccessingModelsTest {
 	@Test
 	public void accessingModelstest() throws IOException, InvalidInputException, InvalidGraphException {
 		//String path = "C:\\Users\\nanli\\Desktop\\temp\\VendingMachine";
-		String path = "E:\\eclipseDataJuno\\VendingMachine";
+		//String path = "E:\\eclipseDataJuno\\VendingMachine";
 		//String path = "E:\\EclipseDataModeling\\VendingMachine";
+		String path = "/Users/nli/Documents/workspace/github/TestAutomationFramework/testData/model";
 		String path1 = path + "/VendingMachineFSM.uml";
 
 		URI modelURI = URI.createFileURI(path1);	
