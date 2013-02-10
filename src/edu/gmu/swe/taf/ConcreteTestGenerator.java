@@ -69,9 +69,18 @@ public class ConcreteTestGenerator {
 		
 		//System.out.println(file.getPath());
 		//needs to be updated for JUnit tests
+		//a package name may need to be specified
+		
+		//indentation vairiables to improve readability
+		String indentationForClass = "    ";
+		String indentationForMethod = "        ";
+
 		FileOutputStream fop = new FileOutputStream(file);
 		String result = "";
-		String imports = "import java.io.*;\n";
+		String importsJava = "import java.io.*;\n";
+		String importsJUnit = "import org.junit.*;\n import static org.junit.Assert.*;\n";
+		
+		String imports = importsJava + importsJUnit;
 		String packageName = "\n";
 		String className = "public class " + name + " {\n";
 		String firstMethod = "public void test" + name + "(){\n";

@@ -62,7 +62,7 @@ public class ConcreteTestGeneratorTest {
 		List<Vertex> vertexes = AbstractTestGenerator.getPathByState(paths.get(0), stateMachine);
 		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
 		AbstractTestGenerator.constraintSolver constraintSolver = abstractTestGenerator. new constraintSolver();
-		List<Transition> mappings = constraintSolver.convertToTransitions(vertexes, stateMachine);
+		List<Transition> mappings = abstractTestGenerator.convertVerticesToTransitions(vertexes, stateMachine);
 		
 		String methodContent = constraintSolver.solveConstraints(mappings, xmlPath);
 		

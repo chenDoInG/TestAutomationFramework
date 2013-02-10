@@ -12,6 +12,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -46,12 +47,15 @@ public class AbstractTestGenerator {
 	String globalDirectory = "Users/nli/Documents/workspace/github/TestAutomationFramework/";
 	String tempTestDirectory = "testData/test/temp/";
 	String tempTestName = "tempTest";
+	//Maps a transition to the mappings
+	private HashMap<Transition, List<Mapping>> hashedTransitionMappings;
 	
 	/**
 	 * Constructs an AbstractTestGenerator with no detailed directories
 	 */
 	public AbstractTestGenerator() {
 		this.globalDirectory = globalDirectory;
+		hashedTransitionMappings = new HashMap<Transition, List<Mapping>>();
 	}
 	
 	/**
@@ -102,6 +106,98 @@ public class AbstractTestGenerator {
 		return vertexes;		
 	}
 	
+	/**
+	 * Transforms a list of {@link org.eclipse.uml2.uml.Vertex} to a list of {@link org.eclipse.uml2.uml.Transition}s in a UML state machine
+	 * @param vertexes		a list of {@link org.eclipse.uml2.uml.Vertex}
+	 * @param stateMachine	a {@link StateMachineAccessor} object
+	 * @return	a list of {@link org.eclipse.uml2.uml.Transition}s
+	 */
+	public List<Transition> convertVerticesToTransitions(List<Vertex> vertexes, StateMachineAccessor stateMachine){
+		List<Mapping> mappings = new ArrayList<Mapping>();
+		List<Transition> transitions = new ArrayList<Transition>();
+		
+		for(int i = 0; i < vertexes.size();){
+			Vertex source = vertexes.get(i);
+			if(i == vertexes.size() - 1)
+				break;
+			else
+				i++;
+			
+			Vertex destination = vertexes.get(i);
+			for(Transition transition: source.getOutgoings()){
+				if(transition.getTarget().getName().equals(destination.getName())){
+					transitions.add(transition);
+				}
+			}
+		}
+		return transitions;
+	}
+	
+	
+	public List<Test> getTests(List<Path> paths, StateMachineAccessor stateMachine){
+		List<Test> tests = new ArrayList<Test>();
+		
+		for(int i = 0; i < paths.size(); i++){
+			List<Transition> transitions = convertVerticesToTransitions(getPathByState(paths.get(i), stateMachine), stateMachine);
+			String testComment = "/** A test for the path " + paths.get(i).toString() + "**/";
+			Test test = new Test("test" + i, testComment, transitions);
+			tests.add(test);
+		}
+		return tests;
+	}
+
+	/**
+	 * Gets a {@link edu.gmu.swe.taf.Test} object that is added with mappings and test code
+	 * @param path	the path of the XML file storing the mappings in a String format
+	 * @param test	a {@link edu.gmu.swe.taf.Test} object that is modified by this method
+	 * @return	a {@link edu.gmu.swe.taf.Test} object
+	 * @throws Exception 
+	 */
+	public Test getTest(String path, Test test) throws Exception{
+		//return concrete test code that are mapped to each transition
+
+		List<Mapping> mappings = test.getMappings();
+		if(mappings == null)
+			mappings = new ArrayList<Mapping>();
+		//System.out.println("transition size: " + test.getPath().size());
+		for(Transition transition: test.getPath()){
+			List<Mapping> nodes = null;
+			//System.out.println("transition name: " + transition.getName());
+			if(transition.getName() != null && !transition.getName().equals("")){
+				nodes = XMLManipulator.getMappingsByTransition(path, transition.getName());
+				//System.out.println("size: " + nodes.size());
+				
+				//if more mappings exist for one transition, pick one
+				//if only one mapping exists, add this one to the list of concrete test code
+				//otherwise, throw "No mapping found" exception
+				if(nodes.size() > 1)
+					//this section will be updated later for picking one out of many mappings
+					mappings.add(nodes.get(0));
+				else if(nodes.size() == 1)
+					mappings.add(nodes.get(0));
+				else
+					throw new Exception("No mapping found");	
+				
+				//store the transition and its mappings
+				if(!hashedTransitionMappings.containsKey(transition))
+					hashedTransitionMappings.put(transition, nodes);
+			}
+			
+		}
+		
+		test.setMappings(mappings);
+		//retrieve the test code from the XML nodes
+		String testCode = "";
+		
+		for(Mapping mapping: mappings)
+			testCode += mapping.getTestCode() + "\n";
+		
+		test.setTestCode(testCode);	
+		mappings = null;
+		
+		return test;
+	}
+	
 	
 	/**
 	 * An inner class that is used to solve constraints in abstract tests
@@ -112,32 +208,7 @@ public class AbstractTestGenerator {
 	 */
 	public class constraintSolver{
 		
-		/**
-		 * Transforms a list of {@link org.eclipse.uml2.uml.Vertex} to a list of {@link org.eclipse.uml2.uml.Transition}s in a UML state machine
-		 * @param vertexes		a list of {@link org.eclipse.uml2.uml.Vertex}
-		 * @param stateMachine	a {@link StateMachineAccessor} object
-		 * @return	a list of {@link org.eclipse.uml2.uml.Transition}s
-		 */
-		public List<Transition> convertToTransitions(List<Vertex> vertexes, StateMachineAccessor stateMachine){
-			List<Mapping> mappings = new ArrayList<Mapping>();
-			List<Transition> transitions = new ArrayList<Transition>();
-			
-			for(int i = 0; i < vertexes.size();){
-				Vertex source = vertexes.get(i);
-				if(i == vertexes.size() - 1)
-					break;
-				else
-					i++;
-				
-				Vertex destination = vertexes.get(i);
-				for(Transition transition: source.getOutgoings()){
-					if(transition.getTarget().getName().equals(destination.getName())){
-						transitions.add(transition);
-					}
-				}
-			}
-			return transitions;
-		}
+
 
 		/**
 		 * 

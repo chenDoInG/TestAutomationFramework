@@ -2,6 +2,7 @@ package edu.gmu.swe.taf;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -368,6 +369,68 @@ public class XMLManipulator {
 					matchedNodes.add(mappings.item(i));
 				}
 			}
+			
+		}
+		return matchedNodes;
+	}
+	
+	/**
+	 * Returns the mappings created for the identifiable element, specified by name
+	 * @param path a String representation of the path of an XML file
+	 * @param name a String representation of the name of an element in an XML model
+	 * @return     a list of {@link org.w3c.dom.Node} objects of
+	 * @throws Exception 
+	 */
+	public static List<Mapping> getMappingsByTransition(String path, String name) throws Exception{
+		List<Mapping> matchedNodes = new ArrayList<Mapping>();
+		Document doc = readXMLFile(path);
+		NodeList mappings = doc.getElementsByTagName("mapping");
+		//System.out.println("size mapping: " + mappings.getLength());
+		//System.out.println("path: " + path);
+		//System.out.println("name: " + name);
+		
+		for(int i = 0; i < mappings.getLength();i++){
+			NodeList nodes = mappings.item(i).getChildNodes();
+			Mapping mapping = new Mapping();
+			//if this boolean sign is true, the transition is the one we are looking for
+			boolean isTransition = false;
+			for(int j = 0; j < nodes.getLength();j++){
+				
+				if(nodes.item(j).getNodeName().equals("name")){
+					mapping.setMappingName(nodes.item(j).getFirstChild().getNodeValue());
+					continue;
+				}
+				
+				if(nodes.item(j).getNodeName().equals("transition-name")){
+					if(nodes.item(j).getFirstChild().getNodeValue().equalsIgnoreCase(name)){
+						mapping.setIdentifiableElementName(nodes.item(j).getFirstChild().getNodeValue());
+						isTransition = true;
+					}
+					else{
+						break;
+					}
+				}
+				
+				if(nodes.item(j).getNodeName().equals("code")){
+					mapping.setTestCode(nodes.item(j).getFirstChild().getNodeValue());
+					continue;
+				}
+				
+				if(nodes.item(j).getNodeName().equals("required-mappings")){
+					String[] parameters = nodes.item(j).getFirstChild().getNodeValue().split(",");
+					mapping.setRequiredMappings(Arrays.asList(parameters));
+					continue;
+				}
+				
+				if(nodes.item(j).getNodeName().equals("paraemeter")){
+					mapping.setTestCode(nodes.item(j).getFirstChild().getNodeValue());
+				}
+				//may add more nodes if a mapping has more
+			}
+			if(isTransition == false)
+				mapping = null;
+			else
+				matchedNodes.add(mapping);
 			
 		}
 		return matchedNodes;

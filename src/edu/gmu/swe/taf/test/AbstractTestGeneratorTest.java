@@ -90,7 +90,7 @@ public class AbstractTestGeneratorTest {
 		List<Vertex> vertexes = AbstractTestGenerator.getPathByState(paths.get(0), stateMachine);
 		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
 		AbstractTestGenerator.constraintSolver constraintSolver = abstractTestGenerator. new constraintSolver();
-		List<Transition> mappings = constraintSolver.convertToTransitions(vertexes, stateMachine);
+		List<Transition> mappings = abstractTestGenerator.convertVerticesToTransitions(vertexes, stateMachine);
 		assertEquals(mappings.size(), 2);
 	}
 	
@@ -109,9 +109,34 @@ public class AbstractTestGeneratorTest {
 		List<Vertex> vertexes = AbstractTestGenerator.getPathByState(paths.get(0), stateMachine);
 		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
 		AbstractTestGenerator.constraintSolver constraintSolver = abstractTestGenerator. new constraintSolver();
-		List<Transition> mappings = constraintSolver.convertToTransitions(vertexes, stateMachine);
+		List<Transition> mappings = abstractTestGenerator.convertVerticesToTransitions(vertexes, stateMachine);
 		
 		constraintSolver.solveConstraints(mappings, xmlPath);
 		assertEquals(mappings.size(), 2);
+	}
+	
+	/**
+	 * Test the method GetTest
+	 * @throws Exception
+	 */
+	@Test
+	public void testGetTest() throws Exception{
+		
+		EObject object = StateMachineAccessor.getModelObject(path);
+		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
+		List<Path> paths = AbstractTestGenerator.getTestPathsForEdgeCoverage(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates());
+		System.out.println(paths.get(0));
+		System.out.println(stateMachine.getStateMappings());
+		
+		//get the vertices from a path and return a list of transitions based on the vertices
+		List<Vertex> vertexes = AbstractTestGenerator.getPathByState(paths.get(0), stateMachine);
+		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
+		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(0), stateMachine), stateMachine);
+		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.Test("test", "", transitions);
+		test = abstractTestGenerator.getTest(xmlPath, test);
+
+		assertEquals(test.getMappings().size(), 1);
 	}
 }

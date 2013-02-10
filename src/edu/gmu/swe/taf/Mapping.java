@@ -46,6 +46,13 @@ public class Mapping {
 	}
 	
 	/**
+	 * Constrcuts a Mapping object with no parameters
+	 */
+	public Mapping(){
+		
+	}
+	
+	/**
 	 * Gets the mapping name
 	 * @return the mapping name
 	 */

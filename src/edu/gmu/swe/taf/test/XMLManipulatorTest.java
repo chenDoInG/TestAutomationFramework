@@ -341,12 +341,27 @@ public class XMLManipulatorTest {
 		}
 	}
 	
+	/**
+	 * Tests the method GetMatchedTransitionMappings
+	 * @throws Exception 
+	 */
 	@Test
 	public void testGetMatchedMappings() throws Exception{
 		List<Node> nodes = XMLManipulator.getMatchedTransitionMappings(path, "coin");
 		assertEquals(2, nodes.size());
 		List<Node> nodes1 = XMLManipulator.getMatchedTransitionMappings(path, "initialize");
 		assertEquals(1, nodes1.size());
+	}
+	
+	/**
+	 * Tests the method GetMappingsByTransition
+	 * @throws Exception 
+	 */
+	@Test
+	public void testGetMappingsByTransition() throws Exception{
+		List<Mapping> nodes = XMLManipulator.getMappingsByTransition(path, "coin");
+		//System.out.println(nodes.get(0).getTestCode());
+		assertEquals(2, nodes.size());
 	}
 
 }
