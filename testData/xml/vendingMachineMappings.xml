@@ -1,1 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><mappings><mapping><name>addChocolate</name><transition-name>addChoc</transition-name><code>vm.addChoc("MM");</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>coinOneDollarAndTen</name><transition-name>coin</transition-name><code>vm.coin(10); vm.coin(25); vm.coin(25); vm.coin(25); vm.coin(25);</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>coinAnyCredit</name><transition-name>coin</transition-name><code>vm.coin(c);</code><required-mappings>vMachineInit</required-mappings><parameters>int c</parameters></mapping><mapping><name>initializeVendingMachine</name><transition-name>initialize</transition-name><code>vendingMachine vm = new vendingMachine();</code></mapping></mappings>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><mappings><mapping><name>addChocolate</name><transition-name>addChocs</transition-name><code>vm.addChoc("MM");</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>coinOneDollarAndTen</name><transition-name>coin</transition-name><code>vm.coin(10);
+vm.coin(25);
+vm.coin(25);
+vm.coin(25);
+vm.coin(25);
+</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>coinAnyCredit</name><transition-name>coin</transition-name><code>vm.coin(c);</code><required-mappings>vMachineInit</required-mappings><parameters>int c</parameters></mapping>
+	<mapping>
+		<name>coinQuarter</name>
+		<transition-name>addCoinLessThanNinty</transition-name>
+		<code>vm.coin(25);</code>
+		<required-mappings>vMachineInit</required-mappings></mapping>
+	<mapping>
+		<name>coinOneDollar</name>
+		<transition-name>addCoinAtLeastNinty</transition-name>
+		<code>vm.coin(100);</code>
+		<required-mappings>vMachineInit</required-mappings></mapping><mapping><name>vMachineInit</name><class-name>VendingMachine</class-name><object-name>vm</object-name><code>vendingMachine vm = new vendingMachine();</code></mapping><mapping><name>initializeVendingMachine</name><transition-name>initialize</transition-name><code>vendingMachine vm = new vendingMachine();</code></mapping><mapping><name>getChocolate</name><transition-name>getChocs</transition-name><code>vm.getChoc(sb);
+</code><required-mappings>vMachineInit, stringBufferInit</required-mappings></mapping><mapping><name>stringBufferInit</name><class-name>StringBuffer</class-name><object-name>sb</object-name><code>StringBuffer sb = new StringBuffer("MM");</code></mapping></mappings>

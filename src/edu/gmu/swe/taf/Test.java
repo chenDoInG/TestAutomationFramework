@@ -3,7 +3,6 @@ package edu.gmu.swe.taf;
 
 import java.util.List;
 
-import org.eclipse.uml2.uml.Transition;
 
 /**
  * A class that represents an object of a test.
@@ -15,7 +14,6 @@ public class Test {
 
 	private String testName;
 	private String testComment;
-	private List<Transition> path;
 	private List<Mapping> mappings;
 	private String testCode;
 	
@@ -26,30 +24,13 @@ public class Test {
 		
 	}
 	/**
-	 * Constructs a Test with the test name, test comment, and abstract test path
+	 * Constructs a Test with the test name, test comment, and abstract test path from a state machine diagram
 	 */
-	public Test(String testName, String testComment, List<Transition> path) {
+	public Test(String testName, String testComment) {
 		this.testName = testName;
 		this.testComment = testComment;
-		this.path = path;
 	}
 	
-	/**
-	 * Gets the abstract test path of the test
-	 * @return a list of {@link org.eclipse.uml2.uml.Transition}s
-	 */
-	public List<Transition> getPath() {
-		return path;
-	}
-
-	/**
-	 * Sets the abstract test path of the test
-	 * @param path	a list of {@link org.eclipse.uml2.uml.Transition}s 
-	 */
-	public void setPath(List<Transition> path) {
-		this.path = path;
-	}
-
 	/**
 	 * Gets the concrete test code
 	 * @return	the concrete test code in a String format

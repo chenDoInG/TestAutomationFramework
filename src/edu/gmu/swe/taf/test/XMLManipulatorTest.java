@@ -20,16 +20,16 @@ import edu.gmu.swe.taf.ClassMapping;
 import edu.gmu.swe.taf.IdentifiableElementType;
 import edu.gmu.swe.taf.Mapping;
 import edu.gmu.swe.taf.Parameter;
-import edu.gmu.swe.taf.XMLManipulator;
+import edu.gmu.swe.taf.XmlManipulator;
 
 /**
- * A JUnit test case for class {@link XMLManipulator}
+ * A JUnit test case for class {@link XmlManipulator}
  * @author Nan Li
  * @version 1.0 Nov 12, 2012
  *
  */
 
-public class XMLManipulatorTest {
+public class XmlManipulatorTest {
 
 	String path;
 	String directory;
@@ -52,7 +52,7 @@ public class XMLManipulatorTest {
 	 */
 	@Test
 	public void testCreateXMLFile() throws ParserConfigurationException, TransformerException {		
-		XMLManipulator.createXMLFile(directory, fileName);
+		XmlManipulator.createXmlFile(directory, fileName);
 		File file = new File(directory + fileName + ".xml");
 		assertEquals(file.exists(), true);
 	}
@@ -64,7 +64,7 @@ public class XMLManipulatorTest {
 	@Test
 	public void testReadXMLFile() throws Exception{
 
-		Document doc = XMLManipulator.readXMLFile(path);
+		Document doc = XmlManipulator.readXmlFile(path);
 		assertNotNull(doc);
 	}
 	
@@ -75,7 +75,7 @@ public class XMLManipulatorTest {
 	@Test
 	public void testCreateMapping() throws Exception{
 		String mappingName = "addChocolate";
-		String identifiedElementName = "addChoc";
+		String identifiedElementName = "addChocs";
 		IdentifiableElementType type = IdentifiableElementType.TRANSITION;
 		String testCode = "vm.addChoc(\"MM\");";
 		List<String> mappings = new ArrayList<String>();
@@ -84,14 +84,14 @@ public class XMLManipulatorTest {
 
 		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters);
 
-		Document doc = XMLManipulator.readXMLFile(path);
+		Document doc = XmlManipulator.readXmlFile(path);
 		
-		XMLManipulator xm = new XMLManipulator();
+		XmlManipulator xm = new XmlManipulator();
 
 		xm.createMapping(doc, mapping, path);
 
 		//Check if the mapping "addChocolate" has been added to the Document object in the XML file specified by path
-		doc = XMLManipulator.readXMLFile(path);
+		doc = XmlManipulator.readXmlFile(path);
 		boolean isExisted = false;
 		NodeList sectionUserName = doc.getElementsByTagName("name");
 		
@@ -105,10 +105,11 @@ public class XMLManipulatorTest {
 	}
 	
 	/**
-	 * Tests the method CreateMapping()
+	 * Creates a mapping for the transition initialize
 	 * @throws Exception
 	 */
 	@Test
+	
 	public void testCreateMappingInitialize() throws Exception{
 		String mappingName = "initializeVendingMachine";
 		String identifiedElementName = "initialize";
@@ -120,47 +121,13 @@ public class XMLManipulatorTest {
 		
 		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters);
 
-		Document doc = XMLManipulator.readXMLFile(path);
+		Document doc = XmlManipulator.readXmlFile(path);
 		
-		XMLManipulator xm = new XMLManipulator();
+		XmlManipulator xm = new XmlManipulator();
 
 		xm.createMapping(doc, mapping, path);
 	}
 	
-	/**
-	 * Tests the method CreateMapping()
-	 * @throws Exception
-	 */
-	@Test
-	public void testCreateMappingForTransitionAddChoc() throws Exception{
-		//Insert the mapping "coinOneDollarAndTen" into an XML file
-		String mappingName = "coinOneDollarAndTen";
-		String identifiedElementName = "coin";
-		IdentifiableElementType type = IdentifiableElementType.TRANSITION;
-		String testCode = "vm.coin(10); vm.coin(25); vm.coin(25); vm.coin(25); vm.coin(25);";
-		List<String> mappings = new ArrayList<String>();
-		mappings.add("vMachineInit");
-		List<Parameter> parameters = new ArrayList<Parameter>();
-		
-		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters);
-
-		Document doc = XMLManipulator.readXMLFile(path);		
-		XMLManipulator xm = new XMLManipulator();
-		xm.createMapping(doc, mapping, path);
-		
-		//Check if the mapping "addChocolate" has been added to the Document object in the XML file specified by path
-		doc = XMLManipulator.readXMLFile(path);
-		boolean isExisted = false;
-		NodeList sectionUserName = doc.getElementsByTagName("name");
-		
-		for(int i = 0; i < sectionUserName.getLength();i++){
-			//System.out.println(sectionUserName.item(i).getFirstChild().getNodeValue());
-			if(sectionUserName.item(i).getFirstChild().getNodeValue().equalsIgnoreCase("coinOneDollarAndTen")){
-				isExisted = true;
-			}
-		}
-		assertEquals(true, isExisted);
-	}
 	
 	/**
 	 * Tests the method CreateMapping()
@@ -172,19 +139,19 @@ public class XMLManipulatorTest {
 		String mappingName = "coinOneDollarAndTen";
 		String identifiedElementName = "coin";
 		IdentifiableElementType type = IdentifiableElementType.TRANSITION;
-		String testCode = "vm.coin(10); vm.coin(25); vm.coin(25); vm.coin(25); vm.coin(25);";
+		String testCode = "vm.coin(10);\n" +"vm.coin(25);\n" + "vm.coin(25);\n" + "vm.coin(25);\n" + "vm.coin(25);\n";
 		List<String> mappings = new ArrayList<String>();
 		mappings.add("vMachineInit");
 		List<Parameter> parameters = new ArrayList<Parameter>();
 		
 		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters);
 
-		Document doc = XMLManipulator.readXMLFile(path);		
-		XMLManipulator xm = new XMLManipulator();
+		Document doc = XmlManipulator.readXmlFile(path);		
+		XmlManipulator xm = new XmlManipulator();
 		xm.createMapping(doc, mapping, path);
 		
 		//Check if the mapping "addChocolate" has been added to the Document object in the XML file specified by path
-		doc = XMLManipulator.readXMLFile(path);
+		doc = XmlManipulator.readXmlFile(path);
 		boolean isExisted = false;
 		NodeList sectionUserName = doc.getElementsByTagName("name");
 		
@@ -216,18 +183,60 @@ public class XMLManipulatorTest {
 		
 		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters);
 
-		Document doc = XMLManipulator.readXMLFile(path);		
-		XMLManipulator xm = new XMLManipulator();
+		Document doc = XmlManipulator.readXmlFile(path);		
+		XmlManipulator xm = new XmlManipulator();
 		xm.createMapping(doc, mapping, path);
 		
-		//Check if the mapping "addChocolate" has been added to the Document object in the XML file specified by path
-		doc = XMLManipulator.readXMLFile(path);
+		//Check if the mapping "coinAnyCredit" has been added to the Document object in the XML file specified by path
+		doc = XmlManipulator.readXmlFile(path);
 		boolean isExisted = false;
 		NodeList sectionUserName = doc.getElementsByTagName("name");
 		
 		for(int i = 0; i < sectionUserName.getLength();i++){
 			//System.out.println(sectionUserName.item(i).getFirstChild().getNodeValue());
-			if(sectionUserName.item(i).getFirstChild().getNodeValue().equalsIgnoreCase("coinOneDollarAndTen")){
+			if(sectionUserName.item(i).getFirstChild().getNodeValue().equalsIgnoreCase("coinAnyCredit")){
+				isExisted = true;
+			}
+		}
+		assertEquals(true, isExisted);
+	}
+	
+	/**
+	 * Tests the method CreateMapping()
+	 * @throws Exception
+	 */
+	@Test
+	public void testCreateMappingForTransitionGetChocs() throws Exception{
+		//Insert the mapping "getChocs" into an XML file
+		String mappingName = "getChocolate";
+		String identifiedElementName = "getChocs";
+		IdentifiableElementType type = IdentifiableElementType.TRANSITION;
+		String testCode = "StringBuffer sb = new StringBuffer(\"MM\");\n" + "vm.getChoc(sb);\n";
+		
+		List<String> required = new ArrayList<String>();
+		required.add("vMachineInit");
+		
+		//add parameters
+		/*
+		List<Parameter> parameters = new ArrayList<Parameter>();
+		Parameter p = new Parameter("int", "c");
+		parameters.add(p);
+		*/
+		
+		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, required, null);
+		
+		Document doc = XmlManipulator.readXmlFile(path);		
+		XmlManipulator xm = new XmlManipulator();
+		xm.createMapping(doc, mapping, path);
+		
+		//Check if the mapping "getChocolate" has been added to the Document object in the XML file specified by path
+		doc = XmlManipulator.readXmlFile(path);
+		boolean isExisted = false;
+		NodeList sectionUserName = doc.getElementsByTagName("name");
+		
+		for(int i = 0; i < sectionUserName.getLength();i++){
+			//System.out.println(sectionUserName.item(i).getFirstChild().getNodeValue());
+			if(sectionUserName.item(i).getFirstChild().getNodeValue().equalsIgnoreCase("getChocolate")){
 				isExisted = true;
 			}
 		}
@@ -250,16 +259,39 @@ public class XMLManipulatorTest {
 		
 		ClassMapping mapping = new ClassMapping(mappingName, type, identifiedElementName, objectName, testCode, mappings, parameters);
 
-		Document doc = XMLManipulator.readXMLFile(path);
+		Document doc = XmlManipulator.readXmlFile(path);
 		
-		XMLManipulator xm = new XMLManipulator();
+		XmlManipulator xm = new XmlManipulator();
+
+		xm.createClassMapping(doc, mapping, path);
+	}
+	
+	/**
+	 * Tests the method CreateClassMapping()
+	 * @throws Exception
+	 */
+	@Test
+	public void testCreateClassMapping1() throws Exception{
+		String mappingName = "stringBufferInit";
+		String identifiedElementName = "StringBuffer";
+		String objectName = "sb";
+		IdentifiableElementType type = IdentifiableElementType.CLASS;
+		String testCode = "StringBuffer sb = new StringBuffer(\"MM\");";
+		List<String> mappings = new ArrayList<String>();
+		List<Parameter> parameters = new ArrayList<Parameter>();
+		
+		ClassMapping mapping = new ClassMapping(mappingName, type, identifiedElementName, objectName, testCode, mappings, parameters);
+
+		Document doc = XmlManipulator.readXmlFile(path);
+		
+		XmlManipulator xm = new XmlManipulator();
 
 		xm.createClassMapping(doc, mapping, path);
 	}
 	
 	@Test
 	public void testRemoveMapping() throws Exception{
-		Document doc = XMLManipulator.readXMLFile(path);
+		Document doc = XmlManipulator.readXmlFile(path);
 		
 		String mappingName = "vMachineInit";
 		String identifiedElementName = "VendingMachine";
@@ -282,7 +314,7 @@ public class XMLManipulatorTest {
 						
 						node.getParentNode().removeChild(node);
 						doc.normalize();
-						XMLManipulator.rewriteXML(doc, path);
+						XmlManipulator.rewriteXml(doc, path);
 						
 						break;
 					}	
@@ -294,9 +326,13 @@ public class XMLManipulatorTest {
 		}
 	}
 	
+	/**
+	 * Tests the method rewriteXml
+	 * @throws Exception
+	 */
 	@Test
-	public void testUpdateMapping() throws Exception{
-		Document doc = XMLManipulator.readXMLFile(path);
+	public void testRewriteXml() throws Exception{
+		Document doc = XmlManipulator.readXmlFile(path);
 		
 		String mappingName = "vMachineInit";
 		String identifiedElementName = "VendingMachine";
@@ -331,7 +367,7 @@ public class XMLManipulatorTest {
 				if(flag == true){
 					node.getParentNode().removeChild(node);
 					doc.normalize();
-					XMLManipulator.rewriteXML(doc, path);
+					XmlManipulator.rewriteXml(doc, path);
 					
 					break;
 				}
@@ -347,9 +383,9 @@ public class XMLManipulatorTest {
 	 */
 	@Test
 	public void testGetMatchedMappings() throws Exception{
-		List<Node> nodes = XMLManipulator.getMatchedTransitionMappings(path, "coin");
+		List<Node> nodes = XmlManipulator.getMatchedTransitionMappings(path, "coin");
 		assertEquals(2, nodes.size());
-		List<Node> nodes1 = XMLManipulator.getMatchedTransitionMappings(path, "initialize");
+		List<Node> nodes1 = XmlManipulator.getMatchedTransitionMappings(path, "initialize");
 		assertEquals(1, nodes1.size());
 	}
 	
@@ -359,9 +395,44 @@ public class XMLManipulatorTest {
 	 */
 	@Test
 	public void testGetMappingsByTransition() throws Exception{
-		List<Mapping> nodes = XMLManipulator.getMappingsByTransition(path, "coin");
+		List<Mapping> nodes = XmlManipulator.getMappingsByTransition(path, "coin");
 		//System.out.println(nodes.get(0).getTestCode());
 		assertEquals(2, nodes.size());
+	}
+	
+	/**
+	 * Tests the method UpdateMapping
+	 * @throws Exception 
+	 * 
+	 */
+	@Test
+	public void testUpdateMapping() throws Exception{
+		//Insert the mapping "getChocs" into an XML file
+		String mappingName = "getChocolate";
+		String identifiedElementName = "getChocs";
+		IdentifiableElementType type = IdentifiableElementType.TRANSITION;
+		String testCode = "vm.getChoc(sb);\n";
+		
+		List<String> required = new ArrayList<String>();
+		required.add("vMachineInit");
+		required.add("stringBufferInit");
+		
+		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, required, null);
+		
+		Document doc = XmlManipulator.readXmlFile(path);		
+		XmlManipulator xm = new XmlManipulator();
+		xm.updateMapping(doc, mapping, path);
+	}
+	
+	/**
+	 * Tests the method getClassMappingByName()
+	 * @throws Exception 
+	 */
+	@Test
+	public void testGetClassMappingByName() throws Exception{
+
+		ClassMapping cm = XmlManipulator.getClassMappingByName(path, "vMachineInit");
+		assertEquals(cm.getMappingName(), "vMachineInit");
 	}
 
 }

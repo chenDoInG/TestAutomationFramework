@@ -33,7 +33,7 @@ import org.xml.sax.SAXParseException;
  * @version 1.0 Nov 12, 2012
  *
  */
-public class XMLManipulator {
+public class XmlManipulator {
 
 	/*
 	public static void main() throws Exception {
@@ -56,7 +56,7 @@ public class XMLManipulator {
 	}
 	*/
 	
-	public XMLManipulator(){
+	public XmlManipulator(){
 		
 	}
 	/**
@@ -69,7 +69,7 @@ public class XMLManipulator {
 	 * @throws ParserConfigurationException
 	 * @throws TransformerException
 	 */
-	public static void createXMLFile(String directory, String fileName) throws ParserConfigurationException, TransformerException{
+	public static void createXmlFile(String directory, String fileName) throws ParserConfigurationException, TransformerException{
 		
 		File file = new File(directory + fileName + ".xml");
 		
@@ -104,7 +104,7 @@ public class XMLManipulator {
 	 * @return an {@link org.w3c.dom.Document} object of an XML file specified by the path e.g. data/vendingMachineMappings.xml
 	 * @throws Exception
 	 */
-	public static Document readXMLFile(String path) throws Exception{
+	public static Document readXmlFile(String path) throws Exception{
 		if(path == null){
 			throw new Exception("No path for reading XML");
 		}
@@ -172,7 +172,7 @@ public class XMLManipulator {
 			
 			root.appendChild(mappingNode);
 
-			rewriteXML(doc,path);
+			rewriteXml(doc,path);
 			return true;
 		}
 		System.out.println("The user account has existed");
@@ -182,6 +182,7 @@ public class XMLManipulator {
 	/**
 	 * Inserts a {@link Mapping} to an {@link org.w3c.dom.Document} object and writes the {@link org.w3c.dom.Document} object 
 	 * to an XML file specified by the argument path.
+	 * If the mapping has been existed, the original XML file will not be affected.
 	 * 
 	 * @param doc		an {@link org.w3c.dom.Document} object in which a new mapping will be inserted
 	 * @param mapping	a {@link Mapping} object that will be inserted in an {@link org.w3c.dom.Document} object specified by doc 	
@@ -213,6 +214,7 @@ public class XMLManipulator {
 			Text codeText = doc.createTextNode(mapping.getTestCode());
 			codeNode.appendChild(codeText);
 			mappingNode.appendChild(codeNode);
+			//System.out.println(mapping.getTestCode());
 			
 			//add required mappings node
 			if(mapping.getRequiredMappings() != null && mapping.getRequiredMappings().size() > 0){
@@ -252,10 +254,111 @@ public class XMLManipulator {
 			
 			root.appendChild(mappingNode);
 
-			rewriteXML(doc,path);
+			rewriteXml(doc,path);
 			return true;
 		}
 		System.out.println("The user account has existed");
+		return false;
+	}
+	
+	/**
+	 * Updates a {@link Mapping} in an {@link org.w3c.dom.Document} object and writes the new {@link org.w3c.dom.Document} object 
+	 * to an XML file specified by the argument path.
+	 * The XML file will only be modified if there exists an old mapping that has the same as that of the new one.
+	 * 
+	 * @param doc		an {@link org.w3c.dom.Document} object in which a new mapping will be inserted
+	 * @param mapping	a {@link Mapping} object that will be inserted in an {@link org.w3c.dom.Document} object specified by doc 	
+	 * @throws TransformerException
+	 */
+	public boolean updateMapping(Document doc, Mapping mapping, String path) throws TransformerException{
+		
+		//continue if this mapping has existed
+		if(isMappingExisted(doc, mapping)){
+			NodeList mappings = doc.getElementsByTagName("mapping");
+			
+			for(int i = 0; i < mappings.getLength();i++){
+				NodeList nodes = mappings.item(i).getChildNodes();
+				for(int j = 0; j < nodes.getLength();j++){
+					//if the names match, remove this node
+					if(nodes.item(j).getNodeName().equals("name")){
+						if(nodes.item(j).getFirstChild().getNodeValue().equals(mapping.getMappingName())){
+							mappings.item(i).getParentNode().removeChild(mappings.item(i));
+						}
+						else
+							break;
+					}
+				}			
+			}
+			
+			//create a new mapping node
+			Element root = doc.getDocumentElement();
+			Element mappingNode = doc.createElement("mapping");
+
+			//add mapping name node
+			Element nameNode = doc.createElement("name");
+			Text nameText = doc.createTextNode(mapping.getMappingName());
+			nameNode.appendChild(nameText);
+			mappingNode.appendChild(nameNode);
+			
+			//add type node
+			String type = "";
+			type = getTypeName(mapping.getType());
+			
+			Element typeNode = doc.createElement(type);
+			Text typeText = doc.createTextNode(mapping.getIdentifiableElementName());
+			typeNode.appendChild(typeText);
+			mappingNode.appendChild(typeNode);
+
+			//add test code node
+			Element codeNode = doc.createElement("code");
+			Text codeText = doc.createTextNode(mapping.getTestCode());
+			codeNode.appendChild(codeText);
+			mappingNode.appendChild(codeNode);
+			//System.out.println(mapping.getTestCode());
+			
+			//add required mappings node
+			if(mapping.getRequiredMappings() != null && mapping.getRequiredMappings().size() > 0){
+				Element requiredMappingsNode = doc.createElement("required-mappings");
+				
+				String requiredMappings = "";
+				for(String s: mapping.getRequiredMappings()){
+					//add comma if there are more than one required mapping
+					if(!requiredMappings.equals(""))
+						requiredMappings += ", ";
+
+					requiredMappings += s;
+				}
+				
+				Text requiredMappingsText = doc.createTextNode(requiredMappings);
+				requiredMappingsNode.appendChild(requiredMappingsText);
+				mappingNode.appendChild(requiredMappingsNode);
+			}
+			
+			//add parameters node
+			if(mapping.getParameters() != null && mapping.getParameters().size() > 0){
+				Element parametersNode = doc.createElement("parameters");
+				
+				String parameters = "";
+				for(Parameter p: mapping.getParameters()){
+					//add comma if there are more than one parameter
+					if(!parameters.equals(""))
+						parameters = ", ";
+					
+					parameters += p.getType() + " " + p.getName();
+				}
+				
+				Text parametersText = doc.createTextNode(parameters);
+				parametersNode.appendChild(parametersText);
+				mappingNode.appendChild(parametersNode);
+			}
+			
+			root.appendChild(mappingNode);
+
+			rewriteXml(doc,path);
+			return true;
+		}else{
+			System.out.println("The mapping is not existed; should create a new mapping instead of the update");
+		}
 		return false;
 	}
 	
@@ -316,7 +419,7 @@ public class XMLManipulator {
 	 * @param destinationXML	the target XML file specified by destinationXML
 	 * @throws TransformerException
 	 */
-	public static void rewriteXML(Document sourceDocument, String destinationXML) throws TransformerException{
+	public static void rewriteXml(Document sourceDocument, String destinationXML) throws TransformerException{
 		//write the new child nodes to the XML file
 		TransformerFactory tFactory =TransformerFactory.newInstance();
 		Transformer transformer = tFactory.newTransformer();
@@ -356,7 +459,7 @@ public class XMLManipulator {
 	 */
 	public static List<Node> getMatchedTransitionMappings(String path, String name) throws Exception{
 		List<Node> matchedNodes = new ArrayList<Node>();
-		Document doc = readXMLFile(path);
+		Document doc = readXmlFile(path);
 		NodeList mappings = doc.getElementsByTagName("mapping");
 		//System.out.println("size mapping: " + mappings.getLength());
 		//System.out.println("path: " + path);
@@ -378,12 +481,12 @@ public class XMLManipulator {
 	 * Returns the mappings created for the identifiable element, specified by name
 	 * @param path a String representation of the path of an XML file
 	 * @param name a String representation of the name of an element in an XML model
-	 * @return     a list of {@link org.w3c.dom.Node} objects of
+	 * @return     a list of {edu.gmu.swe.taf.Mapping} objects
 	 * @throws Exception 
 	 */
 	public static List<Mapping> getMappingsByTransition(String path, String name) throws Exception{
 		List<Mapping> matchedNodes = new ArrayList<Mapping>();
-		Document doc = readXMLFile(path);
+		Document doc = readXmlFile(path);
 		NodeList mappings = doc.getElementsByTagName("mapping");
 		//System.out.println("size mapping: " + mappings.getLength());
 		//System.out.println("path: " + path);
@@ -404,6 +507,7 @@ public class XMLManipulator {
 				if(nodes.item(j).getNodeName().equals("transition-name")){
 					if(nodes.item(j).getFirstChild().getNodeValue().equalsIgnoreCase(name)){
 						mapping.setIdentifiableElementName(nodes.item(j).getFirstChild().getNodeValue());
+						mapping.setType(IdentifiableElementType.TRANSITION);
 						isTransition = true;
 					}
 					else{
@@ -435,5 +539,69 @@ public class XMLManipulator {
 		}
 		return matchedNodes;
 	}
+	
+	/**
+	 * Returns a {edu.gmu.swe.taf.ClassMapping} object based on the specified mapping name
+	 * @param path a String representation of the path of an XML file
+	 * @param name a String representation of the name of an element in an XML model
+	 * @return     a {edu.gmu.swe.taf.Mapping} object
+	 * @throws Exception 
+	 */
+	public static ClassMapping getClassMappingByName(String path, String name) throws Exception{
+		List<Mapping> matchedNodes = new ArrayList<Mapping>();
+		Document doc = readXmlFile(path);
+		NodeList nodes = doc.getElementsByTagName("name");
+		
+		//A ClassMapping object to be returned
+		ClassMapping mapping = new ClassMapping();
+		for(int i = 0; i < nodes.getLength();i++){
+			//if the names match, add the values into the mapping; otherwise, go through the text node
+			//System.out.println("nodes.item(i).getFirstChild().getNodeValue(): "+ nodes.item(i).getFirstChild().getNodeValue());
+			//System.out.println("name: "+ name);
+
+			if(nodes.item(i).getFirstChild().getNodeValue().trim().equals(name.trim())){
+				NodeList children = nodes.item(i).getParentNode().getChildNodes();	
+
+				for(int j = 0; j < children.getLength();j++){
+					if(children.item(j).getNodeName().equals("name")){
+						mapping.setMappingName(children.item(j).getFirstChild().getNodeValue());
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("class-name")){				
+						mapping.setIdentifiableElementName(children.item(j).getFirstChild().getNodeValue());
+						mapping.setType(IdentifiableElementType.CLASS);
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("object-name")){				
+						mapping.setObjectName(children.item(j).getFirstChild().getNodeValue());
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("code")){
+						mapping.setTestCode(children.item(j).getFirstChild().getNodeValue());
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("required-mappings")){
+						String[] parameters = children.item(j).getFirstChild().getNodeValue().split(",");
+						mapping.setRequiredMappings(Arrays.asList(parameters));
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("paraemeter")){
+						mapping.setTestCode(children.item(j).getFirstChild().getNodeValue());
+					}
+				}
+			}
+			else
+				continue;
+		}
+		
+		return mapping;
+
+	}
+
 
 }

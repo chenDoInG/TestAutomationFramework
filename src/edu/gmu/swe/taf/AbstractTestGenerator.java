@@ -133,56 +133,69 @@ public class AbstractTestGenerator {
 		return transitions;
 	}
 	
-	
-	public List<Test> getTests(List<Path> paths, StateMachineAccessor stateMachine){
+	/**
+	 * Generates tests from the paths of a graph
+	 * 
+	 * @param paths			a list of {@link coverage.graph.Path}
+	 * @param modelAccessor	a {@link StateMachineAccessor} object
+	 * @return	a list of {@link edu.gmu.swe.taf.Test} objects
+	 */
+	public List<Test> generateTests(List<Path> paths, ModelAccessor modelAccessor){
 		List<Test> tests = new ArrayList<Test>();
 		
 		for(int i = 0; i < paths.size(); i++){
-			List<Transition> transitions = convertVerticesToTransitions(getPathByState(paths.get(i), stateMachine), stateMachine);
-			String testComment = "/** A test for the path " + paths.get(i).toString() + "**/";
-			Test test = new Test("test" + i, testComment, transitions);
+			Test test = null;
+			
+			if(modelAccessor instanceof StateMachineAccessor){
+				List<Transition> transitions = convertVerticesToTransitions(getPathByState(paths.get(i), (StateMachineAccessor)modelAccessor), (StateMachineAccessor)modelAccessor);
+				String testComment = "/** A test for the path " + paths.get(i).toString() + "**/";
+				test = new Test("test" + i, testComment);
+			}
 			tests.add(test);
 		}
 		return tests;
 	}
 
 	/**
-	 * Gets a {@link edu.gmu.swe.taf.Test} object that is added with mappings and test code
+	 * Updates a {@link edu.gmu.swe.taf.Test} object with adding mappings and test code
 	 * @param path	the path of the XML file storing the mappings in a String format
 	 * @param test	a {@link edu.gmu.swe.taf.Test} object that is modified by this method
-	 * @return	a {@link edu.gmu.swe.taf.Test} object
+	 * @return		a {@link edu.gmu.swe.taf.Test} object
 	 * @throws Exception 
 	 */
-	public Test getTest(String path, Test test) throws Exception{
+	public Test updateTest(String path, Test test) throws Exception{
 		//return concrete test code that are mapped to each transition
 
 		List<Mapping> mappings = test.getMappings();
 		if(mappings == null)
 			mappings = new ArrayList<Mapping>();
+		
 		//System.out.println("transition size: " + test.getPath().size());
-		for(Transition transition: test.getPath()){
-			List<Mapping> nodes = null;
-			//System.out.println("transition name: " + transition.getName());
-			if(transition.getName() != null && !transition.getName().equals("")){
-				nodes = XMLManipulator.getMappingsByTransition(path, transition.getName());
-				//System.out.println("size: " + nodes.size());
-				
-				//if more mappings exist for one transition, pick one
-				//if only one mapping exists, add this one to the list of concrete test code
-				//otherwise, throw "No mapping found" exception
-				if(nodes.size() > 1)
-					//this section will be updated later for picking one out of many mappings
-					mappings.add(nodes.get(0));
-				else if(nodes.size() == 1)
-					mappings.add(nodes.get(0));
-				else
-					throw new Exception("No mapping found");	
-				
-				//store the transition and its mappings
-				if(!hashedTransitionMappings.containsKey(transition))
-					hashedTransitionMappings.put(transition, nodes);
+		
+		if(test instanceof FsmTest){
+			for(Transition transition: ((FsmTest)test).getPath()){
+				List<Mapping> nodes = null;
+				//System.out.println("transition name: " + transition.getName());
+				if(transition.getName() != null && !transition.getName().equals("")){
+					nodes = XmlManipulator.getMappingsByTransition(path, transition.getName());
+					//System.out.println("size: " + nodes.size());
+					
+					//if more mappings exist for one transition, pick one
+					//if only one mapping exists, add this one to the list of concrete test code
+					//otherwise, throw "No mapping found" exception
+					if(nodes.size() > 1)
+						//this section will be updated later for picking one out of many mappings
+						mappings.add(nodes.get(0));
+					else if(nodes.size() == 1)
+						mappings.add(nodes.get(0));
+					else
+						throw new Exception("No mapping found");	
+					
+					//store the transition and its mappings
+					if(!hashedTransitionMappings.containsKey(transition))
+						hashedTransitionMappings.put(transition, nodes);
+				}			
 			}
-			
 		}
 		
 		test.setMappings(mappings);
@@ -207,8 +220,6 @@ public class AbstractTestGenerator {
 	 *
 	 */
 	public class constraintSolver{
-		
-
 
 		/**
 		 * 
@@ -225,7 +236,7 @@ public class AbstractTestGenerator {
 				List<org.w3c.dom.Node> nodes = null;
 				//System.out.println("transition name: " + transition.getName());
 				if(transition.getName() != null && !transition.getName().equals("")){
-					nodes = XMLManipulator.getMatchedTransitionMappings(path, transition.getName());
+					nodes = XmlManipulator.getMatchedTransitionMappings(path, transition.getName());
 					//System.out.println("size: " + nodes.size());
 					
 					//if more mappings exist for one transition, pick one

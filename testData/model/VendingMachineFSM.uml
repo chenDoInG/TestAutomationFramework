@@ -70,7 +70,7 @@ stock = 10</body>
       <transition xmi:id="_bVngcNv2EeGsQfAO8BUOaA" name="coin" kind="internal" source="_GpBr8NtOEeGbQut3CdTx2Q" target="_GpBr8NtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_m2DAQNwCEeGsQfAO8BUOaA" name="coin" kind="internal" source="_mZ6XgNmJEeGa16tZvsIA1w" target="_mZ6XgNmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_uIJU4NwCEeGsQfAO8BUOaA" name="addChocs" kind="internal" source="_mZ6XgNmJEeGa16tZvsIA1w" target="_mZ6XgNmJEeGa16tZvsIA1w"/>
-      <transition xmi:id="_AeKC4NwDEeGsQfAO8BUOaA" name="Transition0" source="_E1RPUNtOEeGbQut3CdTx2Q" target="_VpKXINmJEeGa16tZvsIA1w"/>
+      <transition xmi:id="_AeKC4NwDEeGsQfAO8BUOaA" name="getChocs" source="_E1RPUNtOEeGbQut3CdTx2Q" target="_VpKXINmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_IW12YNwDEeGsQfAO8BUOaA" name="getChocs" source="_E1RPUNtOEeGbQut3CdTx2Q" target="_UwgQ0NmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_llC18NwDEeGsQfAO8BUOaA" name="addCoinAtLeastNinty" source="_UwgQ0NmJEeGa16tZvsIA1w" target="_E1RPUNtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_pfkx0NwDEeGsQfAO8BUOaA" name="addCoinAtLeastNinty" source="_FVPI0NtOEeGbQut3CdTx2Q" target="_G5iNINtOEeGbQut3CdTx2Q"/>

@@ -33,6 +33,12 @@ public class ClassMapping extends Mapping {
 		
 		this.objectName = objectName;
 	}
+	
+	/**
+	 * Constructs a ClassMapping object with no parameters.
+	 */
+	public  ClassMapping(){		
+	}
 
 	/**
 	 * Gets the name of the object of the class that this mapping is for

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A utility classused to support compilation of Java classes
+ * A utility class used to support compilation of Java classes
  * 
  * @author Nan Li
  * @version 1.0 Feb 8, 2013

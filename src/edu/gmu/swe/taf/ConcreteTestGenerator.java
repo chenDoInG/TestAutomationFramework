@@ -15,6 +15,7 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
 import edu.gmu.swe.taf.util.JavaSupporter;
+import edu.gmu.swe.taf.util.JunitTestWriter;
 
 /**
  * A class that generates concrete tests from abstract tests
@@ -27,27 +28,33 @@ import edu.gmu.swe.taf.util.JavaSupporter;
 public class ConcreteTestGenerator {
 	private String directory;
 	private String name;
+	private String xmlPath;
 	/**
 	 * Construct a ConcreteTestGenerator with the specified directory and class name
 	 */
-	public ConcreteTestGenerator(String directory, String name) {
+	public ConcreteTestGenerator(String directory, String name, String xmlPath) {
 		this.setDirectory(directory);
 		this.setName(name);
+		this.xmlPath = xmlPath;
 	}
 
 	/**
-	 * Generates and Compiles a Java file in a directory
+	 * Generates and Compiles a JUnit test in a directory
 	 * 
 	 * @param directory			a directory in a String format
 	 * @param name				a Java class name in a String format
-	 * @param methodContent		the content of a Java class
-	 * @throws Exception
+	 * @param tests				a list of {@link edu.gmu.swe.taf.Test} objects that contain abstract test information
+	 * @throws Exception		throws 
 	 */
-	public void generateConcreteTests(String methodContent) throws Exception{
-		File file = new File(getDirectory() + getName() + ".java");
-
+	public void generateConcreteTests(List<? extends Test> tests) throws Exception{
+		File file = new File(getDirectory() + getTestName() + ".java");
+		
+		List<Test> finalTests = new ArrayList<Test>();
+		for(Test test: tests)
+			finalTests.add(updateConcreteTest(test));
+		
 		try {
-			createConcreteTest(getDirectory(), file, getName(), methodContent);
+			createConcreteTestCase(getDirectory(), file, finalTests);	
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,37 +63,38 @@ public class ConcreteTestGenerator {
 	}
 	
 	/**
-	 * Creates a concrete JUnit test in the specified directory with a specified name
+	 * Creates a concrete JUnit test case (a Java file) containing only one test in the specified directory with a specified name. The compilation is not complete.
 	 * 
 	 * @param directory		a directory in a String format
 	 * @param file			a File object
-	 * @param name			a file name in a String format
-	 * @param content		the method content
+	 * @param test 			a {@link edu.gmu.swe.taf.Test} object
 	 * @return 				true if tests are successfully generated
 	 * @throws IOException
 	 */
-	public boolean createConcreteTest(String directory, File file, String name, String content) throws IOException{
+	public boolean createConcreteTestCase(String directory, File file, Test test) throws IOException{
 		
 		//System.out.println(file.getPath());
-		//needs to be updated for JUnit tests
 		//a package name may need to be specified
-		
-		//indentation vairiables to improve readability
-		String indentationForClass = "    ";
-		String indentationForMethod = "        ";
 
 		FileOutputStream fop = new FileOutputStream(file);
-		String result = "";
-		String importsJava = "import java.io.*;\n";
-		String importsJUnit = "import org.junit.*;\n import static org.junit.Assert.*;\n";
-		
-		String imports = importsJava + importsJUnit;
+		StringBuffer result = new StringBuffer("");
 		String packageName = "\n";
-		String className = "public class " + name + " {\n";
-		String firstMethod = "public void test" + name + "(){\n";
+		String importsJava = "import java.io.*;\n";
+		String importsJUnit = "import org.junit.*;\nimport static org.junit.Assert.*;\n";
+	
+		result.append(packageName);
+		result.append(importsJava);
+		result.append(importsJUnit);
+		result.append("\n");
 		
-		result = packageName + imports + className + firstMethod + content + "}\n}\n";
-		byte[] contentInBytes = result.getBytes();
+		String classHeader = "public class " + getTestName() + " {\n";
+		result.append(classHeader);
+		result.append("\n");
+		
+		result.append(test.getTestCode());
+		result.append("}\n");
+		
+		byte[] contentInBytes = result.toString().getBytes();
 		fop.write(contentInBytes);
 		fop.flush();
 		fop.close();
@@ -94,6 +102,137 @@ public class ConcreteTestGenerator {
 		System.out.println("Done");
 		
 		return false;
+	}
+	
+	/**
+	 * Creates a concrete JUnit test (a Java file) containing a list of tests in the specified directory with a specified name. The compilation is not complete.
+	 * 
+	 * @param directory		a directory in a String format
+	 * @param file			a File object
+	 * @param tests			a list of {@link edu.gmu.swe.taf.Test} objects
+	 * @return 				true if tests are successfully generated
+	 * @throws IOException	throws an IOException if the tests cannot be written in a JUnit test case
+	 */
+	public boolean createConcreteTestCase(String directory, File file, List<? extends Test> tests) throws IOException{
+		
+		//System.out.println(file.getPath());
+		//a package name may need to be specified
+
+		FileOutputStream fop = new FileOutputStream(file);
+		StringBuffer result = new StringBuffer("");
+		String packageName = "\n";
+		String importsJava = "import java.io.*;\n";
+		String importsJUnit = "import org.junit.*;\nimport static org.junit.Assert.*;\n";
+	
+		result.append(packageName);
+		result.append(importsJava);
+		result.append(importsJUnit);
+		result.append("\n");
+		
+		String classHeader = "public class " + getTestName() + " {\n";
+		result.append(classHeader);
+		result.append("\n");
+		
+		for(Test test: tests){
+			result.append(test.getTestCode());
+			result.append("\n");
+		}
+		result.append("}\n");
+		
+		byte[] contentInBytes = result.toString().getBytes();
+		fop.write(contentInBytes);
+		fop.flush();
+		fop.close();
+		
+		System.out.println("Done");
+		
+		return false;
+	}
+	
+	
+	/**
+	 * Updates the concrete JUnit test code of a {@link edu.gmu.swe.taf.Test} object.
+	 * The test content is surrounded with test header and comments in a JUnit test format.
+	 * The test code is embedded with the required variable initializations.
+	 * 
+	 * @param test 			a {@link edu.gmu.swe.taf.Test} object
+	 * 
+	 * @return 				the {@link edu.gmu.swe.taf.Test} object
+	 * @throws Exception 
+	 */
+	public Test updateConcreteTest(Test test) throws Exception {
+
+		StringBuffer result = new StringBuffer(JunitTestWriter.INDENTATIONFORMETHOD);
+		result.append("@Test\n");
+		String methodHeader = "public void test" + test.getTestName() + "(){\n";
+		
+		result.append(JunitTestWriter.INDENTATIONFORMETHOD);
+		result.append(test.getTestComment().endsWith("\n") ? "/* " + test.getTestComment() + " */" : "/* " + test.getTestComment() + " */ \n");
+		result.append(JunitTestWriter.INDENTATIONFORMETHOD);
+		result.append(methodHeader);
+		
+		if(test.getTestCode().startsWith("\n"))
+			result.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
+		
+		String[] code = test.getTestCode().split("\n");
+		
+		StringBuffer testCode = new StringBuffer("");
+		for(String s: code){
+			testCode.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
+			testCode.append(s);
+			testCode.append("\n");
+		}
+		
+		//Check if there are required variable declarations or initializations in the test code.
+		//If none of the required ones exist, add them at the beginning of the test code.
+		//Otherwise, throw an exception
+		
+		//Add all required mappings for this tests into finalRequiredMappings
+		List<Mapping> mappings = test.getMappings();
+		List<String> finalRequiredMappings = new ArrayList<String>();
+		
+		for(Mapping mapping: mappings){
+			if(mapping.getRequiredMappings() != null && mapping.getRequiredMappings().size() != 0){
+				List<String> requiredMappings = mapping.getRequiredMappings();
+				for(String requiredMapping: requiredMappings){
+					if(!finalRequiredMappings.contains(requiredMapping))
+						finalRequiredMappings.add(requiredMapping);
+					
+				}
+			}
+		}
+		
+		//Check if the test code has contained the variable declarations and initializations
+		//If it does not, add the required variable declarations to the variableInitialization
+		
+		StringBuffer variableInitialization = null;
+		if(finalRequiredMappings != null && finalRequiredMappings.size() > 0){
+			variableInitialization = new StringBuffer("");
+			for(String string: finalRequiredMappings){
+				String retrievedTestInitialization = XmlManipulator.getClassMappingByName(xmlPath, string.trim()).getTestCode();
+				//System.out.println("string: " + string);
+				//System.out.println("testCode: " + testCode);
+				//System.out.println("retrievedTestInitialization: " + retrievedTestInitialization);
+				if(testCode.toString().indexOf(retrievedTestInitialization) == -1){
+					variableInitialization.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
+					variableInitialization.append(retrievedTestInitialization);
+					variableInitialization.append("\n");
+				}
+			}
+		}
+		
+		if(variableInitialization != null)
+			if(!variableInitialization.toString().equals(""))
+				result.append(variableInitialization.toString());
+		
+		result.append(testCode.toString());
+		result.append(JunitTestWriter.INDENTATIONFORMETHOD);
+		result.append("}\n");
+		
+		test.setTestCode(result.toString());
+		System.out.println("Done");
+		
+		return test;
 	}
 	
 	/**
@@ -117,7 +256,8 @@ public class ConcreteTestGenerator {
 		DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
 		
 		List<String> optionList = new ArrayList<String>();
-		optionList.addAll(Arrays.asList("-classpath", directory));
+		optionList.addAll(Arrays.asList("-classpath", directory + ":" + System.getProperty("java.class.path")));
+		//optionList.addAll(Arrays.asList("-classpath", System.getProperty("java.class.path")));
 		
 		System.out.println("classpath: " + System.getProperty("java.class.path"));
 		boolean status = compiler.getTask(null, fileManager, diagnostics, optionList, null, compilationUnits).call();
@@ -160,7 +300,7 @@ public class ConcreteTestGenerator {
 	 * Gets the name
 	 * @return	the class name
 	 */
-	public String getName() {
+	public String getTestName() {
 		return name;
 	}
 
