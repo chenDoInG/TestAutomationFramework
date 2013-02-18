@@ -131,16 +131,17 @@ public class AbstractTestGeneratorTest {
 		//System.out.println(stateMachine.getStateMappings());
 		
 		//get the vertices from a path and return a list of transitions based on the vertices
-		List<Vertex> vertexes = AbstractTestGenerator.getPathByState(paths.get(0), stateMachine);
+		List<Vertex> vertexes = AbstractTestGenerator.getPathByState(paths.get(9), stateMachine);
 		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
-		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(0), stateMachine), stateMachine);
+		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(9), stateMachine), stateMachine);
 		
 		for(Transition transition: transitions)
 			System.out.println(transition);
 		
 		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest("test", "", transitions);
 		test = abstractTestGenerator.updateTest(xmlPath, test);
-
-		assertEquals(test.getMappings().size(), 1);
+		
+		System.out.println(test.getTestCode());
+		assertEquals(test.getMappings().size(), 7);
 	}
 }

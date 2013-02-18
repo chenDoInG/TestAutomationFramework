@@ -12,10 +12,9 @@ import java.util.List;
  * @version 1.0 Nov 14, 2012
  *
  */
-public class ClassMapping extends Mapping {
+public class ObjectMapping extends Mapping {
 	//the name of the object of a class that is mapped to
 	private String objectName;
-	
 	/**
 	 * @param mappingName
 	 * @param type
@@ -24,9 +23,9 @@ public class ClassMapping extends Mapping {
 	 * @param requiredMappings
 	 * @param parameters
 	 */
-	public ClassMapping(String mappingName, IdentifiableElementType type,
+	public ObjectMapping(String mappingName, IdentifiableElementType type,
 			String identifiableElementName, String objectName, String testCode,
-			List<String> requiredMappings, List<Parameter> parameters) {
+			List<String> requiredMappings, List<String> parameters) {
 		
 		super(mappingName, type, identifiableElementName, testCode,
 				requiredMappings, parameters);
@@ -37,7 +36,8 @@ public class ClassMapping extends Mapping {
 	/**
 	 * Constructs a ClassMapping object with no parameters.
 	 */
-	public  ClassMapping(){		
+	public  ObjectMapping(){	
+		super();
 	}
 
 	/**

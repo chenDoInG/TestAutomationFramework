@@ -21,6 +21,7 @@ import coverage.graph.Path;
 import coverage.web.InvalidInputException;
 import edu.gmu.swe.taf.AbstractTestGenerator;
 import edu.gmu.swe.taf.ConcreteTestGenerator;
+import edu.gmu.swe.taf.Mapping;
 import edu.gmu.swe.taf.StateMachineAccessor;
 import edu.gmu.swe.taf.AbstractTestGenerator.constraintSolver;
 
@@ -190,6 +191,50 @@ public class ConcreteTestGeneratorTest {
 		//System.out.println(testCodeAfter);
 		
 	}
+	
+	/**
+	 * Tests the method calculateRequiredMappings
+	 * @throws Exception 
+	 */
+	@Test
+	public void testCalculateRequiredMappings() throws Exception{
+		List<String> initialMappings = new ArrayList<String>();
+		initialMappings.add("vMachineInit");
+		initialMappings.add("stringBufferInit");
+		initialMappings.add("intCInit");
+		List<Mapping> finalMappings = new ArrayList<Mapping>();
+		
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(tempTestDirectory, "HelloWorld", xmlPath);
+		finalMappings = concreteTestGenerator.calculateRequiredMappings(finalMappings, initialMappings);
+		for(Mapping s: finalMappings){
+			//System.out.println(s.getMappingName());
+			//System.out.println(s.getTestCode());
+			//System.out.println(s.getRequiredMappings());
+			//System.out.println(s.getParameters());
+		}
+		assertEquals(4, finalMappings.size());
+	}
+	
+	/**
+	 * Tests the method calculateRequiredMappings
+	 * @throws Exception 
+	 */
+	@Test
+	public void testComputeVarialbeInitialization() throws Exception{
+		List<String> initialMappings = new ArrayList<String>();
+		initialMappings.add("vMachineInit");
+		initialMappings.add("stringBufferInit");
+		initialMappings.add("intCInit");
+		List<Mapping> finalMappings = new ArrayList<Mapping>();
+		StringBuffer variableInitialization = new StringBuffer("");;
+		StringBuffer testCode = new StringBuffer("");;
+		
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(tempTestDirectory, "HelloWorld", xmlPath);
+		variableInitialization = concreteTestGenerator.computeVariableInitialization(initialMappings, testCode, variableInitialization);
+		System.out.println(variableInitialization);
+		//assertEquals(4, finalMappings.size());
+	}
+	
 
 	@Test
 	public void testCompileJavaFile() throws Exception {

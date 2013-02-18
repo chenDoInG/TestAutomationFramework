@@ -22,9 +22,10 @@ public class Mapping {
 	private String testCode;
 	//other mappings that are required for this mapping
 	private List<String> requiredMappings;
-	//parameters that used in this mapping
-	private List<Parameter> parameters;
-	
+	//mappings that are used as method parameters 
+	//the parameters also appear in the list of required mappings
+	//the parameters are listed separately for the ease of testing different oracle methods
+	private List<String> parameters;
 	/**
 	 * Allocates a {@link Mapping} object and initialize it to represent the the mapping
 	 * 
@@ -33,10 +34,10 @@ public class Mapping {
 	 * @param identifiableElementName	the name of the identifiable element
 	 * @param testCode					the mapped test code 
 	 * @param requiredMappings			the required mappings for this mapping
-	 * @param parameters				the parameters used in this mapping
+	 * @param parameters TODO
 	 */
 	public Mapping(String mappingName, IdentifiableElementType type, String identifiableElementName, String testCode,
-			List<String> requiredMappings, List<Parameter> parameters){
+			List<String> requiredMappings, List<String> parameters){
 		this.mappingName = mappingName;
 		this.type = type;
 		this.identifiableElementName = identifiableElementName;
@@ -131,20 +132,20 @@ public class Mapping {
 	public void setRequiredMappings(List<String> requiredMappings) {
 		this.requiredMappings = requiredMappings;
 	}
-	
+
 	/**
 	 * Returns the parameters used in this mapping
-	 * @return a list of {@link Parameter}s
+	 * @return a list of {@link String}s
 	 */
-	public List<Parameter> getParameters() {
+	public List<String> getParameters() {
 		return parameters;
 	}
-	
+
 	/**
 	 * Sets the parameters
 	 * @param parameters		the parameters used in this mapping
 	 */
-	public void setParameters(List<Parameter> parameters) {
+	public void setParameters(List<String> parameters) {
 		this.parameters = parameters;
 	}
 }

@@ -45,7 +45,7 @@ public class MappingTest {
 		IdentifiableElementType type = IdentifiableElementType.CLASS;
 		String testCode = "vendingMachine vm = new vendingMachine();";
 		List<String> mappings = new ArrayList<String>();
-		List<Parameter> parameters = new ArrayList<Parameter>();
+		List<String> parameters = new ArrayList<String>();
 		
 		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters);
 		

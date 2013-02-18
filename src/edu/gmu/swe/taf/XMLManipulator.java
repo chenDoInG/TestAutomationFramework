@@ -136,10 +136,10 @@ public class XmlManipulator {
 	 * to an XML file specified by the argument path.
 	 * 
 	 * @param doc		an {@link org.w3c.dom.Document} object in which a new mapping will be inserted
-	 * @param mapping	a {@link ClassMapping} object that will be inserted in an {@link org.w3c.dom.Document} object specified by doc 	
+	 * @param mapping	a {@link ObjectMapping} object that will be inserted in an {@link org.w3c.dom.Document} object specified by doc 	
 	 * @throws TransformerException
 	 */
-	public boolean createClassMapping(Document doc, ClassMapping mapping, String path) throws TransformerException{
+	public boolean createObjectMapping(Document doc, ObjectMapping mapping, String path) throws TransformerException{
 		
 		
 		if(!isMappingExisted(doc, mapping)){
@@ -153,13 +153,13 @@ public class XmlManipulator {
 			mappingNode.appendChild(nameNode);
 			
 			//add class name node
-			Element objectNameNode = doc.createElement("class-name");
+			Element objectNameNode = doc.createElement("object-name");
 			Text objectNameText = doc.createTextNode(mapping.getIdentifiableElementName());
 			objectNameNode.appendChild(objectNameText);
 			mappingNode.appendChild(objectNameNode);
 			
 			//add object name node			
-			Element classNameNode = doc.createElement("object-name");
+			Element classNameNode = doc.createElement("class-name");
 			Text classNameText = doc.createTextNode(mapping.getObjectName());
 			classNameNode.appendChild(classNameText);
 			mappingNode.appendChild(classNameNode);
@@ -169,6 +169,44 @@ public class XmlManipulator {
 			Text codeText = doc.createTextNode(mapping.getTestCode());
 			codeNode.appendChild(codeText);
 			mappingNode.appendChild(codeNode);
+			
+			//add required mappings node
+			if(mapping.getRequiredMappings() != null && mapping.getRequiredMappings().size() > 0){
+				Element requiredMappingsNode = doc.createElement("required-mappings");
+				
+				String requiredMappings = "";
+				for(String s: mapping.getRequiredMappings()){
+					//add comma if there are more than one required mapping
+					if(!requiredMappings.equals(""))
+						requiredMappings += ",";
+					
+					requiredMappings += s;
+				}
+				
+				Text requiredMappingsText = doc.createTextNode(requiredMappings);
+				requiredMappingsNode.appendChild(requiredMappingsText);
+				mappingNode.appendChild(requiredMappingsNode);
+			}
+			
+			//add parameters node
+
+			if(mapping.getParameters() != null && mapping.getParameters().size() > 0){
+				Element parametersNode = doc.createElement("parameters");
+				
+				String parameters = "";
+				for(String p: mapping.getParameters()){
+					//add comma if there are more than one parameter
+					if(!parameters.equals(""))
+						parameters += ",";
+					
+					parameters += p;
+				}
+				
+				Text parametersText = doc.createTextNode(parameters);
+				parametersNode.appendChild(parametersText);
+				mappingNode.appendChild(parametersNode);
+				
+			}
 			
 			root.appendChild(mappingNode);
 
@@ -224,7 +262,7 @@ public class XmlManipulator {
 				for(String s: mapping.getRequiredMappings()){
 					//add comma if there are more than one required mapping
 					if(!requiredMappings.equals(""))
-						requiredMappings = ", ";
+						requiredMappings += ",";
 					
 					requiredMappings += s;
 				}
@@ -235,21 +273,23 @@ public class XmlManipulator {
 			}
 			
 			//add parameters node
+
 			if(mapping.getParameters() != null && mapping.getParameters().size() > 0){
 				Element parametersNode = doc.createElement("parameters");
 				
 				String parameters = "";
-				for(Parameter p: mapping.getParameters()){
+				for(String p: mapping.getParameters()){
 					//add comma if there are more than one parameter
 					if(!parameters.equals(""))
-						parameters = ", ";
+						parameters += ",";
 					
-					parameters += p.getType() + " " + p.getName();
+					parameters += p;
 				}
 				
 				Text parametersText = doc.createTextNode(parameters);
 				parametersNode.appendChild(parametersText);
 				mappingNode.appendChild(parametersNode);
+				
 			}
 			
 			root.appendChild(mappingNode);
@@ -324,7 +364,7 @@ public class XmlManipulator {
 				for(String s: mapping.getRequiredMappings()){
 					//add comma if there are more than one required mapping
 					if(!requiredMappings.equals(""))
-						requiredMappings += ", ";
+						requiredMappings += ",";
 
 					requiredMappings += s;
 				}
@@ -335,16 +375,17 @@ public class XmlManipulator {
 			}
 			
 			//add parameters node
+			
 			if(mapping.getParameters() != null && mapping.getParameters().size() > 0){
 				Element parametersNode = doc.createElement("parameters");
 				
 				String parameters = "";
-				for(Parameter p: mapping.getParameters()){
+				for(String p: mapping.getParameters()){
 					//add comma if there are more than one parameter
 					if(!parameters.equals(""))
-						parameters = ", ";
+						parameters += ",";
 					
-					parameters += p.getType() + " " + p.getName();
+					parameters += p;
 				}
 				
 				Text parametersText = doc.createTextNode(parameters);
@@ -526,7 +567,7 @@ public class XmlManipulator {
 					continue;
 				}
 				
-				if(nodes.item(j).getNodeName().equals("paraemeter")){
+				if(nodes.item(j).getNodeName().equals("parameters")){
 					mapping.setTestCode(nodes.item(j).getFirstChild().getNodeValue());
 				}
 				//may add more nodes if a mapping has more
@@ -541,19 +582,19 @@ public class XmlManipulator {
 	}
 	
 	/**
-	 * Returns a {edu.gmu.swe.taf.ClassMapping} object based on the specified mapping name
+	 * Returns a {edu.gmu.swe.taf.ObjectMapping} object based on the specified mapping name
 	 * @param path a String representation of the path of an XML file
 	 * @param name a String representation of the name of an element in an XML model
 	 * @return     a {edu.gmu.swe.taf.Mapping} object
 	 * @throws Exception 
 	 */
-	public static ClassMapping getClassMappingByName(String path, String name) throws Exception{
-		List<Mapping> matchedNodes = new ArrayList<Mapping>();
+	public static ObjectMapping getObjectMappingByName(String path, String name) throws Exception{
+		
 		Document doc = readXmlFile(path);
 		NodeList nodes = doc.getElementsByTagName("name");
 		
 		//A ClassMapping object to be returned
-		ClassMapping mapping = new ClassMapping();
+		ObjectMapping mapping = new ObjectMapping();
 		for(int i = 0; i < nodes.getLength();i++){
 			//if the names match, add the values into the mapping; otherwise, go through the text node
 			//System.out.println("nodes.item(i).getFirstChild().getNodeValue(): "+ nodes.item(i).getFirstChild().getNodeValue());
@@ -580,18 +621,20 @@ public class XmlManipulator {
 					}
 					
 					if(children.item(j).getNodeName().equals("code")){
+						
 						mapping.setTestCode(children.item(j).getFirstChild().getNodeValue());
 						continue;
 					}
 					
 					if(children.item(j).getNodeName().equals("required-mappings")){
-						String[] parameters = children.item(j).getFirstChild().getNodeValue().split(",");
-						mapping.setRequiredMappings(Arrays.asList(parameters));
+						String[] required = children.item(j).getFirstChild().getNodeValue().split(",");
+						mapping.setRequiredMappings(Arrays.asList(required));
 						continue;
 					}
 					
-					if(children.item(j).getNodeName().equals("paraemeter")){
-						mapping.setTestCode(children.item(j).getFirstChild().getNodeValue());
+					if(children.item(j).getNodeName().equals("parameters")){
+						String[] parameters = children.item(j).getFirstChild().getNodeValue().split(",");
+						mapping.setParameters(Arrays.asList(parameters));
 					}
 				}
 			}

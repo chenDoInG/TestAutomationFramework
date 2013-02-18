@@ -12,7 +12,7 @@ package edu.gmu.swe.taf;
  */
 public enum IdentifiableElementType {
 	CLASS, 
-	
+	OBJECT,
 	//state machine
 	TRANSITION, 
 	STATE, 

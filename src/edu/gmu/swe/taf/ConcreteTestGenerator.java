@@ -185,7 +185,7 @@ public class ConcreteTestGenerator {
 		
 		//Check if there are required variable declarations or initializations in the test code.
 		//If none of the required ones exist, add them at the beginning of the test code.
-		//Otherwise, throw an exception
+		//Otherwise, throw an exception  -- to be done
 		
 		//Add all required mappings for this tests into finalRequiredMappings
 		List<Mapping> mappings = test.getMappings();
@@ -196,20 +196,19 @@ public class ConcreteTestGenerator {
 				List<String> requiredMappings = mapping.getRequiredMappings();
 				for(String requiredMapping: requiredMappings){
 					if(!finalRequiredMappings.contains(requiredMapping))
-						finalRequiredMappings.add(requiredMapping);
-					
+						finalRequiredMappings.add(requiredMapping);					
 				}
 			}
 		}
-		
+		StringBuffer variableInitialization = null;
 		//Check if the test code has contained the variable declarations and initializations
 		//If it does not, add the required variable declarations to the variableInitialization
+		/*
 		
-		StringBuffer variableInitialization = null;
 		if(finalRequiredMappings != null && finalRequiredMappings.size() > 0){
 			variableInitialization = new StringBuffer("");
 			for(String string: finalRequiredMappings){
-				String retrievedTestInitialization = XmlManipulator.getClassMappingByName(xmlPath, string.trim()).getTestCode();
+				String retrievedTestInitialization = XmlManipulator.getObjectMappingByName(xmlPath, string.trim()).getTestCode();
 				//System.out.println("string: " + string);
 				//System.out.println("testCode: " + testCode);
 				//System.out.println("retrievedTestInitialization: " + retrievedTestInitialization);
@@ -219,11 +218,13 @@ public class ConcreteTestGenerator {
 					variableInitialization.append("\n");
 				}
 			}
-		}
-		
+		}*/
+		variableInitialization = computeVariableInitialization(finalRequiredMappings, testCode, variableInitialization);
 		if(variableInitialization != null)
-			if(!variableInitialization.toString().equals(""))
+			if(!variableInitialization.toString().equals("")){
+				variableInitialization.append("\n");
 				result.append(variableInitialization.toString());
+			}
 		
 		result.append(testCode.toString());
 		result.append(JunitTestWriter.INDENTATIONFORMETHOD);
@@ -233,6 +234,73 @@ public class ConcreteTestGenerator {
 		System.out.println("Done");
 		
 		return test;
+	}
+	
+	/**
+	 * Computes the variable declarations and initializations for a test from a list of required mappings
+	 * Dependencies among the required mappings are solved.
+	 * Proper test values are chosen for required mappings to satisfy the preconditions and state invariants if any.
+	 * 
+	 * @param requiredMappings	a list of mappings names in a String format
+	 * @param testCode TODO
+	 * @param variableInitialization TODO
+	 * @return					the variable declarations and initializations in a String format
+	 * @throws Exception 
+	 */
+	public StringBuffer computeVariableInitialization(List<String> requiredMappings, StringBuffer testCode, StringBuffer variableInitialization) throws Exception{
+		List<Mapping> finalMappings = new ArrayList<Mapping>();
+		finalMappings = calculateRequiredMappings(finalMappings, requiredMappings);
+		
+		if(finalMappings != null && finalMappings.size() > 0){
+			variableInitialization = new StringBuffer("");
+			for(Mapping string: finalMappings){
+				String testInitialization = string.getTestCode();
+				//System.out.println("string: " + string.getMappingName());
+				//System.out.println("testCode: " + testCode);
+				//System.out.println("testInitialization: " + testInitialization);
+				if(testCode.toString().indexOf(testInitialization) == -1){
+					variableInitialization.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
+					variableInitialization.append(testInitialization);
+					variableInitialization.append("\n");
+				}
+			}
+		}
+		
+		return variableInitialization;
+	}
+	
+	/**
+	 * Calculates all the required mappings using a recursive method
+	 * 
+	 * @param finalMappings		the final list of mappings in a String format
+	 * @param initialMappings	the initial list of mappings in a String format
+	 * @return					the final list of mappings in a String format
+	 * @throws Exception
+	 */
+	public List<Mapping> calculateRequiredMappings(List<Mapping> finalMappings, List<String> initialMappings) throws Exception{
+		for(String s: initialMappings){
+			ObjectMapping mapping = XmlManipulator.getObjectMappingByName(xmlPath, s.trim());
+			//System.out.println("mapping name: " + mapping.getMappingName());
+			//System.out.println("mapping object: " + mapping.getObjectName());
+			//System.out.println("mapping test: " + mapping.getTestCode());
+			//System.out.println("mapping size: " + (mapping.getRequiredMappings() == null));
+			if(mapping.getRequiredMappings() == null || mapping.getRequiredMappings().size() == 0){
+				finalMappings.add(mapping);
+			}
+			else{
+				calculateRequiredMappings(finalMappings, mapping.getRequiredMappings());
+				finalMappings.add(mapping);
+			}
+		}
+		//Remove redundant mappings
+		for(int i = finalMappings.size() - 1; i >= 0;i--){
+			for(int j = i - 1; j >= 0;j--){
+				if(finalMappings.get(i).getMappingName().equals(finalMappings.get(j).getMappingName()))
+					finalMappings.remove(i);
+			}
+		}
+			
+		return finalMappings;
 	}
 	
 	/**

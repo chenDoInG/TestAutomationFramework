@@ -16,7 +16,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import edu.gmu.swe.taf.ClassMapping;
+import edu.gmu.swe.taf.ObjectMapping;
 import edu.gmu.swe.taf.IdentifiableElementType;
 import edu.gmu.swe.taf.Mapping;
 import edu.gmu.swe.taf.Parameter;
@@ -80,7 +80,7 @@ public class XmlManipulatorTest {
 		String testCode = "vm.addChoc(\"MM\");";
 		List<String> mappings = new ArrayList<String>();
 		mappings.add("vMachineInit");
-		List<Parameter> parameters = new ArrayList<Parameter>();
+		List<String> parameters = new ArrayList<String>();
 
 		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters);
 
@@ -119,7 +119,7 @@ public class XmlManipulatorTest {
 		List<String> mappings = new ArrayList<String>();
 		List<Parameter> parameters = new ArrayList<Parameter>();
 		
-		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters);
+		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, null);
 
 		Document doc = XmlManipulator.readXmlFile(path);
 		
@@ -142,7 +142,7 @@ public class XmlManipulatorTest {
 		String testCode = "vm.coin(10);\n" +"vm.coin(25);\n" + "vm.coin(25);\n" + "vm.coin(25);\n" + "vm.coin(25);\n";
 		List<String> mappings = new ArrayList<String>();
 		mappings.add("vMachineInit");
-		List<Parameter> parameters = new ArrayList<Parameter>();
+		List<String> parameters = new ArrayList<String>();
 		
 		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters);
 
@@ -177,11 +177,11 @@ public class XmlManipulatorTest {
 		String testCode = "vm.coin(c);";
 		List<String> mappings = new ArrayList<String>();
 		mappings.add("vMachineInit");
-		List<Parameter> parameters = new ArrayList<Parameter>();
+		List<Mapping> parameters = new ArrayList<Mapping>();
 		Parameter p = new Parameter("int", "c");
-		parameters.add(p);
+		//parameters.add(p);
 		
-		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters);
+		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, null);
 
 		Document doc = XmlManipulator.readXmlFile(path);		
 		XmlManipulator xm = new XmlManipulator();
@@ -195,6 +195,53 @@ public class XmlManipulatorTest {
 		for(int i = 0; i < sectionUserName.getLength();i++){
 			//System.out.println(sectionUserName.item(i).getFirstChild().getNodeValue());
 			if(sectionUserName.item(i).getFirstChild().getNodeValue().equalsIgnoreCase("coinAnyCredit")){
+				isExisted = true;
+			}
+		}
+		assertEquals(true, isExisted);
+	}
+	
+	/**
+	 * Tests the method CreateMapping()
+	 * @throws Exception
+	 */
+	@Test
+	public void testCreateMappingForTransitionCoinThreeValues() throws Exception{
+		//Insert the mapping "coinAnyCredit" into an XML file
+		String mappingName = "coinThreeValues";
+		String identifiedElementName = "coin";
+		IdentifiableElementType type = IdentifiableElementType.TRANSITION;
+		String testCode = "vm.coin(c);";
+		List<String> mappings = new ArrayList<String>();
+		mappings.add("vMachineInit");
+		List<String> parameters = new ArrayList<String>();
+		parameters.add("intCInit");
+		
+		//a parameter mapping for int c
+		String parameterMappingName = "intCInit";
+		String paramterIdentifiableElementName = "c";		
+		IdentifiableElementType parameterType = IdentifiableElementType.OBJECT;
+		String parameterTestCode = "10,25,100";
+		
+		ObjectMapping parameterMapping = new ObjectMapping(parameterMappingName, parameterType, paramterIdentifiableElementName, "int", parameterTestCode, null, null);
+		
+		//parameters.add(parameterMapping);
+		mappings.add("intCInit");
+		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters);
+
+		Document doc = XmlManipulator.readXmlFile(path);		
+		XmlManipulator xm = new XmlManipulator();
+		xm.createObjectMapping(doc, parameterMapping, path);
+		xm.createMapping(doc, mapping, path);
+		
+		//Check if the mapping "coinAnyCredit" has been added to the Document object in the XML file specified by path
+		doc = XmlManipulator.readXmlFile(path);
+		boolean isExisted = false;
+		NodeList sectionUserName = doc.getElementsByTagName("name");
+		
+		for(int i = 0; i < sectionUserName.getLength();i++){
+			//System.out.println(sectionUserName.item(i).getFirstChild().getNodeValue());
+			if(sectionUserName.item(i).getFirstChild().getNodeValue().equalsIgnoreCase("coinThreeValues")){
 				isExisted = true;
 			}
 		}
@@ -250,20 +297,20 @@ public class XmlManipulatorTest {
 	@Test
 	public void testCreateClassMapping() throws Exception{
 		String mappingName = "vMachineInit";
-		String identifiedElementName = "VendingMachine";
-		String objectName = "vm";
-		IdentifiableElementType type = IdentifiableElementType.CLASS;
+		String className = "VendingMachine";
+		String identifiedElementName = "vm";
+		IdentifiableElementType type = IdentifiableElementType.OBJECT;
 		String testCode = "vendingMachine vm = new vendingMachine();";
 		List<String> mappings = new ArrayList<String>();
-		List<Parameter> parameters = new ArrayList<Parameter>();
+		List<String> parameters = new ArrayList<String>();
 		
-		ClassMapping mapping = new ClassMapping(mappingName, type, identifiedElementName, objectName, testCode, mappings, parameters);
+		ObjectMapping mapping = new ObjectMapping(mappingName, type, identifiedElementName, className, testCode, mappings, parameters);
 
 		Document doc = XmlManipulator.readXmlFile(path);
 		
 		XmlManipulator xm = new XmlManipulator();
 
-		xm.createClassMapping(doc, mapping, path);
+		xm.createObjectMapping(doc, mapping, path);
 	}
 	
 	/**
@@ -273,20 +320,20 @@ public class XmlManipulatorTest {
 	@Test
 	public void testCreateClassMapping1() throws Exception{
 		String mappingName = "stringBufferInit";
-		String identifiedElementName = "StringBuffer";
-		String objectName = "sb";
-		IdentifiableElementType type = IdentifiableElementType.CLASS;
+		String className = "StringBuffer";
+		String identifiedElementName = "sb";
+		IdentifiableElementType type = IdentifiableElementType.OBJECT;
 		String testCode = "StringBuffer sb = new StringBuffer(\"MM\");";
 		List<String> mappings = new ArrayList<String>();
-		List<Parameter> parameters = new ArrayList<Parameter>();
+		List<String> parameters = new ArrayList<String>();
 		
-		ClassMapping mapping = new ClassMapping(mappingName, type, identifiedElementName, objectName, testCode, mappings, parameters);
+		ObjectMapping mapping = new ObjectMapping(mappingName, type, identifiedElementName, className, testCode, mappings, parameters);
 
 		Document doc = XmlManipulator.readXmlFile(path);
 		
 		XmlManipulator xm = new XmlManipulator();
 
-		xm.createClassMapping(doc, mapping, path);
+		xm.createObjectMapping(doc, mapping, path);
 	}
 	
 	@Test
@@ -294,14 +341,14 @@ public class XmlManipulatorTest {
 		Document doc = XmlManipulator.readXmlFile(path);
 		
 		String mappingName = "vMachineInit";
-		String identifiedElementName = "VendingMachine";
-		String objectName = "vm";
-		IdentifiableElementType type = IdentifiableElementType.CLASS;
+		String className = "VendingMachine";
+		String identifiedElementName = "vm";
+		IdentifiableElementType type = IdentifiableElementType.OBJECT;
 		String testCode = "vendingMachine vm = new vendingMachine();";
 		List<String> mappings = new ArrayList<String>();
-		List<Parameter> parameters = new ArrayList<Parameter>();
+		List<String> parameters = new ArrayList<String>();
 		
-		ClassMapping mapping = new ClassMapping(mappingName, type, identifiedElementName, objectName, testCode, mappings, parameters);
+		Mapping mapping = new ObjectMapping(mappingName, type, identifiedElementName, className, testCode, mappings, parameters);
 		
 		NodeList mappingNames = doc.getElementsByTagName("mapping");
 		for(int i = 0; i < mappingNames.getLength(); i++){
@@ -335,14 +382,14 @@ public class XmlManipulatorTest {
 		Document doc = XmlManipulator.readXmlFile(path);
 		
 		String mappingName = "vMachineInit";
-		String identifiedElementName = "VendingMachine";
-		String objectName = "vm";
-		IdentifiableElementType type = IdentifiableElementType.CLASS;
+		String className = "VendingMachine";
+		String identifiedElementName = "vm";
+		IdentifiableElementType type = IdentifiableElementType.OBJECT;
 		String testCode = "vendingMachine vm = new vendingMachine();";
 		List<String> mappings = new ArrayList<String>();
-		List<Parameter> parameters = new ArrayList<Parameter>();
+		List<String> parameters = new ArrayList<String>();
 		
-		ClassMapping mapping = new ClassMapping(mappingName, type, identifiedElementName, objectName, testCode, mappings, parameters);
+		Mapping mapping = new ObjectMapping(mappingName, type, identifiedElementName, className, testCode, mappings, parameters);
 		
 		//String mappingName = mapping.getMappingName();
 		NodeList mappingNames = doc.getElementsByTagName("mapping");
@@ -431,7 +478,7 @@ public class XmlManipulatorTest {
 	@Test
 	public void testGetClassMappingByName() throws Exception{
 
-		ClassMapping cm = XmlManipulator.getClassMappingByName(path, "vMachineInit");
+		Mapping cm = XmlManipulator.getObjectMappingByName(path, "vMachineInit");
 		assertEquals(cm.getMappingName(), "vMachineInit");
 	}
 
