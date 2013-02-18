@@ -202,8 +202,10 @@ public class AbstractTestGenerator {
 		//retrieve the test code from the XML nodes
 		String testCode = "";
 		
-		for(Mapping mapping: mappings)
+		for(Mapping mapping: mappings){
 			testCode += mapping.getTestCode() + "\n";
+			//System.out.println("mapping name: " + mapping.getMappingName());
+		}
 		
 		test.setTestCode(testCode);	
 		mappings = null;

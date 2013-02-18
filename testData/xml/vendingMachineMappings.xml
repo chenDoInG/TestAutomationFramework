@@ -16,9 +16,9 @@ vm.coin(25);
 		<required-mappings>vMachineInit</required-mappings></mapping><mapping><name>initializeVendingMachine</name><transition-name>initialize</transition-name><code>vendingMachine vm = new vendingMachine();</code></mapping><mapping><name>getChocolate</name><transition-name>getChocs</transition-name><code>vm.getChoc(sb);
 </code><required-mappings>vMachineInit, stringBufferInit</required-mappings></mapping><mapping><name>stringBufferInit</name><object-name>sb</object-name><class-name>StringBuffer</class-name><code>StringBuffer sb = new StringBuffer(s);</code>
 	<required-mappings>stringInit</required-mappings>
-	<parameters>stringInit</parameters></mapping><mapping><name>vMachineInit</name><object-name>vm</object-name><class-name>VendingMachine</class-name><code>vendingMachine vm = new vendingMachine();</code></mapping>
+	<parameters>stringInit</parameters></mapping><mapping><name>vMachineInit</name><object-name>vm</object-name><class-name>vendingMachine</class-name><code>vendingMachine vm = new vendingMachine();</code></mapping>
 	<mapping>
 		<name>stringInit</name>
 		<object-name>s</object-name>
 		<class-name>String</class-name>
-		<code>String s = "MM";</code></mapping><mapping><name>intCInit</name><object-name>c</object-name><class-name>int</class-name><code>10,25,100</code></mapping></mappings>
+		<code>String s = "MM";</code></mapping><mapping><name>intCInit</name><object-name>c</object-name><class-name>int</class-name><code>>10</code></mapping></mappings>

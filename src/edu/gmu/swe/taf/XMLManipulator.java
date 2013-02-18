@@ -160,7 +160,7 @@ public class XmlManipulator {
 			
 			//add object name node			
 			Element classNameNode = doc.createElement("class-name");
-			Text classNameText = doc.createTextNode(mapping.getObjectName());
+			Text classNameText = doc.createTextNode(mapping.getClassType());
 			classNameNode.appendChild(classNameText);
 			mappingNode.appendChild(classNameNode);
 			
@@ -562,13 +562,14 @@ public class XmlManipulator {
 				}
 				
 				if(nodes.item(j).getNodeName().equals("required-mappings")){
-					String[] parameters = nodes.item(j).getFirstChild().getNodeValue().split(",");
-					mapping.setRequiredMappings(Arrays.asList(parameters));
+					String[] required = nodes.item(j).getFirstChild().getNodeValue().split(",");
+					mapping.setRequiredMappings(Arrays.asList(required));
 					continue;
 				}
 				
 				if(nodes.item(j).getNodeName().equals("parameters")){
-					mapping.setTestCode(nodes.item(j).getFirstChild().getNodeValue());
+					String[] parameters = nodes.item(j).getFirstChild().getNodeValue().split(",");
+					mapping.setParameters(Arrays.asList(parameters));
 				}
 				//may add more nodes if a mapping has more
 			}
@@ -609,16 +610,19 @@ public class XmlManipulator {
 						continue;
 					}
 					
-					if(children.item(j).getNodeName().equals("class-name")){				
+					if(children.item(j).getNodeName().equals("object-name")){		
 						mapping.setIdentifiableElementName(children.item(j).getFirstChild().getNodeValue());
-						mapping.setType(IdentifiableElementType.CLASS);
+						mapping.setType(IdentifiableElementType.OBJECT);
+
 						continue;
 					}
 					
-					if(children.item(j).getNodeName().equals("object-name")){				
-						mapping.setObjectName(children.item(j).getFirstChild().getNodeValue());
+					if(children.item(j).getNodeName().equals("class-name")){				
+						mapping.setClassType(children.item(j).getFirstChild().getNodeValue());
 						continue;
 					}
+					
+
 					
 					if(children.item(j).getNodeName().equals("code")){
 						

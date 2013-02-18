@@ -13,8 +13,8 @@ import java.util.List;
  *
  */
 public class ObjectMapping extends Mapping {
-	//the name of the object of a class that is mapped to
-	private String objectName;
+	//the class type of this object
+	private String classType;
 	/**
 	 * @param mappingName
 	 * @param type
@@ -30,7 +30,7 @@ public class ObjectMapping extends Mapping {
 		super(mappingName, type, identifiableElementName, testCode,
 				requiredMappings, parameters);
 		
-		this.objectName = objectName;
+		this.classType = objectName;
 	}
 	
 	/**
@@ -44,16 +44,16 @@ public class ObjectMapping extends Mapping {
 	 * Gets the name of the object of the class that this mapping is for
 	 * @return the name of the object
 	 */
-	public String getObjectName() {
-		return objectName;
+	public String getClassType() {
+		return classType;
 	}
 
 	/**
 	 * Sets the object name
-	 * @param objectName		the name of the object
+	 * @param classType		the name of the object
 	 */
-	public void setObjectName(String objectName) {
-		this.objectName = objectName;
+	public void setClassType(String classType) {
+		this.classType = classType;
 	}
 
 }

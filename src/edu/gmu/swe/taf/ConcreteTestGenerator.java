@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
@@ -14,6 +15,7 @@ import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
+import edu.gmu.swe.taf.util.ChocoConstraintSolver;
 import edu.gmu.swe.taf.util.JavaSupporter;
 import edu.gmu.swe.taf.util.JunitTestWriter;
 
@@ -231,7 +233,7 @@ public class ConcreteTestGenerator {
 		result.append("}\n");
 		
 		test.setTestCode(result.toString());
-		System.out.println("Done");
+		//System.out.println("Done");
 		
 		return test;
 	}
@@ -248,16 +250,20 @@ public class ConcreteTestGenerator {
 	 * @throws Exception 
 	 */
 	public StringBuffer computeVariableInitialization(List<String> requiredMappings, StringBuffer testCode, StringBuffer variableInitialization) throws Exception{
-		List<Mapping> finalMappings = new ArrayList<Mapping>();
+		List<ObjectMapping> finalMappings = new ArrayList<ObjectMapping>();
 		finalMappings = calculateRequiredMappings(finalMappings, requiredMappings);
 		
 		if(finalMappings != null && finalMappings.size() > 0){
 			variableInitialization = new StringBuffer("");
-			for(Mapping string: finalMappings){
-				String testInitialization = string.getTestCode();
-				//System.out.println("string: " + string.getMappingName());
+			for(ObjectMapping mapping: finalMappings){
+				String testInitialization = generateTestValue(mapping);
+				//System.out.println("test: " + testInitialization);
+				if(testInitialization == null)
+					throw new NullPointerException("Variables cannot be initialized. Please check the required mappings.");
+				//String testInitialization = mapping.getTestCode();
+				//System.out.println("string: " + mapping.getMappingName());
 				//System.out.println("testCode: " + testCode);
-				//System.out.println("testInitialization: " + testInitialization);
+				
 				if(testCode.toString().indexOf(testInitialization) == -1){
 					variableInitialization.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
 					variableInitialization.append(testInitialization);
@@ -265,7 +271,7 @@ public class ConcreteTestGenerator {
 				}
 			}
 		}
-		
+		//System.out.println("testInitialization: " + variableInitialization);
 		return variableInitialization;
 	}
 	
@@ -277,7 +283,7 @@ public class ConcreteTestGenerator {
 	 * @return					the final list of mappings in a String format
 	 * @throws Exception
 	 */
-	public List<Mapping> calculateRequiredMappings(List<Mapping> finalMappings, List<String> initialMappings) throws Exception{
+	public List<ObjectMapping> calculateRequiredMappings(List<ObjectMapping> finalMappings, List<String> initialMappings) throws Exception{
 		for(String s: initialMappings){
 			ObjectMapping mapping = XmlManipulator.getObjectMappingByName(xmlPath, s.trim());
 			//System.out.println("mapping name: " + mapping.getMappingName());
@@ -301,6 +307,71 @@ public class ConcreteTestGenerator {
 		}
 			
 		return finalMappings;
+	}
+	
+	/**
+	 * Generates a test value for an object variable and return an object initialization.
+	 * For a String object, if a regular expression is specified, an arbitrary String satisfying the regular expression will be generated.
+	 * For an int, float, double, Integer, Float, or Double object, both value scopes and relational conditions may exist and they are separated by comma.
+	 * For instance, "10, 25, 100, c>0"
+	 * @param om	an {@link edu.gmu.swe.taf.ObjectMapping} object
+	 * @return		an object initialization in a String format
+	 */
+	public String generateTestValue(ObjectMapping om){
+		String type = om.getClassType().trim();
+		String code = om.getTestCode();
+		//System.out.println("type: " + type);
+		//System.out.println("code: " + code);
+		
+		//If the test code is a complete variable declaration or initialization, return the code
+		//Otherwise, continue and solve the constraints
+		if(code.startsWith(type)){
+			return code;
+		}
+		//If the type is String, call Xeger library to generate a String value that satisfies the pattern
+		if(type.equalsIgnoreCase("String")){
+			
+		}
+		String[] conditions = code.trim().split(",");
+		if(type.equalsIgnoreCase("int") || type.equalsIgnoreCase("Integer") || type.equalsIgnoreCase("float") ||type.equalsIgnoreCase("double")){
+			//Check if the code has relational conditions
+			boolean hasRelationalOperators = false;
+			for(String s: conditions){
+				if(s.indexOf("<") != -1 || s.indexOf("<=") != -1 || s.indexOf(">") != -1 || s.indexOf(">=") != -1 || s.indexOf("!=") != -1){
+					hasRelationalOperators = true;
+					break;
+				}
+			}
+			
+			//if relational operators exist, call Choco library to solve the constraints.
+			//Otherwise, choose an arbitrary test value
+			if(hasRelationalOperators == true){
+				ChocoConstraintSolver solver = new ChocoConstraintSolver();
+				String value = solver.solveIntegerConstraint(conditions);
+				if(type.equalsIgnoreCase("Integer")){				
+					return type + " " + om.getIdentifiableElementName() + " = new Integer(" + value +");";
+				}
+				if(type.equalsIgnoreCase("int")){	
+					return type + " " + om.getIdentifiableElementName() + " = " + value + ";";
+				}
+			}
+			else{
+				Random randomNumbers = new Random();
+				int randomValue = randomNumbers.nextInt(conditions.length);
+				
+				if(type.equalsIgnoreCase("int")){	
+					//Integer i = Integer.valueOf(conditions[randomValue].trim());
+					String testCode = type + " " + om.getIdentifiableElementName() + " = " + conditions[randomValue].trim() +";";
+					return testCode;
+				}
+				else if(type.equalsIgnoreCase("Integer")){
+					String testCode = type + " " + om.getIdentifiableElementName() + " = new Integer(" + conditions[randomValue].trim() +");";
+					return testCode;
+				}
+			}
+		}
+		
+		return null;
 	}
 	
 	/**

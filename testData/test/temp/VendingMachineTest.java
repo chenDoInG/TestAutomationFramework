@@ -8,8 +8,9 @@ public class VendingMachineTest {
     @Test
     /* The test for the path initialize addChocs addCoinLessThanNinty coin getChocs getChocs addChocs   */ 
     public void test1(){
-        10,25,100
-        StringBuffer sb = new StringBuffer("MM");
+        int c = 11;
+        String s = "MM";
+        StringBuffer sb = new StringBuffer(s);
 
         vendingMachine vm = new vendingMachine();
         vm.addChoc("MM");

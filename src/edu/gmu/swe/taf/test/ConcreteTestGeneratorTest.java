@@ -22,6 +22,7 @@ import coverage.web.InvalidInputException;
 import edu.gmu.swe.taf.AbstractTestGenerator;
 import edu.gmu.swe.taf.ConcreteTestGenerator;
 import edu.gmu.swe.taf.Mapping;
+import edu.gmu.swe.taf.ObjectMapping;
 import edu.gmu.swe.taf.StateMachineAccessor;
 import edu.gmu.swe.taf.AbstractTestGenerator.constraintSolver;
 
@@ -202,7 +203,7 @@ public class ConcreteTestGeneratorTest {
 		initialMappings.add("vMachineInit");
 		initialMappings.add("stringBufferInit");
 		initialMappings.add("intCInit");
-		List<Mapping> finalMappings = new ArrayList<Mapping>();
+		List<ObjectMapping> finalMappings = new ArrayList<ObjectMapping>();
 		
 		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(tempTestDirectory, "HelloWorld", xmlPath);
 		finalMappings = concreteTestGenerator.calculateRequiredMappings(finalMappings, initialMappings);
@@ -226,8 +227,8 @@ public class ConcreteTestGeneratorTest {
 		initialMappings.add("stringBufferInit");
 		initialMappings.add("intCInit");
 		List<Mapping> finalMappings = new ArrayList<Mapping>();
-		StringBuffer variableInitialization = new StringBuffer("");;
-		StringBuffer testCode = new StringBuffer("");;
+		StringBuffer variableInitialization = new StringBuffer("");
+		StringBuffer testCode = new StringBuffer("");
 		
 		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(tempTestDirectory, "HelloWorld", xmlPath);
 		variableInitialization = concreteTestGenerator.computeVariableInitialization(initialMappings, testCode, variableInitialization);
