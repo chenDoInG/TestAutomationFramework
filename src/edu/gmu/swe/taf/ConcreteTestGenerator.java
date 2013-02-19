@@ -18,6 +18,7 @@ import javax.tools.ToolProvider;
 import edu.gmu.swe.taf.util.ChocoConstraintSolver;
 import edu.gmu.swe.taf.util.JavaSupporter;
 import edu.gmu.swe.taf.util.JunitTestWriter;
+import edu.gmu.swe.taf.util.XegerStringGenerator;
 
 /**
  * A class that generates concrete tests from abstract tests
@@ -328,11 +329,28 @@ public class ConcreteTestGenerator {
 		if(code.startsWith(type)){
 			return code;
 		}
+		
 		//If the type is String, call Xeger library to generate a String value that satisfies the pattern
 		if(type.equalsIgnoreCase("String")){
+				boolean isRegex;
+				try {
+			        java.util.regex.Pattern.compile(code);
+			        isRegex = true;
+			    } catch (java.util.regex.PatternSyntaxException e) {
+			    	isRegex = false;
+			    	System.err.println("The input String is not a regular expression.");
+			    }
+				
+				if(isRegex == true){
+					XegerStringGenerator xeger = new XegerStringGenerator();
+					return type + " " + om.getIdentifiableElementName() + " = \"" + xeger.generateString(code) +"\";";
+				}
 			
 		}
+
+		//Get the possible test values
 		String[] conditions = code.trim().split(",");
+		
 		if(type.equalsIgnoreCase("int") || type.equalsIgnoreCase("Integer") || type.equalsIgnoreCase("float") ||type.equalsIgnoreCase("double")){
 			//Check if the code has relational conditions
 			boolean hasRelationalOperators = false;

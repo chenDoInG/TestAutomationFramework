@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package edu.gmu.swe.taf.util;
 
 import java.util.ArrayList;
@@ -12,7 +10,7 @@ import choco.cp.solver.CPSolver;
 import choco.kernel.model.variables.integer.IntegerVariable;
 
 /**
- * A utility class that solve Integer and Rational constraints.
+ * A utility class that solves Integer and Rational constraints.
  *
  * @author Nan Li
  * @version 1.0 Feb 18, 2013

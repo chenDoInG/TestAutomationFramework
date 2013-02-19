@@ -21,4 +21,4 @@ vm.coin(25);
 		<name>stringInit</name>
 		<object-name>s</object-name>
 		<class-name>String</class-name>
-		<code>String s = "MM";</code></mapping><mapping><name>intCInit</name><object-name>c</object-name><class-name>int</class-name><code>>10</code></mapping></mappings>
+		<code>[ab]{4,6}c</code></mapping><mapping><name>intCInit</name><object-name>c</object-name><class-name>int</class-name><code>>10</code></mapping></mappings>
