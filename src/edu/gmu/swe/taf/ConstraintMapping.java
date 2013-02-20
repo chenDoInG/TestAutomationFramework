@@ -6,7 +6,7 @@ package edu.gmu.swe.taf;
 import java.util.List;
 
 /**
- * A {@link Mapping} class that maps test code to a constraint.
+ * A {@link ConstraintMapping} class that maps test code to a constraint.
  * 
  * @author Nan Li
  * @version 1.0 Feb 19, 2013

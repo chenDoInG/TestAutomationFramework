@@ -23,9 +23,11 @@ import coverage.graph.Path;
 import coverage.web.InvalidInputException;
 
 import edu.gmu.swe.taf.AbstractTestGenerator;
+import edu.gmu.swe.taf.ConstraintMapping;
 import edu.gmu.swe.taf.Mapping;
 import edu.gmu.swe.taf.ModelAccessor;
 import edu.gmu.swe.taf.StateMachineAccessor;
+import edu.gmu.swe.taf.XmlManipulator;
 
 /**
  * A JUnit test case for class {@link AbstractTestGenerator}
@@ -116,7 +118,7 @@ public class AbstractTestGeneratorTest {
 	}
 	
 	/**
-	 * Test the method UpdateTest
+	 * Test the method UpdateTest()
 	 * @throws Exception
 	 */
 	@Test
@@ -139,9 +141,24 @@ public class AbstractTestGeneratorTest {
 			System.out.println(transition);
 		
 		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest("test", "", transitions);
-		test = abstractTestGenerator.updateTest(xmlPath, test);
+		test = abstractTestGenerator.updateTest(xmlPath, test, XmlManipulator.getConstraintMappings(xmlPath));
 		
 		System.out.println(test.getTestCode());
-		assertEquals(test.getMappings().size(), 7);
+		assertEquals(test.getMappings().size(), 6);
+	}
+	
+	/**
+	 * Test the method getConstraints()
+	 * @throws Exception 
+	 */
+	@Test
+	public void testGetConstraints() throws Exception{
+		List<ConstraintMapping> nodes = XmlManipulator.getConstraintMappings(xmlPath);
+		List<Mapping> mappings = AbstractTestGenerator.getConstraints(nodes);
+		/*
+		for(Mapping mapping: mappings){
+			System.out.println(mapping.getMappingName() + " " + mapping.getIdentifiableElementName() + " " + mapping.getTestCode());
+		}*/
+		assertEquals(6, mappings.size());
 	}
 }

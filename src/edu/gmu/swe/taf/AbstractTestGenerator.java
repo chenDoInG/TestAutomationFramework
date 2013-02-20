@@ -23,6 +23,7 @@ import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
+import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Transition;
 import org.eclipse.uml2.uml.Vertex;
 import org.w3c.dom.NodeList;
@@ -47,6 +48,7 @@ public class AbstractTestGenerator {
 	String globalDirectory = "Users/nli/Documents/workspace/github/TestAutomationFramework/";
 	String tempTestDirectory = "testData/test/temp/";
 	String tempTestName = "tempTest";
+
 	//Maps a transition to the mappings
 	private HashMap<Transition, List<Mapping>> hashedTransitionMappings;
 	
@@ -54,7 +56,6 @@ public class AbstractTestGenerator {
 	 * Constructs an AbstractTestGenerator with no detailed directories
 	 */
 	public AbstractTestGenerator() {
-		this.globalDirectory = globalDirectory;
 		hashedTransitionMappings = new HashMap<Transition, List<Mapping>>();
 	}
 	
@@ -63,6 +64,7 @@ public class AbstractTestGenerator {
 	 */
 	public AbstractTestGenerator(String globalDirectory) {
 		this.globalDirectory = globalDirectory;
+		hashedTransitionMappings = new HashMap<Transition, List<Mapping>>();
 	}
 	
 	/**
@@ -160,10 +162,11 @@ public class AbstractTestGenerator {
 	 * Updates a {@link edu.gmu.swe.taf.Test} object with adding mappings and test code
 	 * @param path	the path of the XML file storing the mappings in a String format
 	 * @param test	a {@link edu.gmu.swe.taf.Test} object that is modified by this method
+	 * @param constraints TODO
 	 * @return		a {@link edu.gmu.swe.taf.Test} object
 	 * @throws Exception 
 	 */
-	public Test updateTest(String path, Test test) throws Exception{
+	public Test updateTest(String path, Test test, List<ConstraintMapping> constraints) throws Exception{
 		//return concrete test code that are mapped to each transition
 
 		List<Mapping> mappings = test.getMappings();
@@ -172,8 +175,23 @@ public class AbstractTestGenerator {
 		
 		//System.out.println("transition size: " + test.getPath().size());
 		
+		//get the mappings for preconditions, state invariants, and postconditions
+		List<Mapping> constraintMappings = getConstraints(constraints);
+
 		if(test instanceof FsmTest){
+			//checking the very first vertex
+			Vertex firstVertex = ((FsmTest)test).getPath().get(0).getSource();
+			if(constraintMappings != null){
+				mappings = addPreconditionStateInvariantMappings(firstVertex, mappings, constraintMappings);
+				mappings = addPostconditionMappings(firstVertex, mappings, constraintMappings);
+			}
+			
 			for(Transition transition: ((FsmTest)test).getPath()){
+				if(constraintMappings != null)
+					mappings = addPreconditionStateInvariantMappings(transition, mappings, constraintMappings);
+				
+				Vertex destination = transition.getTarget();
+				
 				List<Mapping> nodes = null;
 				//System.out.println("transition name: " + transition.getName());
 				if(transition.getName() != null && !transition.getName().equals("")){
@@ -181,7 +199,7 @@ public class AbstractTestGenerator {
 					//System.out.println("size: " + nodes.size());
 					
 					//if more mappings exist for one transition, pick one
-					//if only one mapping exists, add this one to the list of concrete test code
+					//if only one mapping exists, add this one to the list
 					//otherwise, throw "No mapping found" exception
 					if(nodes.size() > 1)
 						//this section will be updated later for picking one out of many mappings
@@ -194,17 +212,26 @@ public class AbstractTestGenerator {
 					//store the transition and its mappings
 					if(!hashedTransitionMappings.containsKey(transition))
 						hashedTransitionMappings.put(transition, nodes);
-				}			
+				}	
+				
+				if(constraintMappings != null)
+					mappings = addPostconditionMappings(destination, mappings, constraintMappings);		
+				
+				if(constraintMappings != null){
+					mappings = addPreconditionStateInvariantMappings(destination, mappings, constraintMappings);
+					mappings = addPostconditionMappings(destination, mappings, constraintMappings);
+				}
 			}
 		}
 		
 		test.setMappings(mappings);
+		
 		//retrieve the test code from the XML nodes
 		String testCode = "";
 		
 		for(Mapping mapping: mappings){
 			testCode += mapping.getTestCode() + "\n";
-			//System.out.println("mapping name: " + mapping.getMappingName());
+			System.out.println("mapping name: " + mapping.getMappingName());
 		}
 		
 		test.setTestCode(testCode);	
@@ -213,6 +240,109 @@ public class AbstractTestGenerator {
 		return test;
 	}
 	
+	/**
+	 * Adds preconditions, state invariants, and postconditions of an element to the mappings.
+	 * @param element		a {@link Element} object that owns the constraints
+	 * @param finalMappings	a list of {@link Mapping} objects that represents the path of the abstract test
+	 * @param constraints	a list of {@link Mapping} objects that represents preconditions, state invariants, and postconditions	
+	 * @return				a list of {@link Element} objects
+	 */
+	public List<Mapping> addPreconditionStateInvariantMappings(Element element, List<Mapping> finalMappings, List<Mapping> constraints){
+
+		if(element instanceof Vertex){
+			for(Mapping precondition : constraints){
+				if(precondition.getIdentifiableElementName().equalsIgnoreCase(((Vertex) element).getName()) && precondition.getType() == IdentifiableElementType.PRECONDITION)
+					finalMappings.add(precondition);
+			}
+			
+			for(Mapping stateinvariant : constraints){
+				//System.out.println(((Vertex) element).getName() + " " + stateinvariant.getIdentifiableElementName());
+				if(stateinvariant.getIdentifiableElementName().equalsIgnoreCase(((Vertex) element).getName()) && stateinvariant.getType() == IdentifiableElementType.STATEINVARIANT)
+					finalMappings.add(stateinvariant);
+			}		
+		}
+		
+		if(element instanceof Transition){
+			for(Mapping precondition : constraints){
+				if(precondition.getIdentifiableElementName().equalsIgnoreCase(((Transition) element).getName()) && precondition.getType() == IdentifiableElementType.PRECONDITION)
+					finalMappings.add(precondition);
+			}
+			
+			for(Mapping stateinvariant : constraints){
+				if(stateinvariant.getIdentifiableElementName().equalsIgnoreCase(((Transition) element).getName()) && stateinvariant.getType() == IdentifiableElementType.STATEINVARIANT)
+					finalMappings.add(stateinvariant);
+			}
+		}
+		return finalMappings;
+	}
+	
+	/**
+	 * Adds postconditions of an element to the mappings.
+	 * @param element		a {@link Element} object that owns the constraints
+	 * @param finalMappings	a list of {@link Mapping} objects that represents the path of the abstract test
+	 * @param constraints	a list of {@link Mapping} objects that represents postconditions	
+	 * @return				a list of {@link Element} objects
+	 */
+	public List<Mapping> addPostconditionMappings(Element element, List<Mapping> finalMappings, List<Mapping> constraints){
+		if(element instanceof Vertex){
+			for(Mapping postcondition : constraints){
+				if(postcondition.getIdentifiableElementName().equalsIgnoreCase(((Vertex) element).getName()) && postcondition.getType() == IdentifiableElementType.POSTCONDITION)
+					finalMappings.add(postcondition);
+			}		
+		}
+		
+		if(element instanceof Transition){
+			for(Mapping postcondition : constraints){
+				if(postcondition.getIdentifiableElementName().equalsIgnoreCase(((Transition) element).getName()) && postcondition.getType() == IdentifiableElementType.POSTCONDITION)
+					finalMappings.add(postcondition);
+			}			
+		}
+		return finalMappings;
+	}
+	
+	/**
+	 * Gets all constraints from the XML file and creates precondition, stateinvariant, postcondition mappings.
+	 * @param constraints	a list of {@link ConstraintMapping} objects
+	 * @return				a list of {@link Mapping} objects
+	 */
+	public static List<Mapping> getConstraints(List<ConstraintMapping> constraints){
+		//a list of mappings to be returned: precondition, stateinvariant, postcondition mappings 
+		List<Mapping> mappings = new ArrayList<Mapping>();
+		
+		if(constraints != null){
+			for(ConstraintMapping constraint: constraints){
+				//add precondition mappings
+				if(constraint.getPreconditions() != null){
+					if(constraint.getPreconditions().size() > 0){
+						for(String precondition: constraint.getPreconditions()){
+							mappings.add(new Mapping(constraint.getMappingName(), IdentifiableElementType.PRECONDITION, precondition, constraint.getTestCode(), 
+									constraint.getRequiredMappings(), constraint.getParameters(), constraint.getCallers(), constraint.getReturnObjects()));
+						}
+					}
+				}
+				//add state invariant mappings
+				if(constraint.getStateinvariants() != null){
+					if(constraint.getStateinvariants().size() > 0){
+						for(String stateinvariant: constraint.getStateinvariants()){
+							mappings.add(new Mapping(constraint.getMappingName(), IdentifiableElementType.STATEINVARIANT, stateinvariant, constraint.getTestCode(), 
+									constraint.getRequiredMappings(), constraint.getParameters(), constraint.getCallers(), constraint.getReturnObjects()));
+						}
+					}
+				}
+				//add postcondition mappings
+				if(constraint.getPostconditions() != null){
+					if(constraint.getPostconditions().size() > 0){
+						for(String postcondition: constraint.getPostconditions()){
+							mappings.add(new Mapping(constraint.getMappingName(), IdentifiableElementType.POSTCONDITION, postcondition, constraint.getTestCode(), 
+									constraint.getRequiredMappings(), constraint.getParameters(), constraint.getCallers(), constraint.getReturnObjects()));
+						}
+					}
+				}
+			}
+		}
+		
+		return mappings;
+	}
 	
 	/**
 	 * An inner class that is used to solve constraints in abstract tests

@@ -21,5 +21,8 @@ public enum IdentifiableElementType {
 	
 	//arguments and variables checking for test oracle
 	PARAMETER, 
-	FIELD;
+	FIELD,
+	PRECONDITION,
+	POSTCONDITION,
+	STATEINVARIANT;
 }

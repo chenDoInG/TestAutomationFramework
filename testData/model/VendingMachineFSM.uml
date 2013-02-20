@@ -19,7 +19,7 @@ stock = 0</body>
 stock = 0</body>
         </ownedComment>
         <body>credit = 0&#xD;
-1 &lt; stock &lt; 10</body>
+0 &lt; stock &lt; 10</body>
       </ownedComment>
       <ownedComment xmi:id="_7NGkwNtZEeGbQut3CdTx2Q" annotatedElement="_WGTmINmJEeGa16tZvsIA1w">
         <body>0 &lt; credit &lt; 90&#xD;
@@ -27,7 +27,7 @@ stock = 0</body>
       </ownedComment>
       <ownedComment xmi:id="_BxKusNtaEeGbQut3CdTx2Q" annotatedElement="_mZ6XgNmJEeGa16tZvsIA1w">
         <body>0 &lt; credit &lt; 90&#xD;
-1 &lt; stock &lt; 10</body>
+0 &lt; stock &lt; 10</body>
       </ownedComment>
       <ownedComment xmi:id="_It9hsNtaEeGbQut3CdTx2Q" annotatedElement="_GpBr8NtOEeGbQut3CdTx2Q">
         <body>0 &lt; credit &lt; 90&#xD;

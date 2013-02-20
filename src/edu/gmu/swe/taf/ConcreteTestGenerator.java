@@ -29,22 +29,26 @@ import edu.gmu.swe.taf.util.XegerStringGenerator;
  */
 
 public class ConcreteTestGenerator {
+	//a test directory
 	private String directory;
 	private String name;
 	private String xmlPath;
+	//a test directory to put temporal Java files
+	private String tempTestDirectory;
 	/**
 	 * Construct a ConcreteTestGenerator with the specified directory and class name
 	 */
 	public ConcreteTestGenerator(String directory, String name, String xmlPath) {
-		this.setDirectory(directory);
-		this.setName(name);
+		this.directory = directory;
+		this.name = name;
 		this.xmlPath = xmlPath;
+		this.tempTestDirectory = directory + "/temp";
 	}
 
 	/**
 	 * Generates and Compiles a JUnit test in a directory
 	 * 
-	 * @param directory			a directory in a String format
+	 * @param xmlDirectory		a directory in a String format
 	 * @param name				a Java class name in a String format
 	 * @param tests				a list of {@link edu.gmu.swe.taf.Test} objects that contain abstract test information
 	 * @throws Exception		throws 
@@ -393,7 +397,7 @@ public class ConcreteTestGenerator {
 	}
 	
 	/**
-	 * Compile a file in a specified directory
+	 * Compiles a file in a specified directory
 	 * 
 	 * @param directory		a directory in a String format
 	 * @param file			a File object
@@ -402,7 +406,7 @@ public class ConcreteTestGenerator {
 	public void compileJavaFile(String directory, File file) throws Exception{
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
-		List<File> listFiles = JavaSupporter.returnAllJavaFiles(directory);
+		//List<File> listFiles = JavaSupporter.returnAllJavaFiles(directory);
 		//System.out.println("file size: " + listFiles.size());
 		File[] files = new File[]{file};
 		//File[] files = listFiles.toArray(new File[0]);

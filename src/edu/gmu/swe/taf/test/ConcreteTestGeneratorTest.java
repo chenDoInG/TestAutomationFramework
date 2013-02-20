@@ -24,13 +24,14 @@ import edu.gmu.swe.taf.ConcreteTestGenerator;
 import edu.gmu.swe.taf.Mapping;
 import edu.gmu.swe.taf.ObjectMapping;
 import edu.gmu.swe.taf.StateMachineAccessor;
+import edu.gmu.swe.taf.XmlManipulator;
 import edu.gmu.swe.taf.AbstractTestGenerator.constraintSolver;
 
 public class ConcreteTestGeneratorTest {
 
 	String path;
 	String xmlPath;
-	String testDirectory = "testData/test/temp/";
+	String testDirectory = "testData/test/";
 	String testName = "VendingMachineTest";
 	
 	@Before
@@ -75,7 +76,7 @@ public class ConcreteTestGeneratorTest {
 				pathName += transition.getName() + " ";
 			}
 			edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest(String.valueOf(i), "The test for the path " + pathName, transitions);
-			test = abstractTestGenerator.updateTest(xmlPath, test);
+			test = abstractTestGenerator.updateTest(xmlPath, test, null);
 			tests.add(test);
 		}
 		
@@ -117,7 +118,7 @@ public class ConcreteTestGeneratorTest {
 			pathName += transition.getTarget().getName() + " ";
 		}
 		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest("1", "The test for the path " + pathName, transitions);
-		test = abstractTestGenerator.updateTest(xmlPath, test);
+		test = abstractTestGenerator.updateTest(xmlPath, test, XmlManipulator.getConstraintMappings(xmlPath));
 		
 		/**
 		 * Generates the concrete test
@@ -161,7 +162,7 @@ public class ConcreteTestGeneratorTest {
 				pathName += transition.getName() + " ";
 			}
 			edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest(String.valueOf(i), "The test for the path " + pathName, transitions);
-			test = abstractTestGenerator.updateTest(xmlPath, test);
+			test = abstractTestGenerator.updateTest(xmlPath, test, null);
 			tests.add(test);
 		}
 		/**

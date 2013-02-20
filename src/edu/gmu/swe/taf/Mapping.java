@@ -51,8 +51,8 @@ public class Mapping {
 		this.testCode = testCode;
 		this.requiredMappings = requiredMappings;
 		this.parameters = parameters;
-		this.callers = callers;
-		this.returnObjects = returnObjects;
+		this.setCallers(callers);
+		this.setReturnObjects(returnObjects);
 	}
 	
 	/**
@@ -172,6 +172,21 @@ public class Mapping {
 	 */
 	public List<String> getReturnObjects() {
 		return returnObjects;
+	}
+	/**
+	 * Sets the names of the callers
+	 * @param callers	a list of names of callers
+	 */
+	public void setCallers(List<String> callers) {
+		this.callers = callers;
+	}
+	
+	/**
+	 * Sets the names of return objects
+	 * @param returnObjects	a list of return objects
+	 */
+	public void setReturnObjects(List<String> returnObjects) {
+		this.returnObjects = returnObjects;
 	}
 
 }
