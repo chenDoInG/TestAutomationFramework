@@ -26,6 +26,11 @@ public class Mapping {
 	//the parameters also appear in the list of required mappings
 	//the parameters are listed separately for the ease of testing different oracle methods
 	private List<String> parameters;
+	//mappings for objects that call methods
+	private List<String> callers;
+	//mappings for objects that are returned by methods
+	private List<String> returnObjects;
+	
 	/**
 	 * Allocates a {@link Mapping} object and initialize it to represent the the mapping
 	 * 
@@ -34,20 +39,24 @@ public class Mapping {
 	 * @param identifiableElementName	the name of the identifiable element
 	 * @param testCode					the mapped test code 
 	 * @param requiredMappings			the required mappings for this mapping
-	 * @param parameters TODO
+	 * @param parameters 				the names of object mappings that are used to be method parameters
+	 * @param callers 					the names of object mappings that are used to call methods
+	 * @param returnObjects 			the names of object mappings that are returned by methods
 	 */
 	public Mapping(String mappingName, IdentifiableElementType type, String identifiableElementName, String testCode,
-			List<String> requiredMappings, List<String> parameters){
+			List<String> requiredMappings, List<String> parameters, List<String> callers, List<String> returnObjects){
 		this.mappingName = mappingName;
 		this.type = type;
 		this.identifiableElementName = identifiableElementName;
 		this.testCode = testCode;
 		this.requiredMappings = requiredMappings;
 		this.parameters = parameters;
+		this.callers = callers;
+		this.returnObjects = returnObjects;
 	}
 	
 	/**
-	 * Constrcuts a Mapping object with no parameters
+	 * Constructs a Mapping object with no parameters
 	 */
 	public Mapping(){
 		
@@ -148,4 +157,21 @@ public class Mapping {
 	public void setParameters(List<String> parameters) {
 		this.parameters = parameters;
 	}
+	
+	/**
+	 * Gets the objects that call methods
+	 * @return	a list of names of the objects that call methods in a String format
+	 */
+	public List<String> getCallers() {
+		return callers;
+	}
+	
+	/**
+	 * Gets the objects that are returned by methods
+	 * @return	a list of names of the objects that call methods in a String format
+	 */
+	public List<String> getReturnObjects() {
+		return returnObjects;
+	}
+
 }

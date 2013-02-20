@@ -49,10 +49,19 @@ stock = 0</body>
         <body>credit >= 90&#xD;
 stock = 10</body>
       </ownedComment>
-      <ownedComment xmi:id="_lOxN4PwWEeGT0I2oeClwrg">
+      <ownedComment xmi:id="_lOxN4PwWEeGT0I2oeClwrg" annotatedElement="_FVPI0NtOEeGbQut3CdTx2Q">
         <body>credit = 0&#xD;
 stock = 10</body>
       </ownedComment>
+      <ownedRule xmi:id="_4tHQkPxQEeGT0I2oeClwrg" name="ConstraintStockEqualsTen" constrainedElement="_FVPI0NtOEeGbQut3CdTx2Q _GpBr8NtOEeGbQut3CdTx2Q _G5iNINtOEeGbQut3CdTx2Q">
+        <specification xmi:type="uml:LiteralString" xmi:id="_4tH3oPxQEeGT0I2oeClwrg" name="number of stock" value="stockOfVendingMachine =10"/>
+      </ownedRule>
+      <ownedRule xmi:id="_rVgWQPxQEeGT0I2oeClwrg" name="ConstraintStockBetweenOneAndTen" constrainedElement="_UwgQ0NmJEeGa16tZvsIA1w _mZ6XgNmJEeGa16tZvsIA1w _E1RPUNtOEeGbQut3CdTx2Q">
+        <specification xmi:type="uml:LiteralString" xmi:id="_rViLcPxQEeGT0I2oeClwrg" name="number of choclates" value="1 &lt; stockOfVendingMachine &lt; 10"/>
+      </ownedRule>
+      <ownedRule xmi:id="_Cjsu4NwKEeGsQfAO8BUOaA" name="ConstraintGTNinty" constrainedElement="_BkAS4NtOEeGbQut3CdTx2Q _E1RPUNtOEeGbQut3CdTx2Q _G5iNINtOEeGbQut3CdTx2Q">
+        <specification xmi:type="uml:LiteralString" xmi:id="_Cj3G8NwKEeGsQfAO8BUOaA" name="parameter of coin" value="creditOfVendingMachine >= 90"/>
+      </ownedRule>
       <transition xmi:id="_KfiJ0NtWEeGbQut3CdTx2Q" name="coin" source="_WGTmINmJEeGa16tZvsIA1w" target="_BkAS4NtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_adWRYNtWEeGbQut3CdTx2Q" name="addCoinLessThanNinty" source="_VpKXINmJEeGa16tZvsIA1w" target="_WGTmINmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_h41ykNtWEeGbQut3CdTx2Q" name="addCoinLessThanNinty" source="_UwgQ0NmJEeGa16tZvsIA1w" target="_mZ6XgNmJEeGa16tZvsIA1w"/>
@@ -89,23 +98,11 @@ stock = 10</body>
       <subvertex xmi:type="uml:State" xmi:id="_WGTmINmJEeGa16tZvsIA1w" name="State2"/>
       <subvertex xmi:type="uml:FinalState" xmi:id="_jdY8ANmJEeGa16tZvsIA1w" name="Final"/>
       <subvertex xmi:type="uml:State" xmi:id="_mZ6XgNmJEeGa16tZvsIA1w" name="State5"/>
-      <subvertex xmi:type="uml:State" xmi:id="_BkAS4NtOEeGbQut3CdTx2Q" name="State3" stateInvariant="_Cjsu4NwKEeGsQfAO8BUOaA">
-        <ownedRule xmi:id="_Cjsu4NwKEeGsQfAO8BUOaA" name="Constraint1">
-          <specification xmi:type="uml:LiteralString" xmi:id="_Cj3G8NwKEeGsQfAO8BUOaA" name="parameter of coin" value="creditOfVendingMachine >= 90"/>
-        </ownedRule>
-      </subvertex>
-      <subvertex xmi:type="uml:State" xmi:id="_E1RPUNtOEeGbQut3CdTx2Q" name="State6" stateInvariant="_rVgWQPxQEeGT0I2oeClwrg">
-        <ownedRule xmi:id="_rVgWQPxQEeGT0I2oeClwrg" name="Constraint2">
-          <specification xmi:type="uml:LiteralString" xmi:id="_rViLcPxQEeGT0I2oeClwrg" name="number of choclates" value="1 &lt; stockOfVendingMachine &lt; 10"/>
-        </ownedRule>
-      </subvertex>
+      <subvertex xmi:type="uml:State" xmi:id="_BkAS4NtOEeGbQut3CdTx2Q" name="State3"/>
+      <subvertex xmi:type="uml:State" xmi:id="_E1RPUNtOEeGbQut3CdTx2Q" name="State6"/>
       <subvertex xmi:type="uml:State" xmi:id="_FVPI0NtOEeGbQut3CdTx2Q" name="State7"/>
       <subvertex xmi:type="uml:State" xmi:id="_GpBr8NtOEeGbQut3CdTx2Q" name="State8"/>
-      <subvertex xmi:type="uml:State" xmi:id="_G5iNINtOEeGbQut3CdTx2Q" name="State9" stateInvariant="_4tHQkPxQEeGT0I2oeClwrg">
-        <ownedRule xmi:id="_4tHQkPxQEeGT0I2oeClwrg" name="Constraint3">
-          <specification xmi:type="uml:LiteralString" xmi:id="_4tH3oPxQEeGT0I2oeClwrg" name="number of stock" value="stockOfVendingMachine =10"/>
-        </ownedRule>
-      </subvertex>
+      <subvertex xmi:type="uml:State" xmi:id="_G5iNINtOEeGbQut3CdTx2Q" name="State9"/>
     </region>
   </packagedElement>
 </uml:Model>

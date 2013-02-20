@@ -47,7 +47,7 @@ public class MappingTest {
 		List<String> mappings = new ArrayList<String>();
 		List<String> parameters = new ArrayList<String>();
 		
-		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters);
+		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters, null, null);
 		
 		assertEquals(mapping.getMappingName(), "vMachineInit");
 		assertEquals(mapping.getIdentifiableElementName(), "vm");

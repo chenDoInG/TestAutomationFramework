@@ -6,7 +6,7 @@ package edu.gmu.swe.taf;
 import java.util.List;
 
 /**
- * A {@link Mapping} object that maps test code to a class object.
+ * A class that maps test code to an object.
  * 
  * @author Nan Li
  * @version 1.0 Nov 14, 2012
@@ -28,7 +28,7 @@ public class ObjectMapping extends Mapping {
 			List<String> requiredMappings, List<String> parameters) {
 		
 		super(mappingName, type, identifiableElementName, testCode,
-				requiredMappings, parameters);
+				requiredMappings, parameters, null, null);
 		
 		this.classType = objectName;
 	}

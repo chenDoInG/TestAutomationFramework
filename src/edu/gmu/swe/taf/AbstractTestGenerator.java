@@ -95,38 +95,38 @@ public class AbstractTestGenerator {
 	 * @return a list of {@link org.eclipse.uml2.uml.Vertex}
 	 */
 	public static List<Vertex> getPathByState(Path path, StateMachineAccessor stateMachine){
-		List<Vertex> vertexes = new ArrayList<Vertex>();
+		List<Vertex> vertices = new ArrayList<Vertex>();
 		Iterator<Node> nodes = path.getNodeIterator();
 		
 		while(nodes.hasNext()){
 			Node node = nodes.next();
-			vertexes.add(stateMachine.getReversedStateMappings().get(node.toString()));
+			vertices.add(stateMachine.getReversedStateMappings().get(node.toString()));			
 		}
-		
-		return vertexes;		
+		return vertices;		
 	}
 	
 	/**
 	 * Transforms a list of {@link org.eclipse.uml2.uml.Vertex} to a list of {@link org.eclipse.uml2.uml.Transition}s in a UML state machine
-	 * @param vertexes		a list of {@link org.eclipse.uml2.uml.Vertex}
+	 * @param vertices		a list of {@link org.eclipse.uml2.uml.Vertex}
 	 * @param stateMachine	a {@link StateMachineAccessor} object
 	 * @return	a list of {@link org.eclipse.uml2.uml.Transition}s
 	 */
-	public List<Transition> convertVerticesToTransitions(List<Vertex> vertexes, StateMachineAccessor stateMachine){
+	public List<Transition> convertVerticesToTransitions(List<Vertex> vertices, StateMachineAccessor stateMachine){
 		List<Mapping> mappings = new ArrayList<Mapping>();
 		List<Transition> transitions = new ArrayList<Transition>();
 		
-		for(int i = 0; i < vertexes.size();){
-			Vertex source = vertexes.get(i);
-			if(i == vertexes.size() - 1)
+		for(int i = 0; i < vertices.size();){
+			Vertex source = vertices.get(i);
+			if(i == vertices.size() - 1)
 				break;
 			else
 				i++;
 			
-			Vertex destination = vertexes.get(i);
+			Vertex destination = vertices.get(i);
 			for(Transition transition: source.getOutgoings()){
 				if(transition.getTarget().getName().equals(destination.getName())){
 					transitions.add(transition);
+					break;//a bug is fixed; without break statement, extra transitions may be added
 				}
 			}
 		}

@@ -30,8 +30,8 @@ public class ConcreteTestGeneratorTest {
 
 	String path;
 	String xmlPath;
-	String tempTestDirectory = "testData/test/temp/";
-	String tempTestName = "VendingMachineTest";
+	String testDirectory = "testData/test/temp/";
+	String testName = "VendingMachineTest";
 	
 	@Before
 	public void setUp() throws Exception {
@@ -45,8 +45,8 @@ public class ConcreteTestGeneratorTest {
 
 	@Test
 	public void testConcreteTestGenerator() throws Exception {
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(tempTestDirectory, "HelloWorld", xmlPath);
-		assertEquals(tempTestDirectory, concreteTestGenerator.getDirectory());
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "HelloWorld", xmlPath);
+		assertEquals(testDirectory, concreteTestGenerator.getDirectory());
 		assertEquals("HelloWorld", concreteTestGenerator.getTestName());
 	}
 
@@ -79,7 +79,7 @@ public class ConcreteTestGeneratorTest {
 			tests.add(test);
 		}
 		
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(tempTestDirectory, tempTestName, xmlPath);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, testName, xmlPath);
 		concreteTestGenerator.generateConcreteTests(tests);
 	}
 	
@@ -106,11 +106,15 @@ public class ConcreteTestGeneratorTest {
 		//List<Vertex> vertexes = AbstractTestGenerator.getPathByState(paths.get(0), stateMachine);
 		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
 		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(9), stateMachine), stateMachine);
-		
-		String pathName = "";
+
+		//add the test comments
+		String pathName = "" + transitions.get(0).getSource().getName() + " ";
 		for(Transition transition: transitions){
-			System.out.println(transition);
+			System.out.println(transition.getSource().getName());
+			System.out.println(transition);	
+			System.out.println(transition.getTarget().getName());	
 			pathName += transition.getName() + " ";
+			pathName += transition.getTarget().getName() + " ";
 		}
 		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest("1", "The test for the path " + pathName, transitions);
 		test = abstractTestGenerator.updateTest(xmlPath, test);
@@ -118,10 +122,10 @@ public class ConcreteTestGeneratorTest {
 		/**
 		 * Generates the concrete test
 		 */
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(tempTestDirectory, "VendingMachineTest", xmlPath);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "VendingMachineTest", xmlPath);
 
-		File file = new File(tempTestDirectory + "VendingMachineTest" + ".java");
-		concreteTestGenerator.createConcreteTestCase(tempTestDirectory, file, concreteTestGenerator.updateConcreteTest(test));
+		File file = new File(testDirectory + "VendingMachineTest" + ".java");
+		concreteTestGenerator.createConcreteTestCase(testDirectory, file, concreteTestGenerator.updateConcreteTest(test));
 	}
 	
 	/**
@@ -163,14 +167,14 @@ public class ConcreteTestGeneratorTest {
 		/**
 		 * Generates the concrete test
 		 */
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(tempTestDirectory, "VendingMachineTest", xmlPath);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "VendingMachineTest", xmlPath);
 
-		File file = new File(tempTestDirectory + "VendingMachineTest" + ".java");
+		File file = new File(testDirectory + "VendingMachineTest" + ".java");
 		List<edu.gmu.swe.taf.Test> finalTests = new ArrayList<edu.gmu.swe.taf.Test>();
 		for(edu.gmu.swe.taf.Test test: tests)
 			finalTests.add(concreteTestGenerator.updateConcreteTest(test));
 		
-		concreteTestGenerator.createConcreteTestCase(tempTestDirectory, file, finalTests);
+		concreteTestGenerator.createConcreteTestCase(testDirectory, file, finalTests);
 		//concreteTestGenerator.createConcreteTestCase(tempTestDirectory, file, concreteTestGenerator.updateConcreteTest(test));
 	}
 	
@@ -185,7 +189,7 @@ public class ConcreteTestGeneratorTest {
 		test.setTestComment("This is a test");
 		test.setTestCode("System.out.println(\"Hello World\");");
 		
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(tempTestDirectory, "HelloWorld", xmlPath);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "HelloWorld", xmlPath);
 		String priorTestCode = test.getTestCode();
 		String testCodeAfter = concreteTestGenerator.updateConcreteTest(test).getTestCode();
 		assertFalse(testCodeAfter.equals(priorTestCode));
@@ -205,7 +209,7 @@ public class ConcreteTestGeneratorTest {
 		initialMappings.add("intCInit");
 		List<ObjectMapping> finalMappings = new ArrayList<ObjectMapping>();
 		
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(tempTestDirectory, "HelloWorld", xmlPath);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "HelloWorld", xmlPath);
 		finalMappings = concreteTestGenerator.calculateRequiredMappings(finalMappings, initialMappings);
 		for(Mapping s: finalMappings){
 			//System.out.println(s.getMappingName());
@@ -230,7 +234,7 @@ public class ConcreteTestGeneratorTest {
 		StringBuffer variableInitialization = new StringBuffer("");
 		StringBuffer testCode = new StringBuffer("");
 		
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(tempTestDirectory, "HelloWorld", xmlPath);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "HelloWorld", xmlPath);
 		variableInitialization = concreteTestGenerator.computeVariableInitialization(initialMappings, testCode, variableInitialization);
 		System.out.println(variableInitialization);
 		//assertEquals(4, finalMappings.size());
@@ -239,9 +243,9 @@ public class ConcreteTestGeneratorTest {
 
 	@Test
 	public void testCompileJavaFile() throws Exception {
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(tempTestDirectory, "HelloWorld", xmlPath);
-		File file = new File(tempTestDirectory + "HelloWorld" + ".java");
-		concreteTestGenerator.compileJavaFile(tempTestDirectory, file);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "HelloWorld", xmlPath);
+		File file = new File(testDirectory + "HelloWorld" + ".java");
+		concreteTestGenerator.compileJavaFile(testDirectory, file);
 	}
 
 }

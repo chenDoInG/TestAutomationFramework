@@ -16,6 +16,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import edu.gmu.swe.taf.ConstraintMapping;
 import edu.gmu.swe.taf.ObjectMapping;
 import edu.gmu.swe.taf.IdentifiableElementType;
 import edu.gmu.swe.taf.Mapping;
@@ -82,7 +83,7 @@ public class XmlManipulatorTest {
 		mappings.add("vMachineInit");
 		List<String> parameters = new ArrayList<String>();
 
-		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters);
+		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters, null, null);
 
 		Document doc = XmlManipulator.readXmlFile(path);
 		
@@ -119,7 +120,7 @@ public class XmlManipulatorTest {
 		List<String> mappings = new ArrayList<String>();
 		List<Parameter> parameters = new ArrayList<Parameter>();
 		
-		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, null);
+		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, null, null, null);
 
 		Document doc = XmlManipulator.readXmlFile(path);
 		
@@ -144,7 +145,7 @@ public class XmlManipulatorTest {
 		mappings.add("vMachineInit");
 		List<String> parameters = new ArrayList<String>();
 		
-		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters);
+		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters, null, null);
 
 		Document doc = XmlManipulator.readXmlFile(path);		
 		XmlManipulator xm = new XmlManipulator();
@@ -181,7 +182,7 @@ public class XmlManipulatorTest {
 		Parameter p = new Parameter("int", "c");
 		//parameters.add(p);
 		
-		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, null);
+		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, null, null, null);
 
 		Document doc = XmlManipulator.readXmlFile(path);		
 		XmlManipulator xm = new XmlManipulator();
@@ -227,7 +228,7 @@ public class XmlManipulatorTest {
 		
 		//parameters.add(parameterMapping);
 		mappings.add("intCInit");
-		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters);
+		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters, null, null);
 
 		Document doc = XmlManipulator.readXmlFile(path);		
 		XmlManipulator xm = new XmlManipulator();
@@ -270,7 +271,7 @@ public class XmlManipulatorTest {
 		parameters.add(p);
 		*/
 		
-		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, required, null);
+		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, required, null, null, null);
 		
 		Document doc = XmlManipulator.readXmlFile(path);		
 		XmlManipulator xm = new XmlManipulator();
@@ -291,11 +292,11 @@ public class XmlManipulatorTest {
 	}
 	
 	/**
-	 * Tests the method CreateClassMapping()
+	 * Tests the method CreateObjectMapping()
 	 * @throws Exception
 	 */
 	@Test
-	public void testCreateClassMapping() throws Exception{
+	public void testCreateObjectMapping() throws Exception{
 		String mappingName = "vMachineInit";
 		String className = "VendingMachine";
 		String identifiedElementName = "vm";
@@ -314,11 +315,11 @@ public class XmlManipulatorTest {
 	}
 	
 	/**
-	 * Tests the method CreateClassMapping()
+	 * Tests the method CreateObjectMapping()
 	 * @throws Exception
 	 */
 	@Test
-	public void testCreateClassMapping1() throws Exception{
+	public void testCreateObjectMapping1() throws Exception{
 		String mappingName = "stringBufferInit";
 		String className = "StringBuffer";
 		String identifiedElementName = "sb";
@@ -334,6 +335,33 @@ public class XmlManipulatorTest {
 		XmlManipulator xm = new XmlManipulator();
 
 		xm.createObjectMapping(doc, mapping, path);
+	}
+	
+	/**
+	 * Tests the method CreateConstraintMapping()
+	 * @throws Exception
+	 */
+	@Test
+	public void testCreateConstraintMapping() throws Exception{
+		String mappingName = "constraintStockEqualsTenMapping";
+		String identifiedElementName = "ConstraintStockEqualsTen";
+		IdentifiableElementType type = IdentifiableElementType.CONSTRAINT;
+		String testCode = "vm.getStock() == 10;";
+		List<String> requiredMappings = new ArrayList<String>();
+		requiredMappings.add("vMachineInit");
+		List<String> parameters = new ArrayList<String>();
+		List<String> stateinvariants = new ArrayList<String>();
+		stateinvariants.add("State7");
+		stateinvariants.add("State8");
+		stateinvariants.add("State9");
+		
+		ConstraintMapping mapping = new ConstraintMapping(mappingName, type, identifiedElementName, testCode, requiredMappings, parameters, requiredMappings, null, null, null, null, stateinvariants);
+
+		Document doc = XmlManipulator.readXmlFile(path);
+		
+		XmlManipulator xm = new XmlManipulator();
+
+		xm.createConstraintMapping(doc, mapping, path);
 	}
 	
 	@Test
@@ -464,7 +492,7 @@ public class XmlManipulatorTest {
 		required.add("vMachineInit");
 		required.add("stringBufferInit");
 		
-		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, required, null);
+		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, required, null, null, null);
 		
 		Document doc = XmlManipulator.readXmlFile(path);		
 		XmlManipulator xm = new XmlManipulator();
