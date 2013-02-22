@@ -3,6 +3,9 @@ package edu.gmu.swe.taf;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +21,7 @@ import javax.tools.ToolProvider;
 import edu.gmu.swe.taf.util.ChocoConstraintSolver;
 import edu.gmu.swe.taf.util.JavaSupporter;
 import edu.gmu.swe.taf.util.JunitTestWriter;
+import edu.gmu.swe.taf.util.TestLoader;
 import edu.gmu.swe.taf.util.XegerStringGenerator;
 
 /**
@@ -42,7 +46,7 @@ public class ConcreteTestGenerator {
 		this.directory = directory;
 		this.name = name;
 		this.xmlPath = xmlPath;
-		this.tempTestDirectory = directory + "/temp";
+		this.tempTestDirectory = directory + "temp/";
 	}
 
 	/**
@@ -181,57 +185,100 @@ public class ConcreteTestGenerator {
 		if(test.getTestCode().startsWith("\n"))
 			result.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
 		
-		String[] code = test.getTestCode().split("\n");
-		
-		StringBuffer testCode = new StringBuffer("");
-		for(String s: code){
-			testCode.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
-			testCode.append(s);
-			testCode.append("\n");
-		}
-		
 		//Check if there are required variable declarations or initializations in the test code.
 		//If none of the required ones exist, add them at the beginning of the test code.
 		//Otherwise, throw an exception  -- to be done
 		
 		//Add all required mappings for this tests into finalRequiredMappings
 		List<Mapping> mappings = test.getMappings();
-		List<String> finalRequiredMappings = new ArrayList<String>();
+		System.out.println(mappings.size());
 		
-		for(Mapping mapping: mappings){
-			if(mapping.getRequiredMappings() != null && mapping.getRequiredMappings().size() != 0){
-				List<String> requiredMappings = mapping.getRequiredMappings();
-				for(String requiredMapping: requiredMappings){
-					if(!finalRequiredMappings.contains(requiredMapping))
-						finalRequiredMappings.add(requiredMapping);					
+		List<Mapping> finalMappings = new ArrayList<Mapping>();
+		
+		//keep track of the index moving inside of the for loop
+		int flag = 0;
+		for(int i = 0; i < mappings.size() - 1; i++){
+
+			//find a right mapping before a constraint
+			if(mappings.get(i + 1).getType() == IdentifiableElementType.PRECONDITION || mappings.get(i + 1).getType() == IdentifiableElementType.STATEINVARIANT){
+				Mapping currentMapping = mappings.get(i);
+				Mapping nextMapping = mappings.get(i + 1);
+				
+				//Get a list of mappings that are prior to the constraint
+				for(int j = flag; j <= i + 1; j++){
+					finalMappings.add(mappings.get(j));
 				}
-			}
+				System.out.println(currentMapping.getIdentifiableElementName());
+				System.out.println(nextMapping.getIdentifiableElementName() + " " + nextMapping.getMappingName());
+				System.out.println(finalMappings.size());
+				
+				//From the mappings prior to the constraint, write them in a temp Java file and test if the constraint can be satisfied
+				//if this list of mappings cannot satisfy the constraint, use another mapping 
+				//if all mappings cannot satisfy the constraint, throw an exception
+				if(isConstraintSatisfied(finalMappings)){
+					flag = i + 2;
+					continue;
+				}else{
+					//get all mappings for the element right ahead of the constraint
+					//to be updated for any element, not just transition
+					List<Mapping> nodes = XmlManipulator.getMappingsByTransition(xmlPath, currentMapping.getIdentifiableElementName());
+					System.out.println("nodes " + nodes.size());
+					boolean isSatisfied = false;
+					for(Mapping m: nodes){
+						if(!m.getMappingName().equals(currentMapping.getMappingName())){
+							finalMappings.remove(finalMappings.size() - 2);
+							finalMappings.remove(finalMappings.size() - 1);
+							finalMappings.add(m);
+							finalMappings.add(nextMapping);
+							if(isConstraintSatisfied(finalMappings)){
+								isSatisfied = true;
+								break;
+							}
+						}
+					}
+					if(isSatisfied == false){
+						//System.out.println("The constraint in " + nextMapping.getIdentifiableElementName() + " cannot be satisfied in the following path: ");
+						System.err.println("The constraint in " + nextMapping.getIdentifiableElementName() + " cannot be satisfied in the following path: ");
+						for(Mapping m2 : finalMappings){
+							System.err.print(m2.getIdentifiableElementName() + " ");
+						}
+						System.err.println();
+					}
+				}			
+				flag = i + 2;
+			}	
 		}
+	
 		StringBuffer variableInitialization = null;
-		//Check if the test code has contained the variable declarations and initializations
-		//If it does not, add the required variable declarations to the variableInitialization
-		/*
 		
-		if(finalRequiredMappings != null && finalRequiredMappings.size() > 0){
-			variableInitialization = new StringBuffer("");
-			for(String string: finalRequiredMappings){
-				String retrievedTestInitialization = XmlManipulator.getObjectMappingByName(xmlPath, string.trim()).getTestCode();
-				//System.out.println("string: " + string);
-				//System.out.println("testCode: " + testCode);
-				//System.out.println("retrievedTestInitialization: " + retrievedTestInitialization);
-				if(testCode.toString().indexOf(retrievedTestInitialization) == -1){
-					variableInitialization.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
-					variableInitialization.append(retrievedTestInitialization);
-					variableInitialization.append("\n");
-				}
-			}
-		}*/
-		variableInitialization = computeVariableInitialization(finalRequiredMappings, testCode, variableInitialization);
+		//Get the variable initialization
+		variableInitialization = computeVariableInitialization(finalMappings);
 		if(variableInitialization != null)
 			if(!variableInitialization.toString().equals("")){
 				variableInitialization.append("\n");
 				result.append(variableInitialization.toString());
 			}
+		
+		StringBuffer testCode = new StringBuffer("");		
+		for(int i = 0;i < finalMappings.size();i++){
+			System.out.println(finalMappings.get(i).getMappingName());
+			if((mappings.get(i).getType() == IdentifiableElementType.PRECONDITION) ||( mappings.get(i).getType() == IdentifiableElementType.STATEINVARIANT)){
+				if(i == (mappings.size() - 1)){
+					testCode.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT); 
+					testCode.append("assertEquals(true, ");
+					testCode.append(mappings.get(i).getTestCode().substring(0, mappings.get(i).getTestCode().lastIndexOf(";")));
+					testCode.append(");");
+					testCode.append("\n");
+				}
+			}else{
+				String[] code = mappings.get(i).getTestCode().split("\n");
+				for(String s: code){
+					testCode.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
+					testCode.append(s);
+					testCode.append("\n");
+				}
+			}
+		}
 		
 		result.append(testCode.toString());
 		result.append(JunitTestWriter.INDENTATIONFORMETHOD);
@@ -248,15 +295,38 @@ public class ConcreteTestGenerator {
 	 * Dependencies among the required mappings are solved.
 	 * Proper test values are chosen for required mappings to satisfy the preconditions and state invariants if any.
 	 * 
-	 * @param requiredMappings	a list of mappings names in a String format
-	 * @param testCode TODO
-	 * @param variableInitialization TODO
+	 * @param mappings	a list of mappings names in a String format
 	 * @return					the variable declarations and initializations in a String format
 	 * @throws Exception 
 	 */
-	public StringBuffer computeVariableInitialization(List<String> requiredMappings, StringBuffer testCode, StringBuffer variableInitialization) throws Exception{
+	public StringBuffer computeVariableInitialization(List<Mapping> mappings) throws Exception{
+		List<String> initialRequiredMappings = new ArrayList<String>();
+		StringBuffer variableInitialization = null;
+		StringBuffer testCode = new StringBuffer();
+		
+		for(Mapping m1: mappings){
+			testCode.append(m1.getTestCode());
+		}
+		
+		//The first step to compute the required mappings
+		//Get the required object mappings at the top level that are directly associated with identifiable element mappings
+		//Then use these required object mappings to get the variable declarations and initializations
+		for(Mapping mapping: mappings){
+			if(mapping.getRequiredMappings() != null && mapping.getRequiredMappings().size() != 0){
+				List<String> requiredMappings = mapping.getRequiredMappings();
+				for(String requiredMapping: requiredMappings){
+					if(!initialRequiredMappings.contains(requiredMapping))
+						initialRequiredMappings.add(requiredMapping);					
+				}
+			}
+		}
+		
+		//System.out.println(mappings.size());
+		//System.out.println(initialRequiredMappings.size());
+		
 		List<ObjectMapping> finalMappings = new ArrayList<ObjectMapping>();
-		finalMappings = calculateRequiredMappings(finalMappings, requiredMappings);
+		finalMappings = calculateRequiredMappings(finalMappings, initialRequiredMappings);
+		//System.out.println(finalMappings.size());
 		
 		if(finalMappings != null && finalMappings.size() > 0){
 			variableInitialization = new StringBuffer("");
@@ -269,12 +339,18 @@ public class ConcreteTestGenerator {
 				//System.out.println("string: " + mapping.getMappingName());
 				//System.out.println("testCode: " + testCode);
 				
-				if(testCode.toString().indexOf(testInitialization) == -1){
-					variableInitialization.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
-					variableInitialization.append(testInitialization);
-					variableInitialization.append("\n");
-				}
-			}
+				//check if the test initialization has been included in the main body of the test
+					if(testCode.indexOf(testInitialization) == -1){
+						variableInitialization.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
+						variableInitialization.append(testInitialization);
+						variableInitialization.append("\n");
+					}
+					/*
+					else if(testInitialization != null && !testInitialization.toString().trim().equals("")){
+						throw new Exception("a variable initialization" + testInitialization + " has been defined in the test content.");
+					}
+					*/						
+			}//end of the for loop
 		}
 		//System.out.println("testInitialization: " + variableInitialization);
 		return variableInitialization;
@@ -396,6 +472,108 @@ public class ConcreteTestGenerator {
 		return null;
 	}
 	
+	/**
+	 * Determines if the constraint after the given mappings can be evaluated to true.
+	 * @param mappings		a list of <@link Mapping> objects
+	 * @return				true if the constraint is satisfied; otherwise, return false.
+	 * @throws Exception 	
+	 */
+	public boolean isConstraintSatisfied(List<Mapping> mappings) throws Exception{
+		boolean returnValue = false;
+		
+		StringBuffer variableInitilization = computeVariableInitialization(mappings);
+		StringBuffer testCode = new StringBuffer();
+		testCode.append(variableInitilization);
+		
+		//add main body of the test
+		for(int i = 0; i < mappings.size(); i++){
+			if((mappings.get(i).getType() == IdentifiableElementType.PRECONDITION) ||( mappings.get(i).getType() == IdentifiableElementType.STATEINVARIANT)){
+				if(i == (mappings.size() - 1)){
+					testCode.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT); 
+					testCode.append("return ");
+					testCode.append(mappings.get(i).getTestCode());
+					testCode.append("\n");
+				}
+				
+			}else{
+				testCode.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT); 
+				testCode.append(mappings.get(i).getTestCode());
+				testCode.append("\n");
+			}
+		}
+		//System.out.println(testCode.toString());
+		File file = writeTempTest(testCode.toString());
+		compileJavaFile(tempTestDirectory, file);
+		
+		File root1 = new File("./testData/test/temp/");
+		
+		//System.out.println(root1.getAbsolutePath());
+		
+		/* when deploying the project, this part needs to be updated for adding more class paths
+		 	File root2 = new File("./testData/src/");
+			URL[] urls1 = new URL[]{root1.toURI().toURL()};
+			URL[] urls2 = new URL[]{root2.toURI().toURL()};
+			URL[] urls = new URL[urls1.length + urls2.length];
+			System.arraycopy(urls1, 0, urls, 0, urls1.length);
+			System.arraycopy(urls2, 0, urls, urls1.length, urls2.length);
+		*/
+		
+		URLClassLoader classLoader = URLClassLoader.newInstance(new URL[]{root1.toURI().toURL()});
+		Class<?> c = Class.forName("TempTest", true, classLoader);
+		
+		//this part uses a customized class loader: TestLoader, now it looks like we do not need this class
+		//TestLoader loader = new TestLoader();
+		//Class c = loader.loadTestClass("TempTest", tempTestDirectory);
+		Method[] methods = c.getDeclaredMethods();
+
+		if(methods.length == 1){
+			Method m = methods[0];
+			m.setAccessible(true);
+			Object o = m.invoke(c.newInstance(), null);
+			System.out.println(o.toString());
+			returnValue = Boolean.valueOf(o.toString());
+		}
+		else{
+			throw new Exception("Errors in creating a temparoral Java class");
+		}
+	
+		return returnValue;
+	}
+	/**
+	 * Writes the test content in the temp class
+	 * @param testContent	the test content in a String format
+	 * @return				the file object of the test class
+	 * @throws IOException
+	 */
+	public File writeTempTest(String testContent) throws IOException{
+		File file = new File(tempTestDirectory + "TempTest.java");
+		System.out.println(tempTestDirectory + "TempTest.java");
+		FileOutputStream fop = new FileOutputStream(file);
+		StringBuffer result = new StringBuffer("");
+		String packageName = "\n";
+		String importsJava = "import java.io.*;\n";
+		String importsJUnit = "import org.junit.*;\nimport static org.junit.Assert.*;\n";
+	
+		result.append(packageName);
+		result.append(importsJava);
+		result.append(importsJUnit);
+		result.append("\n");
+		
+		String classHeader = "public class TempTest {\n";
+		result.append(classHeader);
+		result.append("\n");
+		result.append("    public boolean test(){\n");
+		result.append(testContent);
+		result.append("    }\n");
+		result.append("}\n");
+		
+		byte[] contentInBytes = result.toString().getBytes();
+		fop.write(contentInBytes);
+		fop.flush();
+		fop.close();
+		
+		return file;
+	}
 	/**
 	 * Compiles a file in a specified directory
 	 * 

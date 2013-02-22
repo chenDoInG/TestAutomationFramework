@@ -203,6 +203,9 @@ public class AbstractTestGenerator {
 					//otherwise, throw "No mapping found" exception
 					if(nodes.size() > 1)
 						//this section will be updated later for picking one out of many mappings
+						//to be updated: if a precondition or state invariant after this element, check if the constraint has 
+						//specified any particular mapping to solve the constraint; if it does, use this specified mapping;
+						//otherwise, use a mapping arbitrarily
 						mappings.add(nodes.get(0));
 					else if(nodes.size() == 1)
 						mappings.add(nodes.get(0));
@@ -231,7 +234,7 @@ public class AbstractTestGenerator {
 		
 		for(Mapping mapping: mappings){
 			testCode += mapping.getTestCode() + "\n";
-			System.out.println("mapping name: " + mapping.getMappingName());
+			//System.out.println("mapping name: " + mapping.getMappingName());
 		}
 		
 		test.setTestCode(testCode);	

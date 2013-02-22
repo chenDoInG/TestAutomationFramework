@@ -21,7 +21,7 @@ private static final int MAX = 10;
 // Constructor
 // vendingmachine starts empty.
 //************************************************
-vendingMachine()
+public vendingMachine()
 {
    credit = 0;
    stock  = new LinkedList(); // Empty stock.

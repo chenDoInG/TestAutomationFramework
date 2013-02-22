@@ -21,6 +21,7 @@ import coverage.graph.Path;
 import coverage.web.InvalidInputException;
 import edu.gmu.swe.taf.AbstractTestGenerator;
 import edu.gmu.swe.taf.ConcreteTestGenerator;
+import edu.gmu.swe.taf.IdentifiableElementType;
 import edu.gmu.swe.taf.Mapping;
 import edu.gmu.swe.taf.ObjectMapping;
 import edu.gmu.swe.taf.StateMachineAccessor;
@@ -76,7 +77,7 @@ public class ConcreteTestGeneratorTest {
 				pathName += transition.getName() + " ";
 			}
 			edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest(String.valueOf(i), "The test for the path " + pathName, transitions);
-			test = abstractTestGenerator.updateTest(xmlPath, test, null);
+			test = abstractTestGenerator.updateTest(xmlPath, test, XmlManipulator.getConstraintMappings(xmlPath));
 			tests.add(test);
 		}
 		
@@ -106,14 +107,14 @@ public class ConcreteTestGeneratorTest {
 		//get the vertices from a path and return a list of transitions based on the vertices
 		//List<Vertex> vertexes = AbstractTestGenerator.getPathByState(paths.get(0), stateMachine);
 		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
-		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(9), stateMachine), stateMachine);
+		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(7), stateMachine), stateMachine);
 
 		//add the test comments
 		String pathName = "" + transitions.get(0).getSource().getName() + " ";
 		for(Transition transition: transitions){
-			System.out.println(transition.getSource().getName());
-			System.out.println(transition);	
-			System.out.println(transition.getTarget().getName());	
+			//System.out.println(transition.getSource().getName());
+			//System.out.println(transition);	
+			//System.out.println(transition.getTarget().getName());	
 			pathName += transition.getName() + " ";
 			pathName += transition.getTarget().getName() + " ";
 		}
@@ -126,6 +127,7 @@ public class ConcreteTestGeneratorTest {
 		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "VendingMachineTest", xmlPath);
 
 		File file = new File(testDirectory + "VendingMachineTest" + ".java");
+		//I should refactoring the this method by moving updateConcreteTest method inside
 		concreteTestGenerator.createConcreteTestCase(testDirectory, file, concreteTestGenerator.updateConcreteTest(test));
 	}
 	
@@ -222,30 +224,63 @@ public class ConcreteTestGeneratorTest {
 	}
 	
 	/**
-	 * Tests the method calculateRequiredMappings
+	 * Tests the method computeVarialbeInitialization()
 	 * @throws Exception 
 	 */
 	@Test
 	public void testComputeVarialbeInitialization() throws Exception{
+		List<Mapping> mappings = new ArrayList<Mapping>();
+		Mapping mapping = new Mapping();
+		mappings.add(mapping);
+		
 		List<String> initialMappings = new ArrayList<String>();
 		initialMappings.add("vMachineInit");
 		initialMappings.add("stringBufferInit");
 		initialMappings.add("intCInit");
-		List<Mapping> finalMappings = new ArrayList<Mapping>();
+		
+		mapping.setRequiredMappings(initialMappings);
+
 		StringBuffer variableInitialization = new StringBuffer("");
-		StringBuffer testCode = new StringBuffer("");
 		
 		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "HelloWorld", xmlPath);
-		variableInitialization = concreteTestGenerator.computeVariableInitialization(initialMappings, testCode, variableInitialization);
+		variableInitialization = concreteTestGenerator.computeVariableInitialization(mappings);
 		System.out.println(variableInitialization);
-		//assertEquals(4, finalMappings.size());
+		assertEquals(true, variableInitialization.length() > 0);
 	}
 	
+	/**
+	 * Tests the method isContraintSatisfied()
+	 * @throws Exception
+	 */
+	@Test
+	public void testIsConstraintSatisfied() throws Exception {
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "TempTest", xmlPath);
 
+		List<Mapping> mappings = new ArrayList<Mapping>();
+		mappings.add(new Mapping(null, null, null, "vendingMachine vm = new vendingMachine();", null, null, null, null));
+		mappings.add(new Mapping(null, null, null, "vm.addChoc(\"MM\");", null, null, null, null));
+		mappings.add(new Mapping(null, IdentifiableElementType.STATEINVARIANT, null, "(vm.getStock().size() < 10 && vm.getStock().size() > 0);", null, null, null, null));
+		
+		boolean sign = concreteTestGenerator.isConstraintSatisfied(mappings);
+		assertEquals(true, sign);
+	}
+	
+	/**
+	 * Tests the method writeTempTest()
+	 * @throws Exception
+	 */
+	@Test
+	public void testWriteTempTest() throws Exception {
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "TempTest", xmlPath);
+		String testContent = "        vendingMachine vm = new vendingMachine();\n        vm.addChoc(\"MM\")\n";
+		concreteTestGenerator.writeTempTest(testContent);
+
+	}
+	
 	@Test
 	public void testCompileJavaFile() throws Exception {
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "HelloWorld", xmlPath);
-		File file = new File(testDirectory + "HelloWorld" + ".java");
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "VendingMachineTest", xmlPath);
+		File file = new File(testDirectory + "VendingMachineTest" + ".java");
 		concreteTestGenerator.compileJavaFile(testDirectory, file);
 	}
 

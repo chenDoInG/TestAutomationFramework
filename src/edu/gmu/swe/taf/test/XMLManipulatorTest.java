@@ -373,7 +373,7 @@ public class XmlManipulatorTest {
 		String mappingName = "constraintStockBetweenOneAndTen";
 		String identifiedElementName = "ConstraintStockBetweenOneAndTen";
 		IdentifiableElementType type = IdentifiableElementType.CONSTRAINT;
-		String testCode = "vm.getStock() > 0 && vm.getStock() < 10;";
+		String testCode = "vm.getStock().size() > 0 && vm.getStock().size() < 10;";
 		List<String> requiredMappings = new ArrayList<String>();
 		requiredMappings.add("vMachineInit");
 		List<String> parameters = new ArrayList<String>();

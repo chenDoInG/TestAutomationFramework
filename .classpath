@@ -21,5 +21,7 @@
 	<classpathentry kind="lib" path="/org.eclipse.acceleo.module.sample/bin"/>
 	<classpathentry kind="lib" path="lib/choco-solver-2.1.5.jar"/>
 	<classpathentry kind="lib" path="lib/xeger-1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="testData/test"/>
+	<classpathentry kind="lib" path="testData/src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
