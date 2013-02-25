@@ -383,7 +383,7 @@
             <children xmi:type="notation:DecorationNode" xmi:id="_Cj6KQtwKEeGsQfAO8BUOaA" type="6668"/>
             <children xmi:type="notation:DecorationNode" xmi:id="_Cj6KQ9wKEeGsQfAO8BUOaA" type="6669"/>
             <element xmi:type="uml:Constraint" href="VendingMachineFSM.uml#_Cjsu4NwKEeGsQfAO8BUOaA"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Cj48IdwKEeGsQfAO8BUOaA" x="936" y="10" width="217" height="48"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Cj48IdwKEeGsQfAO8BUOaA" x="936" y="10" width="187" height="48"/>
           </children>
           <children xmi:type="notation:Shape" xmi:id="_lOxN4fwWEeGT0I2oeClwrg" type="666" fontName="Segoe UI" fontHeight="10" lineColor="0">
             <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_lOxN4vwWEeGT0I2oeClwrg" source="ShadowFigure">
@@ -413,7 +413,7 @@
             <children xmi:type="notation:DecorationNode" xmi:id="_rVjZmPxQEeGT0I2oeClwrg" type="6668"/>
             <children xmi:type="notation:DecorationNode" xmi:id="_rVjZmfxQEeGT0I2oeClwrg" type="6669"/>
             <element xmi:type="uml:Constraint" href="VendingMachineFSM.uml#_rVgWQPxQEeGT0I2oeClwrg"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_rVjZkfxQEeGT0I2oeClwrg" x="942" y="72" width="229"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_rVjZkfxQEeGT0I2oeClwrg" x="942" y="72" width="208"/>
           </children>
           <children xmi:type="notation:Shape" xmi:id="_4tIesPxQEeGT0I2oeClwrg" type="668" fontName="Segoe UI" fontHeight="10" lineColor="0">
             <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_4tIesvxQEeGT0I2oeClwrg" source="ShadowFigure">
@@ -428,12 +428,57 @@
             <children xmi:type="notation:DecorationNode" xmi:id="_4tJFwPxQEeGT0I2oeClwrg" type="6668"/>
             <children xmi:type="notation:DecorationNode" xmi:id="_4tJFwfxQEeGT0I2oeClwrg" type="6669"/>
             <element xmi:type="uml:Constraint" href="VendingMachineFSM.uml#_4tHQkPxQEeGT0I2oeClwrg"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4tIesfxQEeGT0I2oeClwrg" x="942" y="144" width="205"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4tIesfxQEeGT0I2oeClwrg" x="942" y="144" width="181"/>
+          </children>
+          <children xmi:type="notation:Shape" xmi:id="_QnK1MH-TEeKzZ85bW5cs7g" type="668" fontName="Lucida Grande" fontHeight="11" lineColor="0">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_QnLcQH-TEeKzZ85bW5cs7g" source="ShadowFigure">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_QnLcQX-TEeKzZ85bW5cs7g" key="ShadowFigure_Value" value="false"/>
+            </eAnnotations>
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_QnLcQn-TEeKzZ85bW5cs7g" source="displayNameLabelIcon">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_QnLcQ3-TEeKzZ85bW5cs7g" key="displayNameLabelIcon_value" value="false"/>
+            </eAnnotations>
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_QnLcRH-TEeKzZ85bW5cs7g" source="QualifiedName">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_QnLcRX-TEeKzZ85bW5cs7g" key="QualifiedNameDepth" value="1000"/>
+            </eAnnotations>
+            <children xmi:type="notation:DecorationNode" xmi:id="_QnLcRn-TEeKzZ85bW5cs7g" type="6668"/>
+            <children xmi:type="notation:DecorationNode" xmi:id="_QnLcR3-TEeKzZ85bW5cs7g" type="6669"/>
+            <element xmi:type="uml:Constraint" href="VendingMachineFSM.uml#_Qmqe4H-TEeKzZ85bW5cs7g"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_QnK1MX-TEeKzZ85bW5cs7g" x="951" y="234" width="181"/>
+          </children>
+          <children xmi:type="notation:Shape" xmi:id="_2PbagH-UEeKzZ85bW5cs7g" type="668" fontName="Lucida Grande" fontHeight="11" lineColor="0">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2Pbagn-UEeKzZ85bW5cs7g" source="ShadowFigure">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_2Pbag3-UEeKzZ85bW5cs7g" key="ShadowFigure_Value" value="false"/>
+            </eAnnotations>
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2PbahH-UEeKzZ85bW5cs7g" source="displayNameLabelIcon">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_2PcBkH-UEeKzZ85bW5cs7g" key="displayNameLabelIcon_value" value="false"/>
+            </eAnnotations>
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2PcBkX-UEeKzZ85bW5cs7g" source="QualifiedName">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_2PcBkn-UEeKzZ85bW5cs7g" key="QualifiedNameDepth" value="1000"/>
+            </eAnnotations>
+            <children xmi:type="notation:DecorationNode" xmi:id="_2PcBk3-UEeKzZ85bW5cs7g" type="6668"/>
+            <children xmi:type="notation:DecorationNode" xmi:id="_2PcBlH-UEeKzZ85bW5cs7g" type="6669"/>
+            <element xmi:type="uml:Constraint" href="VendingMachineFSM.uml#_2PZlUH-UEeKzZ85bW5cs7g"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_2PbagX-UEeKzZ85bW5cs7g" x="960" y="306"/>
+          </children>
+          <children xmi:type="notation:Shape" xmi:id="_CjqMQH-VEeKzZ85bW5cs7g" type="668" fontName="Lucida Grande" fontHeight="11" lineColor="0">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CjqzUH-VEeKzZ85bW5cs7g" source="ShadowFigure">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_CjqzUX-VEeKzZ85bW5cs7g" key="ShadowFigure_Value" value="false"/>
+            </eAnnotations>
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CjqzUn-VEeKzZ85bW5cs7g" source="displayNameLabelIcon">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_CjqzU3-VEeKzZ85bW5cs7g" key="displayNameLabelIcon_value" value="false"/>
+            </eAnnotations>
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CjqzVH-VEeKzZ85bW5cs7g" source="QualifiedName">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_CjqzVX-VEeKzZ85bW5cs7g" key="QualifiedNameDepth" value="1000"/>
+            </eAnnotations>
+            <children xmi:type="notation:DecorationNode" xmi:id="_CjraYH-VEeKzZ85bW5cs7g" type="6668"/>
+            <children xmi:type="notation:DecorationNode" xmi:id="_CjraYX-VEeKzZ85bW5cs7g" type="6669"/>
+            <element xmi:type="uml:Constraint" href="VendingMachineFSM.uml#_Cjo-IH-VEeKzZ85bW5cs7g"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CjqMQX-VEeKzZ85bW5cs7g" x="960" y="387"/>
           </children>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_OX8zWdmJEeGa16tZvsIA1w"/>
         </children>
         <element xmi:type="uml:Region" href="VendingMachineFSM.uml#_OXBmQNmJEeGa16tZvsIA1w"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_OX8zWtmJEeGa16tZvsIA1w" x="54" y="-82" width="1213" height="566"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_OX8zWtmJEeGa16tZvsIA1w" x="-129" y="12" width="1213" height="566"/>
       </children>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_OX8zW9mJEeGa16tZvsIA1w" y="12" width="1213" height="566"/>
     </children>

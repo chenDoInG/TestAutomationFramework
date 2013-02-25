@@ -10,21 +10,11 @@ public class TempTest {
         String s = "MM";
         StringBuffer sb = new StringBuffer(s);
         vendingMachine vm = new vendingMachine();
+        vm.addChoc("MM");
         vm.coin(25);
-        vm.addChoc("MM");
-        vm.addChoc("MM");
-vm.addChoc("MM");
-vm.addChoc("MM");
-vm.addChoc("MM");
-vm.addChoc("MM");
-vm.addChoc("MM");
-vm.addChoc("MM");
-vm.addChoc("MM");
-vm.addChoc("MM");
-vm.addChoc("MM");
-        vm.coin(c);
         vm.coin(c);
         vm.getChoc(sb);
-        return vm.getStock().size() > 0 && vm.getStock().size() < 10;
+        vm.addChoc("MM");
+        return vm.getCredit() == 0;
     }
 }

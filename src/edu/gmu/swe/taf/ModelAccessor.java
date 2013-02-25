@@ -103,11 +103,6 @@ public class ModelAccessor {
 	}
 	
 	
-	
-	
-	
-	
-	
 	/**
 	 * The methods below are copied from Acceleo.
 	 */

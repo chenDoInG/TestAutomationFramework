@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.FinalState;
+import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Pseudostate;
 import org.eclipse.uml2.uml.Region;
 import org.eclipse.uml2.uml.State;
@@ -22,15 +24,19 @@ import org.eclipse.uml2.uml.Vertex;
  */
 
 public class StateMachineAccessor extends ModelAccessor {
+	
 	/**
 	 * the key is a state; the value is an integer number used in {@link coverage.web.Path}
 	 */
 	private HashMap<Vertex, String> stateMappings = new HashMap<Vertex, String>();
+	
 	/**
 	 * the key is an integer number used in {@link coverage.web.Path}; the value is a state
 	 */
 	private HashMap<String, Vertex> reversedStateMappings = new HashMap<String, Vertex>();
+	//the initial states
 	private String initialStates = "";
+	//the final states
 	private String finalStates = "";
 	
 	//transitions in a String format
@@ -39,6 +45,10 @@ public class StateMachineAccessor extends ModelAccessor {
 	//... etc.
 	private String edges = "";
 	
+	/**
+	 * Constructs an StateMachineAccessor object with a Region object
+	 * @param region	a {@link org.eclipse.uml2.uml.Region} Region object
+	 */
 	public StateMachineAccessor(Region region) {
 		createStateMappings(region);	
 		createEdges(region);
@@ -46,7 +56,8 @@ public class StateMachineAccessor extends ModelAccessor {
 	
 	/**
 	 * Creates the one mapping from vertexes to integers and another mapping from integers to vertexes.
-	 * @param region
+	 * This method cannot be overridden.
+	 * @param region	a {@link org.eclipse.uml2.uml.Region} Region object
 	 */
 	private void createStateMappings(Region region){
 		int stateNumber = 1;
@@ -81,7 +92,9 @@ public class StateMachineAccessor extends ModelAccessor {
 	 * 1 2
 	 * 2 3
 	 * ...
-	 * @param region
+	 * 
+	 * This method cannot be overridden.
+	 * @param region	a {@link org.eclipse.uml2.uml.Region} Region object
 	 */
 	private void createEdges(Region region){
 		EList<Transition> transitions = region.getTransitions();
@@ -161,7 +174,7 @@ public class StateMachineAccessor extends ModelAccessor {
 	 * @return a list of {@link org.eclipse.uml2.uml.Pseudostate} in the region
 	 * 
 	 * Initial states in state machine diagrams are of Pseudostate, in this method, each object of Pseudostate
-	 * is examined and if an object of Pseudostate is connected with other states, it is treated to be an initial state.
+	 * is examined. If an object of Pseudostate is connected with other states, it is treated to be an initial state.
 	 */
 	public static List<Pseudostate> getInitialStates(Region region){
 		List<Pseudostate> result = new ArrayList<Pseudostate>();
@@ -169,11 +182,77 @@ public class StateMachineAccessor extends ModelAccessor {
 		EList<Vertex> vertexes = region.getSubvertices();
 		for(Vertex vertex: vertexes){
 			if(vertex instanceof Pseudostate){
+				//check if the initial node is connected with other nodes
 				EList<Transition> outgoings = vertex.getOutgoings();
 				if(outgoings.size() > 0){
 					result.add(((Pseudostate)vertex));
 				}
 			}
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * Gets all identifiable elements that can be mapped from a region of a state machine.
+	 * So far only transitions, constraints, and states are to be returned.
+	 * 
+	 * @param region	a {@link org.eclipse.uml2.uml.Region} object
+	 * @return			a list of {@link org.eclipse.uml2.uml.NamedElement} objects
+	 */
+	public static List<NamedElement> getAllIdentifiableElements(Region region){
+		List<NamedElement> result = new ArrayList<NamedElement>();
+		
+		//add distinct transitions to the result
+		EList<Transition> transitions = region.getTransitions();
+		for(Transition transition: transitions){
+			boolean hasSameName = false;
+			for(NamedElement element: result){
+				if(element.getName().equals(transition.getName())){
+					hasSameName = true;
+				}
+			}
+			if(hasSameName == false)
+				result.add(transition);
+		}
+		
+		//add distinct constraints to the result
+		EList<Constraint> constraints = region.getOwnedRules();
+		for(Constraint constraint: constraints){
+			boolean hasSameName = false;
+			for(NamedElement element: result){
+				if(element.getName().equals(constraint.getName())){
+					hasSameName = true;
+				}
+			}
+			if(hasSameName == false)
+				result.add(constraint);
+		}
+		
+		//add distinct vertices to the result
+		EList<Vertex> vertices = region.getSubvertices();
+		for(Vertex vertex: vertices){
+			boolean hasSameName = false;
+			for(NamedElement element: result){
+				if(element.getName().equals(vertex.getName())){
+					hasSameName = true;
+				}
+			}
+			
+			if(hasSameName == false){
+				if(vertex instanceof Pseudostate){
+					EList<Transition> outgoings = vertex.getOutgoings();
+					if(outgoings.size() > 0){
+						result.add(((Pseudostate)vertex));
+					}
+				}
+				else if(vertex instanceof FinalState){
+						result.add(((FinalState)vertex));
+				}else{
+					result.add(vertex);
+				}	
+			}
+			
 		}
 		
 		return result;

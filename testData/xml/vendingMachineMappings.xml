@@ -40,4 +40,32 @@ vm.addChoc("MM");</code>
 		<name>getNineChocolates</name>
 		<transition-name>getChocs</transition-name>
 		<code>vm.getChoc(sb);</code>
-		<required-mappings>vMachineInit, stringBufferInit</required-mappings></mapping></mappings>
+		<required-mappings>vMachineInit, stringBufferInit</required-mappings></mapping>
+	<mapping>
+		<name>doingNothing</name>
+		<transition-name>none</transition-name>
+		<code></code></mapping>
+	<mapping>
+		<name>constraintStockEqualsZero</name>
+		<constraint-name>ConstraintStockZero</constraint-name>
+		<code>vm.getStock().size() == 0;</code>
+		<required-mappings>vMachineInit</required-mappings>
+		<stateinvariants>State1,State2,State3</stateinvariants></mapping>
+	<mapping>
+		<name>constraintCreditAtLeastNinty</name>
+		<constraint-name>ConstraintCreditGTNinty</constraint-name>
+		<code>vm.getCredit() >= 90;</code>
+		<required-mappings>vMachineInit</required-mappings>
+		<stateinvariants>State3,State6,State9</stateinvariants></mapping>
+	<mapping>
+		<name>constraintCreditZeroToNinty</name>
+		<constraint-name>ConstraintCreditZeroToNinty</constraint-name>
+		<code>vm.getCredit() &gt; 0 &amp;&amp; vm.getCredit() &lt; 90;</code>
+		<required-mappings>vMachineInit</required-mappings>
+		<stateinvariants>State2,State5,State8</stateinvariants></mapping>
+	<mapping>
+		<name>constraintCreditEqualsZero</name>
+		<constraint-name>ConstraintCreditZero</constraint-name>
+		<code>vm.getCredit() == 0;</code>
+		<required-mappings>vMachineInit</required-mappings>
+		<stateinvariants>State1,State4,State7</stateinvariants></mapping></mappings>

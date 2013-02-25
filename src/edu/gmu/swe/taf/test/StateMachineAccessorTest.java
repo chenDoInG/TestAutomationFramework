@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.FinalState;
+import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Pseudostate;
 import org.eclipse.uml2.uml.Region;
 import org.eclipse.uml2.uml.State;
@@ -31,6 +32,7 @@ import edu.gmu.swe.taf.StateMachineAccessor;
  */
 public class StateMachineAccessorTest {
 
+	private String vendingMachineXmlPath = "testData/model/VendingMachineFSM.uml";
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -47,16 +49,14 @@ public class StateMachineAccessorTest {
 	
 	@Test
 	public void testGetStateMachines() throws IOException{
-		String path = "testData/model/VendingMachineFSM.uml";
-		EObject object = ModelAccessor.getModelObject(path);
+		EObject object = ModelAccessor.getModelObject(vendingMachineXmlPath);
 		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
 		assertEquals(1, statemachines.size());
 	}
 	
 	@Test
 	public void testGetRegions() throws IOException{
-		String path = "testData/model/VendingMachineFSM.uml";
-		EObject object = ModelAccessor.getModelObject(path);
+		EObject object = ModelAccessor.getModelObject(vendingMachineXmlPath);
 		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		assertEquals(1, regions.size());
@@ -64,8 +64,7 @@ public class StateMachineAccessorTest {
 	
 	@Test
 	public void testGetInitialStates() throws IOException{
-		String path = "testData/model/VendingMachineFSM.uml";
-		EObject object = ModelAccessor.getModelObject(path);
+		EObject object = ModelAccessor.getModelObject(vendingMachineXmlPath);
 		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		List<Pseudostate> initialStates = StateMachineAccessor.getInitialStates(regions.get(0));
@@ -74,8 +73,7 @@ public class StateMachineAccessorTest {
 	
 	@Test
 	public void testGetFinalStates() throws IOException{
-		String path = "testData/model/VendingMachineFSM.uml";
-		EObject object = ModelAccessor.getModelObject(path);
+		EObject object = ModelAccessor.getModelObject(vendingMachineXmlPath);
 		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		List<FinalState> finalStates = StateMachineAccessor.getFinalStates(regions.get(0));
@@ -84,8 +82,7 @@ public class StateMachineAccessorTest {
 	
 	@Test
 	public void testGetStates() throws IOException{
-		String path = "testData/model/VendingMachineFSM.uml";
-		EObject object = ModelAccessor.getModelObject(path);
+		EObject object = ModelAccessor.getModelObject(vendingMachineXmlPath);
 		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		List<State> states = StateMachineAccessor.getStates(regions.get(0));
@@ -94,8 +91,7 @@ public class StateMachineAccessorTest {
 	
 	@Test
 	public void testCreateStateMappings() throws IOException{
-		String path = "testData/model/VendingMachineFSM.uml";
-		EObject object = StateMachineAccessor.getModelObject(path);
+		EObject object = StateMachineAccessor.getModelObject(vendingMachineXmlPath);
 		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
@@ -108,6 +104,22 @@ public class StateMachineAccessorTest {
 		assertNotNull(stateMachine.getInitialStates());
 		assertNotNull(stateMachine.getFinalStates());
 		assertNotNull(stateMachine.getEdges());
-		
+	}
+	
+	/**
+	 * Test the method getAllIdentifiableElements(Region)
+	 * @throws IOException
+	 */
+	@Test
+	public void testGetAllIdentifiableElements() throws IOException{
+		EObject object = ModelAccessor.getModelObject(vendingMachineXmlPath);
+		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		List<NamedElement> elements = StateMachineAccessor.getAllIdentifiableElements(regions.get(0));
+		assertEquals(24, elements.size());
+		/*
+		for(NamedElement ne: elements)
+			System.out.println(ne.getName());
+		*/
 	}
 }

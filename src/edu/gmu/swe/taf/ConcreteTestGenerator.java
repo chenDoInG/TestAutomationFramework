@@ -191,6 +191,7 @@ public class ConcreteTestGenerator {
 		
 		//Add all required mappings for this tests into finalRequiredMappings
 		List<Mapping> mappings = test.getMappings();
+		
 		System.out.println(mappings.size());
 		
 		List<Mapping> finalMappings = new ArrayList<Mapping>();

@@ -68,16 +68,17 @@ public class AbstractTestGenerator {
 	}
 	
 	/**
-	 * Generates test paths to satisfy the edge coverage criterion
+	 * Generates test paths to satisfy the edge coverage criterion.
 	 * 
 	 * @param edges				edges of a control flow graph in a String format "1 2 \n 2 3 \n"
 	 * @param initialNodes		initial nodes of a control flow graph in a String format "1 2 ... etc."
 	 * @param finalNodes		final nodes of a control flow graph in a String format "1 2 ... etc."
+	 * @param criterion			an enumeration type of {@link TestCoverageCriteria}
 	 * @return a list of {@link coverage.graph.Path} objects that satisfy edge coverage
 	 * @throws InvalidInputException
 	 * @throws InvalidGraphException
 	 */
-	public static List<Path> getTestPathsForEdgeCoverage(String edges, String initialNodes, String finalNodes) throws InvalidInputException, InvalidGraphException{
+	public static List<Path> getTestPaths(String edges, String initialNodes, String finalNodes, TestCoverageCriteria criterion) throws InvalidInputException, InvalidGraphException{
 		
 		Graph g = GraphUtil.readGraph(edges, initialNodes, finalNodes);
 		try {
@@ -86,7 +87,15 @@ public class AbstractTestGenerator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return g.findEdgeCoverage();	
+		
+		if(criterion == TestCoverageCriteria.NODECOVERAGE)
+			return g.findNodeCoverage();	
+		else if(criterion == TestCoverageCriteria.EDGECOVERAGE)
+			return g.findEdgeCoverage();
+		else if(criterion == TestCoverageCriteria.EDGEPAIRCOVERAGE)
+			return g.findEdgePairCoverage(null);
+		else
+			return g.findMinimumPrimePathCoverageViaPrefixGraphOptimized(null);
 	}
 	
 	/**
@@ -210,7 +219,7 @@ public class AbstractTestGenerator {
 					else if(nodes.size() == 1)
 						mappings.add(nodes.get(0));
 					else
-						throw new Exception("No mapping found");	
+						throw new Exception("No mapping found for the element \"" + transition.getName() + "\"");	
 					
 					//store the transition and its mappings
 					if(!hashedTransitionMappings.containsKey(transition))

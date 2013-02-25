@@ -705,9 +705,12 @@ public class XmlManipulator {
 						break;
 					}
 				}
-				
+				//if no code needs to be mapped to the element, add an empty String object
 				if(nodes.item(j).getNodeName().equals("code")){
-					mapping.setTestCode(nodes.item(j).getFirstChild().getNodeValue());
+					if(nodes.item(j).getFirstChild() == null)
+						mapping.setTestCode("");
+					else
+						mapping.setTestCode(nodes.item(j).getFirstChild().getNodeValue());
 					continue;
 				}
 				
