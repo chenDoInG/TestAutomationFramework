@@ -191,63 +191,111 @@ public class ConcreteTestGenerator {
 		
 		//Add all required mappings for this tests into finalRequiredMappings
 		List<Mapping> mappings = test.getMappings();
-		
-		System.out.println(mappings.size());
+		for(Mapping mapping: mappings)
+			System.out.println(mapping.getMappingName());
 		
 		List<Mapping> finalMappings = new ArrayList<Mapping>();
 		
 		//keep track of the index moving inside of the for loop
-		int flag = 0;
-		for(int i = 0; i < mappings.size() - 1; i++){
 
-			//find a right mapping before a constraint
-			if(mappings.get(i + 1).getType() == IdentifiableElementType.PRECONDITION || mappings.get(i + 1).getType() == IdentifiableElementType.STATEINVARIANT){
-				Mapping currentMapping = mappings.get(i);
-				Mapping nextMapping = mappings.get(i + 1);
-				
-				//Get a list of mappings that are prior to the constraint
-				for(int j = flag; j <= i + 1; j++){
-					finalMappings.add(mappings.get(j));
-				}
-				System.out.println(currentMapping.getIdentifiableElementName());
-				System.out.println(nextMapping.getIdentifiableElementName() + " " + nextMapping.getMappingName());
-				System.out.println(finalMappings.size());
-				
-				//From the mappings prior to the constraint, write them in a temp Java file and test if the constraint can be satisfied
-				//if this list of mappings cannot satisfy the constraint, use another mapping 
-				//if all mappings cannot satisfy the constraint, throw an exception
-				if(isConstraintSatisfied(finalMappings)){
-					flag = i + 2;
-					continue;
-				}else{
-					//get all mappings for the element right ahead of the constraint
-					//to be updated for any element, not just transition
-					List<Mapping> nodes = XmlManipulator.getMappingsByTransition(xmlPath, currentMapping.getIdentifiableElementName());
-					System.out.println("nodes " + nodes.size());
-					boolean isSatisfied = false;
-					for(Mapping m: nodes){
-						if(!m.getMappingName().equals(currentMapping.getMappingName())){
-							finalMappings.remove(finalMappings.size() - 2);
+		for(int i = 0; i < mappings.size();){
+
+			if(i < mappings.size() - 1){
+				//find a right mapping before a constraint
+				if(mappings.get(i + 1).getType() == IdentifiableElementType.PRECONDITION || mappings.get(i + 1).getType() == IdentifiableElementType.STATEINVARIANT){
+					//get the current mapping and this mapping is mapped to an element that describes behaviors of a model
+					Mapping currentMapping = mappings.get(i);
+					
+					//get a list of constraint mappings after the current mapping 
+					List<Mapping> nextMappings = new ArrayList<Mapping>();
+					
+					int z = i + 1;
+					do{
+						nextMappings.add(mappings.get(z));
+						z++;
+					}while(mappings.get(z).getType() == IdentifiableElementType.PRECONDITION || mappings.get(z).getType() == IdentifiableElementType.STATEINVARIANT);
+					
+					//get a list of mappings that are prior to the constraint
+					for(int j = i; j <= z - 1; j++){
+						finalMappings.add(mappings.get(j));
+						i++;
+					}
+					//System.out.println("current: " + currentMapping.getIdentifiableElementName());
+					//for(Mapping nextmapping: nextMappings)
+					//	System.out.println("next: " + nextmapping.getIdentifiableElementName() + " " + nextmapping.getMappingName());
+					
+					//System.out.println("size: " + finalMappings.size() + " i: " + i);
+					
+					//from the mappings prior to the constraint, write them in a temp Java file and test if the constraint can be satisfied
+					//if this list of mappings cannot satisfy the constraint, use another mapping 
+					//if all mappings cannot satisfy the constraint, throw an exception
+					if(!isConstraintSatisfied(finalMappings)){
+						//get all mappings for the element right ahead of the constraint
+						//to be updated for any element, not just transition
+						List<Mapping> nodes = XmlManipulator.getMappingsByTransition(xmlPath, currentMapping.getIdentifiableElementName());
+						System.out.println("available mappings for " + currentMapping.getIdentifiableElementName() + " is " + nodes.size());
+						boolean[] isMappingSatisfied = new boolean[nextMappings.size()];
+						
+						//remove the old mapping and constraints first
+						for(Mapping mappingRemoved: nextMappings){
 							finalMappings.remove(finalMappings.size() - 1);
-							finalMappings.add(m);
-							finalMappings.add(nextMapping);
-							if(isConstraintSatisfied(finalMappings)){
-								isSatisfied = true;
-								break;
+						}
+						finalMappings.remove(finalMappings.size() - 1);
+						
+						for(Mapping m: nodes){
+							if(!m.getMappingName().equals(currentMapping.getMappingName())){
+								finalMappings.add(m);
+								
+								//check every constraint
+								for(int x = 0; x < nextMappings.size();x++){
+									finalMappings.add(nextMappings.get(x));
+									if(isConstraintSatisfied(finalMappings)){
+										isMappingSatisfied[x] = true;
+									}
+									else{
+										isMappingSatisfied[x] = false;
+									}
+									finalMappings.remove(finalMappings.size() - 1);
+								}
+								//System.out.println("after more mappings checking0: " + finalMappings.size());
+								boolean isConstraintSatisfied = true;
+								for(int x = 0; x < nextMappings.size();x++){
+									if(isMappingSatisfied[x]  == false)
+										isConstraintSatisfied = false;
+								}
+								if(isConstraintSatisfied == true){
+									//finalMappings.add(m);
+									for(int x = 0; x < nextMappings.size();x++){
+										finalMappings.add(nextMappings.get(x));
+									}
+									break;
+								}
+									
+								//System.out.println("after more mappings checking1: " + finalMappings.size());
 							}
-						}
+						}	
+
+						//show the error messages
+						for(int y = 0; y < nextMappings.size(); y++){
+							if(isMappingSatisfied[y] == false){
+								System.err.println("The constraint " + nextMappings.get(y).getMappingName() +  " in " + nextMappings.get(y).getIdentifiableElementName() + " cannot be satisfied in the following path: ");
+								for(Mapping m2 : finalMappings){
+									System.err.print(m2.getIdentifiableElementName() + " ");
+								}
+							}
+						}					
 					}
-					if(isSatisfied == false){
-						//System.out.println("The constraint in " + nextMapping.getIdentifiableElementName() + " cannot be satisfied in the following path: ");
-						System.err.println("The constraint in " + nextMapping.getIdentifiableElementName() + " cannot be satisfied in the following path: ");
-						for(Mapping m2 : finalMappings){
-							System.err.print(m2.getIdentifiableElementName() + " ");
-						}
-						System.err.println();
-					}
-				}			
-				flag = i + 2;
-			}	
+					//System.out.println("i: " + i);
+				}
+				else{
+					finalMappings.add(mappings.get(i));
+					i++;
+				}
+			}
+			else{
+				finalMappings.add(mappings.get(i));
+				i++;
+			}
 		}
 	
 		StringBuffer variableInitialization = null;
@@ -263,16 +311,16 @@ public class ConcreteTestGenerator {
 		StringBuffer testCode = new StringBuffer("");		
 		for(int i = 0;i < finalMappings.size();i++){
 			System.out.println(finalMappings.get(i).getMappingName());
-			if((mappings.get(i).getType() == IdentifiableElementType.PRECONDITION) ||( mappings.get(i).getType() == IdentifiableElementType.STATEINVARIANT)){
-				if(i == (mappings.size() - 1)){
+			if((finalMappings.get(i).getType() == IdentifiableElementType.PRECONDITION) ||( finalMappings.get(i).getType() == IdentifiableElementType.STATEINVARIANT)){
+				if(i == (finalMappings.size() - 1)){
 					testCode.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT); 
 					testCode.append("assertEquals(true, ");
-					testCode.append(mappings.get(i).getTestCode().substring(0, mappings.get(i).getTestCode().lastIndexOf(";")));
+					testCode.append(finalMappings.get(i).getTestCode().substring(0, finalMappings.get(i).getTestCode().lastIndexOf(";")));
 					testCode.append(");");
 					testCode.append("\n");
 				}
 			}else{
-				String[] code = mappings.get(i).getTestCode().split("\n");
+				String[] code = finalMappings.get(i).getTestCode().split("\n");
 				for(String s: code){
 					testCode.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
 					testCode.append(s);
@@ -531,7 +579,7 @@ public class ConcreteTestGenerator {
 			Method m = methods[0];
 			m.setAccessible(true);
 			Object o = m.invoke(c.newInstance(), null);
-			System.out.println(o.toString());
+			System.out.println("temp file result: " + o.toString());
 			returnValue = Boolean.valueOf(o.toString());
 		}
 		else{
@@ -548,7 +596,7 @@ public class ConcreteTestGenerator {
 	 */
 	public File writeTempTest(String testContent) throws IOException{
 		File file = new File(tempTestDirectory + "TempTest.java");
-		System.out.println(tempTestDirectory + "TempTest.java");
+		//System.out.println(tempTestDirectory + "TempTest.java");
 		FileOutputStream fop = new FileOutputStream(file);
 		StringBuffer result = new StringBuffer("");
 		String packageName = "\n";
@@ -599,7 +647,7 @@ public class ConcreteTestGenerator {
 		optionList.addAll(Arrays.asList("-classpath", directory + ":" + System.getProperty("java.class.path")));
 		//optionList.addAll(Arrays.asList("-classpath", System.getProperty("java.class.path")));
 		
-		System.out.println("classpath: " + System.getProperty("java.class.path"));
+		//System.out.println("classpath: " + System.getProperty("java.class.path"));
 		boolean status = compiler.getTask(null, fileManager, diagnostics, optionList, null, compilationUnits).call();
 		
 		if (!status){//If compilation error occurs
