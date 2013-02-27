@@ -37,5 +37,23 @@ public class JavaSupporter {
 		
 		return results;
 	}
+	
+	/**
+	 * Removes the semicolon if there is one at the end of a String object.
+	 * @param string
+	 * @return			a String object without having a semicolon at the end
+	 */
+	public static String removeSemiColon(String string){
+		String result = string;
+		if(string.endsWith(";")){
+			result = string.substring(0, string.length() - 1);
+			if(result.endsWith(";"))
+				result = removeSemiColon(result);
+		}
+		else{
+			return result;
+		}
+		return result;	
+	}
 
 }

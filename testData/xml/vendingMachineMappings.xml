@@ -39,7 +39,16 @@ vm.addChoc("MM");</code>
 	<mapping>
 		<name>getNineChocolates</name>
 		<transition-name>getChocs</transition-name>
-		<code>vm.getChoc(sb);</code>
+		<code>vm.getChoc(sb);
+		vm.getChoc(sb);
+		vm.getChoc(sb);
+		vm.getChoc(sb);
+		vm.getChoc(sb);
+		vm.getChoc(sb);
+		vm.getChoc(sb);
+		vm.getChoc(sb);
+		vm.getChoc(sb);
+		</code>
 		<required-mappings>vMachineInit, stringBufferInit</required-mappings></mapping>
 	<mapping>
 		<name>doingNothing</name>

@@ -108,7 +108,95 @@ public class ConcreteTestGeneratorTest {
 		//get the vertices from a path and return a list of transitions based on the vertices
 		//List<Vertex> vertexes = AbstractTestGenerator.getPathByState(paths.get(0), stateMachine);
 		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
-		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(9), stateMachine), stateMachine);
+		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(5), stateMachine), stateMachine);
+
+		//add the test comments
+		String pathName = "" + transitions.get(0).getSource().getName() + " ";
+		for(Transition transition: transitions){
+			//System.out.println(transition.getSource().getName());
+			//System.out.println(transition);	
+			//System.out.println(transition.getTarget().getName());	
+			pathName += transition.getName() + " ";
+			pathName += transition.getTarget().getName() + " ";
+		}
+		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest("1", "The test for the path " + pathName, transitions);
+		test = abstractTestGenerator.updateTest(xmlPath, test, XmlManipulator.getConstraintMappings(xmlPath));
+		
+		/**
+		 * Generates the concrete test
+		 */
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "VendingMachineTest", xmlPath);
+
+		File file = new File(testDirectory + "VendingMachineTest" + ".java");
+		//I should refactoring the this method by moving updateConcreteTest method inside
+		concreteTestGenerator.createConcreteTestCase(testDirectory, file, concreteTestGenerator.updateConcreteTest(test));
+	}
+	
+	/**
+	 * The test for the method "createConcreteTestCase(String, File, Test)"
+	 * @throws Exception
+	 */
+
+	@Test
+	public void testCreateConcreteTestCaseForFifthPathOfEdgeCoverage() throws Exception {
+		
+		/**
+		 * Computes the test
+		 */
+		EObject object = StateMachineAccessor.getModelObject(path);
+		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
+		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.EDGECOVERAGE);
+		
+		//get the vertices from a path and return a list of transitions based on the vertices
+
+		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
+		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(5), stateMachine), stateMachine);
+
+		//add the test comments
+		String pathName = "" + transitions.get(0).getSource().getName() + " ";
+		for(Transition transition: transitions){
+
+			pathName += transition.getName() + " ";
+			pathName += transition.getTarget().getName() + " ";
+		}
+		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest("1", "The test for the path " + pathName, transitions);
+		test = abstractTestGenerator.updateTest(xmlPath, test, XmlManipulator.getConstraintMappings(xmlPath));
+		
+		/**
+		 * Generates the concrete test
+		 */
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "VendingMachineTest", xmlPath);
+
+		File file = new File(testDirectory + "VendingMachineTest" + ".java");
+		//I should refactoring the this method by moving updateConcreteTest method inside
+		concreteTestGenerator.createConcreteTestCase(testDirectory, file, concreteTestGenerator.updateConcreteTest(test));
+	}
+	
+	/**
+	 * The test for the method "createConcreteTestCase(String, File, Test)"
+	 * @throws Exception
+	 */
+
+	@Test
+	public void testCreateConcreteTestCasePrimePathCoverage() throws Exception {
+		
+		/**
+		 * Computes the test
+		 */
+		EObject object = StateMachineAccessor.getModelObject(path);
+		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
+		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.PRIMEPATHCOVERAGE);
+		//System.out.println(paths.get(0));
+		//System.out.println(stateMachine.getStateMappings());
+		
+		//get the vertices from a path and return a list of transitions based on the vertices
+		//List<Vertex> vertexes = AbstractTestGenerator.getPathByState(paths.get(0), stateMachine);
+		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
+		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(1), stateMachine), stateMachine);
 
 		//add the test comments
 		String pathName = "" + transitions.get(0).getSource().getName() + " ";

@@ -209,14 +209,15 @@ public class ConcreteTestGenerator {
 					//get a list of constraint mappings after the current mapping 
 					List<Mapping> nextMappings = new ArrayList<Mapping>();
 					
-					int z = i + 1;
+					//the position of the next element after the constraints
+					int position = i + 1;
 					do{
-						nextMappings.add(mappings.get(z));
-						z++;
-					}while(mappings.get(z).getType() == IdentifiableElementType.PRECONDITION || mappings.get(z).getType() == IdentifiableElementType.STATEINVARIANT);
+						nextMappings.add(mappings.get(position));
+						position++;
+					}while(mappings.get(position).getType() == IdentifiableElementType.PRECONDITION || mappings.get(position).getType() == IdentifiableElementType.STATEINVARIANT);
 					
 					//get a list of mappings that are prior to the constraint
-					for(int j = i; j <= z - 1; j++){
+					for(int j = i; j <= position - 1; j++){
 						finalMappings.add(mappings.get(j));
 						i++;
 					}
@@ -245,7 +246,7 @@ public class ConcreteTestGenerator {
 						for(Mapping m: nodes){
 							if(!m.getMappingName().equals(currentMapping.getMappingName())){
 								finalMappings.add(m);
-								
+								System.out.println("nextMappings size: " + nextMappings.size());
 								//check every constraint
 								for(int x = 0; x < nextMappings.size();x++){
 									finalMappings.add(nextMappings.get(x));
@@ -278,12 +279,18 @@ public class ConcreteTestGenerator {
 						//show the error messages
 						for(int y = 0; y < nextMappings.size(); y++){
 							if(isMappingSatisfied[y] == false){
-								System.err.println("The constraint " + nextMappings.get(y).getMappingName() +  " in " + nextMappings.get(y).getIdentifiableElementName() + " cannot be satisfied in the following path: ");
-								for(Mapping m2 : finalMappings){
-									System.err.print(m2.getIdentifiableElementName() + " ");
+								System.err.println("The constraint " + nextMappings.get(y).getMappingName() +  " in " + nextMappings.get(y).getIdentifiableElementName() + " cannot be satisfied after the following path: ");
+								for(int z = 0; z < finalMappings.size(); z++){
+									if(z > 0){
+										if(!finalMappings.get(z).getIdentifiableElementName().equals(finalMappings.get(z - 1).getIdentifiableElementName()))
+											System.err.print(finalMappings.get(z).getIdentifiableElementName() + " ");
+									}else{
+										System.err.print(finalMappings.get(z).getIdentifiableElementName() + " ");
+									}
 								}
 							}
-						}					
+						}//end of the for loop of showing error messages
+						
 					}
 					//System.out.println("i: " + i);
 				}
@@ -311,7 +318,8 @@ public class ConcreteTestGenerator {
 		StringBuffer testCode = new StringBuffer("");		
 		for(int i = 0;i < finalMappings.size();i++){
 			System.out.println(finalMappings.get(i).getMappingName());
-			if((finalMappings.get(i).getType() == IdentifiableElementType.PRECONDITION) ||( finalMappings.get(i).getType() == IdentifiableElementType.STATEINVARIANT)){
+			//the if branch is to be updated for test oracle
+			if((finalMappings.get(i).getType() == IdentifiableElementType.PRECONDITION) || (finalMappings.get(i).getType() == IdentifiableElementType.STATEINVARIANT)){
 				if(i == (finalMappings.size() - 1)){
 					testCode.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT); 
 					testCode.append("assertEquals(true, ");
@@ -320,10 +328,16 @@ public class ConcreteTestGenerator {
 					testCode.append("\n");
 				}
 			}else{
+				testCode.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
+				testCode.append("/*** test code of " + finalMappings.get(i).getMappingName());
+				testCode.append(" for the element ");
+				testCode.append(finalMappings.get(i).getIdentifiableElementName());
+				testCode.append(" ***/");
+				testCode.append("\n");
 				String[] code = finalMappings.get(i).getTestCode().split("\n");
 				for(String s: code){
 					testCode.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
-					testCode.append(s);
+					testCode.append(s.trim());
 					testCode.append("\n");
 				}
 			}
@@ -534,6 +548,15 @@ public class ConcreteTestGenerator {
 		StringBuffer testCode = new StringBuffer();
 		testCode.append(variableInitilization);
 		
+		//find the position of the last element that is not a constraint
+		int position = 0;
+		for(int i = mappings.size() - 1; i >= 0; i--){
+			if((mappings.get(i).getType() != IdentifiableElementType.PRECONDITION) && (mappings.get(i).getType() != IdentifiableElementType.POSTCONDITION) && (mappings.get(i).getType() != IdentifiableElementType.STATEINVARIANT)){
+				position = i;
+				break;
+			}
+		}
+		
 		//add main body of the test
 		for(int i = 0; i < mappings.size(); i++){
 			if((mappings.get(i).getType() == IdentifiableElementType.PRECONDITION) ||( mappings.get(i).getType() == IdentifiableElementType.STATEINVARIANT)){
@@ -543,14 +566,38 @@ public class ConcreteTestGenerator {
 					testCode.append(mappings.get(i).getTestCode());
 					testCode.append("\n");
 				}
-				
+				else if(i == (position + 1)){
+					testCode.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT); 
+					testCode.append("return (");
+					testCode.append(JavaSupporter.removeSemiColon(mappings.get(i).getTestCode()));
+					testCode.append(") ");
+					
+					for(int j = i + 1; j < mappings.size();j++){
+						testCode.append("&&");
+						testCode.append(" (");
+						testCode.append(JavaSupporter.removeSemiColon(mappings.get(j).getTestCode()));
+						testCode.append(")");
+					}
+					testCode.append(";");
+					testCode.append("\n");
+					break;
+				}
 			}else{
+				
+				String[] code = mappings.get(i).getTestCode().split("\n");
+				for(String s: code){
+					testCode.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
+					testCode.append(s.trim());
+					testCode.append("\n");
+				}
+				/*
 				testCode.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT); 
 				testCode.append(mappings.get(i).getTestCode());
-				testCode.append("\n");
+				testCode.append("\n");*/
 			}
 		}
-		//System.out.println(testCode.toString());
+		System.out.println("mapping size: " + mappings.size());
+		System.out.println(testCode.toString());
 		File file = writeTempTest(testCode.toString());
 		compileJavaFile(tempTestDirectory, file);
 		
