@@ -64,9 +64,18 @@ public class AbstractTestGeneratorTest {
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
 		
-		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.EDGECOVERAGE);
+		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.PRIMEPATHCOVERAGE);
+		
+		/*
+		String[] edges = stateMachine.getEdges().split("\n");
+		for(String edge : edges){
+			String[] vertices = edge.split(" ");
+			//System.out.println(vertices[0]+ " :: " + vertices[1]);
+			System.out.println(stateMachine.getReversedStateMappings().get(vertices[0]).getName() + " :: " + stateMachine.getReversedStateMappings().get(vertices[1]).getName());
+			//System.out.println(stateMachine.getReversedStateMappings().get(vertices[1]).getName());
+		}*/
 		assertNotNull(paths);
-		System.out.println(paths);
+		//System.out.println(paths);
 	}
 	
 	@Test
@@ -137,7 +146,7 @@ public class AbstractTestGeneratorTest {
 		
 		//get the vertices from a path and return a list of transitions based on the vertices
 		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
-		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(9), stateMachine), stateMachine);
+		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(AbstractTestGenerator.getPathByState(paths.get(9), stateMachine), stateMachine);
 		
 		for(Transition transition: transitions)
 			System.out.println(transition);

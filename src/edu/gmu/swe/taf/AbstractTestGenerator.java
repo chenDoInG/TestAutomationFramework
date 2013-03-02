@@ -104,6 +104,8 @@ public class AbstractTestGenerator {
 			Graph prefix = GraphUtil.getPrefixGraph(primePaths);
     		Graph bipartite = GraphUtil.getBipartiteGraph(prefix, initialNodes, finalNodes);
 			List<Path> splittedPaths = g.splittedPathsFromSuperString(bipartite.findMinimumPrimePathCoverageViaPrefixGraphOptimized(g.findPrimePaths()).get(0), g.findTestPath());
+			//System.out.println(edges);
+			//System.out.println("splitted paths: " + splittedPaths.size());
 			return splittedPaths;
 		}
 	}
@@ -145,6 +147,9 @@ public class AbstractTestGenerator {
 			
 			Vertex destination = vertices.get(i);
 			for(Transition transition: source.getOutgoings()){
+				//Now the first right transition is used
+				//but there may be more than one transition between two vertices
+				//this issue will be taken care of later
 				if(transition.getTarget().getName().equals(destination.getName())){
 					transitions.add(transition);
 					break;//a bug is fixed; without break statement, extra transitions may be added

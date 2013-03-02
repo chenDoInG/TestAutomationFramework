@@ -190,7 +190,8 @@ public class ConcreteTestGeneratorTest {
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
 		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.PRIMEPATHCOVERAGE);
-		//System.out.println(paths.get(0));
+		System.out.println(paths.get(1));
+		System.out.println(paths.get(1).size());
 		//System.out.println(stateMachine.getStateMappings());
 		
 		//get the vertices from a path and return a list of transitions based on the vertices

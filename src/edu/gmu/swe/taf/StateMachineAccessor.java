@@ -104,14 +104,19 @@ public class StateMachineAccessor extends ModelAccessor {
 			//they do not appear in the UML diagram but they do exist in the UML model
 			if(transition.getSource() != null && transition.getTarget() != null){
 				//System.out.println(transition.getSource().getName() + "; " + transition.getTarget().getName());
-
-				if(stateMappings.containsKey(transition.getSource())){
-					edges = edges + stateMappings.get(transition.getSource());
+				
+				//redundant edges are not allowed
+				String edge = stateMappings.get(transition.getSource()) + " " + stateMappings.get(transition.getTarget());
+				
+				if(edges.indexOf(edge) == -1){
+					if(stateMappings.containsKey(transition.getSource())){
+						edges = edges + stateMappings.get(transition.getSource());
+					}
+					if(stateMappings.containsKey(transition.getTarget())){
+						edges = edges + " " + stateMappings.get(transition.getTarget());
+					}				
+					edges = edges + "\n"; 
 				}
-				if(stateMappings.containsKey(transition.getTarget())){
-					edges = edges + " " + stateMappings.get(transition.getTarget());
-				}
-				edges = edges + "\n"; 
 			}
 		}
 	}

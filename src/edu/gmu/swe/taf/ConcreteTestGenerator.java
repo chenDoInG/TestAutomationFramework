@@ -199,7 +199,9 @@ public class ConcreteTestGenerator {
 		//keep track of the index moving inside of the for loop
 
 		for(int i = 0; i < mappings.size();){
-
+			//the first if structure deals the case: all mappings before the very last one
+			//because we are using one lookhead mechanism, if the last mapping is reached, the program will reach the one after it
+			//and this could case indexoutofbound exception
 			if(i < mappings.size() - 1){
 				//find a right mapping before a constraint
 				if(mappings.get(i + 1).getType() == IdentifiableElementType.PRECONDITION || mappings.get(i + 1).getType() == IdentifiableElementType.STATEINVARIANT){
@@ -270,6 +272,12 @@ public class ConcreteTestGenerator {
 										finalMappings.add(nextMappings.get(x));
 									}
 									break;
+								}else{
+									//this part will be deleted after the error message catch part is complete
+									//since if any constraint is not satisfied, 
+									for(int x = 0; x < nextMappings.size();x++){
+										finalMappings.add(nextMappings.get(x));
+									}
 								}
 									
 								//System.out.println("after more mappings checking1: " + finalMappings.size());
@@ -298,8 +306,9 @@ public class ConcreteTestGenerator {
 					finalMappings.add(mappings.get(i));
 					i++;
 				}
-			}
+			}			
 			else{
+				//if this is the last mapping, add it
 				finalMappings.add(mappings.get(i));
 				i++;
 			}
