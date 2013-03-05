@@ -503,6 +503,17 @@ public class XmlManipulatorTest {
 	}
 	
 	/**
+	 * Tests the method GetMappingsByElementName
+	 * @throws Exception 
+	 */
+	@Test
+	public void testGetMappingsByElementName() throws Exception{
+		List<Mapping> nodes = XmlManipulator.getMappingsByElementName(xmlPath, "ConstraintCreditZero");
+		//System.out.println(nodes.get(0).getTestCode());
+		assertEquals(1, nodes.size());
+	}
+	
+	/**
 	 * Tests the method GetConstraintMappings
 	 * @throws Exception 
 	 */

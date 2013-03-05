@@ -25,4 +25,5 @@ public enum IdentifiableElementType {
 	PRECONDITION,
 	POSTCONDITION,
 	STATEINVARIANT;
+	
 }

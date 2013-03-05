@@ -13,6 +13,8 @@ import java.util.List;
 
 import org.eclipse.uml2.uml.NamedElement;
 
+import edu.gmu.swe.taf.Mapping;
+
 /**
  * A utility class used to support compilation of Java classes
  * 
@@ -154,6 +156,19 @@ public class JavaSupporter {
 			elementNames.add(element.getName());
 		}
 		return elementNames.toArray();
+	}
+	
+	/**
+	 * Get the names of a list of {@link edu.gmu.swe.taf.Mapping} objects.
+	 * @param elements	a list of {@link edu.gmu.swe.taf.Mapping} objects
+	 * @return			an array of names of {@link edu.gmu.swe.taf.Mapping} objects
+	 */
+	public static Object[] getMappingNames(List<Mapping> mappings){
+		List<String> mappingNames = new ArrayList<String>();
+		for(Mapping mapping : mappings){
+			mappingNames.add(mapping.getMappingName());
+		}
+		return mappingNames.toArray();
 	}
 
 }

@@ -645,7 +645,7 @@ public class XmlManipulator {
 	 * Returns the mappings created for the identifiable element, specified by name
 	 * @param path a String representation of the path of an XML file
 	 * @param name a String representation of the name of an element in an XML model
-	 * @return     a list of {@link org.w3c.dom.Node} objects of
+	 * @return     a list of {@link org.w3c.dom.Node} objects
 	 * @throws Exception 
 	 */
 	public static List<Node> getMatchedTransitionMappings(String path, String name) throws Exception{
@@ -705,6 +705,95 @@ public class XmlManipulator {
 						break;
 					}
 				}
+				//if no code needs to be mapped to the element, add an empty String object
+				if(nodes.item(j).getNodeName().equals("code")){
+					if(nodes.item(j).getFirstChild() == null)
+						mapping.setTestCode("");
+					else
+						mapping.setTestCode(nodes.item(j).getFirstChild().getNodeValue());
+					continue;
+				}
+				
+				if(nodes.item(j).getNodeName().equals("required-mappings")){
+					String[] required = nodes.item(j).getFirstChild().getNodeValue().split(",");
+					mapping.setRequiredMappings(Arrays.asList(required));
+					continue;
+				}
+				
+				if(nodes.item(j).getNodeName().equals("parameters")){
+					String[] parameters = nodes.item(j).getFirstChild().getNodeValue().split(",");
+					mapping.setParameters(Arrays.asList(parameters));
+				}
+				//may add more nodes if a mapping has more
+			}
+			if(isTransition == false)
+				mapping = null;
+			else
+				matchedNodes.add(mapping);
+			
+		}
+		return matchedNodes;
+	}
+	
+	/**
+	 * Returns the mappings created for the identifiable element, specified by name.
+	 * @param path a String representation of the path of an XML file
+	 * @param name a String representation of the name of an element in an XML model
+	 * @return     a list of {edu.gmu.swe.taf.Mapping} objects
+	 * @throws Exception 
+	 */
+	public static List<Mapping> getMappingsByElementName(String path, String name) throws Exception{
+		List<Mapping> matchedNodes = new ArrayList<Mapping>();
+		Document doc = readXmlFile(path);
+		NodeList mappings = doc.getElementsByTagName("mapping");
+		//System.out.println("size mapping: " + mappings.getLength());
+		//System.out.println("path: " + path);
+		//System.out.println("name: " + name);
+		
+		for(int i = 0; i < mappings.getLength();i++){
+			NodeList nodes = mappings.item(i).getChildNodes();
+			Mapping mapping = new Mapping();
+			//if this boolean sign is true, the transition is the one we are looking for
+			boolean isTransition = false;
+			for(int j = 0; j < nodes.getLength();j++){
+				
+				if(nodes.item(j).getNodeName().equals("name")){
+					mapping.setMappingName(nodes.item(j).getFirstChild().getNodeValue());
+					continue;
+				}
+				
+				//this if-else structure needs to be updated for other identifiable elements
+				if(nodes.item(j).getNodeName().equals("transition-name")){
+					if(nodes.item(j).getFirstChild().getNodeValue().equalsIgnoreCase(name)){
+						mapping.setIdentifiableElementName(nodes.item(j).getFirstChild().getNodeValue());
+						mapping.setType(IdentifiableElementType.TRANSITION);
+						isTransition = true;
+					}
+					else{
+						break;
+					}
+				}
+				else if(nodes.item(j).getNodeName().equals("constraint-name")){
+					if(nodes.item(j).getFirstChild().getNodeValue().equalsIgnoreCase(name)){
+						mapping.setIdentifiableElementName(nodes.item(j).getFirstChild().getNodeValue());
+						mapping.setType(IdentifiableElementType.TRANSITION);
+						isTransition = true;
+					}
+					else{
+						break;
+					}
+				}
+				else if(nodes.item(j).getNodeName().equals("state-name")){
+					if(nodes.item(j).getFirstChild().getNodeValue().equalsIgnoreCase(name)){
+						mapping.setIdentifiableElementName(nodes.item(j).getFirstChild().getNodeValue());
+						mapping.setType(IdentifiableElementType.TRANSITION);
+						isTransition = true;
+					}
+					else{
+						break;
+					}
+				}
+				
 				//if no code needs to be mapped to the element, add an empty String object
 				if(nodes.item(j).getNodeName().equals("code")){
 					if(nodes.item(j).getFirstChild() == null)
