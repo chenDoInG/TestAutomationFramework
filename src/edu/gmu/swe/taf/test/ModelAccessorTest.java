@@ -28,7 +28,7 @@ import edu.gmu.swe.taf.ModelAccessor;
  *
  */
 public class ModelAccessorTest {
-
+	private String path = "testData/VendingMachine/model/VendingMachineFSM.uml";
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -46,14 +46,12 @@ public class ModelAccessorTest {
 	@Test
 	public void testGetModelObject() throws IOException {
 		//String path = "C:\\Users\\nanli\\Desktop\\temp\\VendingMachine";
-		String path = "testData/model/VendingMachineFSM.uml";
 		EObject object = ModelAccessor.getModelObject(path);
 		assertNotNull(object);
 	}
 	
 	@Test
 	public void testGetStateMachines() throws IOException{
-		String path = "testData/model/VendingMachineFSM.uml";
 		EObject object = ModelAccessor.getModelObject(path);
 		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
 		assertEquals(1, statemachines.size());

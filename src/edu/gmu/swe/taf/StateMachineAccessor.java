@@ -9,6 +9,7 @@ import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.FinalState;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Pseudostate;
+import org.eclipse.uml2.uml.PseudostateKind;
 import org.eclipse.uml2.uml.Region;
 import org.eclipse.uml2.uml.State;
 import org.eclipse.uml2.uml.StateMachine;
@@ -61,29 +62,87 @@ public class StateMachineAccessor extends ModelAccessor {
 	 */
 	private void createStateMappings(Region region){
 		int stateNumber = 1;
-		EList<Vertex> vertexes = region.getSubvertices();
+		EList<Vertex> vertices = region.getSubvertices();
 		
-		for(Vertex vertex: vertexes){
-			if(vertex instanceof Pseudostate){
-				EList<Transition> outgoings = vertex.getOutgoings();
-				if(outgoings.size() > 0){
-					getStateMappings().put(vertex, new Integer(stateNumber).toString());
-					getReversedStateMappings().put(new Integer(stateNumber).toString(), vertex);
-					setInitialStates(getInitialStates() + new Integer(stateNumber).toString());
-				}
+		//check if all states are simple
+		boolean isSimple = true;
+		for(Vertex vertex: vertices){
+			if(vertex instanceof State){
+				if(((State)vertex).isComposite())
+					isSimple = false;
 			}
 			else if(vertex instanceof FinalState){
-				getStateMappings().put(vertex, new Integer(stateNumber).toString());	
-				getReversedStateMappings().put(new Integer(stateNumber).toString(), vertex);
-				setFinalStates(getFinalStates() + new Integer(stateNumber).toString());
-			}
-			else{
-				getStateMappings().put(vertex, new Integer(stateNumber).toString());	
-				getReversedStateMappings().put(new Integer(stateNumber).toString(), vertex);
-			}
+				if(((FinalState)vertex).isComposite())
+					isSimple = false;
+			}	
+		}
+		//if all states are simple, do the if block; otherwise, do the else block
+		if(isSimple){
+			for(Vertex vertex: vertices){
+				if(vertex instanceof Pseudostate && ((Pseudostate)vertex).getKind() == PseudostateKind.INITIAL_LITERAL){
+					EList<Transition> outgoings = vertex.getOutgoings();
+					if(outgoings.size() > 0){
+						getStateMappings().put(vertex, new Integer(stateNumber).toString());
+						getReversedStateMappings().put(new Integer(stateNumber).toString(), vertex);
+						setInitialStates(getInitialStates() + new Integer(stateNumber).toString());
+					}
+				}
+				else if(vertex instanceof FinalState){
+					getStateMappings().put(vertex, new Integer(stateNumber).toString());	
+					getReversedStateMappings().put(new Integer(stateNumber).toString(), vertex);
+					setFinalStates(getFinalStates() + new Integer(stateNumber).toString());
+				}
+				else{
+					getStateMappings().put(vertex, new Integer(stateNumber).toString());	
+					getReversedStateMappings().put(new Integer(stateNumber).toString(), vertex);
+				}	
+				stateNumber++;
+			}		
+		}
+		else{
+			List<Vertex> compositeStates = new ArrayList<Vertex>();
+			compositeStates.addAll(vertices);
+			System.out.println(compositeStates.size());
+			System.out.println(compositeStates);
+			do{
+					Vertex aVertex = compositeStates.get(0);
+					if(aVertex instanceof Pseudostate && ((Pseudostate)aVertex).getKind() == PseudostateKind.INITIAL_LITERAL){
+						EList<Transition> outgoings = aVertex.getOutgoings();
+						if(outgoings.size() > 0){
+							getStateMappings().put(aVertex, new Integer(stateNumber).toString());
+							getReversedStateMappings().put(new Integer(stateNumber).toString(), aVertex);
+							//set the initial if this initial is at the top level of the region
+							//initials states in composite states are not considered as initials in the whole graph
+							if(aVertex.getOwner() == region)
+								setInitialStates(getInitialStates() + new Integer(stateNumber).toString());
+							compositeStates.remove(0);
+						}
+					}
+					else if(aVertex instanceof FinalState){
+						getStateMappings().put(aVertex, new Integer(stateNumber).toString());	
+						getReversedStateMappings().put(new Integer(stateNumber).toString(), aVertex);
+						//set the final if this final is at the top level of the region
+						//final states in composite states are not considered as finals in the whole graph
+						if(aVertex.getOwner() == region)
+							setFinalStates(getFinalStates() + new Integer(stateNumber).toString());
+						compositeStates.remove(0);
+					}
+					else if(((State)aVertex).isSimple()){
+						getStateMappings().put(aVertex, new Integer(stateNumber).toString());	
+						getReversedStateMappings().put(new Integer(stateNumber).toString(), aVertex);
+						compositeStates.remove(0);
+					}	
+					else if(((State)aVertex).isComposite()){
+						List<Vertex> localVertices = getStates(((State)aVertex));
+						compositeStates.addAll(localVertices);
+						compositeStates.remove(0);
+					}
+					stateNumber++;
+			System.out.println(compositeStates.size());
+			System.out.println(compositeStates);
+			}while(compositeStates.size() > 0);
+		}
 		
-			stateNumber++;
-		}		
 	}
 	
 	/**
@@ -154,6 +213,24 @@ public class StateMachineAccessor extends ModelAccessor {
 		
 		return result;
 	}
+	
+	/**
+	 * Gets all {@link org.eclipse.uml2.uml.Vertex} objects in the region
+	 * @param state
+	 * @return a list of {@link org.eclipse.uml2.uml.Vertex} objects in the region
+	 */
+	public static List<Vertex> getStates(State state){
+		List<Vertex> result = new ArrayList<Vertex>();
+		
+		if(state.isComposite()){
+			EList<Vertex> vertexes = state.getRegions().get(0).getSubvertices();
+			for(Vertex vertex: vertexes){
+				if((vertex instanceof FinalState) || vertex instanceof Pseudostate || vertex instanceof State)
+					result.add(vertex);
+			}
+		}		
+		return result;
+	}
 
 	/**
 	 * Gets all objects of {@link org.eclipse.uml2.uml.FinalState} in the region
@@ -188,9 +265,11 @@ public class StateMachineAccessor extends ModelAccessor {
 		for(Vertex vertex: vertexes){
 			if(vertex instanceof Pseudostate){
 				//check if the initial node is connected with other nodes
-				EList<Transition> outgoings = vertex.getOutgoings();
-				if(outgoings.size() > 0){
-					result.add(((Pseudostate)vertex));
+				if(((Pseudostate) vertex).getKind() == PseudostateKind.INITIAL_LITERAL){
+					EList<Transition> outgoings = vertex.getOutgoings();
+					if(outgoings.size() > 0){
+						result.add(((Pseudostate)vertex));
+					}
 				}
 			}
 		}

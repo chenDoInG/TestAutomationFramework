@@ -16,6 +16,7 @@ import org.eclipse.uml2.uml.Pseudostate;
 import org.eclipse.uml2.uml.Region;
 import org.eclipse.uml2.uml.State;
 import org.eclipse.uml2.uml.StateMachine;
+import org.eclipse.uml2.uml.Transition;
 import org.eclipse.uml2.uml.Vertex;
 import org.junit.After;
 import org.junit.Before;
@@ -32,7 +33,9 @@ import edu.gmu.swe.taf.StateMachineAccessor;
  */
 public class StateMachineAccessorTest {
 
-	private String vendingMachineXmlPath = "testData/model/VendingMachineFSM.uml";
+	private String vendingMachineXmlPath = "testData/VendingMachine/model/VendingMachineFSM.uml";
+	private String calculatorXmlPath = "testData/Calculator/model/CalculatorFSM.uml";
+	private String parserXmlPath = "testData/DynamicParser/model/ParserFSM.uml";
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -55,6 +58,13 @@ public class StateMachineAccessorTest {
 	}
 	
 	@Test
+	public void testGetStateMachinesOfCalculator() throws IOException{
+		EObject object = ModelAccessor.getModelObject(calculatorXmlPath);
+		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
+		assertEquals(1, statemachines.size());
+	}
+	
+	@Test
 	public void testGetRegions() throws IOException{
 		EObject object = ModelAccessor.getModelObject(vendingMachineXmlPath);
 		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
@@ -63,8 +73,25 @@ public class StateMachineAccessorTest {
 	}
 	
 	@Test
+	public void testGetRegionsOfCalculator() throws IOException{
+		EObject object = ModelAccessor.getModelObject(calculatorXmlPath);
+		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		assertEquals(1, regions.size());
+	}
+	
+	@Test
 	public void testGetInitialStates() throws IOException{
 		EObject object = ModelAccessor.getModelObject(vendingMachineXmlPath);
+		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		List<Pseudostate> initialStates = StateMachineAccessor.getInitialStates(regions.get(0));
+		assertEquals(1, initialStates.size());
+	}
+	
+	@Test
+	public void testGetInitialStatesOfCalculator() throws IOException{
+		EObject object = ModelAccessor.getModelObject(calculatorXmlPath);
 		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		List<Pseudostate> initialStates = StateMachineAccessor.getInitialStates(regions.get(0));
@@ -81,12 +108,72 @@ public class StateMachineAccessorTest {
 	}
 	
 	@Test
+	public void testGetFinalStatesOfCalculator() throws IOException{
+		EObject object = ModelAccessor.getModelObject(calculatorXmlPath);
+		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		List<FinalState> finalStates = StateMachineAccessor.getFinalStates(regions.get(0));
+		assertEquals(1, finalStates.size());
+	}
+	
+	@Test
 	public void testGetStates() throws IOException{
 		EObject object = ModelAccessor.getModelObject(vendingMachineXmlPath);
 		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		List<State> states = StateMachineAccessor.getStates(regions.get(0));
 		assertEquals(9, states.size());
+	}
+	
+	@Test
+	public void testGetStatesOfCalculator() throws IOException{
+		EObject object = ModelAccessor.getModelObject(calculatorXmlPath);
+		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		List<State> highestLevelStates = StateMachineAccessor.getStates(regions.get(0));
+		assertEquals(1, highestLevelStates.size());
+		assertEquals(true, highestLevelStates.get(0).isComposite());
+		
+		for(Vertex vertex : highestLevelStates.get(0).getRegions().get(0).getSubvertices()){
+			System.out.println(vertex.getName());
+		}
+		
+		assertEquals(10, highestLevelStates.get(0).getRegions().get(0).getSubvertices().size());
+	
+	}
+	
+	@Test
+	public void testGetParser() throws IOException{
+		EObject object = ModelAccessor.getModelObject(parserXmlPath);
+		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
+		assertEquals(1, statemachines.size());
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));	
+		System.out.println(StateMachineAccessor.getInitialStates(regions.get(0)).get(0).getOwner() == regions.get(0));
+		
+		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
+		
+		HashMap<Vertex, String> stateMappings = stateMachine.getStateMappings();
+		HashMap<String, Vertex> reversedStateMappings = stateMachine.getReversedStateMappings();
+		
+		assertNotNull(stateMappings);
+		assertEquals(16, stateMappings.size());
+		assertEquals(16, reversedStateMappings.size());
+		System.out.println(stateMappings);
+		
+		List<State> highestLevelStates = StateMachineAccessor.getStates(regions.get(0));
+		assertEquals(5, highestLevelStates.size());
+		for(State state : highestLevelStates)
+			System.out.println(state.getName() + " " + state.isComposite());
+		for(Transition transition : regions.get(0).getTransitions())
+			System.out.println(transition.getName() + " source: " + transition.getSource() + " dentinaiton: " + transition.getTarget());
+		System.out.println();
+		
+		for(Vertex vertex : highestLevelStates.get(0).getRegions().get(0).getSubvertices()){
+			System.out.println(vertex.getName());
+		}
+		
+		//assertEquals(10, highestLevelStates.get(0).getRegions().get(0).getSubvertices().size());
+	
 	}
 	
 	@Test

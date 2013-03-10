@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_0cVcoPCDEeGBfdnYq3szoQ" name="model">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_0cWDsPCDEeGBfdnYq3szoQ" name="StateMachine0">
+    <region xmi:id="_0cWDsfCDEeGBfdnYq3szoQ" name="Region0">
+      <transition xmi:id="_BnZIsPCEEeGBfdnYq3szoQ" name="initialize" source="_18IbcPCDEeGBfdnYq3szoQ" target="_2Q4jcPCDEeGBfdnYq3szoQ"/>
+      <transition xmi:id="_RjLP8PCEEeGBfdnYq3szoQ" name="" source="_2Q4jcPCDEeGBfdnYq3szoQ" target="_IPJf0PCEEeGBfdnYq3szoQ"/>
+      <transition xmi:id="_qMUI4PCEEeGBfdnYq3szoQ" name="check" source="_IPJf0PCEEeGBfdnYq3szoQ" target="_oIZJUPCEEeGBfdnYq3szoQ"/>
+      <transition xmi:id="_xH1JgPCEEeGBfdnYq3szoQ" name="no more move" source="_IPJf0PCEEeGBfdnYq3szoQ" target="_rDnkUPCEEeGBfdnYq3szoQ"/>
+      <transition xmi:id="_JvQU8PC2EeGFKqQee1JVMg" name="new game" source="_IPJf0PCEEeGBfdnYq3szoQ" target="_2Q4jcPCDEeGBfdnYq3szoQ"/>
+      <transition xmi:id="_K7v9QPC2EeGFKqQee1JVMg" name="new game" source="_oIZJUPCEEeGBfdnYq3szoQ" target="_2Q4jcPCDEeGBfdnYq3szoQ"/>
+      <transition xmi:id="_LkfYQPC2EeGFKqQee1JVMg" name="new game" source="_rDnkUPCEEeGBfdnYq3szoQ" target="_2Q4jcPCDEeGBfdnYq3szoQ"/>
+      <transition xmi:id="_JvNmYPLfEeG-JcpQuxjkQw" name="exit" source="_rDnkUPCEEeGBfdnYq3szoQ" target="_JRdTYPLfEeG-JcpQuxjkQw"/>
+      <transition xmi:id="_KJix8PLfEeG-JcpQuxjkQw" name="exit" source="_oIZJUPCEEeGBfdnYq3szoQ" target="_JRdTYPLfEeG-JcpQuxjkQw"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_18IbcPCDEeGBfdnYq3szoQ" name="Initial0"/>
+      <subvertex xmi:type="uml:State" xmi:id="_2Q4jcPCDEeGBfdnYq3szoQ" name="New game"/>
+      <subvertex xmi:type="uml:State" xmi:id="_IPJf0PCEEeGBfdnYq3szoQ" name="In the game">
+        <region xmi:id="_KJIgQPCEEeGBfdnYq3szoQ" name="Region0">
+          <transition xmi:id="_R_VngPCEEeGBfdnYq3szoQ" name="white's move" source="_QHsJYPCEEeGBfdnYq3szoQ" target="_KJJuYPCEEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_iiM84PCEEeGBfdnYq3szoQ" name="black's move" source="_KJJuYPCEEeGBfdnYq3szoQ" target="_Ktr-0PCEEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_i7IaQPCEEeGBfdnYq3szoQ" name="white's move" source="_Ktr-0PCEEeGBfdnYq3szoQ" target="_KJJuYPCEEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_sZi1cPCEEeGBfdnYq3szoQ" name="black's move" source="_KJJuYPCEEeGBfdnYq3szoQ" target="_qvypYPCEEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_syVv8PCEEeGBfdnYq3szoQ" name="white's move" source="_Ktr-0PCEEeGBfdnYq3szoQ" target="_mSPqkPCFEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_dIa_UPCFEeGBfdnYq3szoQ" name="waiting" source="_mSPqkPCFEeGBfdnYq3szoQ" target="_KJJuYPCEEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_esv40PCFEeGBfdnYq3szoQ" name="waiting" source="_qvypYPCEEeGBfdnYq3szoQ" target="_Ktr-0PCEEeGBfdnYq3szoQ"/>
+          <transition xmi:id="__IGw4PCFEeGBfdnYq3szoQ" name="white's move" source="_Ktr-0PCEEeGBfdnYq3szoQ" target="_8DNcgPCFEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_Az_q8PCGEeGBfdnYq3szoQ" name="black's move" source="_KJJuYPCEEeGBfdnYq3szoQ" target="_3MpysPCEEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_C0e8APCGEeGBfdnYq3szoQ" name="waiting" source="_3MpysPCEEeGBfdnYq3szoQ" target="_Ktr-0PCEEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_EJ2zgPCGEeGBfdnYq3szoQ" name="waiting" source="_8DNcgPCFEeGBfdnYq3szoQ" target="_KJJuYPCEEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_Y58-UPCGEeGBfdnYq3szoQ" name="white's move" source="_Ktr-0PCEEeGBfdnYq3szoQ" target="_1pk2YPCEEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_aquYYPCGEeGBfdnYq3szoQ" name="black's move" source="_KJJuYPCEEeGBfdnYq3szoQ" target="_MtoLYPCGEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_d5_JsPCGEeGBfdnYq3szoQ" name="waiting" source="_MtoLYPCGEeGBfdnYq3szoQ" target="_KJJuYPCEEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_enz5APCGEeGBfdnYq3szoQ" name="waiting" source="_1pk2YPCEEeGBfdnYq3szoQ" target="_Ktr-0PCEEeGBfdnYq3szoQ"/>
+          <subvertex xmi:type="uml:State" xmi:id="_KJJuYPCEEeGBfdnYq3szoQ" name="waiting for black's move"/>
+          <subvertex xmi:type="uml:State" xmi:id="_Ktr-0PCEEeGBfdnYq3szoQ" name="waiting for white's move"/>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_QHsJYPCEEeGBfdnYq3szoQ" name="Initial0"/>
+          <subvertex xmi:type="uml:State" xmi:id="_qvypYPCEEeGBfdnYq3szoQ" name="black's promotion"/>
+          <subvertex xmi:type="uml:State" xmi:id="_1pk2YPCEEeGBfdnYq3szoQ" name="black's in check"/>
+          <subvertex xmi:type="uml:State" xmi:id="_3MpysPCEEeGBfdnYq3szoQ" name="black's castling"/>
+          <subvertex xmi:type="uml:State" xmi:id="_mSPqkPCFEeGBfdnYq3szoQ" name="white's promotion"/>
+          <subvertex xmi:type="uml:State" xmi:id="_8DNcgPCFEeGBfdnYq3szoQ" name="white's castling"/>
+          <subvertex xmi:type="uml:State" xmi:id="_MtoLYPCGEeGBfdnYq3szoQ" name="white's in check"/>
+        </region>
+      </subvertex>
+      <subvertex xmi:type="uml:State" xmi:id="_oIZJUPCEEeGBfdnYq3szoQ" name="Checkmate"/>
+      <subvertex xmi:type="uml:State" xmi:id="_rDnkUPCEEeGBfdnYq3szoQ" name="Stalemate"/>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_JRdTYPLfEeG-JcpQuxjkQw" name="FinalState0"/>
+    </region>
+  </packagedElement>
+</uml:Model>

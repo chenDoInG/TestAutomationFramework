@@ -60,7 +60,7 @@ public class ConcreteTestGeneratorTest {
 		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
-		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.PRIMEPATHCOVERAGE);
+		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.EDGECOVERAGE);
 		//List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.EDGECOVERAGE);
 		//System.out.println(paths.get(0));
 		//System.out.println(stateMachine.getStateMappings());

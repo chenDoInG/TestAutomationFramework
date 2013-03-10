@@ -91,7 +91,8 @@ public class XmlManipulator {
 			//Output to console for testing			 
 			transformer.transform(source, result);
 			 
-			System.out.println("File saved!");
+			System.out.println(fileName + " has been saved!");
+			System.out.println(fileName + " is located at " + file.getAbsolutePath());
 		}
 		else{
 			System.out.println(directory + fileName + ".xml has existed");

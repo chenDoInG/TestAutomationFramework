@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_U5YdsIhZEeKiK4F1pD8dsA" name="model">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_U5d9QIhZEeKiK4F1pD8dsA" name="StateMachine0">
+    <region xmi:id="_U5gZgIhZEeKiK4F1pD8dsA" name="Region0">
+      <transition xmi:id="_Ln4VwIhcEeKiK4F1pD8dsA" name="arithmeticMode" source="_utOPMIhZEeKiK4F1pD8dsA" target="_vfpxsIhZEeKiK4F1pD8dsA"/>
+      <transition xmi:id="_PBdgsIhcEeKiK4F1pD8dsA" name="logicalMode" source="_utOPMIhZEeKiK4F1pD8dsA" target="_ag_7kIhbEeKiK4F1pD8dsA"/>
+      <transition xmi:id="_DopY4IhdEeKiK4F1pD8dsA" name="parse" source="_vfpxsIhZEeKiK4F1pD8dsA" target="_98-PgIhcEeKiK4F1pD8dsA"/>
+      <transition xmi:id="_JfBWYIhdEeKiK4F1pD8dsA" name="parse" source="_ag_7kIhbEeKiK4F1pD8dsA" target="_98-PgIhcEeKiK4F1pD8dsA"/>
+      <transition xmi:id="_ouZuEIheEeKiK4F1pD8dsA" name="parse" source="_WFKM8IhcEeKiK4F1pD8dsA" target="_98-PgIhcEeKiK4F1pD8dsA"/>
+      <transition xmi:id="_1svz0IheEeKiK4F1pD8dsA" name="typing" source="_zHOjEIheEeKiK4F1pD8dsA" target="_zHOjEIheEeKiK4F1pD8dsA"/>
+      <transition xmi:id="_8TrEgIheEeKiK4F1pD8dsA" name="typing" source="_WFKM8IhcEeKiK4F1pD8dsA" target="_zHOjEIheEeKiK4F1pD8dsA"/>
+      <transition xmi:id="_AArhwIhfEeKiK4F1pD8dsA" name="exit" source="_98-PgIhcEeKiK4F1pD8dsA" target="_-qCe8IheEeKiK4F1pD8dsA"/>
+      <transition xmi:id="_I87rEIhfEeKiK4F1pD8dsA" name="up or down" source="_zHOjEIheEeKiK4F1pD8dsA" target="_sk60AIhbEeKiK4F1pD8dsA"/>
+      <transition xmi:id="_OOfrUIhfEeKiK4F1pD8dsA" name="up or down" source="_WFKM8IhcEeKiK4F1pD8dsA" target="_sk60AIhbEeKiK4F1pD8dsA"/>
+      <transition xmi:id="_YO6AUIhfEeKiK4F1pD8dsA" name="changeOrdering" source="_zHOjEIheEeKiK4F1pD8dsA" target="_WFKM8IhcEeKiK4F1pD8dsA"/>
+      <transition xmi:id="_bJlowIhfEeKiK4F1pD8dsA" name="parse" source="_zHOjEIheEeKiK4F1pD8dsA" target="_98-PgIhcEeKiK4F1pD8dsA"/>
+      <transition xmi:id="_vlqrYIhfEeKiK4F1pD8dsA" name="up or down" source="_zHOjEIheEeKiK4F1pD8dsA" target="_ciiK8IhaEeKiK4F1pD8dsA"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_utOPMIhZEeKiK4F1pD8dsA" name="Initial0"/>
+      <subvertex xmi:type="uml:State" xmi:id="_vfpxsIhZEeKiK4F1pD8dsA" name="ArithmeticMode" visibility="public">
+        <region xmi:id="_-3HD4IhZEeKiK4F1pD8dsA" name="Region0">
+          <transition xmi:id="_OFtVAIhaEeKiK4F1pD8dsA" name="initialize" source="_-3ISAYhZEeKiK4F1pD8dsA" target="__t_okIhZEeKiK4F1pD8dsA"/>
+          <transition xmi:id="_jBcIEIhaEeKiK4F1pD8dsA" name="up or down" source="__t_okIhZEeKiK4F1pD8dsA" target="_ciiK8IhaEeKiK4F1pD8dsA"/>
+          <transition xmi:id="_sRj9sIhcEeKiK4F1pD8dsA" name="changeOrdering" source="__t_okIhZEeKiK4F1pD8dsA" target="_WFKM8IhcEeKiK4F1pD8dsA"/>
+          <transition xmi:id="_w8dmkIhcEeKiK4F1pD8dsA" name="changeOrdering" source="_ciiK8IhaEeKiK4F1pD8dsA" target="_WFKM8IhcEeKiK4F1pD8dsA"/>
+          <transition xmi:id="_kU5hwIhfEeKiK4F1pD8dsA" name="typing" source="__t_okIhZEeKiK4F1pD8dsA" target="_zHOjEIheEeKiK4F1pD8dsA"/>
+          <transition xmi:id="_o7ui8IhfEeKiK4F1pD8dsA" name="typing" source="_ciiK8IhaEeKiK4F1pD8dsA" target="_zHOjEIheEeKiK4F1pD8dsA"/>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_-3ISAYhZEeKiK4F1pD8dsA" name="Initial0"/>
+          <subvertex xmi:type="uml:State" xmi:id="__t_okIhZEeKiK4F1pD8dsA" name="defaultVariablesAndStringMathPrecedence"/>
+          <subvertex xmi:type="uml:State" xmi:id="_ciiK8IhaEeKiK4F1pD8dsA" name="ArithmeticPrecedenceUpdate">
+            <region xmi:id="_hm3ngIhaEeKiK4F1pD8dsA" name="Region0">
+              <transition xmi:id="_sdgZ4IhaEeKiK4F1pD8dsA" name="initialize" source="_hm5csIhaEeKiK4F1pD8dsA" target="_pZU3MIhaEeKiK4F1pD8dsA"/>
+              <transition xmi:id="_0bT98IhaEeKiK4F1pD8dsA" name="customize" source="_pZU3MIhaEeKiK4F1pD8dsA" target="_wlnewIhaEeKiK4F1pD8dsA"/>
+              <transition xmi:id="_1PraIIhaEeKiK4F1pD8dsA" name="math" source="_wlnewIhaEeKiK4F1pD8dsA" target="_pZU3MIhaEeKiK4F1pD8dsA"/>
+              <transition xmi:id="_KQp5kIhbEeKiK4F1pD8dsA" name="allEqual" source="_pZU3MIhaEeKiK4F1pD8dsA" target="_4UBU4IhaEeKiK4F1pD8dsA"/>
+              <transition xmi:id="_Lrh8IIhbEeKiK4F1pD8dsA" name="math" source="_4UBU4IhaEeKiK4F1pD8dsA" target="_pZU3MIhaEeKiK4F1pD8dsA"/>
+              <transition xmi:id="_Tt-WUIhgEeKiK4F1pD8dsA" name="typing" source="_4UBU4IhaEeKiK4F1pD8dsA" target="_wlnewIhaEeKiK4F1pD8dsA"/>
+              <transition xmi:id="_YLrQsIhgEeKiK4F1pD8dsA" name="allEqual" source="_wlnewIhaEeKiK4F1pD8dsA" target="_4UBU4IhaEeKiK4F1pD8dsA"/>
+              <transition xmi:id="_cGh8sIhgEeKiK4F1pD8dsA" name="up" kind="internal" source="_wlnewIhaEeKiK4F1pD8dsA" target="_wlnewIhaEeKiK4F1pD8dsA"/>
+              <transition xmi:id="_hVKkwIhgEeKiK4F1pD8dsA" name="down" source="_wlnewIhaEeKiK4F1pD8dsA" target="_wlnewIhaEeKiK4F1pD8dsA"/>
+              <subvertex xmi:type="uml:Pseudostate" xmi:id="_hm5csIhaEeKiK4F1pD8dsA" name="Initial0"/>
+              <subvertex xmi:type="uml:State" xmi:id="_pZU3MIhaEeKiK4F1pD8dsA" name="mathPrecedence"/>
+              <subvertex xmi:type="uml:State" xmi:id="_wlnewIhaEeKiK4F1pD8dsA" name="CustomizedPrecedence"/>
+              <subvertex xmi:type="uml:State" xmi:id="_4UBU4IhaEeKiK4F1pD8dsA" name="AllEqualPrecedence"/>
+            </region>
+          </subvertex>
+        </region>
+      </subvertex>
+      <subvertex xmi:type="uml:State" xmi:id="_ag_7kIhbEeKiK4F1pD8dsA" name="LogicalMode">
+        <region xmi:id="_eSNjYIhbEeKiK4F1pD8dsA" name="Region0">
+          <transition xmi:id="_mLPVIIhbEeKiK4F1pD8dsA" name="initialize" source="_eSP_oIhbEeKiK4F1pD8dsA" target="_fH84kIhbEeKiK4F1pD8dsA"/>
+          <transition xmi:id="_wmX3QIhbEeKiK4F1pD8dsA" name="up" kind="internal" source="_sk60AIhbEeKiK4F1pD8dsA" target="_sk60AIhbEeKiK4F1pD8dsA"/>
+          <transition xmi:id="_BowaMIhcEeKiK4F1pD8dsA" name="down" kind="internal" source="_sk60AIhbEeKiK4F1pD8dsA" target="_sk60AIhbEeKiK4F1pD8dsA"/>
+          <transition xmi:id="_HLIdoIhcEeKiK4F1pD8dsA" name="up or down" source="_fH84kIhbEeKiK4F1pD8dsA" target="_sk60AIhbEeKiK4F1pD8dsA"/>
+          <transition xmi:id="_Dr-u0IhfEeKiK4F1pD8dsA" name="typing" source="_fH84kIhbEeKiK4F1pD8dsA" target="_zHOjEIheEeKiK4F1pD8dsA"/>
+          <transition xmi:id="_GiWfAIhfEeKiK4F1pD8dsA" name="typing" source="_sk60AIhbEeKiK4F1pD8dsA" target="_zHOjEIheEeKiK4F1pD8dsA"/>
+          <transition xmi:id="_UnspEIhfEeKiK4F1pD8dsA" name="changeOrdering" source="_sk60AIhbEeKiK4F1pD8dsA" target="_WFKM8IhcEeKiK4F1pD8dsA"/>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_eSP_oIhbEeKiK4F1pD8dsA" name="Initial0"/>
+          <subvertex xmi:type="uml:State" xmi:id="_fH84kIhbEeKiK4F1pD8dsA" name="DefaultVarStringPrecedenceOperOrdering"/>
+          <subvertex xmi:type="uml:State" xmi:id="_sk60AIhbEeKiK4F1pD8dsA" name="LogicPrecedenceUpdate"/>
+        </region>
+      </subvertex>
+      <subvertex xmi:type="uml:State" xmi:id="_WFKM8IhcEeKiK4F1pD8dsA" name="OperationOrderingUpdate">
+        <region xmi:id="_ZhS8oIhcEeKiK4F1pD8dsA" name="Region0">
+          <transition xmi:id="_hhTgIIhcEeKiK4F1pD8dsA" name="initialize" source="_ZhUx0ohcEeKiK4F1pD8dsA" target="_bXvg4IhcEeKiK4F1pD8dsA"/>
+          <transition xmi:id="_lMsMwIhcEeKiK4F1pD8dsA" name="left" source="_bXvg4IhcEeKiK4F1pD8dsA" target="_aCj2oIhcEeKiK4F1pD8dsA"/>
+          <transition xmi:id="_ma6TYIhcEeKiK4F1pD8dsA" name="right" source="_aCj2oIhcEeKiK4F1pD8dsA" target="_bXvg4IhcEeKiK4F1pD8dsA"/>
+          <transition xmi:id="_0y66wIhcEeKiK4F1pD8dsA" name="up or down" source="_WFKM8IhcEeKiK4F1pD8dsA" target="_ciiK8IhaEeKiK4F1pD8dsA"/>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_ZhUx0ohcEeKiK4F1pD8dsA" name="Initial0"/>
+          <subvertex xmi:type="uml:State" xmi:id="_aCj2oIhcEeKiK4F1pD8dsA" name="LeftToRight"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bXvg4IhcEeKiK4F1pD8dsA" name="RightToLeft"/>
+        </region>
+      </subvertex>
+      <subvertex xmi:type="uml:State" xmi:id="_98-PgIhcEeKiK4F1pD8dsA" name="Result"/>
+      <subvertex xmi:type="uml:State" xmi:id="_zHOjEIheEeKiK4F1pD8dsA" name="VarsAndStringUpdate"/>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_-qCe8IheEeKiK4F1pD8dsA" name="FinalState0"/>
+    </region>
+  </packagedElement>
+</uml:Model>

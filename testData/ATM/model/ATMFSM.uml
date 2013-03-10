@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_YwUXIOChEeGnT4WBUDdcyw" name="Model">
+  <packageImport xmi:id="_YwUXIeChEeGnT4WBUDdcyw">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_YwZ2sOChEeGnT4WBUDdcyw" name="StateMachine0">
+    <region xmi:id="_cYQuMOChEeGnT4WBUDdcyw" name="Region1">
+      <ownedComment xmi:id="_XMtIIODJEeG34Kh1CNiwzA">
+        <body>1 2&#xD;
+2 3&#xD;
+3 4&#xD;
+4 1&#xD;
+4 5&#xD;
+5 6&#xD;
+6 1&#xD;
+6 7&#xD;
+6 8&#xD;
+6 9&#xD;
+7 10&#xD;
+8 11&#xD;
+9 12&#xD;
+10 13&#xD;
+11 13&#xD;
+12 13&#xD;
+13 1&#xD;
+initial: 1&#xD;
+final: 1&#xD;
+18 tests to cover 43 prime paths</body>
+      </ownedComment>
+      <transition xmi:id="_mZ_44OChEeGnT4WBUDdcyw" name="initializeSystem" source="_iw8ukOChEeGnT4WBUDdcyw" target="_jzNc0OChEeGnT4WBUDdcyw"/>
+      <transition xmi:id="_VBPn4OCiEeGnT4WBUDdcyw" name="typeAccount" source="_jzNc0OChEeGnT4WBUDdcyw" target="_0HmRUOChEeGnT4WBUDdcyw"/>
+      <transition xmi:id="_Lj2q8OCjEeGnT4WBUDdcyw" name="typePassword" source="_0HmRUOChEeGnT4WBUDdcyw" target="_AhuaQOCjEeGnT4WBUDdcyw"/>
+      <transition xmi:id="_giiEUOCjEeGnT4WBUDdcyw" name="authenticate" source="_AhuaQOCjEeGnT4WBUDdcyw" target="_fWE4QOCjEeGnT4WBUDdcyw"/>
+      <transition xmi:id="_h0A6UOCjEeGnT4WBUDdcyw" name="goTure" guard="_unHO0OCiEeGnT4WBUDdcyw" source="_fWE4QOCjEeGnT4WBUDdcyw" target="_OqBxsOCjEeGnT4WBUDdcyw">
+        <ownedRule xmi:id="_p17JMODNEeG34Kh1CNiwzA" name="authentication" constrainedElement="_unHO0OCiEeGnT4WBUDdcyw"/>
+        <ownedRule xmi:id="_unHO0OCiEeGnT4WBUDdcyw" name="Constraint1" constrainedElement="_h0A6UOCjEeGnT4WBUDdcyw _z1EE8OCjEeGnT4WBUDdcyw">
+          <specification xmi:type="uml:Expression" xmi:id="_5mPAQODNEeG34Kh1CNiwzA" name="userAuthenticated" symbol="userAuthenticated = true">
+            <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+          </specification>
+        </ownedRule>
+      </transition>
+      <transition xmi:id="_z1EE8OCjEeGnT4WBUDdcyw" name="goFalse" source="_fWE4QOCjEeGnT4WBUDdcyw" target="_jzNc0OChEeGnT4WBUDdcyw"/>
+      <transition xmi:id="_JcijsOCkEeGnT4WBUDdcyw" name="typeSelection" source="_OqBxsOCjEeGnT4WBUDdcyw" target="_LVNfQODVEeG34Kh1CNiwzA"/>
+      <transition xmi:id="_xhxXMOCkEeGnT4WBUDdcyw" name="goToBalanceInquiry" guard="__W5SUOEEEeG34Kh1CNiwzA" source="_LVNfQODVEeG34Kh1CNiwzA" target="_mpNSMOCkEeGnT4WBUDdcyw">
+        <ownedRule xmi:id="__W5SUOEEEeG34Kh1CNiwzA" name="Constraint2">
+          <specification xmi:type="uml:LiteralString" xmi:id="__Xr8gOEEEeG34Kh1CNiwzA" name="viewBalance" value="mainMenuSelection = 1"/>
+        </ownedRule>
+      </transition>
+      <transition xmi:id="_x50DwOCkEeGnT4WBUDdcyw" name="goToDeposit" guard="_h61AcOEFEeG34Kh1CNiwzA" source="_LVNfQODVEeG34Kh1CNiwzA" target="_qA4_sOCkEeGnT4WBUDdcyw">
+        <ownedRule xmi:id="_h61AcOEFEeG34Kh1CNiwzA" name="Constraint4">
+          <specification xmi:type="uml:LiteralString" xmi:id="_h61AceEFEeG34Kh1CNiwzA" name="depositFunds" value="mainMenuSelection = 3"/>
+        </ownedRule>
+      </transition>
+      <transition xmi:id="_yRsYQOCkEeGnT4WBUDdcyw" name="gotoWithdrawal" guard="_cHZCMOEFEeG34Kh1CNiwzA" source="_LVNfQODVEeG34Kh1CNiwzA" target="_umjjQOCkEeGnT4WBUDdcyw">
+        <ownedRule xmi:id="_cHZCMOEFEeG34Kh1CNiwzA" name="Constraint3">
+          <specification xmi:type="uml:LiteralString" xmi:id="_cHZCMeEFEeG34Kh1CNiwzA" name="withdrawCash" value="mainMenuSelection = 2"/>
+        </ownedRule>
+      </transition>
+      <transition xmi:id="_KSzA0OClEeGnT4WBUDdcyw" name="inquireBalance" source="_mpNSMOCkEeGnT4WBUDdcyw" target="_DrbEMOClEeGnT4WBUDdcyw"/>
+      <transition xmi:id="_Kn2q0OClEeGnT4WBUDdcyw" name="deposit" source="_qA4_sOCkEeGnT4WBUDdcyw" target="_GhsGsOClEeGnT4WBUDdcyw"/>
+      <transition xmi:id="_K-CWMOClEeGnT4WBUDdcyw" name="withdraw" source="_umjjQOCkEeGnT4WBUDdcyw" target="_H__QsOClEeGnT4WBUDdcyw"/>
+      <transition xmi:id="_NbAH4OClEeGnT4WBUDdcyw" name="Transition7" source="_DrbEMOClEeGnT4WBUDdcyw" target="_MhOnQOClEeGnT4WBUDdcyw"/>
+      <transition xmi:id="_N6bO0OClEeGnT4WBUDdcyw" name="Transition8" source="_GhsGsOClEeGnT4WBUDdcyw" target="_MhOnQOClEeGnT4WBUDdcyw"/>
+      <transition xmi:id="_Ogo6QOClEeGnT4WBUDdcyw" name="Transition9" source="_H__QsOClEeGnT4WBUDdcyw" target="_MhOnQOClEeGnT4WBUDdcyw"/>
+      <transition xmi:id="_PObNUOClEeGnT4WBUDdcyw" name="goIdle" source="_MhOnQOClEeGnT4WBUDdcyw" target="_jzNc0OChEeGnT4WBUDdcyw"/>
+      <transition xmi:id="_Czg6EODMEeG34Kh1CNiwzA" name="Transition11" source="_jzNc0OChEeGnT4WBUDdcyw" target="_Bjs4AODMEeG34Kh1CNiwzA"/>
+      <transition xmi:id="_Iog-kODMEeG34Kh1CNiwzA" name="exitSystem" source="_jzNc0OChEeGnT4WBUDdcyw" target="_H_nLgODMEeG34Kh1CNiwzA"/>
+      <transition xmi:id="_eUOdEODMEeG34Kh1CNiwzA" name="exitTheMenu" guard="_mFZjcOEFEeG34Kh1CNiwzA" source="_LVNfQODVEeG34Kh1CNiwzA" target="_jzNc0OChEeGnT4WBUDdcyw">
+        <ownedRule xmi:id="_mFZjcOEFEeG34Kh1CNiwzA" name="Constraint5">
+          <specification xmi:type="uml:LiteralString" xmi:id="_mFaKgOEFEeG34Kh1CNiwzA" name="exit" value="mainMenuSelection = 4"/>
+        </ownedRule>
+      </transition>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_iw8ukOChEeGnT4WBUDdcyw" name="Initial0"/>
+      <subvertex xmi:type="uml:State" xmi:id="_jzNc0OChEeGnT4WBUDdcyw" name="Idle"/>
+      <subvertex xmi:type="uml:State" xmi:id="_0HmRUOChEeGnT4WBUDdcyw" name="AccountTyped"/>
+      <subvertex xmi:type="uml:State" xmi:id="_AhuaQOCjEeGnT4WBUDdcyw" name="PasswordEntered"/>
+      <subvertex xmi:type="uml:State" xmi:id="_OqBxsOCjEeGnT4WBUDdcyw" name="UserAuthenticated"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_fWE4QOCjEeGnT4WBUDdcyw" name="Fork0" kind="fork"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_ISJNIOCkEeGnT4WBUDdcyw" name="Fork1" kind="fork"/>
+      <subvertex xmi:type="uml:State" xmi:id="_mpNSMOCkEeGnT4WBUDdcyw" name="balanceInquirySelected"/>
+      <subvertex xmi:type="uml:State" xmi:id="_qA4_sOCkEeGnT4WBUDdcyw" name="depositSelected"/>
+      <subvertex xmi:type="uml:State" xmi:id="_umjjQOCkEeGnT4WBUDdcyw" name="withdrawalSelected"/>
+      <subvertex xmi:type="uml:State" xmi:id="_DrbEMOClEeGnT4WBUDdcyw" name="balanceInquiryComplete"/>
+      <subvertex xmi:type="uml:State" xmi:id="_GhsGsOClEeGnT4WBUDdcyw" name="depositComplete"/>
+      <subvertex xmi:type="uml:State" xmi:id="_H__QsOClEeGnT4WBUDdcyw" name="withdrawalComplete"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_MhOnQOClEeGnT4WBUDdcyw" name="Join0" kind="join"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_Bjs4AODMEeG34Kh1CNiwzA" name="Terminate0" kind="terminate"/>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_H_nLgODMEeG34Kh1CNiwzA" name="FinalState0"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_LVNfQODVEeG34Kh1CNiwzA" name="Choice0" kind="choice"/>
+    </region>
+  </packagedElement>
+</uml:Model>

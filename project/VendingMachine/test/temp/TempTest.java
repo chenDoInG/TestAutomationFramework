@@ -6,19 +6,15 @@ import static org.junit.Assert.*;
 public class TempTest {
 
     public boolean test(){
+        int c = 10;
         String s = "MM";
         StringBuffer sb = new StringBuffer(s);
-        int c = 25;
         vendingMachine vm = new vendingMachine();
-        vm.coin(100);
         vm.addChoc("MM");
-        vm.getChoc(sb);
+        vm.addChoc("MM");
         vm.coin(25);
-        vm.addChoc("MM");
-        vm.addChoc("MM");
         vm.coin(c);
         vm.getChoc(sb);
-        vm.addChoc("MM");
-        return (vm.getStock().size() == 10) && (vm.getCredit() == 0);
+        return (vm.getStock().size() > 0 && vm.getStock().size() < 10) && (vm.getCredit() == 0);
     }
 }

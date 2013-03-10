@@ -91,6 +91,7 @@ public class TafUserInterface {
 	private JTextArea textArea_testCode;
 	private JPanel panel_models;
 	private JLabel lblNewLabel_6;
+	private int criterionIndex = 0;
 
 	/**
 	 * Launch the application.
@@ -120,7 +121,7 @@ public class TafUserInterface {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 933, 918);
+		frame.setBounds(100, 100, 1011, 1065);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -262,8 +263,12 @@ public class TafUserInterface {
 		
 		String[] coverageCriteria = {"node coverage", "edge coverage", "edge-pair coverage", "prime path coverage"};
 		JComboBox comboBox = new JComboBox(coverageCriteria);
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				criterionIndex = ((JComboBox)e.getSource()).getSelectedIndex();
+			}
+		});
 		comboBox.setBounds(171, 46, 184, 27);
-		//layeredPane.add(comboBox);
 		panel_generateTest.add(comboBox);
 		
 		JButton btnNewButton_1 = new JButton("Generate tests");
@@ -273,7 +278,8 @@ public class TafUserInterface {
 				if("generate tests".equals(e.getActionCommand())){
 					System.out.println("button is clicked");
 					try {
-						generateTests(directoryName + projectName + "/model/" + modelName, directoryName + projectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml", projectName + "Test", directoryName + projectName + "/test/");
+						generateTests(directoryName + projectName + "/model/" + modelName, directoryName + projectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml", 
+								projectName + "Test", directoryName + projectName + "/test/", getCriterionType(criterionIndex));
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -323,14 +329,19 @@ public class TafUserInterface {
 		lblNewLabel_6.setBounds(152, 27, 100, 16);
 		panel_models.add(lblNewLabel_6);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(6, 353, 921, 375);
-		layeredPane.add(panel);
-		panel.setLayout(null);
+		
+		TitledBorder title_mappings = BorderFactory.createTitledBorder(blackline, "Elements and mappings");
+		title_mappings.setTitleJustification(TitledBorder.LEFT);
+		
+		JPanel panel_mappings = new JPanel();
+		panel_mappings.setBounds(6, 340, 921, 388);
+		layeredPane.add(panel_mappings);
+		panel_mappings.setLayout(null);
+		panel_mappings.setBorder(title_mappings);
 		
 		scrollPane_mappings = new JScrollPane();
 		scrollPane_mappings.setBounds(293, 69, 237, 287);
-		panel.add(scrollPane_mappings);
+		panel_mappings.add(scrollPane_mappings);
 		
 		list_mappings = new JList();
 		scrollPane_mappings.setViewportView(list_mappings);
@@ -355,71 +366,71 @@ public class TafUserInterface {
 		
 		textField_requiredMappings = new JTextField();
 		textField_requiredMappings.setBounds(554, 281, 336, 28);
-		panel.add(textField_requiredMappings);
+		panel_mappings.add(textField_requiredMappings);
 		textField_requiredMappings.setColumns(10);
 		
 		JLabel lblRequiredMappings = new JLabel("Required Mappings:");
 		lblRequiredMappings.setBounds(554, 253, 134, 16);
-		panel.add(lblRequiredMappings);
+		panel_mappings.add(lblRequiredMappings);
 		
 		JScrollPane scrollPane_testCode = new JScrollPane();
 		scrollPane_testCode.setBounds(556, 166, 334, 85);
-		panel.add(scrollPane_testCode);
+		panel_mappings.add(scrollPane_testCode);
 		
 		textArea_testCode = new JTextArea();
 		scrollPane_testCode.setRowHeaderView(textArea_testCode);
 		
 		JLabel lblTestCode = new JLabel("Test Code:");
 		lblTestCode.setBounds(556, 138, 78, 16);
-		panel.add(lblTestCode);
+		panel_mappings.add(lblTestCode);
 		
 		textField_mappingName = new JTextField();
-		textField_mappingName.setBounds(557, 98, 333, 28);
-		panel.add(textField_mappingName);
+		textField_mappingName.setBounds(557, 108, 333, 28);
+		panel_mappings.add(textField_mappingName);
 		textField_mappingName.setColumns(10);
 		
 		scrollPane_elements = new JScrollPane();
 		scrollPane_elements.setBounds(10, 49, 237, 307);
-		panel.add(scrollPane_elements);
+		panel_mappings.add(scrollPane_elements);
 		scrollPane_elements.setViewportView(list_elements);
 		
 		JLabel lblMappingName = new JLabel("Mapping Name:");
-		lblMappingName.setBounds(557, 79, 112, 16);
-		panel.add(lblMappingName);
+		lblMappingName.setBounds(554, 80, 112, 16);
+		panel_mappings.add(lblMappingName);
 		
 		textField_elementType = new JTextField();
 		textField_elementType.setBounds(663, 45, 227, 28);
-		panel.add(textField_elementType);
+		panel_mappings.add(textField_elementType);
 		textField_elementType.setColumns(10);
 		
 		JLabel lblElementType = new JLabel("Element Type:");
-		lblElementType.setBounds(557, 51, 98, 16);
-		panel.add(lblElementType);
+		lblElementType.setBounds(554, 49, 98, 16);
+		panel_mappings.add(lblElementType);
 		
 		textField_elementName = new JTextField();
-		textField_elementName.setBounds(663, 8, 227, 28);
-		panel.add(textField_elementName);
+		textField_elementName.setBounds(663, 17, 227, 28);
+		panel_mappings.add(textField_elementName);
 		textField_elementName.setColumns(10);
 		
 		JLabel lblElementName = new JLabel("Element Name:");
-		lblElementName.setBounds(557, 14, 98, 16);
-		panel.add(lblElementName);
+		lblElementName.setBounds(554, 23, 98, 16);
+		panel_mappings.add(lblElementName);
 		
 		JLabel lblIdentifiableElementsIn = new JLabel("Identifiable elements in");
-		lblIdentifiableElementsIn.setBounds(0, 8, 158, 16);
-		panel.add(lblIdentifiableElementsIn);
+		lblIdentifiableElementsIn.setBounds(10, 21, 158, 16);
+		panel_mappings.add(lblIdentifiableElementsIn);
 		
 		lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setBounds(154, 8, 134, 16);
-		panel.add(lblNewLabel_2);
+		lblNewLabel_2.setBounds(163, 21, 134, 16);
+		panel_mappings.add(lblNewLabel_2);
 		
 		JLabel lblAvailableMappingsFor = new JLabel("Available mappings for");
-		lblAvailableMappingsFor.setBounds(259, 39, 148, 18);
-		panel.add(lblAvailableMappingsFor);
+		lblAvailableMappingsFor.setBounds(259, 50, 148, 18);
+		panel_mappings.add(lblAvailableMappingsFor);
 		
 		lblNewLabel_3 = new JLabel("");
-		lblNewLabel_3.setBounds(408, 41, 61, 16);
-		panel.add(lblNewLabel_3);
+		lblNewLabel_3.setBounds(408, 49, 61, 16);
+		panel_mappings.add(lblNewLabel_3);
 		
 		list_models.addMouseListener(new MouseAdapter() {
 			@Override
@@ -502,13 +513,14 @@ public class TafUserInterface {
 		             System.out.println("Double clicked on Item " + index);
 		             String elementName = (String) list_elements.getSelectedValue();
 		             
+		             //when selecting an element in the element list, all mappings for this element will be shown in the mapping list
 		             try {
 		            	 elementMappings = XmlManipulator.getMappingsByElementName(directoryName + projectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml", elementName);
 		            	 list_mappings.setListData(JavaSupporter.getMappingNames(elementMappings));
 		            	 scrollPane_mappings.setViewportView(list_mappings);
 						
-						lblNewLabel_3.setSize(elementName.length() * 8, lblNewLabel_3.getHeight());
-						lblNewLabel_3.setText(elementName);
+		            	 lblNewLabel_3.setSize(elementName.length() * 8, lblNewLabel_3.getHeight());
+		            	 lblNewLabel_3.setText(elementName);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -537,30 +549,20 @@ public class TafUserInterface {
 		return JavaSupporter.getElementNames(elements);
 	}
 	
-	public void generateTests(String modelPath, String xmlPath, String testName, String testPath) throws Exception{
+	public void generateTests(String modelPath, String xmlPath, String testName, String testPath, TestCoverageCriteria testCriterion) throws Exception{
 		EObject object = StateMachineAccessor.getModelObject(modelPath);
 		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
-		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.PRIMEPATHCOVERAGE);
-		//List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.EDGECOVERAGE);
-		//System.out.println(paths.get(0));
-		//System.out.println(stateMachine.getStateMappings());
-		
-		//get the vertices from a path and return a list of transitions based on the vertices
-		//List<Vertex> vertexes = AbstractTestGenerator.getPathByState(paths.get(0), stateMachine);
+		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), testCriterion);
+
 		List<edu.gmu.swe.taf.Test> tests = new ArrayList<edu.gmu.swe.taf.Test>();
 		for(int i = 0; i < paths.size();i++){
 			System.out.println("path: " + paths.get(i));
 			AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
-			List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(i), stateMachine), stateMachine);
+			List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(i), stateMachine), stateMachine);		
 			
-			String pathName = "";
-			for(Transition transition: transitions){
-				System.out.println(transition);
-				pathName += transition.getName() + " ";
-			}
-			edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest(String.valueOf(i), "The test for the path " + pathName, transitions);
+			edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest(String.valueOf(i), "The test for the path " + extractTestComment(transitions), transitions);
 			test = abstractTestGenerator.updateTest(xmlPath, test, XmlManipulator.getConstraintMappings(xmlPath));
 			tests.add(test);
 		}
@@ -587,5 +589,38 @@ public class TafUserInterface {
 		}
 		
 		return result;
+	}
+	
+	/**
+	 * Extracts transition and state information from a path specified by transitions and generates comments for a test.
+	 * @param transitions	a list of {@link edu.gmu.swe.taf.Transition}
+	 * @return				comments that describe the path for a test in a String format
+	 */
+	public String extractTestComment(List<Transition> transitions){
+		String pathName = "" + transitions.get(0).getSource().getName() + " ";
+		for(Transition transition: transitions){
+			pathName += transition.getName() + " ";
+			pathName += transition.getTarget().getName() + " ";
+		}
+		return pathName;
+	}
+	
+	/**
+	 * Gets a type of TestCoverageCriteria based on the index selected from the coverage drop-down list.
+	 * @param criterionIndex	the index of the coverage drop-down list
+	 * @return					a type of enumeration TestCoverageCriteria
+	 */
+	public TestCoverageCriteria getCriterionType(int criterionIndex){
+		switch(criterionIndex){
+		case 0:
+			return TestCoverageCriteria.NODECOVERAGE;
+		case 1:
+			return TestCoverageCriteria.EDGECOVERAGE;
+		case 2:
+			return TestCoverageCriteria.EDGEPAIRCOVERAGE;
+		case 3:
+			return TestCoverageCriteria.PRIMEPATHCOVERAGE;
+		}
+		return null;
 	}
 }

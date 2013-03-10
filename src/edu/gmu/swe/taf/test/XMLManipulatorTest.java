@@ -37,9 +37,9 @@ public class XmlManipulatorTest {
 	String fileName;
 	@Before
 	public void setUp() throws Exception {
-		xmlPath = "testData/xml/vendingMachineMappings.xml";
-		xmlDirectory = "testData/xml/";
-		fileName = "vendingMachineMappings";
+		xmlPath = "testData/VendingMachine/xml/VendingMachineFSM.xml";
+		xmlDirectory = "testData/VendingMachine/xml/";
+		fileName = "VendingMachineFSM";
 	}
 
 	@After
@@ -64,7 +64,6 @@ public class XmlManipulatorTest {
 	 */
 	@Test
 	public void testReadXMLFile() throws Exception{
-
 		Document doc = XmlManipulator.readXmlFile(xmlPath);
 		assertNotNull(doc);
 	}
