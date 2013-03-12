@@ -38,15 +38,17 @@ import edu.gmu.swe.taf.XmlManipulator;
  */
 public class AbstractTestGeneratorTest {
 	
-	String path;
+	String vendingMachinePath;
+	String parserPath;
 	String vendingMachineXmlPath;
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		path = "testData/model/VendingMachineFSM.uml";
+		vendingMachinePath = "testData/model/VendingMachineFSM.uml";
 		vendingMachineXmlPath = "testData/xml/vendingMachineMappings.xml";
+		parserPath = "testData/DynamicParser/model/SimplifiedParserFSM.uml";
 	}
 
 	/**
@@ -59,7 +61,7 @@ public class AbstractTestGeneratorTest {
 	@Test
 	public void testGetTestPaths() throws IOException, InvalidInputException, InvalidGraphException {
 		
-		EObject object = StateMachineAccessor.getModelObject(path);
+		EObject object = StateMachineAccessor.getModelObject(vendingMachinePath);
 		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
@@ -75,13 +77,13 @@ public class AbstractTestGeneratorTest {
 			//System.out.println(stateMachine.getReversedStateMappings().get(vertices[1]).getName());
 		}*/
 		assertNotNull(paths);
-		//System.out.println(paths);
+		System.out.println(paths);
 	}
 	
 	@Test
 	public void testGetPathByVertex() throws IOException, InvalidInputException, InvalidGraphException{
 		
-		EObject object = StateMachineAccessor.getModelObject(path);
+		EObject object = StateMachineAccessor.getModelObject(vendingMachinePath);
 		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
@@ -94,7 +96,7 @@ public class AbstractTestGeneratorTest {
 	@Test
 	public void testConvertToTransitions() throws IOException, InvalidInputException, InvalidGraphException{
 		
-		EObject object = StateMachineAccessor.getModelObject(path);
+		EObject object = StateMachineAccessor.getModelObject(vendingMachinePath);
 		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
@@ -136,10 +138,13 @@ public class AbstractTestGeneratorTest {
 	@Test
 	public void testUpdateTest() throws Exception{
 		
-		EObject object = StateMachineAccessor.getModelObject(path);
+		EObject object = StateMachineAccessor.getModelObject(vendingMachinePath);
 		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
+		//System.out.println(stateMachine.getStateMappings());
+		//System.out.println(stateMachine.getEdges());
 		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.EDGECOVERAGE);
 		//System.out.println(paths.get(0));
 		//System.out.println(stateMachine.getStateMappings());
@@ -156,6 +161,46 @@ public class AbstractTestGeneratorTest {
 		
 		System.out.println(test.getTestCode());
 		assertEquals(test.getMappings().size(), 19);
+	}
+	
+	/**
+	 * Test the method UpdateTest() using the parserPath
+	 * @throws Exception
+	 */
+	@Test
+	public void testUpdateTestParser() throws Exception{
+		
+		EObject object = StateMachineAccessor.getModelObject(parserPath);
+		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		//System.out.println("region before : " + regions.get(0).getTransitions().size());
+		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
+		System.out.println("region after : " + regions.get(0).getTransitions().size());
+		System.out.println("edges : " + stateMachine.getEdges());
+		System.out.println(stateMachine.getStateMappings());
+		/*
+		for(Transition t1 : regions.get(0).getTransitions()){
+			System.out.println(t1.getName() + " " + t1.getSource().getName() + " " + t1.getTarget().getName());
+		}*/
+		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.EDGECOVERAGE);
+		System.out.println(stateMachine.getInitialStates());
+		System.out.println(stateMachine.getFinalStates());
+		System.out.println(paths);
+		//System.out.println(stateMachine.getStateMappings());
+		
+		//get the vertices from a path and return a list of transitions based on the vertices
+		
+		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
+		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(AbstractTestGenerator.getPathByState(paths.get(0), stateMachine), stateMachine);
+		
+		for(Transition transition: transitions)
+			System.out.println(transition);
+		/*
+		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest("test", "", transitions);
+		test = abstractTestGenerator.updateTest(vendingMachineXmlPath, test, XmlManipulator.getConstraintMappings(vendingMachineXmlPath));
+		
+		System.out.println(test.getTestCode());
+		assertEquals(test.getMappings().size(), 19);*/
 	}
 	
 	/**

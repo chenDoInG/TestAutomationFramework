@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings><mapping><name>addChocolate</name><transition-name>addChocs</transition-name><code>vm.addChoc(&quot;MM&quot;);</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>initializeDynamicParser</name><transition-name>initialize</transition-name><code>		DynamicParserView parserView = new DynamicParserView(new DynamicParserApp());
+		JTextArea textAreaVar = (JTextArea) ((JScrollPane)parserView.getComponent().getComponent(0)).getViewport().getView();
+		JCheckBox checkBoxDirection = (JCheckBox) parserView.getComponent().getComponent(1);
+		JTextField textFieldString = (JTextField) parserView.getComponent().getComponent(2);
+		JComboBox comboxOperation = (JComboBox) parserView.getComponent().getComponent(3);
+		JList listOperator = (JList) ((JScrollPane)parserView.getComponent().getComponent(4)).getViewport().getView();
+		JButton buttonDown = (JButton) parserView.getComponent().getComponent(5);
+		JButton buttonUp = (JButton) parserView.getComponent().getComponent(6);
+		JRadioButton radioButtonMath = (JRadioButton) parserView.getComponent().getComponent(7);
+		JRadioButton radioButtonCustomized = (JRadioButton) parserView.getComponent().getComponent(8);
+		JRadioButton radioButtonEqual = (JRadioButton) parserView.getComponent().getComponent(9);
+		JButton buttonParse = (JButton) parserView.getComponent().getComponent(10);
+		JTextArea textAreaOutput = (JTextArea) ((JScrollPane)parserView.getComponent().getComponent(11)).getViewport().getView();
+		JButton buttonClear = (JButton) parserView.getComponent().getComponent(12);
+		DynamicParserApp.main(null);</code></mapping><mapping><name>coinOneDollarAndTen</name><transition-name>coin</transition-name><code>vm.coin(10);
+vm.coin(25);
+vm.coin(25);
+vm.coin(25);
+vm.coin(25);
+</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>coinAnyCredit</name><transition-name>coin</transition-name><code>vm.coin(c);</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>intCInit</name><object-name>c</object-name><class-name>int</class-name><code>10,25,100</code></mapping><mapping><name>coinThreeValues</name><transition-name>coin</transition-name><code>vm.coin(c);</code><required-mappings>vMachineInit,intCInit</required-mappings><parameters>intCInit</parameters></mapping><mapping><name>stringBufferInit</name><object-name>sb</object-name><class-name>StringBuffer</class-name><code>StringBuffer sb = new StringBuffer(&quot;MM&quot;);</code></mapping><mapping><name>constraintStockEqualsTenMapping</name><constraint-name>ConstraintStockEqualsTen</constraint-name><code>vm.getStock() == 10;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>State7,State8,State9</stateinvariants></mapping><mapping><name>constraintStockBetweenOneAndTen</name><constraint-name>ConstraintStockBetweenOneAndTen</constraint-name><code>vm.getStock().size() &gt; 0 &amp;&amp; vm.getStock().size() &lt; 10;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>State4,State5,State6</stateinvariants></mapping><mapping><name>getChocolate</name><transition-name>getChocs</transition-name><code>vm.getChoc(sb);
+</code><required-mappings>vMachineInit,stringBufferInit</required-mappings></mapping></mappings>

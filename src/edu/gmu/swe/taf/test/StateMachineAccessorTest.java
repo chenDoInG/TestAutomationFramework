@@ -35,7 +35,7 @@ public class StateMachineAccessorTest {
 
 	private String vendingMachineXmlPath = "testData/VendingMachine/model/VendingMachineFSM.uml";
 	private String calculatorXmlPath = "testData/Calculator/model/CalculatorFSM.uml";
-	private String parserXmlPath = "testData/DynamicParser/model/ParserFSM.uml";
+	private String parserXmlPath = "testData/DynamicParser/model/SimplifiedParserFSM.uml";
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -148,7 +148,7 @@ public class StateMachineAccessorTest {
 		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
 		assertEquals(1, statemachines.size());
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));	
-		System.out.println(StateMachineAccessor.getInitialStates(regions.get(0)).get(0).getOwner() == regions.get(0));
+		//System.out.println(StateMachineAccessor.getInitialStates(regions.get(0)).get(0).getOwner() == regions.get(0));
 		
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
 		
@@ -156,12 +156,13 @@ public class StateMachineAccessorTest {
 		HashMap<String, Vertex> reversedStateMappings = stateMachine.getReversedStateMappings();
 		
 		assertNotNull(stateMappings);
-		assertEquals(16, stateMappings.size());
-		assertEquals(16, reversedStateMappings.size());
+		assertEquals(22, stateMappings.size());
+		assertEquals(22, reversedStateMappings.size());
 		System.out.println(stateMappings);
 		
 		List<State> highestLevelStates = StateMachineAccessor.getStates(regions.get(0));
-		assertEquals(5, highestLevelStates.size());
+		assertEquals(2, highestLevelStates.size());
+		/*
 		for(State state : highestLevelStates)
 			System.out.println(state.getName() + " " + state.isComposite());
 		for(Transition transition : regions.get(0).getTransitions())
@@ -170,7 +171,7 @@ public class StateMachineAccessorTest {
 		
 		for(Vertex vertex : highestLevelStates.get(0).getRegions().get(0).getSubvertices()){
 			System.out.println(vertex.getName());
-		}
+		}*/
 		
 		//assertEquals(10, highestLevelStates.get(0).getRegions().get(0).getSubvertices().size());
 	
@@ -191,6 +192,7 @@ public class StateMachineAccessorTest {
 		assertNotNull(stateMachine.getInitialStates());
 		assertNotNull(stateMachine.getFinalStates());
 		assertNotNull(stateMachine.getEdges());
+		System.out.println(stateMachine.getEdges());
 	}
 	
 	/**
