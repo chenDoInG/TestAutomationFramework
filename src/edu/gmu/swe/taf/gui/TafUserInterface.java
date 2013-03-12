@@ -567,7 +567,7 @@ public class TafUserInterface {
 			tests.add(test);
 		}
 		
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testPath, testName, xmlPath);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testPath, testName, xmlPath,"","");
 		concreteTestGenerator.generateConcreteTests(tests);
 	}
 	

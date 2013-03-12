@@ -373,10 +373,11 @@ public class StateMachineAccessor extends ModelAccessor {
 				}*/
 			}while(transCompoState.size() > 0);
 		}
+		/*
 		System.out.println(getTransitions().size());
 		for(Transition t3 : getTransitions()){
 			System.out.println(t3.getSource().getName() + " " + t3.getTarget().getName());
-		}
+		}*/
 
 	}
 	

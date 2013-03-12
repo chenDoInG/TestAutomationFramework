@@ -211,6 +211,7 @@ public class AbstractTestGenerator {
 			}
 			
 			for(Transition transition: ((FsmTest)test).getPath()){
+				//System.out.println("transition: " + transition + " " + transition.getSource().getName() + " " + transition.getTarget().getName());
 				if(constraintMappings != null)
 					mappings = addPreconditionStateInvariantMappings(transition, mappings, constraintMappings);
 				
@@ -248,6 +249,8 @@ public class AbstractTestGenerator {
 					mappings = addPreconditionStateInvariantMappings(destination, mappings, constraintMappings);
 					mappings = addPostconditionMappings(destination, mappings, constraintMappings);
 				}
+				//for(Mapping mapping : mappings)
+				//	System.out.println("mapping: " + mapping.getMappingName());
 			}
 		}
 		
@@ -278,25 +281,25 @@ public class AbstractTestGenerator {
 
 		if(element instanceof Vertex){
 			for(Mapping precondition : constraints){
-				if(precondition.getIdentifiableElementName().equalsIgnoreCase(((Vertex) element).getName()) && precondition.getType() == IdentifiableElementType.PRECONDITION)
+				if(precondition.getIdentifiableElementName().equals(((Vertex) element).getName()) && precondition.getType() == IdentifiableElementType.PRECONDITION)
 					finalMappings.add(precondition);
 			}
 			
 			for(Mapping stateinvariant : constraints){
 				//System.out.println(((Vertex) element).getName() + " " + stateinvariant.getIdentifiableElementName());
-				if(stateinvariant.getIdentifiableElementName().equalsIgnoreCase(((Vertex) element).getName()) && stateinvariant.getType() == IdentifiableElementType.STATEINVARIANT)
+				if(stateinvariant.getIdentifiableElementName().equals(((Vertex) element).getName()) && stateinvariant.getType() == IdentifiableElementType.STATEINVARIANT)
 					finalMappings.add(stateinvariant);
 			}		
 		}
 		
 		if(element instanceof Transition){
 			for(Mapping precondition : constraints){
-				if(precondition.getIdentifiableElementName().equalsIgnoreCase(((Transition) element).getName()) && precondition.getType() == IdentifiableElementType.PRECONDITION)
+				if(precondition.getIdentifiableElementName().equals(((Transition) element).getName()) && precondition.getType() == IdentifiableElementType.PRECONDITION)
 					finalMappings.add(precondition);
 			}
 			
 			for(Mapping stateinvariant : constraints){
-				if(stateinvariant.getIdentifiableElementName().equalsIgnoreCase(((Transition) element).getName()) && stateinvariant.getType() == IdentifiableElementType.STATEINVARIANT)
+				if(stateinvariant.getIdentifiableElementName().equals(((Transition) element).getName()) && stateinvariant.getType() == IdentifiableElementType.STATEINVARIANT)
 					finalMappings.add(stateinvariant);
 			}
 		}
@@ -313,14 +316,14 @@ public class AbstractTestGenerator {
 	public List<Mapping> addPostconditionMappings(Element element, List<Mapping> finalMappings, List<Mapping> constraints){
 		if(element instanceof Vertex){
 			for(Mapping postcondition : constraints){
-				if(postcondition.getIdentifiableElementName().equalsIgnoreCase(((Vertex) element).getName()) && postcondition.getType() == IdentifiableElementType.POSTCONDITION)
+				if(postcondition.getIdentifiableElementName().equals(((Vertex) element).getName()) && postcondition.getType() == IdentifiableElementType.POSTCONDITION)
 					finalMappings.add(postcondition);
 			}		
 		}
 		
 		if(element instanceof Transition){
 			for(Mapping postcondition : constraints){
-				if(postcondition.getIdentifiableElementName().equalsIgnoreCase(((Transition) element).getName()) && postcondition.getType() == IdentifiableElementType.POSTCONDITION)
+				if(postcondition.getIdentifiableElementName().equals(((Transition) element).getName()) && postcondition.getType() == IdentifiableElementType.POSTCONDITION)
 					finalMappings.add(postcondition);
 			}			
 		}

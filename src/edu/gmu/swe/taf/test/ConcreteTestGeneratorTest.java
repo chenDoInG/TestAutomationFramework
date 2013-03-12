@@ -31,15 +31,19 @@ import edu.gmu.swe.taf.AbstractTestGenerator.constraintSolver;
 
 public class ConcreteTestGeneratorTest {
 
-	String path;
-	String xmlPath;
-	String testDirectory = "testData/test/";
-	String testName = "VendingMachineTest";
+	String vendingMachineUMLPath;
+	String vendingMachineXmlPath;
+	String vendingMachineDirectory = "testData/VendingMachine/";
+	String vendingMachineTestName = "VendingMachineTest";
+	String parserUMLPath = "testData/DynamicParser/model/SimplifiedParserFSM.uml";;
+	String parserXmlPath = "testData/DynamicParser/xml/SimplifiedParserFSM.xml";;
+	String parserDirectory = "testData/DynamicParser/";
+	String parserTestName = "DynamicParserTest";
 	
 	@Before
 	public void setUp() throws Exception {
-		path = "testData/model/VendingMachineFSM.uml";
-		xmlPath = "testData/xml/vendingMachineMappings.xml";
+		vendingMachineUMLPath = "testData/VendingMachine/model/VendingMachineFSM.uml";
+		vendingMachineXmlPath = "testData/VendingMachine/xml/vendingMachineMappings.xml";
 	}
 
 	@After
@@ -48,15 +52,15 @@ public class ConcreteTestGeneratorTest {
 
 	@Test
 	public void testConcreteTestGenerator() throws Exception {
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "HelloWorld", xmlPath);
-		assertEquals(testDirectory, concreteTestGenerator.getDirectory());
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(vendingMachineDirectory, "HelloWorld", vendingMachineXmlPath, "", "");
+		assertEquals(vendingMachineDirectory, concreteTestGenerator.getDirectory());
 		assertEquals("HelloWorld", concreteTestGenerator.getTestName());
 	}
 
 	@Test
 	public void testGenerateConcreteTests() throws Exception {
 		
-		EObject object = StateMachineAccessor.getModelObject(path);
+		EObject object = StateMachineAccessor.getModelObject(vendingMachineUMLPath);
 		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
@@ -79,11 +83,11 @@ public class ConcreteTestGeneratorTest {
 				pathName += transition.getName() + " ";
 			}
 			edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest(String.valueOf(i), "The test for the path " + pathName, transitions);
-			test = abstractTestGenerator.updateTest(xmlPath, test, XmlManipulator.getConstraintMappings(xmlPath));
+			test = abstractTestGenerator.updateTest(vendingMachineXmlPath, test, XmlManipulator.getConstraintMappings(vendingMachineXmlPath));
 			tests.add(test);
 		}
 		
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, testName, xmlPath);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(vendingMachineDirectory, vendingMachineTestName, vendingMachineXmlPath, "", "");
 		concreteTestGenerator.generateConcreteTests(tests);
 	}
 	
@@ -98,7 +102,7 @@ public class ConcreteTestGeneratorTest {
 		/**
 		 * Computes the test
 		 */
-		EObject object = StateMachineAccessor.getModelObject(path);
+		EObject object = StateMachineAccessor.getModelObject(vendingMachineUMLPath);
 		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
@@ -121,16 +125,65 @@ public class ConcreteTestGeneratorTest {
 			pathName += transition.getTarget().getName() + " ";
 		}
 		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest("1", "The test for the path " + pathName, transitions);
-		test = abstractTestGenerator.updateTest(xmlPath, test, XmlManipulator.getConstraintMappings(xmlPath));
+		test = abstractTestGenerator.updateTest(vendingMachineXmlPath, test, XmlManipulator.getConstraintMappings(vendingMachineXmlPath));
 		
 		/**
 		 * Generates the concrete test
 		 */
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "VendingMachineTest", xmlPath);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(vendingMachineDirectory, "VendingMachineTest", vendingMachineXmlPath, "", "");
 
-		File file = new File(testDirectory + "VendingMachineTest" + ".java");
+		File file = new File(vendingMachineDirectory + "VendingMachineTest" + ".java");
 		//I should refactoring the this method by moving updateConcreteTest method inside
-		concreteTestGenerator.createConcreteTestCase(testDirectory, file, concreteTestGenerator.updateConcreteTest(test));
+		concreteTestGenerator.createConcreteTestCase(vendingMachineDirectory, file, concreteTestGenerator.updateConcreteTest(test));
+	}
+	
+	/**
+	 * The test for the method "createConcreteTestCase(String, File, Test)" for the program Dynamic Parser
+	 * @throws Exception
+	 */
+
+	@Test
+	public void testCreateConcreteTestCaseParser() throws Exception {
+		
+		/**
+		 * Computes the test
+		 */
+		EObject object = StateMachineAccessor.getModelObject(parserUMLPath);
+		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
+		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.EDGECOVERAGE);
+		//System.out.println(paths.get(0));
+		//System.out.println(stateMachine.getStateMappings());
+		
+		//get the vertices from a path and return a list of transitions based on the vertices
+		//List<Vertex> vertexes = AbstractTestGenerator.getPathByState(paths.get(0), stateMachine);
+		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
+		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(5), stateMachine), stateMachine);
+
+		//add the test comments
+		String pathName = "" + transitions.get(0).getSource().getName() + " ";
+		for(Transition transition: transitions){
+			//System.out.println(transition.getSource().getName());
+			//System.out.println(transition);	
+			//System.out.println(transition.getTarget().getName());	
+			pathName += transition.getName() + " ";
+			pathName += transition.getTarget().getName() + " ";
+		}
+		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest("1", "The test for the path " + pathName, transitions);
+		test = abstractTestGenerator.updateTest(parserXmlPath, test, XmlManipulator.getConstraintMappings(parserXmlPath));
+		System.out.println(pathName);
+
+		/**
+		 * Generates the concrete test
+		 */
+		String imports = "import javax.swing.*;\n";
+		String packageName = "package osa.ora;\n";
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(parserDirectory, parserTestName, parserXmlPath, packageName, imports);
+
+		File file = new File(parserDirectory + "test/" + parserTestName + ".java");
+		//I should refactoring the this method by moving updateConcreteTest method inside
+		concreteTestGenerator.createConcreteTestCase(parserDirectory, file, concreteTestGenerator.updateConcreteTest(test));
 	}
 	
 	/**
@@ -144,7 +197,7 @@ public class ConcreteTestGeneratorTest {
 		/**
 		 * Computes the test
 		 */
-		EObject object = StateMachineAccessor.getModelObject(path);
+		EObject object = StateMachineAccessor.getModelObject(vendingMachineUMLPath);
 		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
@@ -163,16 +216,16 @@ public class ConcreteTestGeneratorTest {
 			pathName += transition.getTarget().getName() + " ";
 		}
 		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest("1", "The test for the path " + pathName, transitions);
-		test = abstractTestGenerator.updateTest(xmlPath, test, XmlManipulator.getConstraintMappings(xmlPath));
+		test = abstractTestGenerator.updateTest(vendingMachineXmlPath, test, XmlManipulator.getConstraintMappings(vendingMachineXmlPath));
 		
 		/**
 		 * Generates the concrete test
 		 */
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "VendingMachineTest", xmlPath);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(vendingMachineDirectory, "VendingMachineTest", vendingMachineXmlPath, "", "");
 
-		File file = new File(testDirectory + "VendingMachineTest" + ".java");
+		File file = new File(vendingMachineDirectory + "VendingMachineTest" + ".java");
 		//I should refactoring the this method by moving updateConcreteTest method inside
-		concreteTestGenerator.createConcreteTestCase(testDirectory, file, concreteTestGenerator.updateConcreteTest(test));
+		concreteTestGenerator.createConcreteTestCase(vendingMachineDirectory, file, concreteTestGenerator.updateConcreteTest(test));
 	}
 	
 	/**
@@ -186,7 +239,7 @@ public class ConcreteTestGeneratorTest {
 		/**
 		 * Computes the test
 		 */
-		EObject object = StateMachineAccessor.getModelObject(path);
+		EObject object = StateMachineAccessor.getModelObject(vendingMachineUMLPath);
 		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
@@ -210,16 +263,16 @@ public class ConcreteTestGeneratorTest {
 			pathName += transition.getTarget().getName() + " ";
 		}
 		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest("1", "The test for the path " + pathName, transitions);
-		test = abstractTestGenerator.updateTest(xmlPath, test, XmlManipulator.getConstraintMappings(xmlPath));
+		test = abstractTestGenerator.updateTest(vendingMachineXmlPath, test, XmlManipulator.getConstraintMappings(vendingMachineXmlPath));
 		
 		/**
 		 * Generates the concrete test
 		 */
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "VendingMachineTest", xmlPath);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(vendingMachineDirectory, "VendingMachineTest", vendingMachineXmlPath, "", "");
 
-		File file = new File(testDirectory + "VendingMachineTest" + ".java");
+		File file = new File(vendingMachineDirectory + "VendingMachineTest" + ".java");
 		//I should refactoring the this method by moving updateConcreteTest method inside
-		concreteTestGenerator.createConcreteTestCase(testDirectory, file, concreteTestGenerator.updateConcreteTest(test));
+		concreteTestGenerator.createConcreteTestCase(vendingMachineDirectory, file, concreteTestGenerator.updateConcreteTest(test));
 	}
 	
 	/**
@@ -233,7 +286,7 @@ public class ConcreteTestGeneratorTest {
 		/**
 		 * Computes the test
 		 */
-		EObject object = StateMachineAccessor.getModelObject(path);
+		EObject object = StateMachineAccessor.getModelObject(vendingMachineUMLPath);
 		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
@@ -255,20 +308,20 @@ public class ConcreteTestGeneratorTest {
 				pathName += transition.getName() + " ";
 			}
 			edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest(String.valueOf(i), "The test for the path " + pathName, transitions);
-			test = abstractTestGenerator.updateTest(xmlPath, test, null);
+			test = abstractTestGenerator.updateTest(vendingMachineXmlPath, test, null);
 			tests.add(test);
 		}
 		/**
 		 * Generates the concrete test
 		 */
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "VendingMachineTest", xmlPath);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(vendingMachineDirectory, "VendingMachineTest", vendingMachineXmlPath, "", "");
 
-		File file = new File(testDirectory + "VendingMachineTest" + ".java");
+		File file = new File(vendingMachineDirectory + "VendingMachineTest" + ".java");
 		List<edu.gmu.swe.taf.Test> finalTests = new ArrayList<edu.gmu.swe.taf.Test>();
 		for(edu.gmu.swe.taf.Test test: tests)
 			finalTests.add(concreteTestGenerator.updateConcreteTest(test));
 		
-		concreteTestGenerator.createConcreteTestCase(testDirectory, file, finalTests);
+		concreteTestGenerator.createConcreteTestCase(vendingMachineDirectory, file, finalTests);
 		//concreteTestGenerator.createConcreteTestCase(tempTestDirectory, file, concreteTestGenerator.updateConcreteTest(test));
 	}
 	
@@ -283,7 +336,7 @@ public class ConcreteTestGeneratorTest {
 		test.setTestComment("This is a test");
 		test.setTestCode("System.out.println(\"Hello World\");");
 		
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "HelloWorld", xmlPath);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(vendingMachineDirectory, "HelloWorld", vendingMachineXmlPath, "", "");
 		String priorTestCode = test.getTestCode();
 		String testCodeAfter = concreteTestGenerator.updateConcreteTest(test).getTestCode();
 		assertFalse(testCodeAfter.equals(priorTestCode));
@@ -303,7 +356,7 @@ public class ConcreteTestGeneratorTest {
 		initialMappings.add("intCInit");
 		List<ObjectMapping> finalMappings = new ArrayList<ObjectMapping>();
 		
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "HelloWorld", xmlPath);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(vendingMachineDirectory, "HelloWorld", vendingMachineXmlPath, "", "");
 		finalMappings = concreteTestGenerator.calculateRequiredMappings(finalMappings, initialMappings);
 		for(Mapping s: finalMappings){
 			//System.out.println(s.getMappingName());
@@ -333,7 +386,7 @@ public class ConcreteTestGeneratorTest {
 
 		StringBuffer variableInitialization = new StringBuffer("");
 		
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "HelloWorld", xmlPath);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(vendingMachineDirectory, "HelloWorld", vendingMachineXmlPath, "", "");
 		variableInitialization = concreteTestGenerator.computeVariableInitialization(mappings);
 		System.out.println(variableInitialization);
 		assertEquals(true, variableInitialization.length() > 0);
@@ -345,7 +398,7 @@ public class ConcreteTestGeneratorTest {
 	 */
 	@Test
 	public void testIsConstraintSatisfied() throws Exception {
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "TempTest", xmlPath);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(vendingMachineDirectory, "TempTest", vendingMachineXmlPath, "", "");
 
 		List<Mapping> mappings = new ArrayList<Mapping>();
 		mappings.add(new Mapping(null, null, null, "vendingMachine vm = new vendingMachine();", null, null, null, null));
@@ -362,7 +415,7 @@ public class ConcreteTestGeneratorTest {
 	 */
 	@Test
 	public void testWriteTempTest() throws Exception {
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "TempTest", xmlPath);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(vendingMachineDirectory, "TempTest", vendingMachineXmlPath, "", "");
 		String testContent = "        vendingMachine vm = new vendingMachine();\n        vm.addChoc(\"MM\")\n";
 		concreteTestGenerator.writeTempTest(testContent);
 
@@ -370,9 +423,9 @@ public class ConcreteTestGeneratorTest {
 	
 	@Test
 	public void testCompileJavaFile() throws Exception {
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(testDirectory, "VendingMachineTest", xmlPath);
-		File file = new File(testDirectory + "VendingMachineTest" + ".java");
-		concreteTestGenerator.compileJavaFile(testDirectory, file);
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(vendingMachineDirectory, "VendingMachineTest", vendingMachineXmlPath, "", "");
+		File file = new File(vendingMachineDirectory + "VendingMachineTest" + ".java");
+		concreteTestGenerator.compileJavaFile(vendingMachineDirectory, file);
 	}
 
 }

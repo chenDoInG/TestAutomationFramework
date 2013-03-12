@@ -2,7 +2,11 @@
 <uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_N7k6gIp8EeK-J-78SNIzFw" name="model">
   <packagedElement xmi:type="uml:StateMachine" xmi:id="_N7qaEIp8EeK-J-78SNIzFw" name="StateMachine0">
     <region xmi:id="_N7qaEYp8EeK-J-78SNIzFw" name="Region0">
-      <transition xmi:id="_HudbgIp9EeK-J-78SNIzFw" name="initialize" source="_SpI10Ip8EeK-J-78SNIzFw" target="_T1vy4Ip8EeK-J-78SNIzFw"/>
+      <ownedRule xmi:id="_BDTRMIskEeKtl-muK9pehw" name="ConstraintLeft" constrainedElement="_vAxt4IqJEeK-J-78SNIzFw _74JXAIqLEeK-J-78SNIzFw _NSdRwIqMEeK-J-78SNIzFw _Sp_XIIqMEeK-J-78SNIzFw _e9mWoIq0EeKVhKWrWq20wg _A7ta4Iq1EeKVhKWrWq20wg _HQVzwIqLEeK-J-78SNIzFw _DCmLgIqMEeK-J-78SNIzFw"/>
+      <ownedRule xmi:id="_QXFu4IslEeKtl-muK9pehw" name="ConstraintRight" constrainedElement="_mbZfYIp8EeK-J-78SNIzFw _jXTwYIqJEeK-J-78SNIzFw _pRgd8IqJEeK-J-78SNIzFw _b7w58IqLEeK-J-78SNIzFw _pvtyAIqLEeK-J-78SNIzFw _0HZ-kIqLEeK-J-78SNIzFw _rJjV8IqPEeK-J-78SNIzFw _416_gIq0EeKVhKWrWq20wg">
+        <specification xmi:type="uml:LiteralString" xmi:id="_QXGV8IslEeKtl-muK9pehw" value=""/>
+      </ownedRule>
+      <transition xmi:id="_HudbgIp9EeK-J-78SNIzFw" name="" source="_SpI10Ip8EeK-J-78SNIzFw" target="_T1vy4Ip8EeK-J-78SNIzFw"/>
       <transition xmi:id="_LU7L4Ip9EeK-J-78SNIzFw" name="logicMode" source="_T1vy4Ip8EeK-J-78SNIzFw" target="_XD80QIp8EeK-J-78SNIzFw"/>
       <transition xmi:id="_PqQ0cIp9EeK-J-78SNIzFw" name="arithMode" source="_XD80QIp8EeK-J-78SNIzFw" target="_T1vy4Ip8EeK-J-78SNIzFw"/>
       <transition xmi:id="_omBCMIqPEeK-J-78SNIzFw" name="" source="_T1vy4Ip8EeK-J-78SNIzFw" target="_nl9TYIqPEeK-J-78SNIzFw"/>

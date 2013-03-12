@@ -41,6 +41,7 @@ public class AbstractTestGeneratorTest {
 	String vendingMachinePath;
 	String parserPath;
 	String vendingMachineXmlPath;
+	String parserXmlPath;
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -49,6 +50,7 @@ public class AbstractTestGeneratorTest {
 		vendingMachinePath = "testData/model/VendingMachineFSM.uml";
 		vendingMachineXmlPath = "testData/xml/vendingMachineMappings.xml";
 		parserPath = "testData/DynamicParser/model/SimplifiedParserFSM.uml";
+		parserXmlPath = "testData/DynamicParser/xml/SimplifiedParserFSM.xml";
 	}
 
 	/**
@@ -183,8 +185,8 @@ public class AbstractTestGeneratorTest {
 			System.out.println(t1.getName() + " " + t1.getSource().getName() + " " + t1.getTarget().getName());
 		}*/
 		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.EDGECOVERAGE);
-		System.out.println(stateMachine.getInitialStates());
-		System.out.println(stateMachine.getFinalStates());
+		//System.out.println(stateMachine.getInitialStates());
+		//System.out.println(stateMachine.getFinalStates());
 		System.out.println(paths);
 		//System.out.println(stateMachine.getStateMappings());
 		
@@ -195,12 +197,12 @@ public class AbstractTestGeneratorTest {
 		
 		for(Transition transition: transitions)
 			System.out.println(transition);
-		/*
+		
 		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest("test", "", transitions);
-		test = abstractTestGenerator.updateTest(vendingMachineXmlPath, test, XmlManipulator.getConstraintMappings(vendingMachineXmlPath));
+		test = abstractTestGenerator.updateTest(parserXmlPath, test, XmlManipulator.getConstraintMappings(parserXmlPath));
 		
 		System.out.println(test.getTestCode());
-		assertEquals(test.getMappings().size(), 19);*/
+		assertEquals(6, test.getMappings().size());
 	}
 	
 	/**

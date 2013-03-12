@@ -8,6 +8,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +46,26 @@ public class JavaSupporter {
 		
 		for(File file: files){
 			if(file.isFile() && file.getName().endsWith(".java"))
+				results.add(file);
+		}
+		
+		return results;
+	}
+	
+	/**
+	 * Returns all Jar files in a directory specified by path
+	 * 
+	 * @param path the current path of a directory
+	 * @return a {@link java.util.List} of {@link java.io.File}s that are Jar files
+	 */
+	public static List<File> returnAllJarFiles(String path){
+		
+		File folder = new File(path);
+		File[] files = folder.listFiles();
+		List<File> results = new ArrayList<File>();
+		
+		for(File file: files){
+			if(file.isFile() && file.getName().endsWith(".jar"))
 				results.add(file);
 		}
 		
@@ -170,5 +193,103 @@ public class JavaSupporter {
 		}
 		return mappingNames.toArray();
 	}
+	
+	/**
+	 * Create directories from the package.
+	 * For instance, if a package name is "edu.gmu", two directories edu and gmu are created.
+	 * @param directory		
+	 * @param packageName
+	 */
+	public static final void createTestDirectory(String directory, String packageName){
+		if(packageName != null){
+			if(packageName.trim().length() > 0){
+				String name = packageName;
+				if(packageName.startsWith("package")){
+					name = name.substring(7, name.length()).trim();
+				}
+				if(name.endsWith(";")){
+					name = removeSemiColon(name);
+				}
+				
+				String[] levels = name.split("\\.");
+				String directories = directory;
+				for(String level : levels){
+					directories += level + "/";
+					//System.out.println(level);
+				}
+				//System.out.println(directories);
+				File file = new File(directories);
+				file.mkdirs();
+			}
+		}		
+	}
+	
+	/**
+	 * Convert a packageName separated by dot to a file path having the package names separated by slash.
+	 * @param packageName	a package name that could have dot or have no dot
+	 * @return				a path in a String format		
+	 */	
+	public static String returnPackages(String packageName){
+		if(packageName != null){
+			if(packageName.trim().length() > 0){
+				String name = packageName;
+				if(packageName.startsWith("package")){
+					name = name.substring(7, name.length()).trim();
+				}
+				if(name.endsWith(";")){
+					name = removeSemiColon(name);
+				}
+				String[] levels = name.split("\\.");
+				String directories = "";
+				for(String level : levels){
+					directories += level + "/";
+				}
+				return directories;
+			}
+		}	
+		return "";
+	}
+	
+	/**
+	 * Removes the header "package" and ";" at the end if any.
+	 * @param packageName	a package name in a String format
+	 * @return				the package name without "package" keyword and ";"
+	 */
+	public static String cleanUpPackageName(String packageName){
+		if(packageName != null){
+			if(packageName.trim().length() > 0){
+				String name = packageName;
+				if(packageName.startsWith("package")){
+					name = name.substring(7, name.length()).trim();
+				}
+				if(name.endsWith(";")){
+					name = removeSemiColon(name);
+				}
+				return name.trim();
+			}
+		}	
+		return "";
+	}
+	
+	/**
+	 * A hack method to add classes dynamically.
+	 * @param url
+	 * @throws Exception
+	 */
+	public static final void addURL(URL url) throws Exception {
+		  URLClassLoader classLoader
+		         = (URLClassLoader) ClassLoader.getSystemClassLoader();
+		  Class clazz= URLClassLoader.class;
+
+		  // Use reflection
+		  Method method= clazz.getDeclaredMethod("addURL", new Class[] { URL.class });
+		  method.setAccessible(true);
+		  method.invoke(classLoader, new Object[] { url });
+	}
+	
+	/*
+	public static String convertToClassPath(String directory){
+		
+	}*/
 
 }

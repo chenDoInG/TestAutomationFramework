@@ -900,7 +900,10 @@ public class XmlManipulator {
 	 */
 	public static List<ConstraintMapping> getConstraintMappings(String path) throws Exception{
 		List<ConstraintMapping> matchedNodes = new ArrayList<ConstraintMapping>();
+		//System.out.println("path: " + path);
+		
 		Document doc = readXmlFile(path);
+
 		NodeList mappings = doc.getElementsByTagName("constraint-name");
 		//System.out.println("size mapping: " + mappings.getLength());
 		//System.out.println("path: " + path);

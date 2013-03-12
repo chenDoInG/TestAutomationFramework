@@ -35,18 +35,25 @@ import edu.gmu.swe.taf.util.XegerStringGenerator;
 public class ConcreteTestGenerator {
 	//a test directory
 	private String directory;
+	private String testDirectory;
 	private String name;
 	private String xmlPath;
 	//a test directory to put temporal Java files
 	private String tempTestDirectory;
+	private String packageName;
+	private String imports;
 	/**
 	 * Construct a ConcreteTestGenerator with the specified directory and class name
 	 */
-	public ConcreteTestGenerator(String directory, String name, String xmlPath) {
+	public ConcreteTestGenerator(String directory, String name, String xmlPath, String packageName, String imports) {
 		this.directory = directory;
 		this.name = name;
 		this.xmlPath = xmlPath;
-		this.tempTestDirectory = directory + "temp/";
+		this.tempTestDirectory = directory + "test/temp/";
+		this.packageName = packageName;
+		this.imports = imports;
+		this.testDirectory = directory + "test/";
+		JavaSupporter.createTestDirectory(tempTestDirectory, packageName);
 	}
 
 	/**
@@ -58,19 +65,19 @@ public class ConcreteTestGenerator {
 	 * @throws Exception		throws 
 	 */
 	public void generateConcreteTests(List<? extends Test> tests) throws Exception{
-		File file = new File(getDirectory() + getTestName() + ".java");
+		File file = new File(getDirectory() + "test/" + getTestName() + ".java");
 		
 		List<Test> finalTests = new ArrayList<Test>();
 		for(Test test: tests)
 			finalTests.add(updateConcreteTest(test));
 		
 		try {
-			createConcreteTestCase(getDirectory(), file, finalTests);	
+			createConcreteTestCase(getDirectory() + "test/", file, finalTests);	
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		compileJavaFile(getDirectory(), file);
+		compileJavaFile(getDirectory() + "test/", file);
 	}
 	
 	/**
@@ -89,13 +96,13 @@ public class ConcreteTestGenerator {
 
 		FileOutputStream fop = new FileOutputStream(file);
 		StringBuffer result = new StringBuffer("");
-		String packageName = "\n";
 		String importsJava = "import java.io.*;\n";
 		String importsJUnit = "import org.junit.*;\nimport static org.junit.Assert.*;\n";
 	
 		result.append(packageName);
 		result.append(importsJava);
 		result.append(importsJUnit);
+		result.append(imports);
 		result.append("\n");
 		
 		String classHeader = "public class " + getTestName() + " {\n";
@@ -191,8 +198,10 @@ public class ConcreteTestGenerator {
 		
 		//Add all required mappings for this tests into finalRequiredMappings
 		List<Mapping> mappings = test.getMappings();
-		for(Mapping mapping: mappings)
+		for(Mapping mapping: mappings){
+			//System.out.println(mapping.getIdentifiableElementName());
 			System.out.println(mapping.getMappingName());
+		}
 		
 		List<Mapping> finalMappings = new ArrayList<Mapping>();
 		
@@ -216,6 +225,8 @@ public class ConcreteTestGenerator {
 					do{
 						nextMappings.add(mappings.get(position));
 						position++;
+						if(position >= mappings.size())
+							break;
 					}while(mappings.get(position).getType() == IdentifiableElementType.PRECONDITION || mappings.get(position).getType() == IdentifiableElementType.STATEINVARIANT);
 					
 					//get a list of mappings that are prior to the constraint
@@ -398,11 +409,12 @@ public class ConcreteTestGenerator {
 		
 		List<ObjectMapping> finalMappings = new ArrayList<ObjectMapping>();
 		finalMappings = calculateRequiredMappings(finalMappings, initialRequiredMappings);
-		//System.out.println(finalMappings.size());
+		//System.out.println("finalMappings.size(): " + finalMappings.size());
 		
 		if(finalMappings != null && finalMappings.size() > 0){
 			variableInitialization = new StringBuffer("");
 			for(ObjectMapping mapping: finalMappings){
+				//System.out.println("mapping: " + mapping.getTestCode());
 				String testInitialization = generateTestValue(mapping);
 				//System.out.println("test: " + testInitialization);
 				if(testInitialization == null)
@@ -472,9 +484,13 @@ public class ConcreteTestGenerator {
 	 */
 	public String generateTestValue(ObjectMapping om){
 		String type = om.getClassType().trim();
-		String code = om.getTestCode();
+		String code = om.getTestCode().trim();
 		//System.out.println("type: " + type);
-		//System.out.println("code: " + code);
+		//System.out.println("code: " + code + code.startsWith(type));
+		
+		//if this mapping requires no more mappings, return its test code
+		if(om.getRequiredMappings() == null)
+			return code;
 		
 		//If the test code is a complete variable declaration or initialization, return the code
 		//Otherwise, continue and solve the constraints
@@ -608,11 +624,11 @@ public class ConcreteTestGenerator {
 		System.out.println("mapping size: " + mappings.size());
 		System.out.println(testCode.toString());
 		File file = writeTempTest(testCode.toString());
-		compileJavaFile(tempTestDirectory, file);
+		compileJavaFile(directory + "class/", file);
 		
-		File root1 = new File("./testData/test/temp/");
+		File root1 = new File(tempTestDirectory);
 		
-		//System.out.println(root1.getAbsolutePath());
+		System.out.println(root1.getAbsolutePath());
 		
 		/* when deploying the project, this part needs to be updated for adding more class paths
 		 	File root2 = new File("./testData/src/");
@@ -624,7 +640,17 @@ public class ConcreteTestGenerator {
 		*/
 		
 		URLClassLoader classLoader = URLClassLoader.newInstance(new URL[]{root1.toURI().toURL()});
-		Class<?> c = Class.forName("TempTest", true, classLoader);
+		List<File> jarFiles = JavaSupporter.returnAllJarFiles(directory + "class/");
+		
+		for(File jar : jarFiles){
+			System.out.println(jar.getName());
+			System.out.println(jar.getAbsolutePath());
+			JavaSupporter.addURL(jar.toURL());
+		}
+		
+		JavaSupporter.addURL(new File(directory + "class/").toURL());
+		//System.out.println(JavaSupporter.returnPackages(packageName) + "TempTest");
+		Class<?> c = Class.forName(JavaSupporter.cleanUpPackageName(packageName) + ".TempTest", true, classLoader);
 		
 		//this part uses a customized class loader: TestLoader, now it looks like we do not need this class
 		//TestLoader loader = new TestLoader();
@@ -651,17 +677,18 @@ public class ConcreteTestGenerator {
 	 * @throws IOException
 	 */
 	public File writeTempTest(String testContent) throws IOException{
-		File file = new File(tempTestDirectory + "TempTest.java");
+		File file = new File(tempTestDirectory + JavaSupporter.returnPackages(packageName) + "TempTest.java");
 		//System.out.println(tempTestDirectory + "TempTest.java");
 		FileOutputStream fop = new FileOutputStream(file);
 		StringBuffer result = new StringBuffer("");
-		String packageName = "\n";
+
 		String importsJava = "import java.io.*;\n";
 		String importsJUnit = "import org.junit.*;\nimport static org.junit.Assert.*;\n";
 	
 		result.append(packageName);
 		result.append(importsJava);
 		result.append(importsJUnit);
+		result.append(imports);
 		result.append("\n");
 		
 		String classHeader = "public class TempTest {\n";
@@ -699,8 +726,14 @@ public class ConcreteTestGenerator {
 		//create a diagnostic controller, which holds the compilation problems
 		DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
 		
+		//find all jar files in the class folder of the directory
+		List<File> jarFiles = JavaSupporter.returnAllJarFiles(directory);
+		String jarPath = "";
+		for(File jar : jarFiles)
+			jarPath += ":" + directory + jar.getName();
+		
 		List<String> optionList = new ArrayList<String>();
-		optionList.addAll(Arrays.asList("-classpath", directory + ":" + System.getProperty("java.class.path")));
+		optionList.addAll(Arrays.asList("-classpath", directory + ":" + System.getProperty("java.class.path") + jarPath));
 		//optionList.addAll(Arrays.asList("-classpath", System.getProperty("java.class.path")));
 		
 		//System.out.println("classpath: " + System.getProperty("java.class.path"));
