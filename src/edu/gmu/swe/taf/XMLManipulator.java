@@ -716,9 +716,11 @@ public class XmlManipulator {
 				}
 				
 				if(nodes.item(j).getNodeName().equals("required-mappings")){
-					String[] required = nodes.item(j).getFirstChild().getNodeValue().split(",");
-					mapping.setRequiredMappings(Arrays.asList(required));
-					continue;
+					if(nodes.item(j).getFirstChild() != null){
+						String[] required = nodes.item(j).getFirstChild().getNodeValue().split(",");
+						mapping.setRequiredMappings(Arrays.asList(required));
+						continue;
+					}
 				}
 				
 				if(nodes.item(j).getNodeName().equals("parameters")){
@@ -931,9 +933,11 @@ public class XmlManipulator {
 				}
 				
 				if(nodes.item(j).getNodeName().equals("required-mappings")){
-					String[] required = nodes.item(j).getFirstChild().getNodeValue().split(",");
-					mapping.setRequiredMappings(Arrays.asList(required));
-					continue;
+					if(nodes.item(j).getFirstChild() != null){
+						String[] required = nodes.item(j).getFirstChild().getNodeValue().split(",");
+						mapping.setRequiredMappings(Arrays.asList(required));
+						continue;
+					}
 				}
 				
 				if(nodes.item(j).getNodeName().equals("parameters")){

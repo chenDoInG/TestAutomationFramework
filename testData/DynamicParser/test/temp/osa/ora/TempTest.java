@@ -23,7 +23,6 @@ public class TempTest {
 		JButton buttonClear = (JButton) parserView.getComponent().getComponent(12);
 		DynamicParserApp.main(null);
         buttonParse.doClick();
-        radioButtonMath.doClick();
         return checkBoxDirection.isSelected() == false;
     }
 }

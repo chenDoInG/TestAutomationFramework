@@ -15,7 +15,11 @@
 		JButton buttonClear = (JButton) parserView.getComponent().getComponent(12);
 		DynamicParserApp.main(null);</code>
 	
-	</mapping><mapping><name>mathMapping</name><transition-name>math</transition-name><code>radioButtonMath.doClick();</code><required-mappings>initializeDynamicParser</required-mappings></mapping><mapping><name>customizeMapping</name><transition-name>customize</transition-name><code>radioButtonCustomized.doClick();</code><required-mappings>initializeDynamicParser</required-mappings></mapping><mapping><name>allEqualMapping</name><object-name>allEqual</object-name><class-name>radioButtonEqual.doClick();</class-name><code>initializeDynamicParser</code></mapping><mapping><name>clearMapping</name><transition-name>clear</transition-name><code>buttonClear.doClick();</code><required-mappings>initializeDynamicParser</required-mappings></mapping><mapping><name>leftMapping</name><object-name>left</object-name><class-name>checkBoxDirection.doClick();</class-name><code>initializeDynamicParser</code></mapping><mapping><name>ConstraintLeftMapping</name><constraint-name>ConstraintLeft</constraint-name><code>checkBoxDirection.isSelected() == true;</code><required-mappings>initializeDynamicParser</required-mappings><stateinvariants>Left,MathLeft,AllEqualLeft,LeftOutput,MathLeftOutput,AllEqualLeftOutput</stateinvariants></mapping><mapping><name>ConstraintRightMapping</name><constraint-name>ConstraintRight</constraint-name><code>checkBoxDirection.isSelected() == false;</code><required-mappings>initializeDynamicParser</required-mappings><stateinvariants>ArithDefault,Output,Math,MathOutput,AllEqualOutput,AllEqual</stateinvariants></mapping><mapping><name>logicModeMapping</name><transition-name>logicMode</transition-name><code>comboBoxOperation.setSelectedIndex(1);</code><required-mappings>initializeDynamicParser</required-mappings></mapping>
+	</mapping><mapping><name>mathMapping</name><transition-name>math</transition-name><code>radioButtonMath.doClick();</code><required-mappings>initializeDynamicParser</required-mappings></mapping><mapping><name>customizeMapping</name><transition-name>customize</transition-name><code>radioButtonCustomized.doClick();</code><required-mappings>initializeDynamicParser</required-mappings></mapping><mapping><name>allEqualMapping</name><transition-name>allEqual</transition-name><code>radioButtonEqual.doClick();</code>
+	
+	<required-mappings>initializeDynamicParser</required-mappings></mapping><mapping><name>clearMapping</name><transition-name>clear</transition-name><code>buttonClear.doClick();</code><required-mappings>initializeDynamicParser</required-mappings></mapping><mapping><name>leftMapping</name><transition-name>left</transition-name><code>checkBoxDirection.doClick();</code>
+	
+	<required-mappings>initializeDynamicParser</required-mappings></mapping><mapping><name>ConstraintLeftMapping</name><constraint-name>ConstraintLeft</constraint-name><code>checkBoxDirection.isSelected() == true;</code><required-mappings>initializeDynamicParser</required-mappings><stateinvariants>Left,MathLeft,AllEqualLeft,LeftOutput,MathLeftOutput,AllEqualLeftOutput</stateinvariants></mapping><mapping><name>ConstraintRightMapping</name><constraint-name>ConstraintRight</constraint-name><code>checkBoxDirection.isSelected() == false;</code><required-mappings>initializeDynamicParser</required-mappings><stateinvariants>ArithDefault,Output,Math,MathOutput,AllEqualOutput,AllEqual</stateinvariants></mapping><mapping><name>logicModeMapping</name><transition-name>logicMode</transition-name><code>comboBoxOperation.setSelectedIndex(1);</code><required-mappings>initializeDynamicParser</required-mappings></mapping>
 	<mapping>
 		<name>arithModeMapping</name>
 		<transition-name>arithMode</transition-name>
@@ -24,5 +28,10 @@
 	<mapping>
 		<name>changePrecedenceMapping</name>
 		<transition-name>changePrecedence</transition-name>
-		<code>parserView.setOperStrings(new String[]{ "+", "%", "*", "/" });</code>
+		<code>parserView.setOperStrings(new String[]{ &quot;+&quot;, &quot;%&quot;, &quot;*&quot;, &quot;/&quot; });</code>
+		<required-mappings>initializeDynamicParser</required-mappings></mapping>
+	<mapping>
+		<name>rightMapping</name>
+		<transition-name>right</transition-name>
+		<code>checkBoxDirection.doClick();</code>
 		<required-mappings>initializeDynamicParser</required-mappings></mapping></mappings>
