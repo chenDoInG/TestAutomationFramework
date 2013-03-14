@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code> BlackjackGUI frame = new BlackjackGUI();
+    frame.display();</code><required-mappings></required-mappings></mapping>
+<mapping><name>dealMapping</name><transition-name>deal</transition-name><code>frame.getDealButton().doClick();</code><required-mappings></required-mappings></mapping>
+<mapping><name>stayMapping</name><transition-name>stay</transition-name><code>frame.getStayButton().doClick();</code><required-mappings></required-mappings></mapping>
+<mapping><name>hit1OrStayMapping</name>
+	<transition-name>hitOrStay</transition-name>
+	<code>frame.getHitButton().doClick();</code><required-mappings></required-mappings></mapping>
+<mapping><name>ConstraintLostMapping</name><constraint-name>ConstraintLost</constraint-name><code>(frame.getWinLoseBox().getText().equals("Lost") || frame.getWinLoseBox().getText().equals("Bust")) == true;</code><required-mappings></required-mappings><stateinvariants>Lost</stateinvariants></mapping>
+	<mapping>
+		<name>hitOrStay1Mapping</name>
+		<transition-name>hitOrStay</transition-name>
+		<code>frame.getStayButton().doClick();</code></mapping>
+	<mapping>
+		<name>hit2OrStayMapping</name>
+		<transition-name>hitOrStay</transition-name>
+		<code>frame.getHitButton().doClick();
+		frame.getHitButton().doClick();</code></mapping>
+	<mapping>
+		<name>ConstraintWinMapping</name>
+		<constraint-name>ConstraintWin</constraint-name>
+		<code>frame.getWinLoseBox().getText().equals("Lost") == true;</code>
+		<required-mappings></required-mappings>
+		<stateinvariants>Win</stateinvariants></mapping>
+	<mapping>
+		<name>ConstraintDrawMapping</name>
+		<constraint-name>ConstraintDraw</constraint-name>
+		
+		
+		<code>frame.getWinLoseBox().getText().equals("Draw") == true;</code>
+		<required-mappings></required-mappings>
+		<stateinvariants>Draw</stateinvariants></mapping>
+	<mapping>
+		<name>againMapping</name>
+		<transition-name>again</transition-name>
+		<code>frame.getPlayAgainButton().doClick();</code></mapping></mappings>

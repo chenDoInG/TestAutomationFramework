@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_UnVhEPEfEeGRDc0UHqwrug" name="model">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_UqaqQPEfEeGRDc0UHqwrug" name="StateMachine0">
+    <region xmi:id="_UquMQPEfEeGRDc0UHqwrug" name="Region0">
+      <ownedRule xmi:id="_AWus4IzWEeKhkdNvmyRIwg" name="ConstraintLost" constrainedElement="_PpqQsPEgEeGRDc0UHqwrug">
+        <specification xmi:type="uml:LiteralString" xmi:id="_AWvT8IzWEeKhkdNvmyRIwg" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_KgDGQIzWEeKhkdNvmyRIwg" name="ConstraintWin" constrainedElement="_QlSygPEgEeGRDc0UHqwrug">
+        <specification xmi:type="uml:LiteralString" xmi:id="_KgDGQYzWEeKhkdNvmyRIwg" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_NUaEQIzWEeKhkdNvmyRIwg" name="ConstraintDraw" constrainedElement="_uAAuoPEhEeGRDc0UHqwrug">
+        <specification xmi:type="uml:LiteralString" xmi:id="_NUarUIzWEeKhkdNvmyRIwg" value=""/>
+      </ownedRule>
+      <transition xmi:id="_lmrXEPEfEeGRDc0UHqwrug" name="initialize" source="_aCIV0PEfEeGRDc0UHqwrug" target="_jrxwoPEfEeGRDc0UHqwrug"/>
+      <transition xmi:id="_vX4LYPEfEeGRDc0UHqwrug" name="deal" source="_jrxwoPEfEeGRDc0UHqwrug" target="_sx_uQPEfEeGRDc0UHqwrug"/>
+      <transition xmi:id="_9URNwPEfEeGRDc0UHqwrug" name="hitOrStay" source="_sx_uQPEfEeGRDc0UHqwrug" target="_6VquoPEfEeGRDc0UHqwrug"/>
+      <transition xmi:id="__qL8QPEfEeGRDc0UHqwrug" name="stay" source="_sx_uQPEfEeGRDc0UHqwrug" target="_6VquoPEfEeGRDc0UHqwrug"/>
+      <transition xmi:id="_BhD-UPEgEeGRDc0UHqwrug" name="hitOrStay" kind="internal" source="_6VquoPEfEeGRDc0UHqwrug" target="_6VquoPEfEeGRDc0UHqwrug"/>
+      <transition xmi:id="_ESm44PEgEeGRDc0UHqwrug" name="stay" kind="internal" source="_6VquoPEfEeGRDc0UHqwrug" target="_6VquoPEfEeGRDc0UHqwrug"/>
+      <transition xmi:id="_SjuOEPEgEeGRDc0UHqwrug" name="stay" source="_6VquoPEfEeGRDc0UHqwrug" target="_PpqQsPEgEeGRDc0UHqwrug"/>
+      <transition xmi:id="_S6iLkPEgEeGRDc0UHqwrug" name="stay" source="_6VquoPEfEeGRDc0UHqwrug" target="_QlSygPEgEeGRDc0UHqwrug"/>
+      <transition xmi:id="_U5HYIPEgEeGRDc0UHqwrug" name="hitOrStay" source="_sx_uQPEfEeGRDc0UHqwrug" target="_PpqQsPEgEeGRDc0UHqwrug"/>
+      <transition xmi:id="_V2iCoPEgEeGRDc0UHqwrug" name="hitOrStay" source="_sx_uQPEfEeGRDc0UHqwrug" target="_QlSygPEgEeGRDc0UHqwrug"/>
+      <transition xmi:id="_aq8M0PEgEeGRDc0UHqwrug" name="" source="_QlSygPEgEeGRDc0UHqwrug" target="_Z0_cQPEgEeGRDc0UHqwrug"/>
+      <transition xmi:id="_bIdPQPEgEeGRDc0UHqwrug" name="" source="_PpqQsPEgEeGRDc0UHqwrug" target="_Z0_cQPEgEeGRDc0UHqwrug"/>
+      <transition xmi:id="_j2YMMPEhEeGRDc0UHqwrug" name="again" source="_PpqQsPEgEeGRDc0UHqwrug" target="_jrxwoPEfEeGRDc0UHqwrug"/>
+      <transition xmi:id="_kQrikPEhEeGRDc0UHqwrug" name="again" source="_QlSygPEgEeGRDc0UHqwrug" target="_jrxwoPEfEeGRDc0UHqwrug"/>
+      <transition xmi:id="_vqxAQPEhEeGRDc0UHqwrug" name="stay" source="_6VquoPEfEeGRDc0UHqwrug" target="_uAAuoPEhEeGRDc0UHqwrug"/>
+      <transition xmi:id="_xE7RIPEhEeGRDc0UHqwrug" name="again" source="_uAAuoPEhEeGRDc0UHqwrug" target="_jrxwoPEfEeGRDc0UHqwrug"/>
+      <transition xmi:id="_iqkD4PEiEeGRDc0UHqwrug" name="hitOrStay" source="_sx_uQPEfEeGRDc0UHqwrug" target="_uAAuoPEhEeGRDc0UHqwrug"/>
+      <transition xmi:id="_sDnd8PEiEeGRDc0UHqwrug" name="" source="_uAAuoPEhEeGRDc0UHqwrug" target="_Z0_cQPEgEeGRDc0UHqwrug"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_aCIV0PEfEeGRDc0UHqwrug" name="Initial0"/>
+      <subvertex xmi:type="uml:State" xmi:id="_jrxwoPEfEeGRDc0UHqwrug" name="Initialized"/>
+      <subvertex xmi:type="uml:State" xmi:id="_sx_uQPEfEeGRDc0UHqwrug" name="NewDeal"/>
+      <subvertex xmi:type="uml:State" xmi:id="_6VquoPEfEeGRDc0UHqwrug" name="InPlay"/>
+      <subvertex xmi:type="uml:State" xmi:id="_PpqQsPEgEeGRDc0UHqwrug" name="Lost"/>
+      <subvertex xmi:type="uml:State" xmi:id="_QlSygPEgEeGRDc0UHqwrug" name="Win"/>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_Z0_cQPEgEeGRDc0UHqwrug" name="FinalState0"/>
+      <subvertex xmi:type="uml:State" xmi:id="_uAAuoPEhEeGRDc0UHqwrug" name="Draw"/>
+    </region>
+  </packagedElement>
+</uml:Model>
