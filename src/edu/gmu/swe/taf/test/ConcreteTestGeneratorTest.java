@@ -47,6 +47,14 @@ public class ConcreteTestGeneratorTest {
 	String treeXmlPath = "testData/Tree/xml/TreeFSM.xml";
 	String treeDirectory = "testData/Tree/";
 	String treeTestName = "TreeTest";
+	String polyPath = "testData/Poly/model/PolyFSM.uml";
+	String polyXmlPath = "testData/Poly/xml/PolyFSM.xml";
+	String polyDirectory = "testData/Poly/";
+	String polyTestName = "PolyTest";
+	String trianglePath = "testData/Triangle/model/TriangleFSM.uml";
+	String triangleXmlPath = "testData/Triangle/xml/TriangleFSM.xml";
+	String triangleDirectory = "testData/Triangle/";
+	String triangleTestName = "TriangleTest";
 	
 	@Before
 	public void setUp() throws Exception {
@@ -347,6 +355,147 @@ public class ConcreteTestGeneratorTest {
 			
 			edu.gmu.swe.taf.Test test1 = new edu.gmu.swe.taf.FsmTest(String.valueOf(i), "The test for the path " + pathName, transitions1);
 			test1 = abstractTestGenerator1.updateTest(treeXmlPath, test1, XmlManipulator.getConstraintMappings(treeXmlPath));
+			tests.add(test1);
+		}
+		
+		concreteTestGenerator.generateConcreteTests(tests);
+	}
+	
+	/**
+	 * The test for the method "createConcreteTestCase(String, File, Test)" for the program Poly
+	 * @throws Exception
+	 */
+
+	@Test
+	public void testCreateConcreteTestCasePoly() throws Exception {
+		
+		/**
+		 * Computes the test
+		 */
+		EObject object = StateMachineAccessor.getModelObject(polyPath);
+		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
+		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.EDGECOVERAGE);
+		for(Transition transition : stateMachine.getTransitions())
+			System.out.println(transition);
+		System.out.println(stateMachine.getEdges());
+		System.out.println(paths);
+		System.out.println(stateMachine.getStateMappings());
+		
+		//get the vertices from a path and return a list of transitions based on the vertices
+		//List<Vertex> vertexes = AbstractTestGenerator.getPathByState(paths.get(0), stateMachine);
+		
+		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
+		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(2), stateMachine), stateMachine);
+		
+		//add the test comments
+		String pathName = "" + transitions.get(0).getSource().getName() + " ";
+		for(Transition transition: transitions){
+			//System.out.println(transition.getSource().getName());
+			System.out.println(transition);	
+			//System.out.println(transition.getTarget().getName());	
+			pathName += transition.getName() + " ";
+			pathName += transition.getTarget().getName() + " ";
+		}
+		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest("1", "The test for the path " + pathName, transitions);
+		test = abstractTestGenerator.updateTest(polyXmlPath, test, XmlManipulator.getConstraintMappings(polyXmlPath));
+		System.out.println(pathName);
+
+		/**
+		 * Generates the concrete test
+		 */
+		
+		String imports = "\n";
+		String packageName = "\n";
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(polyDirectory, polyTestName, polyXmlPath, packageName, imports);
+
+		File file = new File(polyDirectory + "test/" + polyTestName + ".java");
+		//I should refactoring the this method by moving updateConcreteTest method inside
+		concreteTestGenerator.createConcreteTestCase(polyDirectory, file, concreteTestGenerator.updateConcreteTest(test));
+		
+		List<edu.gmu.swe.taf.Test> tests = new ArrayList<edu.gmu.swe.taf.Test>();
+		for(int i = 0; i < paths.size();i++){
+			AbstractTestGenerator abstractTestGenerator1 = new AbstractTestGenerator();
+			System.out.println("path: " + paths.get(i));
+			List<Transition> transitions1 = abstractTestGenerator1.convertVerticesToTransitions(abstractTestGenerator1.getPathByState(paths.get(i), stateMachine), stateMachine);
+			
+			pathName = "" + transitions1.get(0).getSource().getName() + " ";
+			for(Transition transition: transitions1){	
+				pathName += transition.getName() + " ";
+				pathName += transition.getTarget().getName() + " ";
+			}
+			
+			edu.gmu.swe.taf.Test test1 = new edu.gmu.swe.taf.FsmTest(String.valueOf(i), "The test for the path " + pathName, transitions1);
+			test1 = abstractTestGenerator1.updateTest(polyXmlPath, test1, XmlManipulator.getConstraintMappings(polyXmlPath));
+			tests.add(test1);
+		}
+		
+		concreteTestGenerator.generateConcreteTests(tests);
+	}
+	
+	/**
+	 * The test for the method "createConcreteTestCase(String, File, Test)" for the program Triangle
+	 * @throws Exception
+	 */
+
+	@Test
+	public void testCreateConcreteTestCaseTriangle() throws Exception {
+		
+		/**
+		 * Computes the test
+		 */
+		EObject object = StateMachineAccessor.getModelObject(trianglePath);
+		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
+		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.EDGECOVERAGE);
+		for(Transition transition : stateMachine.getTransitions())
+			System.out.println(transition);
+		System.out.println(stateMachine.getEdges());
+		System.out.println(paths);
+		System.out.println(stateMachine.getStateMappings());
+		
+		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
+		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(2), stateMachine), stateMachine);
+		
+		//add the test comments
+		String pathName = "" + transitions.get(0).getSource().getName() + " ";
+		for(Transition transition: transitions){
+			System.out.println(transition);	
+			pathName += transition.getName() + " ";
+			pathName += transition.getTarget().getName() + " ";
+		}
+		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest("1", "The test for the path " + pathName, transitions);
+		test = abstractTestGenerator.updateTest(triangleXmlPath, test, XmlManipulator.getConstraintMappings(triangleXmlPath));
+		System.out.println(pathName);
+
+		/**
+		 * Generates the concrete test
+		 */
+		
+		String imports = "\n";
+		String packageName = "\n";
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(triangleDirectory, triangleTestName, triangleXmlPath, packageName, imports);
+
+		File file = new File(triangleDirectory + "test/" + triangleTestName + ".java");
+		//I should refactoring the this method by moving updateConcreteTest method inside
+		concreteTestGenerator.createConcreteTestCase(triangleDirectory, file, concreteTestGenerator.updateConcreteTest(test));
+		
+		List<edu.gmu.swe.taf.Test> tests = new ArrayList<edu.gmu.swe.taf.Test>();
+		for(int i = 0; i < paths.size();i++){
+			AbstractTestGenerator abstractTestGenerator1 = new AbstractTestGenerator();
+			System.out.println("path: " + paths.get(i));
+			List<Transition> transitions1 = abstractTestGenerator1.convertVerticesToTransitions(abstractTestGenerator1.getPathByState(paths.get(i), stateMachine), stateMachine);
+			
+			pathName = "" + transitions1.get(0).getSource().getName() + " ";
+			for(Transition transition: transitions1){	
+				pathName += transition.getName() + " ";
+				pathName += transition.getTarget().getName() + " ";
+			}
+			
+			edu.gmu.swe.taf.Test test1 = new edu.gmu.swe.taf.FsmTest(String.valueOf(i), "The test for the path " + pathName, transitions1);
+			test1 = abstractTestGenerator1.updateTest(triangleXmlPath, test1, XmlManipulator.getConstraintMappings(triangleXmlPath));
 			tests.add(test1);
 		}
 		

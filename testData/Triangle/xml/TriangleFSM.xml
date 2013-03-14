@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>Triangle t = new Triangle(1,2,3);</code><required-mappings></required-mappings></mapping>
+<mapping><name>setImpossibleMapping</name><transition-name>setImpossible</transition-name><code>t.setSideLengths(1, 0, 0);</code><required-mappings></required-mappings></mapping>
+<mapping><name>setScaleneMapping</name><transition-name>setScalene</transition-name><code>t.setSideLengths(1, 2, 3);</code><required-mappings></required-mappings></mapping>
+<mapping><name>setRightAngledMapping</name>
+	<transition-name>setRightAngled</transition-name>
+	<code>t.setSideLengths(3, 4, 5);</code><required-mappings></required-mappings></mapping>
+<mapping><name>ConstraintScaleneMapping</name><constraint-name>ConstraintScalene</constraint-name><code>t.isScalene() == true;</code><required-mappings></required-mappings><stateinvariants>Scalene</stateinvariants></mapping>
+	<mapping>
+		<name>setIsocelesMapping</name>
+		<transition-name>setIsoceles</transition-name>
+		<code>t.setSideLengths(2, 2, 3);</code></mapping>
+	<mapping>
+		<name>setEquilateralMapping</name>
+		<transition-name>setEquilateral</transition-name>
+		<code>t.setSideLengths(3, 3, 3);</code></mapping>
+	<mapping>
+		<name>getPerimeterMapping</name>
+		<transition-name>getPerimeter</transition-name>
+		<code>System.out.println(t.getPerimeter());</code></mapping>
+	<mapping>
+		<name>ConstraintImpossileMapping</name>
+		<constraint-name>ConstraintImpossible</constraint-name>
+		<code>t.isImpossible() == true;</code>
+		<required-mappings></required-mappings>
+		<stateinvariants>Impossible</stateinvariants></mapping>
+	<mapping>
+		<name>ConstraintRightAngledMapping</name>
+		<constraint-name>ConstraintRightAngled</constraint-name>
+		
+		
+		<code>t.isRightAngled() == true;</code>
+		<required-mappings></required-mappings>
+		<stateinvariants>RightAngled</stateinvariants></mapping>
+	<mapping>
+		<name>ConstraintIsocelesMapping</name>
+		<constraint-name>ConstraintIsoceles</constraint-name>
+		
+		<code>t.isIsosceles() == true;</code>
+		<required-mappings></required-mappings>
+		<stateinvariants>Isosceles</stateinvariants></mapping>
+	<mapping>
+		<name>ConstraintEquilateralMapping</name>
+		<constraint-name>ConstraintEquilateral</constraint-name>
+		<code>t.isEquilateral() == true;</code>
+		<stateinvariants>Equilateral</stateinvariants></mapping></mappings>
