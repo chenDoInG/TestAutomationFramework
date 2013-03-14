@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>Tree tree = new Tree();</code><required-mappings></required-mappings></mapping>
+<mapping><name>showMapping</name><transition-name>show</transition-name><code>tree.displayTree();</code><required-mappings></required-mappings></mapping>
+<mapping><name>traverseMapping</name><transition-name>traverse</transition-name><code>tree.traverse(1);</code><required-mappings></required-mappings></mapping>
+<mapping><name>ConstraintNoNodeMapping</name><constraint-name>ConstraintNoNode</constraint-name><code>(tree.getRoot() == null) == true;</code><required-mappings></required-mappings><stateinvariants>Initialized,Shown,Traversed,Found</stateinvariants></mapping>
+<mapping><name>ConstraintMoreThanRootMapping</name><constraint-name>ConstraintMoreThanRoot</constraint-name><code>(tree.getRoot()!= null &amp;&amp; (tree.getRoot().leftChild == null || tree.getRoot().rightChild != null)) == true;</code><required-mappings></required-mappings><stateinvariants>MoreThanRoot,MoreThanRootFound,MoreThanRootShown,MoreThanRootTraversed</stateinvariants></mapping>
+	<mapping>
+		<name>findMapping</name>
+		<transition-name>find</transition-name>
+		<code>tree.find(1);</code></mapping>
+	<mapping>
+		<name>insertMapping</name>
+		<transition-name>insert</transition-name>
+		<code>tree.insert(1, 1.0);</code></mapping>
+	<mapping>
+		<name>insertTwoNodesMapping</name>
+		<transition-name>insert</transition-name>
+		<code>		tree.insert(3, 3.0);
+		tree.insert(4, 4.0);</code></mapping>
+	<mapping>
+		<name>deleteMapping</name>
+		<transition-name>delete</transition-name>
+		<code>tree.delete(1);</code></mapping>
+	<mapping>
+		<name>deleteTwoNodesMapping</name>
+		<transition-name>delete</transition-name>
+		<code>tree.delete(3);
+		tree.delete(4);</code></mapping>
+	<mapping>
+		<name>ConstraintRootMapping</name>
+		<constraint-name>ConstraintRoot</constraint-name>
+		<code>(tree.getRoot()!= null &amp;&amp; tree.getRoot().leftChild == null &amp;&amp; tree.getRoot().rightChild == null) == true;</code>
+		<required-mappings></required-mappings>
+		<stateinvariants>Root,RootFound,RootTraversed,RootShown</stateinvariants></mapping></mappings>

@@ -8,63 +8,433 @@
 		int WhosTurn = 1;
 				
 		TicTacToe ttt = new TicTacToe();
-		ttt.Welcome();</code><required-mappings></required-mappings></mapping><mapping><name>newMapping</name><transition-name>new</transition-name><code>System.setIn(new ByteArrayInputStream("y".getBytes()));	
-		ttt.NewGame(Amap, Xmap, Omap);
-		ttt.ShowGameBoard(Amap, Xmap, Omap);</code><required-mappings></required-mappings></mapping><mapping><name>exitMapping</name><transition-name>exit</transition-name><code>System.setIn(new ByteArrayInputStream("n".getBytes()));
-		ttt.CheckWin(Amap, Xmap, Omap);</code><required-mappings></required-mappings></mapping><mapping><name>movesMapping</name><transition-name>moves</transition-name><code>//this code is used to simulate the system input from the command line
+		ttt.Welcome();</code><required-mappings></required-mappings></mapping><mapping><name>newMapping</name><transition-name>new</transition-name><code>	System.setIn(new ByteArrayInputStream("y".getBytes()));	
+		try {
+			ttt.NewGame(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ttt.ShowGameBoard(Amap, Xmap, Omap);</code><required-mappings></required-mappings></mapping><mapping><name>exitMapping</name><transition-name>exit</transition-name><code>  System.setIn(new ByteArrayInputStream("n".getBytes()));
+        try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}</code><required-mappings></required-mappings></mapping><mapping><name>movesOWinMapping</name><transition-name>moves</transition-name><code>		//this code is used to simulate the system input from the command line
 		System.setIn(new ByteArrayInputStream("b2".getBytes()));	
 		
-		WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
-		ttt.CheckWin(Amap, Xmap, Omap);
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
 		System.setIn(new ByteArrayInputStream("a1".getBytes()));
 		
-		WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
-		ttt.CheckWin(Amap, Xmap, Omap);
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
 		System.setIn(new ByteArrayInputStream("a2".getBytes()));
 		
-		WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
-		ttt.CheckWin(Amap, Xmap, Omap);
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
 		System.setIn(new ByteArrayInputStream("c2".getBytes()));
 		
-		WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
-		ttt.CheckWin(Amap, Xmap, Omap);
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
 		System.setIn(new ByteArrayInputStream("b3".getBytes()));
 				
-		WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
-		ttt.CheckWin(Amap, Xmap, Omap);
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
 		System.setIn(new ByteArrayInputStream("b1".getBytes()));
 						
-		WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
-		ttt.CheckWin(Amap, Xmap, Omap);
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
 		System.setIn(new ByteArrayInputStream("a3".getBytes()));
 								
-		WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
-		ttt.CheckWin(Amap, Xmap, Omap);
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
 		System.setIn(new ByteArrayInputStream("c1".getBytes()));
 										
-		WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);</code>
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//this code is used to simulate the system input from the command line
+		//System.setIn(new ByteArrayInputStream("n".getBytes()));
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}</code>
 	
-	<required-mappings>initializeDynamicParser</required-mappings></mapping><mapping><name>ConstraintXWinMapping</name><constraint-name>ConstraintXWin</constraint-name><code>ttt.getWinner().equals("eXes") == true;</code><required-mappings></required-mappings><stateinvariants>XWin</stateinvariants></mapping><mapping><name>ConstraintOWinMapping</name><constraint-name>ConstraintOWin</constraint-name><code>ttt.getWinner().equals("Ohes") == true;</code><required-mappings></required-mappings><stateinvariants>OWin</stateinvariants></mapping><mapping><name>ConstraintDrawMapping</name><constraint-name>ConstraintDraw</constraint-name><code>ttt.getWinner().equals("BOARD FULL! STALEMATE - NO") == true;</code><required-mappings></required-mappings>
+	<required-mappings></required-mappings></mapping><mapping><name>ConstraintXWinMapping</name><constraint-name>ConstraintXWin</constraint-name><code>ttt.getWinner().equals("eXes") == true;</code><required-mappings></required-mappings><stateinvariants>XWin</stateinvariants></mapping><mapping><name>ConstraintOWinMapping</name><constraint-name>ConstraintOWin</constraint-name><code>ttt.getWinner().equals("Ohes") == true;</code><required-mappings></required-mappings><stateinvariants>OWin</stateinvariants></mapping><mapping><name>ConstraintDrawMapping</name><constraint-name>ConstraintDraw</constraint-name><code>ttt.getWinner().equals("BOARD FULL! STALEMATE - NO") == true;</code><required-mappings></required-mappings>
 	
-	<stateinvariants>Draw</stateinvariants></mapping></mappings>
+	<stateinvariants>Draw</stateinvariants></mapping>
+	<mapping>
+		<name>movesDrawMapping</name>
+		<transition-name>moves</transition-name>
+		<code>		System.setIn(new ByteArrayInputStream("a1".getBytes()));	
+		
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ttt.ShowGameBoard(Amap, Xmap, Omap);
+		
+		//this code is used to simulate the system input from the command line
+		System.setIn(new ByteArrayInputStream("a2".getBytes()));
+		
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ttt.ShowGameBoard(Amap, Xmap, Omap);
+		
+		//this code is used to simulate the system input from the command line
+		System.setIn(new ByteArrayInputStream("a3".getBytes()));
+		
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ttt.ShowGameBoard(Amap, Xmap, Omap);
+		
+		//this code is used to simulate the system input from the command line
+		System.setIn(new ByteArrayInputStream("b2".getBytes()));
+		
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ttt.ShowGameBoard(Amap, Xmap, Omap);
+		
+		//this code is used to simulate the system input from the command line
+		System.setIn(new ByteArrayInputStream("c2".getBytes()));
+				
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ttt.ShowGameBoard(Amap, Xmap, Omap);
+		
+		//this code is used to simulate the system input from the command line
+		System.setIn(new ByteArrayInputStream("b1".getBytes()));
+						
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ttt.ShowGameBoard(Amap, Xmap, Omap);
+		
+		//this code is used to simulate the system input from the command line
+		System.setIn(new ByteArrayInputStream("b3".getBytes()));
+								
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ttt.ShowGameBoard(Amap, Xmap, Omap);
+		
+		//this code is used to simulate the system input from the command line
+		System.setIn(new ByteArrayInputStream("c1".getBytes()));
+										
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ttt.ShowGameBoard(Amap, Xmap, Omap);
+
+		System.setIn(new ByteArrayInputStream("c3".getBytes()));
+										
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}</code></mapping>
+	<mapping>
+		<name>movesXWinMapping</name>
+		<transition-name>moves</transition-name>
+		<code>		System.setIn(new ByteArrayInputStream("y".getBytes()));	
+		try {
+			ttt.NewGame(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ttt.ShowGameBoard(Amap, Xmap, Omap);
+		
+		//this code is used to simulate the system input from the command line
+		System.setIn(new ByteArrayInputStream("a1".getBytes()));	
+		
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ttt.ShowGameBoard(Amap, Xmap, Omap);
+		
+		//this code is used to simulate the system input from the command line
+		System.setIn(new ByteArrayInputStream("a2".getBytes()));
+		
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ttt.ShowGameBoard(Amap, Xmap, Omap);
+		
+		//this code is used to simulate the system input from the command line
+		System.setIn(new ByteArrayInputStream("b2".getBytes()));
+		
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ttt.ShowGameBoard(Amap, Xmap, Omap);
+		
+		//this code is used to simulate the system input from the command line
+		System.setIn(new ByteArrayInputStream("c3".getBytes()));
+		
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ttt.ShowGameBoard(Amap, Xmap, Omap);
+		
+		//this code is used to simulate the system input from the command line
+		System.setIn(new ByteArrayInputStream("b1".getBytes()));
+				
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ttt.ShowGameBoard(Amap, Xmap, Omap);
+		
+		//this code is used to simulate the system input from the command line
+		System.setIn(new ByteArrayInputStream("b3".getBytes()));
+						
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ttt.ShowGameBoard(Amap, Xmap, Omap);
+		
+		
+		System.setIn(new ByteArrayInputStream("c1".getBytes()));
+		
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+</code></mapping></mappings>

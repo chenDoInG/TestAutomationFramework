@@ -77,7 +77,7 @@ public class ConcreteTestGenerator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		compileJavaFile(getDirectory() + "test/", file);
+		compileJavaFile(getDirectory() + "class/", file);
 	}
 	
 	/**
@@ -250,14 +250,21 @@ public class ConcreteTestGenerator {
 						System.out.println("available mappings for " + currentMapping.getIdentifiableElementName() + " is " + nodes.size());
 						boolean[] isMappingSatisfied = new boolean[nextMappings.size()];
 						
-						//remove the old mapping and constraints first
-						for(Mapping mappingRemoved: nextMappings){
-							finalMappings.remove(finalMappings.size() - 1);
-						}
-						finalMappings.remove(finalMappings.size() - 1);
+
 						
 						for(Mapping m: nodes){
+							//System.out.println("mappings before: " + finalMappings.size());
+							//remove the old mapping and constraints first
+
+							//System.out.println("mappings after: " + finalMappings.size());
+							//System.out.println("m.getMappingName(): " + m.getMappingName() + "currentMapping.getMappingName(): " + currentMapping.getMappingName());
+							//use a different mapping to solve the constraint
 							if(!m.getMappingName().equals(currentMapping.getMappingName())){
+								for(Mapping mappingRemoved: nextMappings){
+									finalMappings.remove(finalMappings.size() - 1);
+								}
+								finalMappings.remove(finalMappings.size() - 1);
+								
 								finalMappings.add(m);
 								System.out.println("nextMappings size: " + nextMappings.size());
 								//check every constraint
@@ -284,6 +291,7 @@ public class ConcreteTestGenerator {
 									}
 									break;
 								}else{
+									
 									//this part will be deleted after the error message catch part is complete
 									//since if any constraint is not satisfied, 
 									for(int x = 0; x < nextMappings.size();x++){
@@ -571,7 +579,9 @@ public class ConcreteTestGenerator {
 		
 		StringBuffer variableInitilization = computeVariableInitialization(mappings);
 		StringBuffer testCode = new StringBuffer();
-		testCode.append(variableInitilization);
+		
+		if(variableInitilization != null)
+			testCode.append(variableInitilization);
 		
 		//find the position of the last element that is not a constraint
 		int position = 0;
@@ -622,13 +632,15 @@ public class ConcreteTestGenerator {
 			}
 		}
 		System.out.println("mapping size: " + mappings.size());
-		System.out.println(testCode.toString());
+		for(Mapping mapping : mappings)
+			System.out.println(mapping.getMappingName());
+		//System.out.println(testCode.toString());
 		File file = writeTempTest(testCode.toString());
 		compileJavaFile(directory + "class/", file);
 		
 		File root1 = new File(tempTestDirectory);
 		
-		System.out.println(root1.getAbsolutePath());
+		//System.out.println(root1.getAbsolutePath());
 		
 		/* when deploying the project, this part needs to be updated for adding more class paths
 		 	File root2 = new File("./testData/src/");
@@ -650,7 +662,11 @@ public class ConcreteTestGenerator {
 		
 		JavaSupporter.addURL(new File(directory + "class/").toURL());
 		//System.out.println(JavaSupporter.returnPackages(packageName) + "TempTest");
-		Class<?> c = Class.forName(JavaSupporter.cleanUpPackageName(packageName) + ".TempTest", true, classLoader);
+		Class<?> c = null;
+		if(packageName == null || packageName.trim().equals(""))
+			c = Class.forName("TempTest", true, classLoader);
+		else
+			c = Class.forName(JavaSupporter.cleanUpPackageName(packageName) + ".TempTest", true, classLoader);
 		
 		//this part uses a customized class loader: TestLoader, now it looks like we do not need this class
 		//TestLoader loader = new TestLoader();
@@ -660,7 +676,7 @@ public class ConcreteTestGenerator {
 		if(methods.length == 1){
 			Method m = methods[0];
 			m.setAccessible(true);
-			Object o = m.invoke(c.newInstance(), null);
+			Object o = m.invoke(c.newInstance(), new Object[]{});
 			System.out.println("temp file result: " + o.toString());
 			returnValue = Boolean.valueOf(o.toString());
 		}
