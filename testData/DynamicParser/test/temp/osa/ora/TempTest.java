@@ -23,6 +23,7 @@ public class TempTest {
 		JButton buttonClear = (JButton) parserView.getComponent().getComponent(12);
 		DynamicParserApp.main(null);
         buttonParse.doClick();
+        parserView.setOperStrings(new String[]{ "+", "%", "*", "/" });
         return checkBoxDirection.isSelected() == false;
     }
 }

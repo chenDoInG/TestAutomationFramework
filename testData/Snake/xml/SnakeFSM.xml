@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>SnakeApplication game = new SnakeApplication();
+		GamePanel gp = game.getGamePanel();
+		SideNavigationBar sn = game.getSideNavigation();
+		NavButton nvHighScores = sn.getHighScores();
+		NavButton nvNewGame = sn.getNewGame();
+		NavButton nvDifficulties = sn.getSettings();
+		SettingsPanel sp = game.getSettingsPanel();
+		Robot robot = null;
+		try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}</code><required-mappings></required-mappings></mapping>
+<mapping><name>checkScoresMapping</name><transition-name>checkScores</transition-name><code>nvHighScores.doClick();</code><required-mappings></required-mappings></mapping>
+<mapping><name>newGameMapping</name><transition-name>newGame</transition-name><code>nvNewGame.doClick();</code><required-mappings></required-mappings></mapping>
+<mapping><name>chooseDifficultyMapping</name>
+	<transition-name>chooseDifficulty</transition-name>
+	<code>nvDifficulties.doClick();</code><required-mappings></required-mappings></mapping>
+<mapping><name>ConstraintScaleneMapping</name><constraint-name>ConstraintScalene</constraint-name><code>t.isScalene() == true;</code><required-mappings></required-mappings><stateinvariants>Scalene</stateinvariants></mapping>
+	<mapping>
+		<name>easyMapping</name>
+		<transition-name>easy</transition-name>
+		<code>sp.difficultySetter.setSelectedIndex(0);</code></mapping>
+	<mapping>
+		<name>normMapping</name>
+		<transition-name>norm</transition-name>
+		<code>sp.difficultySetter.setSelectedIndex(1);</code></mapping>
+	<mapping>
+		<name>hardMapping</name>
+		<transition-name>hard</transition-name>
+		<code>sp.difficultySetter.setSelectedIndex(2);</code></mapping>
+	<mapping>
+		<name>ConstraintImpossileMapping</name>
+		<constraint-name>ConstraintImpossible</constraint-name>
+		<code>t.isImpossible() == true;</code>
+		<required-mappings></required-mappings>
+		<stateinvariants>Impossible</stateinvariants></mapping>
+	<mapping>
+		<name>ConstraintRightAngledMapping</name>
+		<constraint-name>ConstraintRightAngled</constraint-name>
+		
+		
+		<code>t.isRightAngled() == true;</code>
+		<required-mappings></required-mappings>
+		<stateinvariants>RightAngled</stateinvariants></mapping>
+	<mapping>
+		<name>ConstraintIsocelesMapping</name>
+		<constraint-name>ConstraintIsoceles</constraint-name>
+		
+		<code>t.isIsosceles() == true;</code>
+		<required-mappings></required-mappings>
+		<stateinvariants>Isosceles</stateinvariants></mapping>
+	<mapping>
+		<name>ConstraintEquilateralMapping</name>
+		<constraint-name>ConstraintEquilateral</constraint-name>
+		<code>t.isEquilateral() == true;</code>
+		<stateinvariants>Equilateral</stateinvariants></mapping>
+	<mapping>
+		<name>extremeMapping</name>
+		<transition-name>extreme</transition-name>
+		<code>sp.difficultySetter.setSelectedIndex(3);</code></mapping>
+	<mapping>
+		<name>pressKeyMapping</name>
+		<transition-name>pressKey</transition-name>
+		<code>robot.keyPress(KeyEvent.VK_U);
+		robot.keyRelease(KeyEvent.VK_U);</code></mapping>
+	<mapping>
+		<name>playMapping</name>
+		<transition-name>play</transition-name>
+		<code>		while (gp.getStatus() != Status.LOSE)
+	    {
+			int osfp = Helper.findNearestPickUp(gp.getPickUps(gp.getPickUps()), gp.getPlayer());
+	        Helper.getRobotDirection(gp.getPickUps().get(osfp),game.getGamePanel().getPlayer(), robot);
+	        try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+	    }</code></mapping></mappings>

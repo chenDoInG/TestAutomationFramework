@@ -190,8 +190,8 @@ public class StateMachineAccessor extends ModelAccessor {
 		System.out.println(transCompoState.size());
 		for(Transition tran : transCompoState){
 			System.out.println(tran.getName()+ " " + tran.getSource().getName() + " " + tran.getTarget().getName());
-		}
-		*/
+		}*/
+		
 		//mark composite states whose sub-states have been added to the list transCompoState
 		List<Vertex> compositeStates = new ArrayList<Vertex>();
 		List<Transition> simpleTrans = new ArrayList<Transition>();
@@ -369,6 +369,7 @@ public class StateMachineAccessor extends ModelAccessor {
 				}
 				System.out.println(transCompoState.size());
 				for(Transition t2 : transCompoState){
+					//System.out.println(t2.getName() );
 					System.out.println(t2.getName() + " " + t2.getSource().getName() + " " + t2.getTarget().getName() + (t2.getSource() instanceof State && ((State)t2.getSource()).isSimple()) + (t2.getTarget() instanceof State && ((State)t2.getTarget()).isSimple()));
 				}*/
 			}while(transCompoState.size() > 0);

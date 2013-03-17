@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_Nr7q8I5sEeKW4qsG1-gl9w" name="model">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_NskkII5sEeKW4qsG1-gl9w" name="StateMachine0">
+    <region xmi:id="_NsnAYI5sEeKW4qsG1-gl9w" name="Region0">
+      <transition xmi:id="_ozpfII5sEeK5BuI19e9FRQ" name="initialize" source="_j2fooI5sEeK5BuI19e9FRQ" target="_kdA2EI5sEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_aIC7cI5uEeK5BuI19e9FRQ" name="chooseDifficulty" source="_kdA2EI5sEeK5BuI19e9FRQ" target="_wASE8I5sEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_vG5pEI5wEeK5BuI19e9FRQ" name="pressKey" source="_4LdhMI5tEeK5BuI19e9FRQ" target="_l3vnUI5vEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_m0dm4I5yEeK5BuI19e9FRQ" name="play" source="_l3vnUI5vEeK5BuI19e9FRQ" target="_oKTf0I5vEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_1igIoI5yEeK5BuI19e9FRQ" name="pressKey" source="_kdA2EI5sEeK5BuI19e9FRQ" target="_om8RII5yEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_3C0r4I5yEeK5BuI19e9FRQ" name="pressKey" source="_JdU1II5vEeK5BuI19e9FRQ" target="_rlRDcI5yEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_4J1-UI5yEeK5BuI19e9FRQ" name="pressKey" source="_IzKd0I5vEeK5BuI19e9FRQ" target="_vKHqQI5yEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_5YlpYI5yEeK5BuI19e9FRQ" name="play" source="_om8RII5yEeK5BuI19e9FRQ" target="_qH01EI5yEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_6SFdMI5yEeK5BuI19e9FRQ" name="play" source="_rlRDcI5yEeK5BuI19e9FRQ" target="_tCf2cI5yEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_7QWcQI5yEeK5BuI19e9FRQ" name="play" source="_vKHqQI5yEeK5BuI19e9FRQ" target="_wkO30I5yEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_oOPAwI5zEeK5BuI19e9FRQ" name="checkScores" source="_kdA2EI5sEeK5BuI19e9FRQ" target="_uNQBEI5sEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_5ElS0I5zEeK5BuI19e9FRQ" name="newGame" source="_uNQBEI5sEeK5BuI19e9FRQ" target="_kdA2EI5sEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_7wI6II5zEeK5BuI19e9FRQ" name="chooseDifficulty" source="_uNQBEI5sEeK5BuI19e9FRQ" target="_wASE8I5sEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_HLNPQI50EeK5BuI19e9FRQ" name="chooseDifficulty" source="_4LdhMI5tEeK5BuI19e9FRQ" target="_8HRPcI5tEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_LwweEI50EeK5BuI19e9FRQ" name="chooseDifficulty" source="_JdU1II5vEeK5BuI19e9FRQ" target="_PtXFQI5uEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_NLMbwI50EeK5BuI19e9FRQ" name="chooseDifficulty" source="_IzKd0I5vEeK5BuI19e9FRQ" target="_-Tz_gI5tEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_ZgF74I50EeK5BuI19e9FRQ" name="newGame" source="_dKVOcI5zEeK5BuI19e9FRQ" target="_4LdhMI5tEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_bXgJcI50EeK5BuI19e9FRQ" name="checkScores" source="_4LdhMI5tEeK5BuI19e9FRQ" target="_dKVOcI5zEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_0gUA8I50EeK5BuI19e9FRQ" name="chooseDifficulty" source="_dKVOcI5zEeK5BuI19e9FRQ" target="_8HRPcI5tEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_ULL3QI51EeK5BuI19e9FRQ" name="NewGame" source="_MXvJEI51EeK5BuI19e9FRQ" target="_IzKd0I5vEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_WIgfkI51EeK5BuI19e9FRQ" name="checkScores" source="_IzKd0I5vEeK5BuI19e9FRQ" target="_MXvJEI51EeK5BuI19e9FRQ"/>
+      <transition xmi:id="_XrsJkI51EeK5BuI19e9FRQ" name="chooseDifficulty" source="_MXvJEI51EeK5BuI19e9FRQ" target="_-Tz_gI5tEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_flewUI51EeK5BuI19e9FRQ" name="newGame" source="_DDqVoI51EeK5BuI19e9FRQ" target="_JdU1II5vEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_ij8skI51EeK5BuI19e9FRQ" name="chooseDifficulty" source="_DDqVoI51EeK5BuI19e9FRQ" target="_PtXFQI5uEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_kUs4gI51EeK5BuI19e9FRQ" name="checkScores" source="_JdU1II5vEeK5BuI19e9FRQ" target="_DDqVoI51EeK5BuI19e9FRQ"/>
+      <transition xmi:id="_p2peII51EeK5BuI19e9FRQ" name="" source="_qH01EI5yEeK5BuI19e9FRQ" target="_pMFeMI51EeK5BuI19e9FRQ"/>
+      <transition xmi:id="_q6PpII51EeK5BuI19e9FRQ" name="" source="_oKTf0I5vEeK5BuI19e9FRQ" target="_pMFeMI51EeK5BuI19e9FRQ"/>
+      <transition xmi:id="_rzT_II51EeK5BuI19e9FRQ" name="" source="_tCf2cI5yEeK5BuI19e9FRQ" target="_pMFeMI51EeK5BuI19e9FRQ"/>
+      <transition xmi:id="_tOMowI51EeK5BuI19e9FRQ" name="" source="_wkO30I5yEeK5BuI19e9FRQ" target="_pMFeMI51EeK5BuI19e9FRQ"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_j2fooI5sEeK5BuI19e9FRQ" name="Initial0"/>
+      <subvertex xmi:type="uml:State" xmi:id="_kdA2EI5sEeK5BuI19e9FRQ" name="Default"/>
+      <subvertex xmi:type="uml:State" xmi:id="_uNQBEI5sEeK5BuI19e9FRQ" name="HighScores"/>
+      <subvertex xmi:type="uml:State" xmi:id="_wASE8I5sEeK5BuI19e9FRQ" name="Difficulties">
+        <region xmi:id="_2TQe4I5sEeK5BuI19e9FRQ" name="Region0">
+          <transition xmi:id="_ceQk4I5uEeK5BuI19e9FRQ" name="" source="_7KbMsI5tEeK5BuI19e9FRQ" target="_9GSccI5tEeK5BuI19e9FRQ"/>
+          <transition xmi:id="_pLE1wI5uEeK5BuI19e9FRQ" name="norm" source="_8HRPcI5tEeK5BuI19e9FRQ" target="_9GSccI5tEeK5BuI19e9FRQ"/>
+          <transition xmi:id="_qXBrgI5uEeK5BuI19e9FRQ" name="easy" source="_9GSccI5tEeK5BuI19e9FRQ" target="_8HRPcI5tEeK5BuI19e9FRQ"/>
+          <transition xmi:id="_rccbcI5uEeK5BuI19e9FRQ" name="hard" source="_8HRPcI5tEeK5BuI19e9FRQ" target="_-Tz_gI5tEeK5BuI19e9FRQ"/>
+          <transition xmi:id="_sc7oEI5uEeK5BuI19e9FRQ" name="easy" source="_-Tz_gI5tEeK5BuI19e9FRQ" target="_8HRPcI5tEeK5BuI19e9FRQ"/>
+          <transition xmi:id="_tdnpAI5uEeK5BuI19e9FRQ" name="extreme" source="_-Tz_gI5tEeK5BuI19e9FRQ" target="_PtXFQI5uEeK5BuI19e9FRQ"/>
+          <transition xmi:id="_udB3kI5uEeK5BuI19e9FRQ" name="hard" source="_PtXFQI5uEeK5BuI19e9FRQ" target="_-Tz_gI5tEeK5BuI19e9FRQ"/>
+          <transition xmi:id="_v5t4AI5uEeK5BuI19e9FRQ" name="norm" source="_PtXFQI5uEeK5BuI19e9FRQ" target="_9GSccI5tEeK5BuI19e9FRQ"/>
+          <transition xmi:id="_xQ2DAI5uEeK5BuI19e9FRQ" name="extreme" source="_9GSccI5tEeK5BuI19e9FRQ" target="_PtXFQI5uEeK5BuI19e9FRQ"/>
+          <transition xmi:id="_FONwYI5vEeK5BuI19e9FRQ" name="newGame" source="_8HRPcI5tEeK5BuI19e9FRQ" target="_4LdhMI5tEeK5BuI19e9FRQ"/>
+          <transition xmi:id="_cOAs8I5vEeK5BuI19e9FRQ" name="newGame" source="_PtXFQI5uEeK5BuI19e9FRQ" target="_JdU1II5vEeK5BuI19e9FRQ"/>
+          <transition xmi:id="_dbkFMI5vEeK5BuI19e9FRQ" name="newGame" source="_-Tz_gI5tEeK5BuI19e9FRQ" target="_IzKd0I5vEeK5BuI19e9FRQ"/>
+          <transition xmi:id="_gYjd8I5zEeK5BuI19e9FRQ" name="checkScores" source="_8HRPcI5tEeK5BuI19e9FRQ" target="_dKVOcI5zEeK5BuI19e9FRQ"/>
+          <transition xmi:id="_saoTQI50EeK5BuI19e9FRQ" name="checkScores" source="_9GSccI5tEeK5BuI19e9FRQ" target="_uNQBEI5sEeK5BuI19e9FRQ"/>
+          <transition xmi:id="_vkUoEI50EeK5BuI19e9FRQ" name="newGame" source="_9GSccI5tEeK5BuI19e9FRQ" target="_kdA2EI5sEeK5BuI19e9FRQ"/>
+          <transition xmi:id="_IwwbUI51EeK5BuI19e9FRQ" name="checkScores" source="_PtXFQI5uEeK5BuI19e9FRQ" target="_DDqVoI51EeK5BuI19e9FRQ"/>
+          <transition xmi:id="_bZ7V4I51EeK5BuI19e9FRQ" name="checkScores" source="_-Tz_gI5tEeK5BuI19e9FRQ" target="_MXvJEI51EeK5BuI19e9FRQ"/>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_7KbMsI5tEeK5BuI19e9FRQ" name="Initial0Difficulty"/>
+          <subvertex xmi:type="uml:State" xmi:id="_8HRPcI5tEeK5BuI19e9FRQ" name="Easy"/>
+          <subvertex xmi:type="uml:State" xmi:id="_9GSccI5tEeK5BuI19e9FRQ" name="Normal"/>
+          <subvertex xmi:type="uml:State" xmi:id="_-Tz_gI5tEeK5BuI19e9FRQ" name="Hard"/>
+          <subvertex xmi:type="uml:State" xmi:id="_PtXFQI5uEeK5BuI19e9FRQ" name="ExtremeHard"/>
+        </region>
+      </subvertex>
+      <subvertex xmi:type="uml:State" xmi:id="_4LdhMI5tEeK5BuI19e9FRQ" name="EasyNewGame"/>
+      <subvertex xmi:type="uml:State" xmi:id="_IzKd0I5vEeK5BuI19e9FRQ" name="HardNewGame"/>
+      <subvertex xmi:type="uml:State" xmi:id="_JdU1II5vEeK5BuI19e9FRQ" name="ExHardNewGame"/>
+      <subvertex xmi:type="uml:State" xmi:id="_l3vnUI5vEeK5BuI19e9FRQ" name="EasyStarted"/>
+      <subvertex xmi:type="uml:State" xmi:id="_oKTf0I5vEeK5BuI19e9FRQ" name="EasyLost"/>
+      <subvertex xmi:type="uml:State" xmi:id="_om8RII5yEeK5BuI19e9FRQ" name="NormalStarted"/>
+      <subvertex xmi:type="uml:State" xmi:id="_qH01EI5yEeK5BuI19e9FRQ" name="NormalLost"/>
+      <subvertex xmi:type="uml:State" xmi:id="_rlRDcI5yEeK5BuI19e9FRQ" name="ExHardStarted"/>
+      <subvertex xmi:type="uml:State" xmi:id="_tCf2cI5yEeK5BuI19e9FRQ" name="ExHardLost"/>
+      <subvertex xmi:type="uml:State" xmi:id="_vKHqQI5yEeK5BuI19e9FRQ" name="HardStarted"/>
+      <subvertex xmi:type="uml:State" xmi:id="_wkO30I5yEeK5BuI19e9FRQ" name="HardLost"/>
+      <subvertex xmi:type="uml:State" xmi:id="_dKVOcI5zEeK5BuI19e9FRQ" name="EasyHighScores"/>
+      <subvertex xmi:type="uml:State" xmi:id="_DDqVoI51EeK5BuI19e9FRQ" name="ExHardHighScores"/>
+      <subvertex xmi:type="uml:State" xmi:id="_MXvJEI51EeK5BuI19e9FRQ" name="HardHighScores"/>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_pMFeMI51EeK5BuI19e9FRQ" name="FinalState0"/>
+    </region>
+  </packagedElement>
+</uml:Model>

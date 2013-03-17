@@ -63,6 +63,10 @@ public class ConcreteTestGeneratorTest {
 	String atmXmlPath = "testData/Atm/xml/AtmFSM.xml";
 	String atmDirectory = "testData/Atm/";
 	String atmTestName = "AtmTest";
+	String snakePath = "testData/Snake/model/SnakeFSM.uml";
+	String snakeXmlPath = "testData/Snake/xml/SnakeFSM.xml";
+	String snakeDirectory = "testData/Snake/";
+	String snakeTestName = "SnakeTest";
 	
 	@Before
 	public void setUp() throws Exception {
@@ -511,6 +515,76 @@ public class ConcreteTestGeneratorTest {
 	}
 	
 	/**
+	 * The test for the method "createConcreteTestCase(String, File, Test)" for the program Snake
+	 * @throws Exception
+	 */
+
+	@Test
+	public void testCreateConcreteTestCaseSnake() throws Exception {
+		
+		/**
+		 * Computes the test
+		 */
+		EObject object = StateMachineAccessor.getModelObject(snakePath);
+		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
+		
+		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.EDGECOVERAGE);
+		for(Transition transition : stateMachine.getTransitions())
+			System.out.println(transition);
+		System.out.println(stateMachine.getEdges());
+		System.out.println(paths);
+		System.out.println(stateMachine.getStateMappings());
+		
+		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
+		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(2), stateMachine), stateMachine);
+	
+		//add the test comments
+		String pathName = "" + transitions.get(0).getSource().getName() + " ";
+		for(Transition transition: transitions){
+			System.out.println(transition);	
+			pathName += transition.getName() + " ";
+			pathName += transition.getTarget().getName() + " ";
+		}
+		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest("1", "The test for the path " + pathName, transitions);
+		test = abstractTestGenerator.updateTest(snakeXmlPath, test, XmlManipulator.getConstraintMappings(snakeXmlPath));
+		System.out.println(pathName);
+
+		/**
+		 * Generates the concrete test
+		 */
+		
+		String imports = "import java.awt.AWTException;\nimport java.awt.Component;\n import java.awt.Point;\nimport java.awt.Robot;\nimport java.awt.event.KeyEvent;" +
+				"\nimport snakeapplication.GamePanel.Difficulty;\nimport snakeapplication.GamePanel.Status;\nimport snakeapplication.SideNavigationBar.NavButton;\n";
+		String packageName = "package snakeapplication;";
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(snakeDirectory, snakeTestName, snakeXmlPath, packageName, imports);
+
+		File file = new File(triangleDirectory + "test/" + triangleTestName + ".java");
+		//I should refactoring the this method by moving updateConcreteTest method inside
+		concreteTestGenerator.createConcreteTestCase(triangleDirectory, file, concreteTestGenerator.updateConcreteTest(test));
+		
+		List<edu.gmu.swe.taf.Test> tests = new ArrayList<edu.gmu.swe.taf.Test>();
+		for(int i = 0; i < paths.size();i++){
+			AbstractTestGenerator abstractTestGenerator1 = new AbstractTestGenerator();
+			System.out.println("path: " + paths.get(i));
+			List<Transition> transitions1 = abstractTestGenerator1.convertVerticesToTransitions(abstractTestGenerator1.getPathByState(paths.get(i), stateMachine), stateMachine);
+			
+			pathName = "" + transitions1.get(0).getSource().getName() + " ";
+			for(Transition transition: transitions1){	
+				pathName += transition.getName() + " ";
+				pathName += transition.getTarget().getName() + " ";
+			}
+			
+			edu.gmu.swe.taf.Test test1 = new edu.gmu.swe.taf.FsmTest(String.valueOf(i), "The test for the path " + pathName, transitions1);
+			test1 = abstractTestGenerator1.updateTest(snakeXmlPath, test1, XmlManipulator.getConstraintMappings(snakeXmlPath));
+			tests.add(test1);
+		}
+		
+		concreteTestGenerator.generateConcreteTests(tests);
+	}
+	
+	/**
 	 * The test for the method "createConcreteTestCase(String, File, Test)" for the program ATM
 	 * @throws Exception
 	 */
@@ -551,7 +625,7 @@ public class ConcreteTestGeneratorTest {
 		/**
 		 * Generates the concrete test
 		 */
-		/*
+		
 		String imports = "\n";
 		String packageName = "\n";
 		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(atmDirectory, atmTestName, atmXmlPath, packageName, imports);
@@ -577,7 +651,7 @@ public class ConcreteTestGeneratorTest {
 			tests.add(test1);
 		}
 		
-		concreteTestGenerator.generateConcreteTests(tests);*/
+		concreteTestGenerator.generateConcreteTests(tests);
 	}
 	/**
 	 * The test for the method "createConcreteTestCase(String, File, Test)" for the program BlackJack

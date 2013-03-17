@@ -1,34 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mappings><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>Tree tree = new Tree();</code><required-mappings></required-mappings></mapping>
-<mapping><name>showMapping</name><transition-name>show</transition-name><code>tree.displayTree();</code><required-mappings></required-mappings></mapping>
-<mapping><name>traverseMapping</name><transition-name>traverse</transition-name><code>tree.traverse(1);</code><required-mappings></required-mappings></mapping>
-<mapping><name>ConstraintNoNodeMapping</name><constraint-name>ConstraintNoNode</constraint-name><code>(tree.getRoot() == null) == true;</code><required-mappings></required-mappings><stateinvariants>Initialized,Shown,Traversed,Found</stateinvariants></mapping>
-<mapping><name>ConstraintMoreThanRootMapping</name><constraint-name>ConstraintMoreThanRoot</constraint-name><code>(tree.getRoot()!= null &amp;&amp; (tree.getRoot().leftChild == null || tree.getRoot().rightChild != null)) == true;</code><required-mappings></required-mappings><stateinvariants>MoreThanRoot,MoreThanRootFound,MoreThanRootShown,MoreThanRootTraversed</stateinvariants></mapping>
+<mappings><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>		boolean userAuthenticated = false; // user is not authenticated to start
+		int currentAccountNumber = 0; // no current account number to start
+		String input = "1\n\n10";
+		System.setIn(new ByteArrayInputStream(input.getBytes()));
+		Screen screen = new Screen(); // create screen
+		Keypad keypad = new Keypad(); // create keypad 
+		CashDispenser cashDispenser = new CashDispenser(); // create cash dispenser
+		DepositSlot depositSlot = new DepositSlot(); // create deposit slot	
+		BankDatabase bankDatabase = new BankDatabase(); // create acct info database
+		Transaction currentTransaction = null;</code><required-mappings></required-mappings></mapping>
+<mapping><name>authenticateMapping</name><transition-name>authenticate</transition-name><code>userAuthenticated = bankDatabase.authenticateUser( 12345, 54321 );</code><required-mappings></required-mappings></mapping>
+<mapping><name>notAuthenticateMapping</name><transition-name>authenticate</transition-name><code>userAuthenticated = bankDatabase.authenticateUser( 12345, 54320 );</code><required-mappings></required-mappings></mapping>
+<mapping><name>ConstraintAuthenticationValidMapping</name><constraint-name>ConstraintAuthenticationValid</constraint-name><code>userAuthenticated == true;</code><required-mappings></required-mappings><stateinvariants>AuthenticationValid</stateinvariants></mapping>
+<mapping><name>ConstraintAuthenticationNotValidMapping</name><constraint-name>ConstraintAuthenticationNotValid</constraint-name><code>userAuthenticated == false;</code><required-mappings></required-mappings><stateinvariants>AuthenticationNotValid</stateinvariants></mapping>
 	<mapping>
-		<name>findMapping</name>
-		<transition-name>find</transition-name>
-		<code>tree.find(1);</code></mapping>
+		<name>inquireMapping</name>
+		<transition-name>inquire</transition-name>
+		<code>		currentTransaction = new BalanceInquiry( 12345, screen, bankDatabase );
+		currentTransaction.execute();</code></mapping>
 	<mapping>
-		<name>insertMapping</name>
-		<transition-name>insert</transition-name>
-		<code>tree.insert(1, 1.0);</code></mapping>
+		<name>depositMapping</name>
+		<transition-name>deposit</transition-name>
+		<code>currentTransaction = new Withdrawal( 12345, screen, bankDatabase, keypad, cashDispenser );		
+		currentTransaction.execute();</code></mapping>
 	<mapping>
-		<name>insertTwoNodesMapping</name>
-		<transition-name>insert</transition-name>
-		<code>		tree.insert(3, 3.0);
-		tree.insert(4, 4.0);</code></mapping>
-	<mapping>
-		<name>deleteMapping</name>
-		<transition-name>delete</transition-name>
-		<code>tree.delete(1);</code></mapping>
-	<mapping>
-		<name>deleteTwoNodesMapping</name>
-		<transition-name>delete</transition-name>
-		<code>tree.delete(3);
-		tree.delete(4);</code></mapping>
-	<mapping>
-		<name>ConstraintRootMapping</name>
-		<constraint-name>ConstraintRoot</constraint-name>
-		<code>(tree.getRoot()!= null &amp;&amp; tree.getRoot().leftChild == null &amp;&amp; tree.getRoot().rightChild == null) == true;</code>
-		<required-mappings></required-mappings>
-		<stateinvariants>Root,RootFound,RootTraversed,RootShown</stateinvariants></mapping></mappings>
+		<name>withdrawMapping</name>
+		<transition-name>withdraw</transition-name>
+		<code>		currentTransaction = new Deposit( 12345, screen, bankDatabase, keypad, depositSlot );
+		currentTransaction.execute();</code></mapping></mappings>
