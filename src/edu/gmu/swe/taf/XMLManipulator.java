@@ -697,7 +697,7 @@ public class XmlManipulator {
 				}
 				
 				if(nodes.item(j).getNodeName().equals("transition-name")){
-					if(nodes.item(j).getFirstChild().getNodeValue().equalsIgnoreCase(name)){
+					if(nodes.item(j).getFirstChild().getNodeValue().equals(name)){
 						mapping.setIdentifiableElementName(nodes.item(j).getFirstChild().getNodeValue());
 						mapping.setType(IdentifiableElementType.TRANSITION);
 						isTransition = true;

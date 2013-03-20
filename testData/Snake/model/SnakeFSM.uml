@@ -2,6 +2,18 @@
 <uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_Nr7q8I5sEeKW4qsG1-gl9w" name="model">
   <packagedElement xmi:type="uml:StateMachine" xmi:id="_NskkII5sEeKW4qsG1-gl9w" name="StateMachine0">
     <region xmi:id="_NsnAYI5sEeKW4qsG1-gl9w" name="Region0">
+      <ownedRule xmi:id="_vWC0sI7mEeKxboeGE2GmlA" name="ConstraintEasy" constrainedElement="_8HRPcI5tEeK5BuI19e9FRQ _4LdhMI5tEeK5BuI19e9FRQ _l3vnUI5vEeK5BuI19e9FRQ _oKTf0I5vEeK5BuI19e9FRQ _dKVOcI5zEeK5BuI19e9FRQ">
+        <specification xmi:type="uml:LiteralString" xmi:id="_vWJiYI7mEeKxboeGE2GmlA" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_-NSVwI7mEeKxboeGE2GmlA" name="ConstraintNormal" constrainedElement="_kdA2EI5sEeK5BuI19e9FRQ _9GSccI5tEeK5BuI19e9FRQ _om8RII5yEeK5BuI19e9FRQ _qH01EI5yEeK5BuI19e9FRQ _uNQBEI5sEeK5BuI19e9FRQ">
+        <specification xmi:type="uml:LiteralString" xmi:id="_-NS80I7mEeKxboeGE2GmlA" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_MEarYI7sEeKxboeGE2GmlA" name="ConstraintHard" visibility="package" constrainedElement="_-Tz_gI5tEeK5BuI19e9FRQ _IzKd0I5vEeK5BuI19e9FRQ _vKHqQI5yEeK5BuI19e9FRQ _wkO30I5yEeK5BuI19e9FRQ _MXvJEI51EeK5BuI19e9FRQ">
+        <specification xmi:type="uml:LiteralString" xmi:id="_MEbScI7sEeKxboeGE2GmlA" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_PQmeEI7tEeKxboeGE2GmlA" name="ConstraintExtremeHard" constrainedElement="_PtXFQI5uEeK5BuI19e9FRQ _JdU1II5vEeK5BuI19e9FRQ _rlRDcI5yEeK5BuI19e9FRQ _tCf2cI5yEeK5BuI19e9FRQ _DDqVoI51EeK5BuI19e9FRQ">
+        <specification xmi:type="uml:LiteralString" xmi:id="_PQnFII7tEeKxboeGE2GmlA" value=""/>
+      </ownedRule>
       <transition xmi:id="_ozpfII5sEeK5BuI19e9FRQ" name="initialize" source="_j2fooI5sEeK5BuI19e9FRQ" target="_kdA2EI5sEeK5BuI19e9FRQ"/>
       <transition xmi:id="_aIC7cI5uEeK5BuI19e9FRQ" name="chooseDifficulty" source="_kdA2EI5sEeK5BuI19e9FRQ" target="_wASE8I5sEeK5BuI19e9FRQ"/>
       <transition xmi:id="_vG5pEI5wEeK5BuI19e9FRQ" name="pressKey" source="_4LdhMI5tEeK5BuI19e9FRQ" target="_l3vnUI5vEeK5BuI19e9FRQ"/>

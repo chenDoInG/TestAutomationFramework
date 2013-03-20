@@ -65,14 +65,14 @@ public class ConcreteTestGenerator {
 	 * @throws Exception		throws 
 	 */
 	public void generateConcreteTests(List<? extends Test> tests) throws Exception{
-		File file = new File(getDirectory() + "test/" + getTestName() + ".java");
+		File file = new File(getDirectory() + "test/" + JavaSupporter.returnPackages(packageName) + getTestName() + ".java");
 		
 		List<Test> finalTests = new ArrayList<Test>();
 		for(Test test: tests)
 			finalTests.add(updateConcreteTest(test));
 		
 		try {
-			createConcreteTestCase(getDirectory() + "test/", file, finalTests);	
+			createConcreteTestCase(getDirectory(), file, finalTests);	
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -91,7 +91,7 @@ public class ConcreteTestGenerator {
 	 */
 	public boolean createConcreteTestCase(String directory, File file, Test test) throws IOException{
 		
-		//System.out.println(file.getPath());
+		//file = new File(directory + "test/" + JavaSupporter.returnPackages(packageName) + name + ".java");
 		//a package name may need to be specified
 
 		FileOutputStream fop = new FileOutputStream(file);
@@ -100,8 +100,10 @@ public class ConcreteTestGenerator {
 		String importsJUnit = "import org.junit.*;\nimport static org.junit.Assert.*;\n";
 	
 		result.append(packageName);
+		result.append("\n");
 		result.append(importsJava);
 		result.append(importsJUnit);
+		result.append("\n");
 		result.append(imports);
 		result.append("\n");
 		
@@ -133,18 +135,21 @@ public class ConcreteTestGenerator {
 	 */
 	public boolean createConcreteTestCase(String directory, File file, List<? extends Test> tests) throws IOException{
 		
-		//System.out.println(file.getPath());
+		file = new File(directory + "test/" + JavaSupporter.returnPackages(packageName) + name + ".java");
 		//a package name may need to be specified
 
 		FileOutputStream fop = new FileOutputStream(file);
 		StringBuffer result = new StringBuffer("");
-		String packageName = "\n";
+
 		String importsJava = "import java.io.*;\n";
 		String importsJUnit = "import org.junit.*;\nimport static org.junit.Assert.*;\n";
 	
 		result.append(packageName);
+		result.append("\n");
 		result.append(importsJava);
 		result.append(importsJUnit);
+		result.append("\n");
+		result.append(imports);
 		result.append("\n");
 		
 		String classHeader = "public class " + getTestName() + " {\n";
@@ -660,13 +665,20 @@ public class ConcreteTestGenerator {
 			JavaSupporter.addURL(jar.toURL());
 		}
 		
+		//add classes in the directory of class dynamically
+		//may fail the program if a security checker or manager is running
 		JavaSupporter.addURL(new File(directory + "class/").toURL());
 		//System.out.println(JavaSupporter.returnPackages(packageName) + "TempTest");
 		Class<?> c = null;
 		if(packageName == null || packageName.trim().equals(""))
 			c = Class.forName("TempTest", true, classLoader);
-		else
-			c = Class.forName(JavaSupporter.cleanUpPackageName(packageName) + ".TempTest", true, classLoader);
+		else{
+			try{
+				c = Class.forName(JavaSupporter.cleanUpPackageName(packageName) + ".TempTest", true, classLoader);			
+			} catch (ClassNotFoundException e){
+				System.err.println("class " + JavaSupporter.cleanUpPackageName(packageName) + ".TempTest is not found. Please check if the Java file of this class is compilable." );
+			}
+		}
 		
 		//this part uses a customized class loader: TestLoader, now it looks like we do not need this class
 		//TestLoader loader = new TestLoader();
@@ -702,8 +714,10 @@ public class ConcreteTestGenerator {
 		String importsJUnit = "import org.junit.*;\nimport static org.junit.Assert.*;\n";
 	
 		result.append(packageName);
+		result.append("\n");
 		result.append(importsJava);
 		result.append(importsJUnit);
+		result.append("\n");
 		result.append(imports);
 		result.append("\n");
 		
