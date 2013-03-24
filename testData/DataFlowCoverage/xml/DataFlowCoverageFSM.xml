@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>final WebClient webClient = new WebClient();
+		WebRequest request = null;
+		 try {
+			request = new WebRequest( new URL(&quot;http://localhost:8080/CoverageWebApplication/coverage/DFGraphCoverage&quot; ), HttpMethod.POST);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		HtmlPage page = null;
+		try {
+			page = webClient.getPage(request);
+		} catch (FailingHttpStatusCodeException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		HtmlForm form = page.getFormByName(&quot;dataFlowCoverageForm&quot;);
+		 
+		final HtmlSubmitInput buttonDuPairs = form.getInputByValue(&quot;DU Pairs&quot;);
+		
+		final HtmlSubmitInput buttonDuPaths = form.getInputByValue(&quot;DU Paths&quot;);
+		
+		final HtmlSubmitInput buttonAllDefCoverage = form.getInputByValue(&quot;All Def Coverage&quot;);
+		
+		final HtmlSubmitInput buttonAllUseCoverage = form.getInputByValue(&quot;All Use Coverage&quot;);
+		
+		final HtmlSubmitInput buttonAllDuPathCoverage = form.getInputByValue(&quot;All DU Path Coverage&quot;);
+		
+		final HtmlSubmitInput buttonNewGraph = form.getInputByValue(&quot;New Graph&quot;);
+		final HtmlSubmitInput buttonNewDuInfo = form.getInputByValue(&quot;New DU Info&quot;);
+		
+		final HtmlSubmitInput buttonGraphCoverage = form.getInputByValue(&quot;Graph Coverage&quot;);
+		final HtmlSubmitInput buttonLogicCoverage = form.getInputByValue(&quot;Logic Coverage&quot;);
+		final HtmlSubmitInput buttonMinimalMUMCUTCoverage = form.getInputByValue(&quot;Minimal-MUMCUT Coverage&quot;);
+		final HtmlTextArea textAreaEdges = form.getTextAreaByName(&quot;edges&quot;);
+		final HtmlTextInput textFieldEndNodes = form.getInputByName(&quot;endNode&quot;);
+		final HtmlTextInput textFieldInitialNodes = form.getInputByName(&quot;initialNode&quot;);
+		final HtmlTextArea textAreaDefs = form.getTextAreaByName(&quot;defs&quot;);
+		final HtmlTextArea textAreaUses = form.getTextAreaByName(&quot;uses&quot;);
+		</code><required-mappings></required-mappings></mapping>
+<mapping><name>enterGraphMapping</name><transition-name>enterGraph</transition-name><code>
+		textAreaEdges.setText(&quot;1 2\n&quot;);	
+		textFieldEndNodes.setValueAttribute(&quot;2&quot;);
+		textFieldInitialNodes.setValueAttribute(&quot;1&quot;);
+		</code><required-mappings></required-mappings></mapping>
+<mapping><name>updateGraphMapping</name><transition-name>updateGraph</transition-name><code>		
+		textAreaEdges.setText(&quot;1 2\n1 3\n&quot;);	
+		textFieldEndNodes.setValueAttribute(&quot;2 3&quot;);
+		textFieldInitialNodes.setValueAttribute(&quot;1&quot;);</code><required-mappings></required-mappings></mapping>
+<mapping><name>enterDataFlowMapping</name>
+	<transition-name>enterDataFlow</transition-name>
+	<code>
+	textAreaDefs.setText(&quot;x 1\n&quot;);
+	textAreaUses.setText(&quot;x 2\n&quot;);</code><required-mappings></required-mappings></mapping>
+<mapping><name>updateDataFlowMapping</name>
+	<transition-name>updateDataFlow</transition-name>
+	<code>
+		textAreaDefs.setText(&quot;x 1\n&quot;);
+		textAreaUses.setText(&quot;x 2\nx 3\n&quot;);</code><required-mappings></required-mappings></mapping>
+	<mapping>
+		<name>duPairMapping</name>
+		<transition-name>duPair</transition-name>
+		<code>try {
+			page = buttonDuPairs.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping>
+	<mapping>
+		<name>duPathMapping</name>
+		<transition-name>duPath</transition-name>
+		<code>try {
+			page = buttonDuPaths.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping>
+	<mapping>
+		<name>allDefCoverageMapping</name>
+		<transition-name>allDefCoverage</transition-name>	
+		<code>try {
+			page = buttonAllDefCoverage.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code>
+		<required-mappings></required-mappings></mapping>
+	<mapping>
+		<name>allUseCoverageMapping</name>
+		<transition-name>allUseCoverage</transition-name>
+			
+		<code>try {
+			page = buttonAllUseCoverage.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code>
+		<required-mappings></required-mappings></mapping>
+	<mapping>
+		<name>allDuPathCoverageMapping</name>
+		<transition-name>allDuPathCoverage</transition-name>
+		<code>try {
+			page = buttonAllDuPathCoverage.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping>
+	<mapping>
+		<name>newDataFlowMapping</name>
+		<transition-name>newDataFlow</transition-name>
+		<code>try {
+			page = buttonNewDuInfo.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping>
+	<mapping>
+		<name>primePathCoverageMapping</name>
+		<transition-name>primePathCoverage</transition-name>
+		<code>try {
+			page = buttonPrimePathCoverage.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping>
+	<mapping>
+		<name>logicCoverageMapping</name>
+		<transition-name>logicCoverage</transition-name>
+		<code>try {
+			page = buttonLogicCoverage.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping>
+	<mapping>
+		<name>graphCoverageMapping</name>
+		<transition-name>graphCoverage</transition-name>
+		<code>try {
+			page = buttonGraphCoverage.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping>
+	<mapping>
+		<name>minimalMUMCUTCoverageMapping</name>
+		<transition-name>minimalMUMCUTCoverage</transition-name>
+		<code>try {
+			page = buttonMinimalMUMCUTCoverage.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping>
+	<mapping>
+		<name>newGraphMapping</name>
+		<transition-name>newGraph</transition-name>
+		<code>try {
+			page = buttonNewGraph.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping>
+	<mapping>
+		<name>ConstraintResultNotNullMapping</name>
+		<constraint-name>ConstraintResultNotNull</constraint-name>
+		<code>(((HtmlTable) page.getHtmlElementById(&quot;tableResult&quot;)).getCellAt(0, 0).asText() != null);</code>
+		<required-mappings></required-mappings>
+		<stateinvariants>DuPairs,DuPaths,AllDefCoverage,AllUseCoverage,AllDuPathCoverage</stateinvariants></mapping></mappings>

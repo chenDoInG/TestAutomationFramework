@@ -76,7 +76,14 @@ public class ConcreteTestGeneratorTest {
 	String dataFlowCoverageXmlPath = "testData/DataFlowCoverage/xml/DataFlowCoverageFSM.xml";
 	String dataFlowCoverageDirectory = "testData/DataFlowCoverage/";
 	String dataFlowCoverageTestName = "DataFlowCoverageTest";
-	
+	String logicCoveragePath = "testData/LogicCoverage/model/LogicCoverageFSM.uml";
+	String logicCoverageXmlPath = "testData/LogicCoverage/xml/LogicCoverageFSM.xml";
+	String logicCoverageDirectory = "testData/LogicCoverage/";
+	String logicCoverageTestName = "LogicCoverageTest";
+	String minimalMUMCUTCoveragePath = "testData/MinimalMUMCUTCoverage/model/MinimalMUMCUTCoverageFSM.uml";
+	String minimalMUMCUTCoverageXmlPath = "testData/MinimalMUMCUTCoverage/xml/MinimalMUMCUTCoverageFSM.xml";
+	String minimalMUMCUTCoverageDirectory = "testData/MinimalMUMCUTCoverage/";
+	String minimalMUMCUTCoverageTestName = "MinimalMUMCUTCoverageTest";	
 	@Before
 	public void setUp() throws Exception {
 		vendingMachineUMLPath = "testData/VendingMachine/model/VendingMachineFSM.uml";
@@ -850,7 +857,7 @@ public class ConcreteTestGeneratorTest {
 			pathName += transition.getTarget().getName() + " ";
 		}
 		System.out.println(pathName);
-		/*
+		
 		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest("1", "The test for the path " + pathName, transitions);
 		test = abstractTestGenerator.updateTest(dataFlowCoverageXmlPath, test, XmlManipulator.getConstraintMappings(dataFlowCoverageXmlPath));
 		
@@ -858,7 +865,7 @@ public class ConcreteTestGeneratorTest {
 		/**
 		 * Generates the concrete test
 		 */
-		/*
+		
 		String imports = "import java.io.IOException;\nimport java.net.MalformedURLException;\nimport java.net.URL;" +
 				"import com.gargoylesoftware.htmlunit.*;\nimport com.gargoylesoftware.htmlunit.html.*;\n";
 		String packageName = "package coverage.test;\n";
@@ -894,9 +901,174 @@ public class ConcreteTestGeneratorTest {
 			tests.add(test1);
 		}
 		
+		concreteTestGenerator.generateConcreteTests(tests);
+	}
+	
+	/**
+	 * The test for the method "createConcreteTestCase(String, File, Test)" for the program Logic Coverage
+	 * @throws Exception
+	 */
+
+	@Test
+	public void testCreateConcreteTestCaseLogicCoverage() throws Exception {
+		
+		/**
+		 * Computes the test
+		 */
+		EObject object = StateMachineAccessor.getModelObject(logicCoveragePath);
+		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
+		for(Transition transition : stateMachine.getTransitions())
+			System.out.println(transition);
+		
+		System.out.println(stateMachine.getStateMappings());
+		
+		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.EDGECOVERAGE);
+
+		System.out.println(stateMachine.getEdges());
+		System.out.println(paths);
+		/*
+		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
+		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(2), stateMachine), stateMachine);
+		
+		//add the test comments
+		String pathName = "" + transitions.get(0).getSource().getName() + " ";
+		for(Transition transition: transitions){
+			System.out.println(transition);	
+			pathName += transition.getName() + " ";
+			pathName += transition.getTarget().getName() + " ";
+		}
+		System.out.println(pathName);
+		
+		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest("1", "The test for the path " + pathName, transitions);
+		test = abstractTestGenerator.updateTest(logicCoverageXmlPath, test, XmlManipulator.getConstraintMappings(logicCoverageXmlPath));
+		
+		
+		/**
+		 * Generates the concrete test
+		 */
+		/*
+		String imports = "import java.io.IOException;\nimport java.net.MalformedURLException;\nimport java.net.URL;" +
+				"import com.gargoylesoftware.htmlunit.*;\nimport com.gargoylesoftware.htmlunit.html.*;\n";
+		String packageName = "package coverage.test;\n";
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(logicCoverageDirectory, logicCoverageTestName, logicCoverageXmlPath, packageName, imports);
+		
+		File file = null;
+		File fileDirectory = null;
+		if(packageName.trim().equals(""))
+			file = new File(logicCoverageDirectory + "test/" + logicCoverageTestName + ".java");
+		else{
+			fileDirectory = new File(logicCoverageDirectory + "test/" + JavaSupporter.returnPackages(packageName));
+			fileDirectory.mkdirs();
+			file = new File(logicCoverageDirectory + "test/" + JavaSupporter.returnPackages(packageName)  + logicCoverageTestName + ".java");
+		}
+		
+		//I should refactoring the this method by moving updateConcreteTest method inside
+		concreteTestGenerator.createConcreteTestCase(logicCoverageDirectory, file, concreteTestGenerator.updateConcreteTest(test));
+		
+		List<edu.gmu.swe.taf.Test> tests = new ArrayList<edu.gmu.swe.taf.Test>();
+		for(int i = 0; i < paths.size();i++){
+			AbstractTestGenerator abstractTestGenerator1 = new AbstractTestGenerator();
+			System.out.println("path: " + paths.get(i));
+			List<Transition> transitions1 = abstractTestGenerator1.convertVerticesToTransitions(abstractTestGenerator1.getPathByState(paths.get(i), stateMachine), stateMachine);
+			
+			pathName = "" + transitions1.get(0).getSource().getName() + " ";
+			for(Transition transition: transitions1){	
+				pathName += transition.getName() + " ";
+				pathName += transition.getTarget().getName() + " ";
+			}
+			
+			edu.gmu.swe.taf.Test test1 = new edu.gmu.swe.taf.FsmTest(String.valueOf(i), "The test for the path " + pathName, transitions1);
+			test1 = abstractTestGenerator1.updateTest(logicCoverageXmlPath, test1, XmlManipulator.getConstraintMappings(logicCoverageXmlPath));
+			tests.add(test1);
+		}
+		
 		concreteTestGenerator.generateConcreteTests(tests);*/
 	}
 	
+	/**
+	 * The test for the method "createConcreteTestCase(String, File, Test)" for the program minimal MUMCUT Coverage
+	 * @throws Exception
+	 */
+
+	@Test
+	public void testCreateConcreteTestCaseMinimalMUMCUTCoverage() throws Exception {
+		
+		/**
+		 * Computes the test
+		 */
+		EObject object = StateMachineAccessor.getModelObject(minimalMUMCUTCoveragePath);
+		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
+		for(Transition transition : stateMachine.getTransitions())
+			System.out.println(transition);
+		
+		System.out.println(stateMachine.getStateMappings());
+		
+		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.EDGECOVERAGE);
+
+		System.out.println(stateMachine.getEdges());
+		System.out.println(paths);
+		
+		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
+		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(1), stateMachine), stateMachine);
+		
+		//add the test comments
+		String pathName = "" + transitions.get(0).getSource().getName() + " ";
+		for(Transition transition: transitions){
+			System.out.println(transition);	
+			pathName += transition.getName() + " ";
+			pathName += transition.getTarget().getName() + " ";
+		}
+		System.out.println(pathName);
+		
+		edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest("1", "The test for the path " + pathName, transitions);
+		test = abstractTestGenerator.updateTest(minimalMUMCUTCoverageXmlPath, test, XmlManipulator.getConstraintMappings(minimalMUMCUTCoverageXmlPath));
+		
+		
+		/**
+		 * Generates the concrete test
+		 */
+		
+		String imports = "import java.io.IOException;\nimport java.net.MalformedURLException;\nimport java.net.URL;" +
+				"import com.gargoylesoftware.htmlunit.*;\nimport com.gargoylesoftware.htmlunit.html.*;\n";
+		String packageName = "package coverage.test;\n";
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(minimalMUMCUTCoverageDirectory, minimalMUMCUTCoverageTestName, minimalMUMCUTCoverageXmlPath, packageName, imports);
+		
+		File file = null;
+		File fileDirectory = null;
+		if(packageName.trim().equals(""))
+			file = new File(minimalMUMCUTCoverageDirectory + "test/" + minimalMUMCUTCoverageTestName + ".java");
+		else{
+			fileDirectory = new File(minimalMUMCUTCoverageDirectory + "test/" + JavaSupporter.returnPackages(packageName));
+			fileDirectory.mkdirs();
+			file = new File(minimalMUMCUTCoverageDirectory + "test/" + JavaSupporter.returnPackages(packageName)  + minimalMUMCUTCoverageTestName + ".java");
+		}
+		
+		//I should refactoring the this method by moving updateConcreteTest method inside
+		concreteTestGenerator.createConcreteTestCase(minimalMUMCUTCoverageDirectory, file, concreteTestGenerator.updateConcreteTest(test));
+		
+		List<edu.gmu.swe.taf.Test> tests = new ArrayList<edu.gmu.swe.taf.Test>();
+		for(int i = 0; i < paths.size();i++){
+			AbstractTestGenerator abstractTestGenerator1 = new AbstractTestGenerator();
+			System.out.println("path: " + paths.get(i));
+			List<Transition> transitions1 = abstractTestGenerator1.convertVerticesToTransitions(abstractTestGenerator1.getPathByState(paths.get(i), stateMachine), stateMachine);
+			
+			pathName = "" + transitions1.get(0).getSource().getName() + " ";
+			for(Transition transition: transitions1){	
+				pathName += transition.getName() + " ";
+				pathName += transition.getTarget().getName() + " ";
+			}
+			
+			edu.gmu.swe.taf.Test test1 = new edu.gmu.swe.taf.FsmTest(String.valueOf(i), "The test for the path " + pathName, transitions1);
+			test1 = abstractTestGenerator1.updateTest(minimalMUMCUTCoverageXmlPath, test1, XmlManipulator.getConstraintMappings(minimalMUMCUTCoverageXmlPath));
+			tests.add(test1);
+		}
+		
+		concreteTestGenerator.generateConcreteTests(tests);
+	}
 	
 	/**
 	 * The test for the method "createConcreteTestCase(String, File, Test)"
@@ -1110,6 +1282,7 @@ public class ConcreteTestGeneratorTest {
 	 */
 	@Test
 	public void testIsConstraintSatisfied() throws Exception {
+		
 		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(vendingMachineDirectory, "TempTest", vendingMachineXmlPath, "", "");
 
 		List<Mapping> mappings = new ArrayList<Mapping>();

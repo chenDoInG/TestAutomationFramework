@@ -5,6 +5,9 @@
   </packageImport>
   <packagedElement xmi:type="uml:StateMachine" xmi:id="_keuzkvYtEeG9_IvcAhmuTg" name="StateMachine0">
     <region xmi:id="_keuzk_YtEeG9_IvcAhmuTg" name="Region0">
+      <ownedRule xmi:id="_utA00JISEeKjy-2NLMM7QA" name="ConstraintResultNotNull" constrainedElement="_HYDbh_YxEeG9_IvcAhmuTg _N47HgPYxEeG9_IvcAhmuTg _uMIJLfYxEeG9_IvcAhmuTg _U82z8PaXEeGwKLm285l1sw _Xb5CMPaXEeGwKLm285l1sw">
+        <specification xmi:type="uml:LiteralString" xmi:id="_utFtUJISEeKjy-2NLMM7QA" value=""/>
+      </ownedRule>
       <transition xmi:id="_oLhHAPYwEeG9_IvcAhmuTg" name="initialize" source="_AjwkkPYuEeG9_IvcAhmuTg" target="_CBV84PYuEeG9_IvcAhmuTg"/>
       <transition xmi:id="_3GWHkPYwEeG9_IvcAhmuTg" name="enterGraph" source="_CBV84PYuEeG9_IvcAhmuTg" target="_rfEicPYwEeG9_IvcAhmuTg"/>
       <transition xmi:id="_37dKoPYwEeG9_IvcAhmuTg" name="updateGraph" kind="internal" source="_rfEicPYwEeG9_IvcAhmuTg" target="_rfEicPYwEeG9_IvcAhmuTg"/>
@@ -20,14 +23,12 @@
       <transition xmi:id="_LLbgsPaYEeGwKLm285l1sw" name="allUseCoverage" source="_r_aJkPaXEeGwKLm285l1sw" target="_U82z8PaXEeGwKLm285l1sw"/>
       <transition xmi:id="_hpAhAPaYEeGwKLm285l1sw" name="newGraph" source="_qaqpsPYxEeG9_IvcAhmuTg" target="_CBV84PYuEeG9_IvcAhmuTg"/>
       <transition xmi:id="_rdQpUPaYEeGwKLm285l1sw" name="newGraph" source="_Ei2wAPYxEeG9_IvcAhmuTg" target="_CBV84PYuEeG9_IvcAhmuTg"/>
-      <transition xmi:id="_xEJZUPaYEeGwKLm285l1sw" name="newDataFlow" source="_qaqpsPYxEeG9_IvcAhmuTg" target="_rfEicPYwEeG9_IvcAhmuTg"/>
       <transition xmi:id="_VGmT4PaZEeGwKLm285l1sw" name="graphCoverage" source="_r_aJkPaXEeGwKLm285l1sw" target="_Xb6a4PaYEeGwKLm285l1sw"/>
       <transition xmi:id="_mEcVEPaZEeGwKLm285l1sw" name="minimalMUMCUTCoverage" source="_rfEicPYwEeG9_IvcAhmuTg" target="_Z4gZIPaYEeGwKLm285l1sw"/>
       <transition xmi:id="_mrhjMPaZEeGwKLm285l1sw" name="logicCoverage" source="_CBV84PYuEeG9_IvcAhmuTg" target="_Y1akcPaYEeGwKLm285l1sw"/>
       <transition xmi:id="_54Gs0PaZEeGwKLm285l1sw" name="" source="_Ei2wAPYxEeG9_IvcAhmuTg" target="_5cOCEPaZEeGwKLm285l1sw"/>
       <transition xmi:id="_6Pdc4PaZEeGwKLm285l1sw" name="" source="_qaqpsPYxEeG9_IvcAhmuTg" target="_5cOCEPaZEeGwKLm285l1sw"/>
-      <transition xmi:id="_F4bOoPabEeGwKLm285l1sw" name="new graph" source="_rfEicPYwEeG9_IvcAhmuTg" target="_CBV84PYuEeG9_IvcAhmuTg"/>
-      <transition xmi:id="_HKkL8PabEeGwKLm285l1sw" name="newDataFlow" source="_r_aJkPaXEeGwKLm285l1sw" target="_rfEicPYwEeG9_IvcAhmuTg"/>
+      <transition xmi:id="_F4bOoPabEeGwKLm285l1sw" name="newGraph" source="_rfEicPYwEeG9_IvcAhmuTg" target="_CBV84PYuEeG9_IvcAhmuTg"/>
       <transition xmi:id="_Qb-s8PabEeGwKLm285l1sw" name="newGraph" source="_r_aJkPaXEeGwKLm285l1sw" target="_CBV84PYuEeG9_IvcAhmuTg"/>
       <transition xmi:id="_suy_QJFPEeKyNsSwXKsqkQ" name="duPath" source="_qaqpsPYxEeG9_IvcAhmuTg" target="_N47HgPYxEeG9_IvcAhmuTg"/>
       <transition xmi:id="_wuiyUJFPEeKyNsSwXKsqkQ" name="allUseCoverage" source="_Ei2wAPYxEeG9_IvcAhmuTg" target="_U82z8PaXEeGwKLm285l1sw"/>

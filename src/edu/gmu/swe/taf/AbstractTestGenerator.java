@@ -149,7 +149,7 @@ public class AbstractTestGenerator {
 			for(Transition transition: source.getOutgoings()){
 				if(transition.getTarget() == null)
 					try {
-						throw new Exception(transition.getName() + "has no target state");
+						throw new Exception(transition.getName() + " has no target state");
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

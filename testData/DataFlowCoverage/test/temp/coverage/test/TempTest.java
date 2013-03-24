@@ -15,7 +15,7 @@ public class TempTest {
         final WebClient webClient = new WebClient();
         WebRequest request = null;
         try {
-        request = new WebRequest( new URL("http://localhost:8080/CoverageWebApplication/coverage/GraphCoverage" ), HttpMethod.POST);
+        request = new WebRequest( new URL("http://localhost:8080/CoverageWebApplication/coverage/DFGraphCoverage" ), HttpMethod.POST);
         } catch (MalformedURLException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
@@ -25,81 +25,51 @@ public class TempTest {
         try {
         page = webClient.getPage(request);
         } catch (FailingHttpStatusCodeException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
         } catch (IOException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
         }
         
-        HtmlForm form = page.getFormByName("graphCoverageForm");
+        HtmlForm form = page.getFormByName("dataFlowCoverageForm");
         
-        final HtmlSubmitInput buttonNodes = form.getInputByValue("Nodes");
+        final HtmlSubmitInput buttonDuPairs = form.getInputByValue("DU Pairs");
         
-        final HtmlSubmitInput buttonEdges = form.getInputByValue("Edges");
+        final HtmlSubmitInput buttonDuPaths = form.getInputByValue("DU Paths");
         
-        final HtmlSubmitInput buttonEdgePairs = form.getInputByValue("Edge-Pair");
+        final HtmlSubmitInput buttonAllDefCoverage = form.getInputByValue("All Def Coverage");
         
-        final HtmlSubmitInput buttonSimplePaths = form.getInputByValue("Simple Paths");
+        final HtmlSubmitInput buttonAllUseCoverage = form.getInputByValue("All Use Coverage");
         
-        final HtmlSubmitInput buttonPrimePaths = form.getInputByValue("Prime Paths");
-        
-        final HtmlSubmitInput buttonNodeCoverage = form.getInputByValue("Node Coverage");
-        
-        final HtmlSubmitInput buttonEdgeCoverage = form.getInputByValue("Edge Coverage");
-        
-        final HtmlSubmitInput buttonEdgePairCoverage = form.getInputByValue("Edge-Pair Coverage");
-        
-        final HtmlSubmitInput buttonPrimePathCoverage = form.getInputByValue("Prime Path Coverage");
+        final HtmlSubmitInput buttonAllDuPathCoverage = form.getInputByValue("All DU Path Coverage");
         
         final HtmlSubmitInput buttonNewGraph = form.getInputByValue("New Graph");
+        final HtmlSubmitInput buttonNewDuInfo = form.getInputByValue("New DU Info");
         
-        final HtmlSubmitInput buttonDataFlowCoverage = form.getInputByValue("Data Flow Coverage");
+        final HtmlSubmitInput buttonGraphCoverage = form.getInputByValue("Graph Coverage");
         final HtmlSubmitInput buttonLogicCoverage = form.getInputByValue("Logic Coverage");
         final HtmlSubmitInput buttonMinimalMUMCUTCoverage = form.getInputByValue("Minimal-MUMCUT Coverage");
-        
         final HtmlTextArea textAreaEdges = form.getTextAreaByName("edges");
         final HtmlTextInput textFieldEndNodes = form.getInputByName("endNode");
         final HtmlTextInput textFieldInitialNodes = form.getInputByName("initialNode");
+        final HtmlTextArea textAreaDefs = form.getTextAreaByName("defs");
+        final HtmlTextArea textAreaUses = form.getTextAreaByName("uses");
         
-        final HtmlTable table = null;
         
         textAreaEdges.setText("1 2\n");
         textFieldEndNodes.setValueAttribute("2");
         textFieldInitialNodes.setValueAttribute("1");
         
+        
+        textAreaDefs.setText("x 1\n");
+        textAreaUses.setText("x 2\n");
         try {
-        page = buttonNodes.click();
+        page = buttonAllDuPathCoverage.click();
         } catch (IOException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
         }
         try {
-        page = buttonPrimePaths.click();
-        } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-        }
-        try {
-        page = buttonNodeCoverage.click();
-        } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-        }
-        try {
-        page = buttonEdgeCoverage.click();
-        } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-        }
-        try {
-        page = buttonEdgePairCoverage.click();
-        } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-        }
-        try {
-        page = buttonPrimePathCoverage.click();
+        page = buttonAllUseCoverage.click();
         } catch (IOException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();

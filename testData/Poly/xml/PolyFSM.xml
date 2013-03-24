@@ -27,7 +27,7 @@
 	<mapping>
 		<name>ConstraintMoreDegtMapping</name>
 		<constraint-name>ConstraintMoreDeg</constraint-name>
-		<code>(p.degree() > 1) == true;</code>
+		<code>(p.degree() &gt; 1) == true;</code>
 		<required-mappings></required-mappings>
 		<stateinvariants>MoreDegAndPosCoef,MoreDegAndNegCoef,MoreDegAndMixCoef</stateinvariants></mapping>
 	<mapping>

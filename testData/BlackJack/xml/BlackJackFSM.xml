@@ -6,7 +6,7 @@
 <mapping><name>hit1OrStayMapping</name>
 	<transition-name>hitOrStay</transition-name>
 	<code>frame.getHitButton().doClick();</code><required-mappings></required-mappings></mapping>
-<mapping><name>ConstraintLostMapping</name><constraint-name>ConstraintLost</constraint-name><code>(frame.getWinLoseBox().getText().equals("Lost") || frame.getWinLoseBox().getText().equals("Bust")) == true;</code><required-mappings></required-mappings><stateinvariants>Lost</stateinvariants></mapping>
+<mapping><name>ConstraintLostMapping</name><constraint-name>ConstraintLost</constraint-name><code>(frame.getWinLoseBox().getText().equals(&quot;Lost&quot;) || frame.getWinLoseBox().getText().equals(&quot;Bust&quot;)) == true;</code><required-mappings></required-mappings><stateinvariants>Lost</stateinvariants></mapping>
 	<mapping>
 		<name>hitOrStay1Mapping</name>
 		<transition-name>hitOrStay</transition-name>
@@ -19,7 +19,7 @@
 	<mapping>
 		<name>ConstraintWinMapping</name>
 		<constraint-name>ConstraintWin</constraint-name>
-		<code>frame.getWinLoseBox().getText().equals("Lost") == true;</code>
+		<code>frame.getWinLoseBox().getText().equals(&quot;Lost&quot;) == true;</code>
 		<required-mappings></required-mappings>
 		<stateinvariants>Win</stateinvariants></mapping>
 	<mapping>
@@ -27,7 +27,7 @@
 		<constraint-name>ConstraintDraw</constraint-name>
 		
 		
-		<code>frame.getWinLoseBox().getText().equals("Draw") == true;</code>
+		<code>frame.getWinLoseBox().getText().equals(&quot;Draw&quot;) == true;</code>
 		<required-mappings></required-mappings>
 		<stateinvariants>Draw</stateinvariants></mapping>
 	<mapping>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>final WebClient webClient = new WebClient();
+		WebRequest request = null;
+		 try {
+			request = new WebRequest( new URL(&quot;http://localhost:8080/CoverageWebApplication/coverage/MinimalMUMCUTCoverage&quot; ), HttpMethod.POST);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		 
+		HtmlPage page = null;
+		try {
+			page = webClient.getPage(request);
+		} catch (FailingHttpStatusCodeException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		HtmlForm form = page.getFormByName("minimalMUMCUTCoverageForm");
+
+		final HtmlSubmitInput buttonMUTPH = form.getInputByValue("MUTP Heuristic");
+		
+		final HtmlSubmitInput buttonFDM = form.getInputByValue("Fault Detection Maximization");
+		
+		final HtmlSubmitInput buttonNewExpression = form.getInputByValue("New Expression");
+		
+		final HtmlSubmitInput buttonGraphCoverage = form.getInputByValue("Graph Coverage");
+		final HtmlSubmitInput buttonDataFlowCoverage = form.getInputByValue("Data Flow Coverage");
+		final HtmlSubmitInput buttonLogicCoverage = form.getInputByValue("Logic Coverage");
+		
+		final HtmlTextInput textInputExpression = form.getInputByName("expression");
+		final HtmlTextInput textInputInfeasibleLiterals = form.getInputByName("infeasibleLiterals");
+		final HtmlTextInput textInputMaxTestSetSize = form.getInputByName("maxTestSetSize");
+		</code><required-mappings></required-mappings></mapping>
+<mapping><name>enterExpressionAndLiteralsMapping</name><transition-name>enterExpressionAndLiterals</transition-name><code>textInputExpression.setText(&quot;a &amp; b&quot;); textInputInfeasibleLiterals.setText("");</code><required-mappings></required-mappings></mapping>
+<mapping><name>enterWrongExpressionMapping</name><transition-name>enterWrongExpression</transition-name><code>textInputExpression.setText(&quot;a &amp;&amp; b&quot;);textInputInfeasibleLiterals.setText("");</code><required-mappings></required-mappings></mapping>
+<mapping><name>enterIntegerMapping</name>
+	<transition-name>enterInteger</transition-name>
+	<code>textInputMaxTestSetSize.setText("1");</code><required-mappings></required-mappings></mapping>
+<mapping><name>clearIntegerMapping</name>
+	<transition-name>clearInteger</transition-name>
+	<code>textInputMaxTestSetSize.setText("");</code><required-mappings></required-mappings></mapping>
+	<mapping>
+		<name>enterWrongIntegerMapping</name>
+		<transition-name>enterWrongInteger</transition-name>
+		<code>textInputMaxTestSetSize.setText("-1");</code></mapping>
+	<mapping>
+		<name>enterExpressionAndWrongLiteralsMapping</name>
+		<transition-name>enterExpressionAndWrongLiterals</transition-name>
+		<code>
+			textInputExpression.setText(&quot;a &amp; b&quot;);
+			textInputInfeasibleLiterals.setText("a = 0");
+		</code></mapping>
+	<mapping>
+		<name>mUTPHMapping</name>
+		<transition-name>mUTPH</transition-name>	
+		<code>try {
+			page = buttonMUTPH.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code>
+		<required-mappings></required-mappings></mapping>
+	<mapping>
+		<name>fDMMapping</name>
+		<transition-name>fDM</transition-name>			
+		<code>try {
+			page = buttonFDM.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code>
+		<required-mappings></required-mappings></mapping>
+	<mapping>
+		<name>giccMapping</name>
+		<transition-name>gicc</transition-name>
+		<code>try {
+			page = buttonGicc.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping>
+	<mapping>
+		<name>riccMapping</name>
+		<transition-name>ricc</transition-name>
+		<code>try {
+			page = buttonRicc.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping>
+	<mapping>
+		<name>dataFlowMapping</name>
+		<transition-name>dataFlow</transition-name>
+		<code>try {
+			page = buttonDataFlowCoverage.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping>
+	<mapping>
+		<name>graphMapping</name>
+		<transition-name>graph</transition-name>
+		<code>try {
+			page = buttonGraphCoverage.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping>
+	<mapping>
+		<name>logicMapping</name>
+		<transition-name>logic</transition-name>
+		<code>try {
+			page = buttonLogicCoverage.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping>
+	<mapping>
+		<name>newExpressionMapping</name>
+		<transition-name>newExpression</transition-name>
+		<code>try {
+			page = buttonNewExpression.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping>
+	<mapping>
+		<name>ConstraintExceptionNotNullMapping</name>
+		<constraint-name>ConstraintExceptionNotNull</constraint-name>
+		<code>(((HtmlTable) page.getHtmlElementById(&quot;tableResult&quot;)).getCellAt(0, 0).asText() != null);</code>
+		<required-mappings></required-mappings>
+		<stateinvariants>Error</stateinvariants></mapping></mappings>
