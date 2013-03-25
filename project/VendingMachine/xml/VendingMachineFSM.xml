@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<mappings><mapping><name>coinTwoValuesLessThanNinty</name><transition-name>coin</transition-name><code>vm.coin(c);</code><required-mappings>vMachineInit,intCInit</required-mappings><parameters>intCInit</parameters></mapping><mapping><name>addChocolate</name><transition-name>addChocs</transition-name><code>vm.addChoc(&quot;MM&quot;);</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>coinOneDollarAndTen</name><transition-name>coin</transition-name><code>vm.coin(10);
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><mappings><mapping><name>coinTwoValuesLessThanNinty</name><transition-name>coin</transition-name><code>vm.coin(c);</code><required-mappings>vMachineInit,intCInit</required-mappings><parameters>intCInit</parameters></mapping><mapping><name>addChocolate</name><transition-name>addChocs</transition-name><code>vm.addChoc("MM");</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>coinOneDollarAndTen</name><transition-name>coin</transition-name><code>vm.coin(10);
 vm.coin(25);
 vm.coin(25);
 vm.coin(25);
@@ -22,20 +21,20 @@ vm.coin(25);
 		<name>stringInit</name>
 		<object-name>s</object-name>
 		<class-name>String</class-name>
-		<code>&quot;MM&quot;</code></mapping><mapping><name>intCInit</name><object-name>c</object-name><class-name>int</class-name><code>10,25</code></mapping><mapping><name>constraintStockEqualsTenMapping</name><constraint-name>ConstraintStockEqualsTen</constraint-name><code>vm.getStock().size() == 10;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>State7,State8,State9</stateinvariants></mapping><mapping><name>constraintStockBetweenOneAndTen</name><constraint-name>ConstraintStockBetweenOneAndTen</constraint-name><code>vm.getStock().size() &gt; 0 &amp;&amp; vm.getStock().size() &lt; 10;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>State4,State5,State6</stateinvariants></mapping>
+		<code>"MM"</code></mapping><mapping><name>intCInit</name><object-name>c</object-name><class-name>int</class-name><code>10,25</code></mapping><mapping><name>constraintStockEqualsTenMapping</name><constraint-name>ConstraintStockEqualsTen</constraint-name><code>vm.getStock().size() == 10;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>State7,State8,State9</stateinvariants></mapping><mapping><name>constraintStockBetweenOneAndTen</name><constraint-name>ConstraintStockBetweenOneAndTen</constraint-name><code>vm.getStock().size() &gt; 0 &amp;&amp; vm.getStock().size() &lt; 10;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>State4,State5,State6</stateinvariants></mapping>
 	<mapping>
 		<name>addTenChocolates</name>
 		<transition-name>addChocs</transition-name>
-		<code>vm.addChoc(&quot;MM&quot;);
-vm.addChoc(&quot;MM&quot;);
-vm.addChoc(&quot;MM&quot;);
-vm.addChoc(&quot;MM&quot;);
-vm.addChoc(&quot;MM&quot;);
-vm.addChoc(&quot;MM&quot;);
-vm.addChoc(&quot;MM&quot;);
-vm.addChoc(&quot;MM&quot;);
-vm.addChoc(&quot;MM&quot;);
-vm.addChoc(&quot;MM&quot;);</code>
+		<code>vm.addChoc("MM");
+vm.addChoc("MM");
+vm.addChoc("MM");
+vm.addChoc("MM");
+vm.addChoc("MM");
+vm.addChoc("MM");
+vm.addChoc("MM");
+vm.addChoc("MM");
+vm.addChoc("MM");
+vm.addChoc("MM");</code>
 		<required-mappings>vMachineInit</required-mappings></mapping>
 	<mapping>
 		<name>getNineChocolates</name>
@@ -54,7 +53,7 @@ vm.addChoc(&quot;MM&quot;);</code>
 	<mapping>
 		<name>doingNothing</name>
 		<transition-name>none</transition-name>
-		<code></code></mapping>
+		<code/></mapping>
 	<mapping>
 		<name>constraintStockEqualsZero</name>
 		<constraint-name>ConstraintStockZero</constraint-name>
@@ -78,4 +77,6 @@ vm.addChoc(&quot;MM&quot;);</code>
 		<constraint-name>ConstraintCreditZero</constraint-name>
 		<code>vm.getCredit() == 0;</code>
 		<required-mappings>vMachineInit</required-mappings>
-		<stateinvariants>State1,State4,State7</stateinvariants></mapping></mappings>
+		<stateinvariants>State1,State4,State7</stateinvariants></mapping><mapping><name>coinFifty</name><transition-name>coin</transition-name><code>vm.coin(25);
+vm.coin(25);
+</code><required-mappings>vMachineInit</required-mappings></mapping></mappings>

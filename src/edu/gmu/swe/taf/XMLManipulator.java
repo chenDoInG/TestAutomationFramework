@@ -779,7 +779,7 @@ public class XmlManipulator {
 				else if(nodes.item(j).getNodeName().equals("constraint-name")){
 					if(nodes.item(j).getFirstChild().getNodeValue().equalsIgnoreCase(name)){
 						mapping.setIdentifiableElementName(nodes.item(j).getFirstChild().getNodeValue());
-						mapping.setType(IdentifiableElementType.TRANSITION);
+						mapping.setType(IdentifiableElementType.CONSTRAINT);
 						isTransition = true;
 					}
 					else{
@@ -789,7 +789,17 @@ public class XmlManipulator {
 				else if(nodes.item(j).getNodeName().equals("state-name")){
 					if(nodes.item(j).getFirstChild().getNodeValue().equalsIgnoreCase(name)){
 						mapping.setIdentifiableElementName(nodes.item(j).getFirstChild().getNodeValue());
-						mapping.setType(IdentifiableElementType.TRANSITION);
+						mapping.setType(IdentifiableElementType.STATE);
+						isTransition = true;
+					}
+					else{
+						break;
+					}					
+				}
+				else if(nodes.item(j).getNodeName().equals("object-name")){
+					if(nodes.item(j).getFirstChild().getNodeValue().equalsIgnoreCase(name)){
+						mapping.setIdentifiableElementName(nodes.item(j).getFirstChild().getNodeValue());
+						mapping.setType(IdentifiableElementType.OBJECT);
 						isTransition = true;
 					}
 					else{
@@ -884,6 +894,82 @@ public class XmlManipulator {
 					if(children.item(j).getNodeName().equals("parameters")){
 						String[] parameters = children.item(j).getFirstChild().getNodeValue().split(",");
 						mapping.setParameters(Arrays.asList(parameters));
+					}
+				}
+			}
+			else
+				continue;
+		}
+		
+		return mapping;
+	}
+	
+	/**
+	 * Returns a {edu.gmu.swe.taf.ConstraintMapping} object based on the specified mapping name
+	 * @param path a String representation of the path of an XML file
+	 * @param name a String representation of the name of an element in an XML model
+	 * @return     a {edu.gmu.swe.taf.ConstraintMapping} object
+	 * @throws Exception 
+	 */
+	public static ConstraintMapping getConstraintMappingByName(String path, String name) throws Exception{
+		
+		Document doc = readXmlFile(path);
+		NodeList nodes = doc.getElementsByTagName("name");
+		
+		//A ConstraintMapping object to be returned
+		ConstraintMapping mapping = new ConstraintMapping();
+		for(int i = 0; i < nodes.getLength();i++){
+			//if the names match, add the values into the mapping; otherwise, go through the text node
+			//System.out.println("nodes.item(i).getFirstChild().getNodeValue(): "+ nodes.item(i).getFirstChild().getNodeValue());
+			//System.out.println("name: "+ name);
+
+			if(nodes.item(i).getFirstChild().getNodeValue().trim().equals(name.trim())){
+				NodeList children = nodes.item(i).getParentNode().getChildNodes();	
+
+				for(int j = 0; j < children.getLength();j++){
+					if(children.item(j).getNodeName().equals("name")){
+						mapping.setMappingName(children.item(j).getFirstChild().getNodeValue());
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("constraint-name")){		
+						mapping.setIdentifiableElementName(children.item(j).getFirstChild().getNodeValue());
+						mapping.setType(IdentifiableElementType.OBJECT);
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("code")){						
+						mapping.setTestCode(children.item(j).getFirstChild().getNodeValue());
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("required-mappings")){
+						String[] required = children.item(j).getFirstChild().getNodeValue().split(",");
+						mapping.setRequiredMappings(Arrays.asList(required));
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("parameters")){
+						String[] parameters = children.item(j).getFirstChild().getNodeValue().split(",");
+						mapping.setParameters(Arrays.asList(parameters));
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("stateinvariants")){
+						String[] parameters = children.item(j).getFirstChild().getNodeValue().split(",");
+						mapping.setStateinvariants(Arrays.asList(parameters));
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("preconditions")){
+						String[] parameters = children.item(j).getFirstChild().getNodeValue().split(",");
+						mapping.setPreconditions(Arrays.asList(parameters));
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("postconditions")){
+						String[] parameters = children.item(j).getFirstChild().getNodeValue().split(",");
+						mapping.setPostconditions(Arrays.asList(parameters));
 					}
 				}
 			}

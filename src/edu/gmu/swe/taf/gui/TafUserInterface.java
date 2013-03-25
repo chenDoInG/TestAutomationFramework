@@ -25,6 +25,8 @@ import javax.swing.JTextField;
 
 import edu.gmu.swe.taf.AbstractTestGenerator;
 import edu.gmu.swe.taf.ConcreteTestGenerator;
+import edu.gmu.swe.taf.ConstraintMapping;
+import edu.gmu.swe.taf.IdentifiableElementType;
 import edu.gmu.swe.taf.Mapping;
 import edu.gmu.swe.taf.ModelAccessor;
 import edu.gmu.swe.taf.StateMachineAccessor;
@@ -37,6 +39,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
@@ -61,6 +64,7 @@ import coverage.graph.Path;
 import coverage.web.InvalidInputException;
 
 import javax.swing.JTextArea;
+import javax.xml.transform.TransformerException;
 
 public class TafUserInterface {
 
@@ -84,14 +88,18 @@ public class TafUserInterface {
 	private JLabel lblNewLabel_3;
 	private List<Mapping> elementMappings;
 	private JScrollPane scrollPane_mappings;
-	private JTextField textField_elementName;
-	private JTextField textField_elementType;
 	private JTextField textField_mappingName;
 	private JTextField textField_requiredMappings;
 	private JTextArea textArea_testCode;
 	private JPanel panel_models;
 	private JLabel lblNewLabel_6;
 	private int criterionIndex = 0;
+	private JComboBox comboBox_elementType;
+	private JComboBox comboBox_elementName;
+	private JTextField textField_stateInvariants;
+	private JLabel lblNewLabel_stateInvariants;
+	private JButton btnNewButton_clear;
+	private JButton btnNewButton_save;
 
 	/**
 	 * Launch the application.
@@ -168,6 +176,79 @@ public class TafUserInterface {
 						projectNames.add(projectFile.getName());
 					}
 					list_projects.setListData(projectNames.toArray());
+					
+					//handle the case in which there is only one project
+					if(projectNames.size() == 1){
+						projectName = projectNames.get(0);
+						List<File> files = JavaSupporter.returnAllUmlFiles(directoryName + projectName + "/model/"); 
+						Object[] models = JavaSupporter.getFileNames(files);
+			            list_models.setListData(models);
+			            scrollPane_models.setViewportView(list_models);
+			            lblNewLabel_6.setText(projectName);
+			            lblNewLabel_6.setSize(projectName.length() * 8, lblNewLabel_6.getHeight());
+			            
+			            //handle the case in which there is only one mode for this project
+			            if(models.length == 1){
+			            	modelName = (String)models[0];
+			            	Object[] elements = null;
+			            	try {
+			            		elements = returnElementNames(directoryName + projectName + "/model/" + modelName);
+								list_elements.setListData(elements);
+								scrollPane_elements.setViewportView(list_elements);
+									
+								lblNewLabel_2.setSize(modelName.length() * 8, lblNewLabel_2.getHeight());
+								lblNewLabel_2.setText(modelName);
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							}
+			            	
+			            	//show the mappings created for the first identifiable element
+			            	if(elements.length >= 1){
+			            		String elementName = (String)elements[0];
+			            		try {
+					            	 elementMappings = XmlManipulator.getMappingsByElementName(directoryName + projectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml", elementName);
+					            	 list_mappings.setListData(JavaSupporter.getMappingNames(elementMappings));
+					            	 scrollPane_mappings.setViewportView(list_mappings);
+									
+					            	 lblNewLabel_3.setSize(elementName.length() * 8, lblNewLabel_3.getHeight());
+					            	 lblNewLabel_3.setText(elementName);
+					            	 
+					            	 //show the content of the mapping if there is only one mapping
+					            	 if(elementMappings.size() >= 1){
+					            		 Mapping mapping = elementMappings.get(0);
+					            		 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
+										 comboBox_elementType.setSelectedItem(mapping.getType().toString());
+										 textField_mappingName.setText(mapping.getMappingName());
+										 textArea_testCode.setText(mapping.getTestCode());
+										 textField_requiredMappings.setText(mapping.getRequiredMappings().toString());
+					            	 }
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								} catch (Exception e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+			            	}
+			            }
+					} 
+					
+					/*** initialization of comboBox for elementName ***/
+					
+					if(directoryName != null && projectName != null && modelName != null){
+						if(directoryName.length() > 0 && projectName.length() > 0 && modelName.length() > 0){
+							Object[] elementNames = null;
+							try {
+								elementNames = returnElementNames(directoryName + projectName + "/model/" + modelName);
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							}
+							for(Object o : elementNames){
+								comboBox_elementName.addItem(o);
+							}
+						}
+					}
+					
 				}
 					
 			}
@@ -304,6 +385,7 @@ public class TafUserInterface {
 		panel_models.setLayout(null);
 		panel_models.setBorder(title_models);
 		
+		
 		JLabel lblLoadModels = new JLabel("Add models (*) :");
 		lblLoadModels.setBounds(288, 57, 114, 16);
 		panel_models.add(lblLoadModels);
@@ -334,7 +416,7 @@ public class TafUserInterface {
 		title_mappings.setTitleJustification(TitledBorder.LEFT);
 		
 		JPanel panel_mappings = new JPanel();
-		panel_mappings.setBounds(6, 340, 921, 388);
+		panel_mappings.setBounds(6, 340, 921, 408);
 		layeredPane.add(panel_mappings);
 		panel_mappings.setLayout(null);
 		panel_mappings.setBorder(title_mappings);
@@ -342,6 +424,22 @@ public class TafUserInterface {
 		scrollPane_mappings = new JScrollPane();
 		scrollPane_mappings.setBounds(293, 69, 237, 287);
 		panel_mappings.add(scrollPane_mappings);
+		
+		/*** initialization of comboBox for elementName ***/
+		comboBox_elementName = new JComboBox();
+		comboBox_elementName.setBounds(664, 17, 226, 27);
+		panel_mappings.add(comboBox_elementName);
+		
+		/*** initialization of comboBox for element type ***/
+		//String [] elementTypes = {IdentifiableElementType.TRANSITION.toString(), IdentifiableElementType.CONSTRAINT.toString(), IdentifiableElementType.GUARD.toString(), IdentifiableElementType.OBJECT.toString(), IdentifiableElementType.PARAMETER.toString(),
+		//		IdentifiableElementType.POSTCONDITION.toString(), IdentifiableElementType.PRECONDITION.toString(), IdentifiableElementType.STATEINVARIANT.toString(), IdentifiableElementType.STATE.toString()};
+
+		IdentifiableElementType [] elementTypes = {IdentifiableElementType.TRANSITION, IdentifiableElementType.CONSTRAINT, IdentifiableElementType.GUARD, IdentifiableElementType.OBJECT, IdentifiableElementType.PARAMETER,
+				IdentifiableElementType.POSTCONDITION, IdentifiableElementType.PRECONDITION, IdentifiableElementType.STATEINVARIANT, IdentifiableElementType.STATE};
+		
+		comboBox_elementType = new JComboBox(elementTypes);
+		comboBox_elementType.setBounds(664, 49, 226, 27);
+		panel_mappings.add(comboBox_elementType);
 		
 		list_mappings = new JList();
 		scrollPane_mappings.setViewportView(list_mappings);
@@ -353,13 +451,28 @@ public class TafUserInterface {
 		             System.out.println("Double clicked on Item " + index);
 					 if(index <= elementMappings.size()){
 						 Mapping mapping = elementMappings.get(index);
-						 textField_elementName.setText(mapping.getIdentifiableElementName());
-						 textField_elementType.setText(mapping.getType().toString());
+						 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
+						 System.out.println("mapping.getType().toString(): " + mapping.getType().toString());
+						 comboBox_elementType.setSelectedItem(mapping.getType());
 						 textField_mappingName.setText(mapping.getMappingName());
 						 textArea_testCode.setText(mapping.getTestCode());
 						 textField_requiredMappings.setText(mapping.getRequiredMappings().toString());
-					 }
 						 
+						 if(mapping.getType() == IdentifiableElementType.CONSTRAINT){
+							 textField_stateInvariants.setVisible(true);
+							 textField_stateInvariants.setEnabled(true);
+							 lblNewLabel_stateInvariants.setVisible(true);
+							 lblNewLabel_stateInvariants.setEnabled(true);
+							 
+							 ConstraintMapping cm = null;
+							 try {
+								cm = XmlManipulator.getConstraintMappingByName(directoryName + projectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml", mapping.getMappingName());
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+							 textField_stateInvariants.setText(cm.getStateinvariants().toString());
+						 }
+					 }
 				 }
 			}
 		});
@@ -379,6 +492,7 @@ public class TafUserInterface {
 		
 		textArea_testCode = new JTextArea();
 		scrollPane_testCode.setRowHeaderView(textArea_testCode);
+		textArea_testCode.setEditable(true);
 		
 		JLabel lblTestCode = new JLabel("Test Code:");
 		lblTestCode.setBounds(556, 138, 78, 16);
@@ -395,25 +509,15 @@ public class TafUserInterface {
 		scrollPane_elements.setViewportView(list_elements);
 		
 		JLabel lblMappingName = new JLabel("Mapping Name:");
-		lblMappingName.setBounds(554, 80, 112, 16);
+		lblMappingName.setBounds(554, 88, 112, 16);
 		panel_mappings.add(lblMappingName);
-		
-		textField_elementType = new JTextField();
-		textField_elementType.setBounds(663, 45, 227, 28);
-		panel_mappings.add(textField_elementType);
-		textField_elementType.setColumns(10);
 		
 		JLabel lblElementType = new JLabel("Element Type:");
 		lblElementType.setBounds(554, 49, 98, 16);
 		panel_mappings.add(lblElementType);
 		
-		textField_elementName = new JTextField();
-		textField_elementName.setBounds(663, 17, 227, 28);
-		panel_mappings.add(textField_elementName);
-		textField_elementName.setColumns(10);
-		
 		JLabel lblElementName = new JLabel("Element Name:");
-		lblElementName.setBounds(554, 23, 98, 16);
+		lblElementName.setBounds(554, 21, 98, 16);
 		panel_mappings.add(lblElementName);
 		
 		JLabel lblIdentifiableElementsIn = new JLabel("Identifiable elements in");
@@ -431,6 +535,73 @@ public class TafUserInterface {
 		lblNewLabel_3 = new JLabel("");
 		lblNewLabel_3.setBounds(408, 49, 61, 16);
 		panel_mappings.add(lblNewLabel_3);
+		
+		lblNewLabel_stateInvariants = new JLabel("State Invariants:");
+		lblNewLabel_stateInvariants.setEnabled(false);
+		lblNewLabel_stateInvariants.setVisible(false);
+		lblNewLabel_stateInvariants.setBounds(554, 312, 112, 16);
+		panel_mappings.add(lblNewLabel_stateInvariants);
+		
+		textField_stateInvariants = new JTextField();
+		textField_stateInvariants.setEnabled(false);
+		textField_stateInvariants.setVisible(false);
+		textField_stateInvariants.setBounds(554, 339, 336, 28);
+		panel_mappings.add(textField_stateInvariants);
+		textField_stateInvariants.setColumns(10);
+		
+		btnNewButton_clear = new JButton("Clear");
+		btnNewButton_clear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource() == btnNewButton_clear){
+					 comboBox_elementName.setSelectedIndex(0);
+					 comboBox_elementType.setSelectedIndex(0);
+					 textField_mappingName.setText("");
+					 textArea_testCode.setText("");
+					 textField_requiredMappings.setText("");
+					 
+					 if(textField_stateInvariants.isVisible() == true && textField_stateInvariants.isEnabled() == true)
+						 textField_stateInvariants.setText("");
+				}
+			}
+		});
+		btnNewButton_clear.setBounds(554, 373, 117, 29);
+		panel_mappings.add(btnNewButton_clear);
+		
+		btnNewButton_save = new JButton("Save");
+		btnNewButton_save.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource() == btnNewButton_save){
+					//get the mapping inputs
+					String elementName = (String) comboBox_elementName.getSelectedItem();
+					IdentifiableElementType type = (IdentifiableElementType) comboBox_elementType.getSelectedItem();
+					String mappingName = textField_mappingName.getText();
+					String testCode = textArea_testCode.getText();
+					String requiredMappings_textField = textField_requiredMappings.getText();
+					String stateInvariants = null;
+					if(textField_stateInvariants.isVisible() == true && textField_stateInvariants.isEnabled() == true)
+						stateInvariants = textField_stateInvariants.getText();
+					
+					List<String> requiredMappings_list = new ArrayList<String>();
+					requiredMappings_list = Arrays.asList(requiredMappings_textField.split(","));
+					
+					Mapping mapping = new Mapping(mappingName, type, elementName, testCode, requiredMappings_list, null, null, null);
+					
+					XmlManipulator xm = new XmlManipulator();
+					String xmlPath = directoryName + projectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml";
+					try {
+						xm.createMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
+					} catch (TransformerException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		btnNewButton_save.setBounds(697, 373, 117, 29);
+		panel_mappings.add(btnNewButton_save);
 		
 		list_models.addMouseListener(new MouseAdapter() {
 			@Override
@@ -450,6 +621,21 @@ public class TafUserInterface {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+		            //update the elements in comboBox_elementName while a model is selected 
+					if(directoryName != null && projectName != null && modelName != null){
+						if(directoryName.length() > 0 && projectName.length() > 0 && modelName.length() > 0){
+							Object[] elementNames = null;
+							try {
+								elementNames = returnElementNames(directoryName + projectName + "/model/" + modelName);
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							}
+							for(Object o : elementNames){
+								comboBox_elementName.addItem(o);
+							}
+						}
+					}		
+					
 				 }
 			}
 		});
