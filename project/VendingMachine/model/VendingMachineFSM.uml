@@ -59,7 +59,7 @@ stock = 10</body>
       <ownedRule xmi:id="_rVgWQPxQEeGT0I2oeClwrg" name="ConstraintStockBetweenOneAndTen" constrainedElement="_UwgQ0NmJEeGa16tZvsIA1w _mZ6XgNmJEeGa16tZvsIA1w _E1RPUNtOEeGbQut3CdTx2Q">
         <specification xmi:type="uml:LiteralString" xmi:id="_rViLcPxQEeGT0I2oeClwrg" name="number of the stock" value="1 &lt; stockOfVendingMachine &lt; 10"/>
       </ownedRule>
-      <ownedRule xmi:id="_Cjsu4NwKEeGsQfAO8BUOaA" name="ConstraintGTNinty" constrainedElement="_BkAS4NtOEeGbQut3CdTx2Q _E1RPUNtOEeGbQut3CdTx2Q _G5iNINtOEeGbQut3CdTx2Q">
+      <ownedRule xmi:id="_Cjsu4NwKEeGsQfAO8BUOaA" name="ConstraintCreditGTNinty" constrainedElement="_BkAS4NtOEeGbQut3CdTx2Q _E1RPUNtOEeGbQut3CdTx2Q _G5iNINtOEeGbQut3CdTx2Q">
         <specification xmi:type="uml:LiteralString" xmi:id="_Cj3G8NwKEeGsQfAO8BUOaA" name="credit" value="creditOfVendingMachine >= 90"/>
       </ownedRule>
       <ownedRule xmi:id="_Qmqe4H-TEeKzZ85bW5cs7g" name="ConstraintCreditZeroToNinty" constrainedElement="_WGTmINmJEeGa16tZvsIA1w _mZ6XgNmJEeGa16tZvsIA1w _GpBr8NtOEeGbQut3CdTx2Q">

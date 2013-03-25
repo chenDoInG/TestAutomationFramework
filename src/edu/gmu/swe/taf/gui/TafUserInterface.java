@@ -65,6 +65,8 @@ import coverage.web.InvalidInputException;
 
 import javax.swing.JTextArea;
 import javax.xml.transform.TransformerException;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class TafUserInterface {
 
@@ -73,8 +75,8 @@ public class TafUserInterface {
 	private JLabel lblMustEnterA ;
 	private JLabel lblTheProjectDirectory;
 	private String directoryName = "project/";
-	private String projectName;
-	private String modelName;
+	private String projectName = "";
+	private String modelName = ".uml";
 	private JLabel lblThereAreNo;
 	private JLabel lblAvailableProjects;
 	private JScrollPane scrollPane_projects;
@@ -100,6 +102,7 @@ public class TafUserInterface {
 	private JLabel lblNewLabel_stateInvariants;
 	private JButton btnNewButton_clear;
 	private JButton btnNewButton_save;
+	private String xmlPath;
 
 	/**
 	 * Launch the application.
@@ -129,7 +132,7 @@ public class TafUserInterface {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1011, 1065);
+		frame.setBounds(100, 100, 1280, 900);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -202,11 +205,12 @@ public class TafUserInterface {
 								e1.printStackTrace();
 							}
 			            	
+			            	xmlPath = directoryName + projectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml";
 			            	//show the mappings created for the first identifiable element
 			            	if(elements.length >= 1){
 			            		String elementName = (String)elements[0];
 			            		try {
-					            	 elementMappings = XmlManipulator.getMappingsByElementName(directoryName + projectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml", elementName);
+					            	 elementMappings = XmlManipulator.getMappingsByElementName(xmlPath, elementName);
 					            	 list_mappings.setListData(JavaSupporter.getMappingNames(elementMappings));
 					            	 scrollPane_mappings.setViewportView(list_mappings);
 									
@@ -220,7 +224,22 @@ public class TafUserInterface {
 										 comboBox_elementType.setSelectedItem(mapping.getType().toString());
 										 textField_mappingName.setText(mapping.getMappingName());
 										 textArea_testCode.setText(mapping.getTestCode());
-										 textField_requiredMappings.setText(mapping.getRequiredMappings().toString());
+										 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
+										 
+										 if(mapping.getType() == IdentifiableElementType.CONSTRAINT){
+											 textField_stateInvariants.setVisible(true);
+											 textField_stateInvariants.setEnabled(true);
+											 lblNewLabel_stateInvariants.setVisible(true);
+											 lblNewLabel_stateInvariants.setEnabled(true);
+											 
+											 ConstraintMapping cm = null;
+											 try {
+												cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getMappingName());
+											} catch (Exception e1) {
+												e1.printStackTrace();
+											}
+											 textField_stateInvariants.setText(JavaSupporter.removeBrackets(cm.getStateinvariants().toString()));
+										 }
 					            	 }
 								} catch (IOException e1) {
 									// TODO Auto-generated catch block
@@ -357,12 +376,11 @@ public class TafUserInterface {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if("generate tests".equals(e.getActionCommand())){
-					System.out.println("button is clicked");
+					//System.out.println("button is clicked");
 					try {
-						generateTests(directoryName + projectName + "/model/" + modelName, directoryName + projectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml", 
+						generateTests(directoryName + projectName + "/model/" + modelName, xmlPath, 
 								projectName + "Test", directoryName + projectName + "/test/", getCriterionType(criterionIndex));
 					} catch (Exception e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
@@ -416,7 +434,7 @@ public class TafUserInterface {
 		title_mappings.setTitleJustification(TitledBorder.LEFT);
 		
 		JPanel panel_mappings = new JPanel();
-		panel_mappings.setBounds(6, 340, 921, 408);
+		panel_mappings.setBounds(6, 340, 1171, 408);
 		layeredPane.add(panel_mappings);
 		panel_mappings.setLayout(null);
 		panel_mappings.setBorder(title_mappings);
@@ -438,6 +456,23 @@ public class TafUserInterface {
 				IdentifiableElementType.POSTCONDITION, IdentifiableElementType.PRECONDITION, IdentifiableElementType.STATEINVARIANT, IdentifiableElementType.STATE};
 		
 		comboBox_elementType = new JComboBox(elementTypes);
+		comboBox_elementType.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				//System.out.println(comboBox_elementType.getSelectedItem());
+				if(comboBox_elementType.getSelectedItem() == IdentifiableElementType.CONSTRAINT){
+					 textField_stateInvariants.setVisible(true);
+					 textField_stateInvariants.setEnabled(true);
+					 lblNewLabel_stateInvariants.setVisible(true);
+					 lblNewLabel_stateInvariants.setEnabled(true);
+				}
+				else{
+					 textField_stateInvariants.setVisible(false);
+					 textField_stateInvariants.setEnabled(false);
+					 lblNewLabel_stateInvariants.setVisible(false);
+					 lblNewLabel_stateInvariants.setEnabled(false);
+				}
+			}
+		});
 		comboBox_elementType.setBounds(664, 49, 226, 27);
 		panel_mappings.add(comboBox_elementType);
 		
@@ -448,15 +483,15 @@ public class TafUserInterface {
 			public void mouseClicked(MouseEvent e) {
 				 if(e.getClickCount() == 2){
 					 int index = list_mappings.locationToIndex(e.getPoint());
-		             System.out.println("Double clicked on Item " + index);
+		             //System.out.println("Double clicked on Item " + index);
 					 if(index <= elementMappings.size()){
 						 Mapping mapping = elementMappings.get(index);
 						 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
-						 System.out.println("mapping.getType().toString(): " + mapping.getType().toString());
+						 //System.out.println("mapping.getType().toString(): " + mapping.getType().toString());
 						 comboBox_elementType.setSelectedItem(mapping.getType());
 						 textField_mappingName.setText(mapping.getMappingName());
 						 textArea_testCode.setText(mapping.getTestCode());
-						 textField_requiredMappings.setText(mapping.getRequiredMappings().toString());
+						 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
 						 
 						 if(mapping.getType() == IdentifiableElementType.CONSTRAINT){
 							 textField_stateInvariants.setVisible(true);
@@ -466,11 +501,11 @@ public class TafUserInterface {
 							 
 							 ConstraintMapping cm = null;
 							 try {
-								cm = XmlManipulator.getConstraintMappingByName(directoryName + projectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml", mapping.getMappingName());
+								cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getMappingName());
 							} catch (Exception e1) {
 								e1.printStackTrace();
 							}
-							 textField_stateInvariants.setText(cm.getStateinvariants().toString());
+							 textField_stateInvariants.setText(JavaSupporter.removeBrackets(cm.getStateinvariants().toString()));
 						 }
 					 }
 				 }
@@ -489,6 +524,7 @@ public class TafUserInterface {
 		JScrollPane scrollPane_testCode = new JScrollPane();
 		scrollPane_testCode.setBounds(556, 166, 334, 85);
 		panel_mappings.add(scrollPane_testCode);
+		scrollPane_testCode.setEnabled(true);
 		
 		textArea_testCode = new JTextArea();
 		scrollPane_testCode.setRowHeaderView(textArea_testCode);
@@ -577,26 +613,55 @@ public class TafUserInterface {
 					String mappingName = textField_mappingName.getText();
 					String testCode = textArea_testCode.getText();
 					String requiredMappings_textField = textField_requiredMappings.getText();
-					String stateInvariants = null;
-					if(textField_stateInvariants.isVisible() == true && textField_stateInvariants.isEnabled() == true)
-						stateInvariants = textField_stateInvariants.getText();
-					
 					List<String> requiredMappings_list = new ArrayList<String>();
 					requiredMappings_list = Arrays.asList(requiredMappings_textField.split(","));
 					
-					Mapping mapping = new Mapping(mappingName, type, elementName, testCode, requiredMappings_list, null, null, null);
+					String stateInvariants = null;
+					List<String> stateInvariant_list = new ArrayList<String>();
+
+					if(textField_stateInvariants.isVisible() == true && textField_stateInvariants.isEnabled() == true){
+						stateInvariants = textField_stateInvariants.getText();
+						stateInvariant_list = Arrays.asList(stateInvariants.split(","));
+					}
 					
-					XmlManipulator xm = new XmlManipulator();
-					String xmlPath = directoryName + projectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml";
+					if(stateInvariants == null){
+						Mapping mapping = new Mapping(mappingName, type, elementName, testCode, requiredMappings_list, null, null, null);
+						
+						XmlManipulator xm = new XmlManipulator();
+						try {
+							if(!XmlManipulator.isMappingExisted(XmlManipulator.readXmlFile(xmlPath), mapping)){
+								xm.createMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
+							}
+							else{
+								xm.updateMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
+							}
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+					else{
+						ConstraintMapping mapping = new ConstraintMapping(mappingName, type, elementName, testCode, requiredMappings_list, null, null, null, null, null, null, stateInvariant_list);
+						XmlManipulator xm = new XmlManipulator();
+
+						try {
+								xm.createConstraintMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
+						} catch (TransformerException e1) {
+							e1.printStackTrace();
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+	
+					}
+					
+					//update the mapping list
 					try {
-						xm.createMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
-					} catch (TransformerException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						elementMappings = XmlManipulator.getMappingsByElementName(xmlPath, elementName);
 					} catch (Exception e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+	            	list_mappings.setListData(JavaSupporter.getMappingNames(elementMappings));
+	            	scrollPane_mappings.setViewportView(list_mappings);
 				}
 			}
 		});
@@ -608,7 +673,7 @@ public class TafUserInterface {
 			public void mouseClicked(MouseEvent e) {
 				 if(e.getClickCount() == 2){
 					 int index = list_models.locationToIndex(e.getPoint());
-		             System.out.println("Double clicked on Item " + index);
+		             //System.out.println("Double clicked on Item " + index);
 		             modelName = (String) list_models.getSelectedValue();
 		             
 		             try {
@@ -646,7 +711,7 @@ public class TafUserInterface {
 					int returnVal = fc.showDialog(layeredPane, "Load");
 					if (returnVal == JFileChooser.APPROVE_OPTION) {
 		                File file = fc.getSelectedFile();
-		                System.out.println(file.getName());
+		                //System.out.println(file.getName());
 		                
 		                //create a directory
 		                String projectName = textField.getText();
@@ -696,22 +761,63 @@ public class TafUserInterface {
 			public void mouseClicked(MouseEvent e) {
 				 if(e.getClickCount() == 2){
 					 int index = list_elements.locationToIndex(e.getPoint());
-		             System.out.println("Double clicked on Item " + index);
+		             //System.out.println("Double clicked on Item " + index);
 		             String elementName = (String) list_elements.getSelectedValue();
 		             
 		             //when selecting an element in the element list, all mappings for this element will be shown in the mapping list
 		             try {
-		            	 elementMappings = XmlManipulator.getMappingsByElementName(directoryName + projectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml", elementName);
+		            	 elementMappings = XmlManipulator.getMappingsByElementName(xmlPath, elementName);
 		            	 list_mappings.setListData(JavaSupporter.getMappingNames(elementMappings));
 		            	 scrollPane_mappings.setViewportView(list_mappings);
 						
 		            	 lblNewLabel_3.setSize(elementName.length() * 8, lblNewLabel_3.getHeight());
 		            	 lblNewLabel_3.setText(elementName);
+		            	 
+		            	 if(elementMappings.size() >= 1){
+							 Mapping mapping = elementMappings.get(0);
+							 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
+							 comboBox_elementType.setSelectedItem(mapping.getType());
+							 textField_mappingName.setText(mapping.getMappingName());
+							 textArea_testCode.setText(mapping.getTestCode());
+							 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
+							 
+							 if(mapping.getType() == IdentifiableElementType.CONSTRAINT){
+								 textField_stateInvariants.setVisible(true);
+								 textField_stateInvariants.setEnabled(true);
+								 lblNewLabel_stateInvariants.setVisible(true);
+								 lblNewLabel_stateInvariants.setEnabled(true);
+								 
+								 ConstraintMapping cm = null;
+								 try {
+									cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getMappingName());
+								} catch (Exception e1) {
+									e1.printStackTrace();
+								}
+								 textField_stateInvariants.setText(JavaSupporter.removeBrackets(cm.getStateinvariants().toString()));
+							 }
+		            	 }
+		            	 else{
+		            		 List<NamedElement> elements = returnElements(directoryName + projectName + "/model/" + modelName);
+		            		 for(NamedElement element : elements){
+		            			 if(element.getName().equals(elementName)){
+		            				if(element.toString().indexOf("Transition") != -1)
+		            					comboBox_elementType.setSelectedItem(IdentifiableElementType.TRANSITION);
+		            				else if(element.toString().indexOf("Constraint") != -1)
+		            					comboBox_elementType.setSelectedItem(IdentifiableElementType.CONSTRAINT);
+		            				else if(element.toString().indexOf("State") != -1)
+		            					comboBox_elementType.setSelectedItem(IdentifiableElementType.STATE);
+		            			 }
+		            		 }
+		            		 comboBox_elementName.setSelectedItem(elementName);
+		            		
+		            		 textField_mappingName.setText("");
+		            		 textArea_testCode.setText("");
+		            		 textField_requiredMappings.setText("");
+		            		 textField_stateInvariants.setText("");
+		            	 }
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (Exception e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				 }
@@ -733,6 +839,20 @@ public class TafUserInterface {
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		List<NamedElement> elements = StateMachineAccessor.getAllIdentifiableElements(regions.get(0));
 		return JavaSupporter.getElementNames(elements);
+	}
+	
+	/**
+	 * Gets all identifiable elements in a UML diagram specified by the parameter.
+	 * @param path			the path of the UML diagram in a String format
+	 * @return				an array of Object objects
+	 * @throws IOException
+	 */
+	public List<NamedElement> returnElements(String path) throws IOException{
+		EObject object = ModelAccessor.getModelObject(path);
+		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		List<NamedElement> elements = StateMachineAccessor.getAllIdentifiableElements(regions.get(0));
+		return elements;
 	}
 	
 	public void generateTests(String modelPath, String xmlPath, String testName, String testPath, TestCoverageCriteria testCriterion) throws Exception{

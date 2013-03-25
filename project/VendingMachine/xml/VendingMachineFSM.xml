@@ -60,12 +60,7 @@ vm.addChoc("MM");</code>
 		<code>vm.getStock().size() == 0;</code>
 		<required-mappings>vMachineInit</required-mappings>
 		<stateinvariants>State1,State2,State3</stateinvariants></mapping>
-	<mapping>
-		<name>constraintCreditAtLeastNinty</name>
-		<constraint-name>ConstraintCreditGTNinty</constraint-name>
-		<code>vm.getCredit() &gt;= 90;</code>
-		<required-mappings>vMachineInit</required-mappings>
-		<stateinvariants>State3,State6,State9</stateinvariants></mapping>
+	
 	<mapping>
 		<name>constraintCreditZeroToNinty</name>
 		<constraint-name>ConstraintCreditZeroToNinty</constraint-name>
@@ -78,5 +73,4 @@ vm.addChoc("MM");</code>
 		<code>vm.getCredit() == 0;</code>
 		<required-mappings>vMachineInit</required-mappings>
 		<stateinvariants>State1,State4,State7</stateinvariants></mapping><mapping><name>coinFifty</name><transition-name>coin</transition-name><code>vm.coin(25);
-vm.coin(25);
-</code><required-mappings>vMachineInit</required-mappings></mapping></mappings>
+vm.coin(25);</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>constraintCreditAtLeastNinty</name><constraint-name>ConstraintCreditGTNinty</constraint-name><code>vm.getCredit() &gt;= 90;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>State3,  State6,  State9</stateinvariants></mapping></mappings>

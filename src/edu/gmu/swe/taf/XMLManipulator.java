@@ -311,145 +311,160 @@ public class XmlManipulator {
 	 * @throws TransformerException
 	 */
 	public boolean createConstraintMapping(Document doc, ConstraintMapping mapping, String path) throws TransformerException{
-		
-		
-		if(!isMappingExisted(doc, mapping)){
-			Element root = doc.getDocumentElement();
-			Element mappingNode = doc.createElement("mapping");
-
-			//add mapping name node
-			Element nameNode = doc.createElement("name");
-			Text nameText = doc.createTextNode(mapping.getMappingName());
-			nameNode.appendChild(nameText);
-			mappingNode.appendChild(nameNode);
-			
-			//add constraint name node
-			Element objectNameNode = doc.createElement("constraint-name");
-			Text objectNameText = doc.createTextNode(mapping.getIdentifiableElementName());
-			objectNameNode.appendChild(objectNameText);
-			mappingNode.appendChild(objectNameNode);
-			
-			//add test code node
-			Element codeNode = doc.createElement("code");
-			Text codeText = doc.createTextNode(mapping.getTestCode());
-			codeNode.appendChild(codeText);
-			mappingNode.appendChild(codeNode);
-			
-			//add required mappings node
-			if(mapping.getRequiredMappings() != null && mapping.getRequiredMappings().size() > 0){
-				Element requiredMappingsNode = doc.createElement("required-mappings");
 				
-				String requiredMappings = "";
-				for(String s: mapping.getRequiredMappings()){
-					//add comma if there are more than one required mapping
-					if(!requiredMappings.equals(""))
-						requiredMappings += ",";
-					
-					requiredMappings += s;
-				}
-				
-				Text requiredMappingsText = doc.createTextNode(requiredMappings);
-				requiredMappingsNode.appendChild(requiredMappingsText);
-				mappingNode.appendChild(requiredMappingsNode);
+		if(isMappingExisted(doc, mapping)){
+			NodeList mappings = doc.getElementsByTagName("mapping");
+			
+			for(int i = 0; i < mappings.getLength();i++){
+				NodeList nodes = mappings.item(i).getChildNodes();
+				for(int j = 0; j < nodes.getLength();j++){
+					//if the names match, remove this node
+					if(nodes.item(j).getNodeName().equals("name")){
+						if(nodes.item(j).getFirstChild().getNodeValue().equals(mapping.getMappingName())){
+							mappings.item(i).getParentNode().removeChild(mappings.item(i));
+						}
+						else
+							break;
+					}
+				}			
 			}
-			
-			//add parameters node
-			if(mapping.getParameters() != null && mapping.getParameters().size() > 0){
-				Element parametersNode = doc.createElement("parameters");
-				
-				String parameters = "";
-				for(String p: mapping.getParameters()){
-					//add comma if there are more than one parameter
-					if(!parameters.equals(""))
-						parameters += ",";
-					
-					parameters += p;
-				}
-				
-				Text parametersText = doc.createTextNode(parameters);
-				parametersNode.appendChild(parametersText);
-				mappingNode.appendChild(parametersNode);			
-			}
-			
-			//add constraint solving mapping node
-			if(mapping.getConstSolvingMappings() != null && mapping.getConstSolvingMappings().size() > 0){
-				Element solvingMappingsNode = doc.createElement("constraintSolvingMappings");
-				
-				String solvingMappings = "";
-				for(String p: mapping.getConstSolvingMappings()){
-					//add comma if there are more than one parameter
-					if(!solvingMappings.equals(""))
-						solvingMappings += ",";
-					
-					solvingMappings += p;
-				}
-				
-				Text solvingMappingsText = doc.createTextNode(solvingMappings);
-				solvingMappingsNode.appendChild(solvingMappingsText);
-				mappingNode.appendChild(solvingMappingsNode);			
-			}
-			
-			//add preconditions node
-			if(mapping.getPreconditions() != null && mapping.getPreconditions().size() > 0){
-				Element preconditionsNode = doc.createElement("preconditions");
-				
-				String preconditions = "";
-				for(String p: mapping.getPreconditions()){
-					//add comma if there are more than one parameter
-					if(!preconditions.equals(""))
-						preconditions += ",";
-					
-					preconditions += p;
-				}
-				
-				Text preconditionsText = doc.createTextNode(preconditions);
-				preconditionsNode.appendChild(preconditionsText);
-				mappingNode.appendChild(preconditionsNode);			
-			}
-			
-			//add postconditions node
-			if(mapping.getPostconditions() != null && mapping.getPostconditions().size() > 0){
-				Element postconditionsNode = doc.createElement("postconditions");
-				
-				String postconditions = "";
-				for(String p: mapping.getPostconditions()){
-					//add comma if there are more than one parameter
-					if(!postconditions.equals(""))
-						postconditions += ",";
-					
-					postconditions += p;
-				}
-				
-				Text postconditionsText = doc.createTextNode(postconditions);
-				postconditionsNode.appendChild(postconditionsText);
-				mappingNode.appendChild(postconditionsNode);			
-			}
-			
-			//add state invariants node
-			if(mapping.getStateinvariants() != null && mapping.getStateinvariants().size() > 0){
-				Element stateinvariantsNode = doc.createElement("stateinvariants");
-				
-				String stateinvariants = "";
-				for(String p: mapping.getStateinvariants()){
-					//add comma if there are more than one parameter
-					if(!stateinvariants.equals(""))
-						stateinvariants += ",";
-					
-					stateinvariants += p;
-				}
-				
-				Text stateinvariantsText = doc.createTextNode(stateinvariants);
-				stateinvariantsNode.appendChild(stateinvariantsText);
-				mappingNode.appendChild(stateinvariantsNode);			
-			}
-			
-			root.appendChild(mappingNode);
-
-			rewriteXml(doc,path);
-			return true;
 		}
-		System.out.println("The user account has existed");
-		return false;
+		
+		//create a constraint mapping node
+		Element root = doc.getDocumentElement();
+		Element mappingNode = doc.createElement("mapping");
+
+		//add mapping name node
+		Element nameNode = doc.createElement("name");
+		Text nameText = doc.createTextNode(mapping.getMappingName());
+		nameNode.appendChild(nameText);
+		mappingNode.appendChild(nameNode);
+			
+		//add constraint name node
+		Element objectNameNode = doc.createElement("constraint-name");
+		Text objectNameText = doc.createTextNode(mapping.getIdentifiableElementName());
+		objectNameNode.appendChild(objectNameText);
+		mappingNode.appendChild(objectNameNode);
+			
+		//add test code node
+		Element codeNode = doc.createElement("code");
+		Text codeText = doc.createTextNode(mapping.getTestCode());
+		codeNode.appendChild(codeText);
+		mappingNode.appendChild(codeNode);
+			
+		//add required mappings node
+		if(mapping.getRequiredMappings() != null && mapping.getRequiredMappings().size() > 0){
+			Element requiredMappingsNode = doc.createElement("required-mappings");
+			
+			String requiredMappings = "";
+			for(String s: mapping.getRequiredMappings()){
+				//add comma if there are more than one required mapping
+				if(!requiredMappings.equals(""))
+					requiredMappings += ",";
+			
+				requiredMappings += s;
+			}
+				
+			Text requiredMappingsText = doc.createTextNode(requiredMappings);
+			requiredMappingsNode.appendChild(requiredMappingsText);
+			mappingNode.appendChild(requiredMappingsNode);
+		}
+			
+		//add parameters node
+		if(mapping.getParameters() != null && mapping.getParameters().size() > 0){
+			Element parametersNode = doc.createElement("parameters");
+			
+			String parameters = "";
+			for(String p: mapping.getParameters()){
+				//add comma if there are more than one parameter
+				if(!parameters.equals(""))
+					parameters += ",";
+					
+				parameters += p;
+			}
+				
+			Text parametersText = doc.createTextNode(parameters);
+			parametersNode.appendChild(parametersText);
+			mappingNode.appendChild(parametersNode);			
+		}
+			
+		//add constraint solving mapping node
+		if(mapping.getConstSolvingMappings() != null && mapping.getConstSolvingMappings().size() > 0){
+			Element solvingMappingsNode = doc.createElement("constraintSolvingMappings");
+			
+			String solvingMappings = "";
+			for(String p: mapping.getConstSolvingMappings()){
+				//add comma if there are more than one parameter
+				if(!solvingMappings.equals(""))
+					solvingMappings += ",";
+					
+				solvingMappings += p;
+			}
+			
+			Text solvingMappingsText = doc.createTextNode(solvingMappings);
+			solvingMappingsNode.appendChild(solvingMappingsText);
+			mappingNode.appendChild(solvingMappingsNode);			
+		}
+			
+		//add preconditions node
+		if(mapping.getPreconditions() != null && mapping.getPreconditions().size() > 0){
+			Element preconditionsNode = doc.createElement("preconditions");
+			
+			String preconditions = "";
+			for(String p: mapping.getPreconditions()){
+				//add comma if there are more than one parameter
+				if(!preconditions.equals(""))
+					preconditions += ",";
+				
+				preconditions += p;
+			}
+					
+			Text preconditionsText = doc.createTextNode(preconditions);
+			preconditionsNode.appendChild(preconditionsText);
+			mappingNode.appendChild(preconditionsNode);			
+		}
+			
+		//add postconditions node
+		if(mapping.getPostconditions() != null && mapping.getPostconditions().size() > 0){
+			Element postconditionsNode = doc.createElement("postconditions");
+			
+			String postconditions = "";
+			for(String p: mapping.getPostconditions()){
+				//add comma if there are more than one parameter
+				if(!postconditions.equals(""))
+					postconditions += ",";
+						
+				postconditions += p;
+			}
+				
+			Text postconditionsText = doc.createTextNode(postconditions);
+			postconditionsNode.appendChild(postconditionsText);
+			mappingNode.appendChild(postconditionsNode);			
+		}
+			
+		//add state invariants node
+		if(mapping.getStateinvariants() != null && mapping.getStateinvariants().size() > 0){
+			Element stateinvariantsNode = doc.createElement("stateinvariants");
+				
+			String stateinvariants = "";
+			for(String p: mapping.getStateinvariants()){
+				//add comma if there are more than one parameter
+				if(!stateinvariants.equals(""))
+					stateinvariants += ",";
+					
+				stateinvariants += p;
+		}
+				
+		Text stateinvariantsText = doc.createTextNode(stateinvariants);
+		stateinvariantsNode.appendChild(stateinvariantsText);
+		mappingNode.appendChild(stateinvariantsNode);			
+		}
+			
+		root.appendChild(mappingNode);
+		
+		rewriteXml(doc,path);
+		return true;
+			
 	}
 	
 	/**
@@ -626,7 +641,7 @@ public class XmlManipulator {
 	 * @param mapping	a {@link Mapping} object that will be inserted in an {@link org.w3c.dom.Document} object specified by doc 	
 	 * @return	true if the mapping has existed by name in the doc; otherwise return false
 	 */
-	private boolean isMappingExisted(Document doc, Mapping mapping){
+	public static boolean isMappingExisted(Document doc, Mapping mapping){
 		
 		//Check whether the user has existed in the XML files
 		boolean isExisted = false;
@@ -817,21 +832,37 @@ public class XmlManipulator {
 				}
 				
 				if(nodes.item(j).getNodeName().equals("required-mappings")){
-					String[] required = nodes.item(j).getFirstChild().getNodeValue().split(",");
-					mapping.setRequiredMappings(Arrays.asList(required));
+					if(nodes.item(j).getFirstChild() == null){
+						mapping.setRequiredMappings(new ArrayList<String>());
+					}
+					else{
+						String[] required = nodes.item(j).getFirstChild().getNodeValue().split(",");
+						mapping.setRequiredMappings(Arrays.asList(required));
+					}
 					continue;
 				}
 				
 				if(nodes.item(j).getNodeName().equals("parameters")){
-					String[] parameters = nodes.item(j).getFirstChild().getNodeValue().split(",");
-					mapping.setParameters(Arrays.asList(parameters));
+					if(nodes.item(j).getFirstChild() == null)
+						mapping.setParameters(new ArrayList<String>());
+					else{
+						String[] parameters = nodes.item(j).getFirstChild().getNodeValue().split(",");
+						mapping.setParameters(Arrays.asList(parameters));
+					}
 				}
 				//may add more nodes if a mapping has more
 			}
 			if(isTransition == false)
 				mapping = null;
-			else
+			else{
+				if(mapping.getRequiredMappings() == null)
+					mapping.setRequiredMappings(new ArrayList<String>());
+				
+				if(mapping.getParameters() == null)
+					mapping.setParameters(new ArrayList<String>());
+				
 				matchedNodes.add(mapping);
+			}
 			
 		}
 		return matchedNodes;

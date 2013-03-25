@@ -287,9 +287,19 @@ public class JavaSupporter {
 		  method.invoke(classLoader, new Object[] { url });
 	}
 	
-	/*
-	public static String convertToClassPath(String directory){
-		
-	}*/
+	/**
+	 * Removes the brackets in the toString() result used by List
+	 * @param listString	toString() result by java.util.List
+	 * @return			 	the same String representation without brackets 
+	 */
+	public static String removeBrackets(String listString){
+		String noBracketsString = null;
+		if(listString.startsWith("[") && listString.endsWith("]")){
+			noBracketsString = listString.substring(1, listString.length() - 1);
+			return noBracketsString;
+		}
+		else
+			return listString;
+	}
 
 }
