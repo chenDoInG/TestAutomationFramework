@@ -151,13 +151,13 @@ public class ConcreteTestGeneratorTest {
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
 		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), TestCoverageCriteria.EDGECOVERAGE);
-		//System.out.println(paths.get(0));
+		System.out.println(paths);
 		//System.out.println(stateMachine.getStateMappings());
 		
 		//get the vertices from a path and return a list of transitions based on the vertices
 		//List<Vertex> vertexes = AbstractTestGenerator.getPathByState(paths.get(0), stateMachine);
 		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
-		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(5), stateMachine), stateMachine);
+		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(7), stateMachine), stateMachine);
 
 		//add the test comments
 		String pathName = "" + transitions.get(0).getSource().getName() + " ";
@@ -176,7 +176,7 @@ public class ConcreteTestGeneratorTest {
 		 */
 		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(vendingMachineDirectory, "VendingMachineTest", vendingMachineXmlPath, "", "");
 
-		File file = new File(vendingMachineDirectory + "VendingMachineTest" + ".java");
+		File file = new File(vendingMachineDirectory + "test/" + "VendingMachineTest" + ".java");
 		//I should refactoring the this method by moving updateConcreteTest method inside
 		concreteTestGenerator.createConcreteTestCase(vendingMachineDirectory, file, concreteTestGenerator.updateConcreteTest(test));
 	}

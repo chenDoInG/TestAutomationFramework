@@ -312,6 +312,7 @@ public class ConcreteTestGenerator {
 						for(int y = 0; y < nextMappings.size(); y++){
 							if(isMappingSatisfied[y] == false){
 								System.err.println("The constraint " + nextMappings.get(y).getMappingName() +  " in " + nextMappings.get(y).getIdentifiableElementName() + " cannot be satisfied after the following path: ");
+								
 								for(int z = 0; z < finalMappings.size(); z++){
 									if(z > 0){
 										if(!finalMappings.get(z).getIdentifiableElementName().equals(finalMappings.get(z - 1).getIdentifiableElementName()))
@@ -320,6 +321,7 @@ public class ConcreteTestGenerator {
 										System.err.print(finalMappings.get(z).getIdentifiableElementName() + " ");
 									}
 								}
+								//throw new Exception("The constraint " + nextMappings.get(y).getMappingName() +  " in " + nextMappings.get(y).getIdentifiableElementName() + " cannot be satisfied after the following path: ");
 							}
 						}//end of the for loop of showing error messages
 						

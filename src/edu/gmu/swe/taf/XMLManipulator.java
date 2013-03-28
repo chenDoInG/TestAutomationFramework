@@ -771,8 +771,8 @@ public class XmlManipulator {
 		for(int i = 0; i < mappings.getLength();i++){
 			NodeList nodes = mappings.item(i).getChildNodes();
 			Mapping mapping = new Mapping();
-			//if this boolean sign is true, the transition is the one we are looking for
-			boolean isTransition = false;
+			//if this boolean sign is true, the element is the one we are looking for
+			boolean isElement = false;
 			for(int j = 0; j < nodes.getLength();j++){
 				
 				if(nodes.item(j).getNodeName().equals("name")){
@@ -785,7 +785,7 @@ public class XmlManipulator {
 					if(nodes.item(j).getFirstChild().getNodeValue().equalsIgnoreCase(name)){
 						mapping.setIdentifiableElementName(nodes.item(j).getFirstChild().getNodeValue());
 						mapping.setType(IdentifiableElementType.TRANSITION);
-						isTransition = true;
+						isElement = true;
 					}
 					else{
 						break;
@@ -795,7 +795,7 @@ public class XmlManipulator {
 					if(nodes.item(j).getFirstChild().getNodeValue().equalsIgnoreCase(name)){
 						mapping.setIdentifiableElementName(nodes.item(j).getFirstChild().getNodeValue());
 						mapping.setType(IdentifiableElementType.CONSTRAINT);
-						isTransition = true;
+						isElement = true;
 					}
 					else{
 						break;
@@ -805,7 +805,7 @@ public class XmlManipulator {
 					if(nodes.item(j).getFirstChild().getNodeValue().equalsIgnoreCase(name)){
 						mapping.setIdentifiableElementName(nodes.item(j).getFirstChild().getNodeValue());
 						mapping.setType(IdentifiableElementType.STATE);
-						isTransition = true;
+						isElement = true;
 					}
 					else{
 						break;
@@ -815,7 +815,7 @@ public class XmlManipulator {
 					if(nodes.item(j).getFirstChild().getNodeValue().equalsIgnoreCase(name)){
 						mapping.setIdentifiableElementName(nodes.item(j).getFirstChild().getNodeValue());
 						mapping.setType(IdentifiableElementType.OBJECT);
-						isTransition = true;
+						isElement = true;
 					}
 					else{
 						break;
@@ -852,9 +852,95 @@ public class XmlManipulator {
 				}
 				//may add more nodes if a mapping has more
 			}
-			if(isTransition == false)
+			if(isElement == false)
 				mapping = null;
 			else{
+				//handle the cases in which there are no required mappings or parameters saved
+				if(mapping.getRequiredMappings() == null)
+					mapping.setRequiredMappings(new ArrayList<String>());
+				
+				if(mapping.getParameters() == null)
+					mapping.setParameters(new ArrayList<String>());
+				
+				matchedNodes.add(mapping);
+			}
+			
+		}
+		return matchedNodes;
+	}
+	
+	/**
+	 * Returns all object mappings for a model whose location is specified by the parameter.
+	 * @param path a String representation of the path of an XML file
+	 * @return     a list of {edu.gmu.swe.taf.ObjectMapping} objects
+	 * @throws Exception 
+	 */
+	public static List<ObjectMapping> getObjectMappings(String path) throws Exception{
+		List<ObjectMapping> matchedNodes = new ArrayList<ObjectMapping>();
+		Document doc = readXmlFile(path);
+		NodeList mappings = doc.getElementsByTagName("mapping");
+		//System.out.println("size mapping: " + mappings.getLength());
+		//System.out.println("path: " + path);
+		//System.out.println("name: " + name);
+		
+		for(int i = 0; i < mappings.getLength();i++){
+			NodeList nodes = mappings.item(i).getChildNodes();
+			ObjectMapping mapping = new ObjectMapping();
+			//if this boolean sign is true, the object is the one we are looking for
+			boolean isObject = false;
+			for(int j = 0; j < nodes.getLength();j++){
+				
+				if(nodes.item(j).getNodeName().equals("name")){
+					mapping.setMappingName(nodes.item(j).getFirstChild().getNodeValue());
+					continue;
+				}
+				
+				if(nodes.item(j).getNodeName().equals("object-name")){
+					mapping.setIdentifiableElementName(nodes.item(j).getFirstChild().getNodeValue());
+					mapping.setType(IdentifiableElementType.OBJECT);
+					isObject = true;
+					continue;
+				}
+				
+				if(nodes.item(j).getNodeName().equals("class-name")){				
+					mapping.setClassType(nodes.item(j).getFirstChild().getNodeValue());
+					continue;
+				}
+				
+				//if no code needs to be mapped to the element, add an empty String object
+				if(nodes.item(j).getNodeName().equals("code")){
+					if(nodes.item(j).getFirstChild() == null)
+						mapping.setTestCode("");
+					else
+						mapping.setTestCode(nodes.item(j).getFirstChild().getNodeValue());
+					continue;
+				}
+				
+				if(nodes.item(j).getNodeName().equals("required-mappings")){
+					if(nodes.item(j).getFirstChild() == null){
+						mapping.setRequiredMappings(new ArrayList<String>());
+					}
+					else{
+						String[] required = nodes.item(j).getFirstChild().getNodeValue().split(",");
+						mapping.setRequiredMappings(Arrays.asList(required));
+					}
+					continue;
+				}
+				
+				if(nodes.item(j).getNodeName().equals("parameters")){
+					if(nodes.item(j).getFirstChild() == null)
+						mapping.setParameters(new ArrayList<String>());
+					else{
+						String[] parameters = nodes.item(j).getFirstChild().getNodeValue().split(",");
+						mapping.setParameters(Arrays.asList(parameters));
+					}
+				}
+				//may add more nodes if a mapping has more
+			}
+			if(isObject == false)
+				mapping = null;
+			else{
+				//handle the cases in which there are no required mappings or parameters saved
 				if(mapping.getRequiredMappings() == null)
 					mapping.setRequiredMappings(new ArrayList<String>());
 				
@@ -908,23 +994,31 @@ public class XmlManipulator {
 						continue;
 					}
 					
-
-					
 					if(children.item(j).getNodeName().equals("code")){
-						
-						mapping.setTestCode(children.item(j).getFirstChild().getNodeValue());
+						if(children.item(j).getFirstChild() == null)
+							mapping.setTestCode("");
+						else
+							mapping.setTestCode(children.item(j).getFirstChild().getNodeValue());
 						continue;
 					}
 					
 					if(children.item(j).getNodeName().equals("required-mappings")){
-						String[] required = children.item(j).getFirstChild().getNodeValue().split(",");
-						mapping.setRequiredMappings(Arrays.asList(required));
+						if(children.item(j).getFirstChild() == null)
+							mapping.setRequiredMappings(new ArrayList<String>());
+						else{
+							String[] required = children.item(j).getFirstChild().getNodeValue().split(",");
+							mapping.setRequiredMappings(Arrays.asList(required));
+						}
 						continue;
 					}
 					
 					if(children.item(j).getNodeName().equals("parameters")){
-						String[] parameters = children.item(j).getFirstChild().getNodeValue().split(",");
-						mapping.setParameters(Arrays.asList(parameters));
+						if(children.item(j).getFirstChild() == null)
+							mapping.setParameters(new ArrayList<String>());
+						else{
+							String[] parameters = children.item(j).getFirstChild().getNodeValue().split(",");
+							mapping.setParameters(Arrays.asList(parameters));
+						}
 					}
 				}
 			}
@@ -932,6 +1026,15 @@ public class XmlManipulator {
 				continue;
 		}
 		
+		//handle the cases in which there are no test code or required mappings or parameters saved
+		if(mapping.getTestCode() == null)
+			mapping.setTestCode("");
+		
+		if(mapping.getRequiredMappings() == null)
+			mapping.setRequiredMappings(new ArrayList<String>());
+		
+		if(mapping.getParameters() == null)
+			mapping.setParameters(new ArrayList<String>());
 		return mapping;
 	}
 	

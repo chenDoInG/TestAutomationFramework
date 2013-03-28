@@ -25,5 +25,11 @@
 	<classpathentry kind="lib" path="testData/src"/>
 	<classpathentry kind="lib" path="/Users/nli/Software/eclipse/plugins/org.eclipse.swt.cocoa.macosx.x86_64_3.100.1.v4234e.jar"/>
 	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
+	<classpathentry kind="lib" path="/Users/nli/Documents/workspace/github/TestAutomationFramework/lib"/>
+	<classpathentry kind="lib" path="/Users/nli/Documents/library/apache-log4j-2.0-beta4-bin/log4j-core-2.0-beta4.jar"/>
+	<classpathentry kind="lib" path="/Users/nli/Documents/library/apache-log4j-2.0-beta4-bin/log4j-1.2-api-2.0-beta4.jar"/>
+	<classpathentry kind="lib" path="/Users/nli/Documents/library/apache-log4j-2.0-beta4-bin/log4j-api-2.0-beta4.jar"/>
+	<classpathentry kind="lib" path="/Users/nli/Documents/library/apache-log4j-2.0-beta4-bin/log4j-flume-ng-2.0-beta4.jar"/>
+	<classpathentry kind="lib" path="/Users/nli/Documents/library/apache-log4j-2.0-beta4-bin/log4j-jcl-2.0-beta4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

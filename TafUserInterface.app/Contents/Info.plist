@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>CFBundleExecutable</key>
+        <string>JavaApplicationStub</string>
+        <key>CFBundleGetInfoString</key>
+        <string>TafUserInterface1.0, Copyright {user} 2004. All rights reserved.</string>
+        <key>CFBundleInfoDictionaryVersion</key>
+        <string>6.0</string>
+        <key>CFBundleIconFile</key>
+        <string>TafUserInterface.icns</string>
+        <key>CFBundleIdentifier</key>
+        <string>TestAutomationFramework</string>
+        <key>CFBundleName</key>
+        <string>TafUserInterface</string>
+        <key>CFBundlePackageType</key>
+        <string>APPL</string>
+        <key>CFBundleSignature</key>
+        <string>????</string>
+        <key>CFBundleVersion</key>
+        <string>1.0.1</string>
+        <key>Java</key>
+        <dict>
+            <key>JVMVersion</key>
+            <string>1.6*</string>
+            <key>MainClass</key>
+            <string>edu.gmu.swe.taf.gui.TafUserInterface</string>
+            <key>Arguments</key>
+            <array/>
+            <key>ClassPath</key>
+            <string>$JAVAROOT/jar_0.jar:$JAVAROOT/junit.jar:$JAVAROOT/org.hamcrest.core_1.1.0.v20090501071000.jar:$JAVAROOT/org.eclipse.acceleo.model_3.3.1.v20120831-0923.jar:$JAVAROOT/org.eclipse.emf.ecore_2.8.1.v20120911-0500.jar:$JAVAROOT/lpg.runtime.java_2.0.17.v201004271640.jar:$JAVAROOT/ant-antlr.jar:$JAVAROOT/org.eclipse.ocl_3.2.1.v20120917-1739.jar:$JAVAROOT/org.eclipse.core.contenttype_3.4.200.v20120523-2004.jar:$JAVAROOT/org.eclipse.emf.ecore.xmi_2.8.0.v20120911-0500.jar:$JAVAROOT/org.eclipse.core.runtime_3.8.0.v20120521-2346.jar:$JAVAROOT/runtime_registry_compatibility.jar:$JAVAROOT/org.eclipse.acceleo.common_3.3.1.v20120831-0923.jar:$JAVAROOT/org.eclipse.equinox.preferences_3.5.0.v20120522-1841.jar:$JAVAROOT/org.eclipse.acceleo.parser_3.3.1.v20120831-0923.jar:$JAVAROOT/org.eclipse.acceleo.engine_3.3.1.v20120831-0923.jar:$JAVAROOT/org.eclipse.equinox.app_1.3.100.v20120522-1841.jar:$JAVAROOT/org.eclipse.core.jobs_3.5.300.v20120622-204750.jar:$JAVAROOT/org.eclipse.ocl.ecore_3.2.0.v20120522-1637.jar:$JAVAROOT/org.eclipse.acceleo.profiler_3.3.1.v20120831-0923.jar:$JAVAROOT/org.eclipse.equinox.common_3.6.100.v20120522-1841.jar:$JAVAROOT/org.eclipse.emf.common_2.8.0.v20120911-0500.jar:$JAVAROOT/org.eclipse.ocl.common_1.0.0.v20120516-1543.jar:$JAVAROOT/org.eclipse.osgi_3.8.1.v20120830-144521.jar:$JAVAROOT/org.eclipse.uml2.types_1.0.0.v20120913-1441.jar:$JAVAROOT/com.google.guava_10.0.1.v201203051515.jar:$JAVAROOT/org.eclipse.uml2.common_1.7.0.v20120913-1441.jar:$JAVAROOT/org.eclipse.uml2.uml_4.0.1.v20120913-1441.jar:$JAVAROOT/org.eclipse.core.resources_3.8.1.v20120802-154922.jar:$JAVAROOT/org.eclipse.emf.codegen.ecore_2.8.1.v20120917-0436.jar:$JAVAROOT/org.eclipse.emf.codegen_2.8.0.v20120917-0436.jar:$JAVAROOT/org.eclipse.emf.mapping.ecore2xml_2.7.0.v20120917-0436.jar:$JAVAROOT/org.eclipse.emf.validation_1.4.0.v20100428-2315.jar:$JAVAROOT/org.eclipse.equinox.registry_3.5.200.v20120522-1841.jar:$JAVAROOT/graph.jar:$JAVAROOT/jar_1.jar:$JAVAROOT/choco-solver-2.1.5.jar:$JAVAROOT/xeger-1.0-SNAPSHOT.jar:$JAVAROOT/jar_2.jar:$JAVAROOT/jar_3.jar:$JAVAROOT/org.eclipse.swt.cocoa.macosx.x86_64_3.100.1.v4234e.jar:$JAVAROOT/miglayout15-swing.jar:$JAVAROOT/jar_4.jar:$JAVAROOT/log4j-core-2.0-beta4.jar:$JAVAROOT/log4j-1.2-api-2.0-beta4.jar:$JAVAROOT/log4j-api-2.0-beta4.jar:$JAVAROOT/log4j-flume-ng-2.0-beta4.jar:$JAVAROOT/log4j-jcl-2.0-beta4.jar</string>
+        </dict>
+    </dict>
+</plist>

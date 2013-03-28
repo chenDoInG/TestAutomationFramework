@@ -19,7 +19,7 @@ stock = 0</body>
 stock = 0</body>
         </ownedComment>
         <body>credit = 0&#xD;
-0 &lt; stock &lt; 10</body>
+stock = 1</body>
       </ownedComment>
       <ownedComment xmi:id="_7NGkwNtZEeGbQut3CdTx2Q" annotatedElement="_WGTmINmJEeGa16tZvsIA1w">
         <body>0 &lt; credit &lt; 90&#xD;
@@ -27,11 +27,11 @@ stock = 0</body>
       </ownedComment>
       <ownedComment xmi:id="_BxKusNtaEeGbQut3CdTx2Q" annotatedElement="_mZ6XgNmJEeGa16tZvsIA1w">
         <body>0 &lt; credit &lt; 90&#xD;
-0 &lt; stock &lt; 10</body>
+stock = 1</body>
       </ownedComment>
       <ownedComment xmi:id="_It9hsNtaEeGbQut3CdTx2Q" annotatedElement="_GpBr8NtOEeGbQut3CdTx2Q">
         <body>0 &lt; credit &lt; 90&#xD;
-stock = 10</body>
+1 &lt; stock &lt;= 10</body>
       </ownedComment>
       <ownedComment xmi:id="_M9grUNtaEeGbQut3CdTx2Q" annotatedElement="_BkAS4NtOEeGbQut3CdTx2Q">
         <ownedComment xmi:id="_OjvpUNtaEeGbQut3CdTx2Q">
@@ -43,20 +43,20 @@ stock = 0</body>
       </ownedComment>
       <ownedComment xmi:id="_Sjs3wNtaEeGbQut3CdTx2Q" annotatedElement="_E1RPUNtOEeGbQut3CdTx2Q">
         <body>credit >= 90&#xD;
-0&lt; stock &lt; 10</body>
+stock = 1</body>
       </ownedComment>
-      <ownedComment xmi:id="_VmzcYNtaEeGbQut3CdTx2Q" annotatedElement="_G5iNINtOEeGbQut3CdTx2Q">
+      <ownedComment xmi:id="_VmzcYNtaEeGbQut3CdTx2Q">
         <body>credit >= 90&#xD;
-stock = 10</body>
+1 &lt; stock &lt;= 10</body>
       </ownedComment>
       <ownedComment xmi:id="_lOxN4PwWEeGT0I2oeClwrg" annotatedElement="_FVPI0NtOEeGbQut3CdTx2Q">
         <body>credit = 0&#xD;
-stock = 10</body>
+1&lt; stock &lt;= 10</body>
       </ownedComment>
-      <ownedRule xmi:id="_4tHQkPxQEeGT0I2oeClwrg" name="ConstraintStockEqualsTen" constrainedElement="_FVPI0NtOEeGbQut3CdTx2Q _GpBr8NtOEeGbQut3CdTx2Q _G5iNINtOEeGbQut3CdTx2Q">
+      <ownedRule xmi:id="_4tHQkPxQEeGT0I2oeClwrg" name="ConstraintStockBetweenOneToTen" constrainedElement="_FVPI0NtOEeGbQut3CdTx2Q _GpBr8NtOEeGbQut3CdTx2Q _G5iNINtOEeGbQut3CdTx2Q">
         <specification xmi:type="uml:LiteralString" xmi:id="_4tH3oPxQEeGT0I2oeClwrg" name="number of stock" value="stockOfVendingMachine =10"/>
       </ownedRule>
-      <ownedRule xmi:id="_rVgWQPxQEeGT0I2oeClwrg" name="ConstraintStockBetweenOneAndTen" constrainedElement="_UwgQ0NmJEeGa16tZvsIA1w _mZ6XgNmJEeGa16tZvsIA1w _E1RPUNtOEeGbQut3CdTx2Q">
+      <ownedRule xmi:id="_rVgWQPxQEeGT0I2oeClwrg" name="ConstraintStocKOne" constrainedElement="_UwgQ0NmJEeGa16tZvsIA1w _mZ6XgNmJEeGa16tZvsIA1w _E1RPUNtOEeGbQut3CdTx2Q">
         <specification xmi:type="uml:LiteralString" xmi:id="_rViLcPxQEeGT0I2oeClwrg" name="number of the stock" value="1 &lt; stockOfVendingMachine &lt; 10"/>
       </ownedRule>
       <ownedRule xmi:id="_Cjsu4NwKEeGsQfAO8BUOaA" name="ConstraintCreditGTNinty" constrainedElement="_BkAS4NtOEeGbQut3CdTx2Q _E1RPUNtOEeGbQut3CdTx2Q _G5iNINtOEeGbQut3CdTx2Q">
@@ -81,18 +81,13 @@ stock = 10</body>
       <transition xmi:id="_N1BCcNtXEeGbQut3CdTx2Q" name="addChocs" source="_mZ6XgNmJEeGa16tZvsIA1w" target="_GpBr8NtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_OXKtQNtXEeGbQut3CdTx2Q" name="addChocs" source="_E1RPUNtOEeGbQut3CdTx2Q" target="_G5iNINtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_mS67wNtXEeGbQut3CdTx2Q" name="addChocs" source="_VpKXINmJEeGa16tZvsIA1w" target="_UwgQ0NmJEeGa16tZvsIA1w"/>
-      <transition xmi:id="_8_mxQNtmEeGSZqkFVjpPHw" name="getChocs" source="_E1RPUNtOEeGbQut3CdTx2Q" target="_VpKXINmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_qezYANv0EeGsQfAO8BUOaA" name="getChocs" source="_G5iNINtOEeGbQut3CdTx2Q" target="_UwgQ0NmJEeGa16tZvsIA1w"/>
-      <transition xmi:id="_9k8tANv1EeGsQfAO8BUOaA" name="addChocs" kind="internal" source="_UwgQ0NmJEeGa16tZvsIA1w" target="_UwgQ0NmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_QQpXINv2EeGsQfAO8BUOaA" name="addChocs" source="_BkAS4NtOEeGbQut3CdTx2Q" target="_E1RPUNtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_bVngcNv2EeGsQfAO8BUOaA" name="coin" kind="internal" source="_GpBr8NtOEeGbQut3CdTx2Q" target="_GpBr8NtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_m2DAQNwCEeGsQfAO8BUOaA" name="coin" kind="internal" source="_mZ6XgNmJEeGa16tZvsIA1w" target="_mZ6XgNmJEeGa16tZvsIA1w"/>
-      <transition xmi:id="_uIJU4NwCEeGsQfAO8BUOaA" name="addChocs" kind="internal" source="_mZ6XgNmJEeGa16tZvsIA1w" target="_mZ6XgNmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_AeKC4NwDEeGsQfAO8BUOaA" name="getChocs" source="_E1RPUNtOEeGbQut3CdTx2Q" target="_VpKXINmJEeGa16tZvsIA1w"/>
-      <transition xmi:id="_IW12YNwDEeGsQfAO8BUOaA" name="getChocs" source="_E1RPUNtOEeGbQut3CdTx2Q" target="_UwgQ0NmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_llC18NwDEeGsQfAO8BUOaA" name="addCoinAtLeastNinty" source="_UwgQ0NmJEeGa16tZvsIA1w" target="_E1RPUNtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_pfkx0NwDEeGsQfAO8BUOaA" name="addCoinAtLeastNinty" source="_FVPI0NtOEeGbQut3CdTx2Q" target="_G5iNINtOEeGbQut3CdTx2Q"/>
-      <transition xmi:id="_cN8WoPgxEeGHgLRm2DTQnQ" name="addChocs" kind="internal" source="_E1RPUNtOEeGbQut3CdTx2Q" target="_E1RPUNtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_0jZCEPgyEeGHgLRm2DTQnQ" name="getChocs" target="_FVPI0NtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_jZSREPgzEeGHgLRm2DTQnQ" name="none" source="_FVPI0NtOEeGbQut3CdTx2Q" target="_jdY8ANmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_kZ5ZgPgzEeGHgLRm2DTQnQ" name="none" source="_UwgQ0NmJEeGa16tZvsIA1w" target="_jdY8ANmJEeGa16tZvsIA1w"/>
@@ -101,6 +96,9 @@ stock = 10</body>
       <transition xmi:id="_U5jyoPwZEeGT0I2oeClwrg" name="addChocs" source="_WGTmINmJEeGa16tZvsIA1w" target="_mZ6XgNmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_eOceYPwZEeGT0I2oeClwrg" name="coin" kind="internal" source="_WGTmINmJEeGa16tZvsIA1w" target="_WGTmINmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_6hqugPw8EeGT0I2oeClwrg" name="addCoinAtLeastNinty" source="_VpKXINmJEeGa16tZvsIA1w" target="_BkAS4NtOEeGbQut3CdTx2Q"/>
+      <transition xmi:id="_W_mxgJaKEeKvu58QNkWm_g" name="addChocs" kind="internal" source="_FVPI0NtOEeGbQut3CdTx2Q" target="_FVPI0NtOEeGbQut3CdTx2Q"/>
+      <transition xmi:id="_aYAQsJaKEeKvu58QNkWm_g" name="addChocs" kind="internal" source="_GpBr8NtOEeGbQut3CdTx2Q" target="_GpBr8NtOEeGbQut3CdTx2Q"/>
+      <transition xmi:id="_cd60UJaKEeKvu58QNkWm_g" name="addChocs" kind="internal" source="_G5iNINtOEeGbQut3CdTx2Q" target="_G5iNINtOEeGbQut3CdTx2Q"/>
       <subvertex xmi:type="uml:Pseudostate" xmi:id="_TEbwkNmJEeGa16tZvsIA1w" name="Initial"/>
       <subvertex xmi:type="uml:State" xmi:id="_UwgQ0NmJEeGa16tZvsIA1w" name="State4"/>
       <subvertex xmi:type="uml:State" xmi:id="_VpKXINmJEeGa16tZvsIA1w" name="State1"/>

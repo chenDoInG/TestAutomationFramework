@@ -186,7 +186,7 @@ public class JavaSupporter {
 	 * @param elements	a list of {@link edu.gmu.swe.taf.Mapping} objects
 	 * @return			an array of names of {@link edu.gmu.swe.taf.Mapping} objects
 	 */
-	public static Object[] getMappingNames(List<Mapping> mappings){
+	public static Object[] getMappingNames(List<? extends Mapping> mappings){
 		List<String> mappingNames = new ArrayList<String>();
 		for(Mapping mapping : mappings){
 			mappingNames.add(mapping.getMappingName());
