@@ -255,7 +255,7 @@ public class TafUserInterface {
 					            	 if(elementMappings.size() >= 1){
 					            		 Mapping mapping = elementMappings.get(0);
 					            		 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
-										 comboBox_elementType.setSelectedItem(mapping.getType().toString());
+										 comboBox_elementType.setSelectedItem(mapping.getType());
 										 textField_mappingName.setText(mapping.getMappingName());
 										 textArea_testCode.setText(mapping.getTestCode());
 										 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
@@ -405,7 +405,7 @@ public class TafUserInterface {
 						            	 if(elementMappings.size() >= 1){
 						            		 Mapping mapping = elementMappings.get(0);
 						            		 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
-											 comboBox_elementType.setSelectedItem(mapping.getType().toString());
+											 comboBox_elementType.setSelectedItem(mapping.getType());
 											 textField_mappingName.setText(mapping.getMappingName());
 											 textArea_testCode.setText(mapping.getTestCode());
 											 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
@@ -642,12 +642,29 @@ public class TafUserInterface {
 					 textField_stateInvariants.setEnabled(true);
 					 lblStateInvariants.setVisible(true);
 					 lblStateInvariants.setEnabled(true);
+					 
+					 setObjectMappingBlack();
+					 setConstraintMappingGreen();
+					 
+					 textField_objectName.setText("");
+					 textField_className.setText("");
+					 textArea_testCode.setText("");
+					 textField_requiredMappings.setText("");
 				}
-				else{
+				else if(comboBox_elementType.getSelectedItem() == IdentifiableElementType.TRANSITION){
 					 textField_stateInvariants.setVisible(false);
 					 textField_stateInvariants.setEnabled(false);
 					 lblStateInvariants.setVisible(false);
 					 lblStateInvariants.setEnabled(false);
+					 
+					 setConstraintMappingBlack();
+					 setObjectMappingBlack();
+					 setElementMappingGreen();
+					 
+					 textField_objectName.setText("");
+					 textField_className.setText("");
+					 textArea_testCode.setText("");
+					 textField_requiredMappings.setText("");
 				}
 			}
 		});
@@ -778,11 +795,14 @@ public class TafUserInterface {
 		btnNewButton_clear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(e.getSource() == btnNewButton_clear){
-					 comboBox_elementName.setSelectedIndex(0);
-					 comboBox_elementType.setSelectedIndex(0);
+				     //only clear the text in the text field and text area
+					 comboBox_elementName.setSelectedIndex(comboBox_elementName.getSelectedIndex());
+					 comboBox_elementType.setSelectedIndex(comboBox_elementType.getSelectedIndex());
 					 textField_mappingName.setText("");
 					 textArea_testCode.setText("");
 					 textField_requiredMappings.setText("");
+					 textField_objectName.setText("");
+					 textField_className.setText("");
 					 
 					 if(textField_stateInvariants.isVisible() == true && textField_stateInvariants.isEnabled() == true)
 						 textField_stateInvariants.setText("");
@@ -802,55 +822,94 @@ public class TafUserInterface {
 					String mappingName = textField_mappingName.getText();
 					String testCode = textArea_testCode.getText();
 					String requiredMappings_textField = textField_requiredMappings.getText();
+					
 					List<String> requiredMappings_list = new ArrayList<String>();
-					requiredMappings_list = Arrays.asList(requiredMappings_textField.split(","));
+					if(requiredMappings_textField != null && !requiredMappings_textField.trim().equals(""))
+						requiredMappings_list = Arrays.asList(requiredMappings_textField.split(","));
+					
+					String objectName = textField_objectName.getText();
+					String className = textField_className.getText();
 					
 					String stateInvariants = null;
 					List<String> stateInvariant_list = new ArrayList<String>();
-
-					if(textField_stateInvariants.isVisible() == true && textField_stateInvariants.isEnabled() == true){
-						stateInvariants = textField_stateInvariants.getText();
-						stateInvariant_list = Arrays.asList(stateInvariants.split(","));
-					}
 					
-					if(stateInvariants == null){
-						Mapping mapping = new Mapping(mappingName, type, elementName, testCode, requiredMappings_list, null, null, null);
+					if(lblElementName.getForeground().toString().equals("java.awt.Color[r=0,g=178,b=0]")){
+						
+						if(textField_stateInvariants.isVisible() == true && textField_stateInvariants.isEnabled() == true){
+							stateInvariants = textField_stateInvariants.getText();
+							stateInvariant_list = Arrays.asList(stateInvariants.split(","));
+						}
+						
+						if(stateInvariants == null){
+							Mapping mapping = new Mapping(mappingName, type, elementName, testCode, requiredMappings_list, null, null, null);
+							
+							XmlManipulator xm = new XmlManipulator();
+							try {
+								if(!XmlManipulator.isMappingExisted(XmlManipulator.readXmlFile(xmlPath), mapping)){
+									xm.createMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
+								}
+								else{
+									xm.updateMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
+								}
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+						else{
+							ConstraintMapping mapping = new ConstraintMapping(mappingName, type, elementName, testCode, requiredMappings_list, null, null, null, null, null, null, stateInvariant_list);
+							XmlManipulator xm = new XmlManipulator();
+	
+							try {
+								if(!XmlManipulator.isMappingExisted(XmlManipulator.readXmlFile(xmlPath), mapping)){
+									xm.createConstraintMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
+								}else{
+									xm.updateConstraintMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
+								}
+							} catch (TransformerException e1) {
+								e1.printStackTrace();
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+						}
+						
+						//update the mapping list
+						try {
+							elementMappings = XmlManipulator.getMappingsByElementName(xmlPath, elementName);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+		            	list_mappings.setListData(JavaSupporter.getMappingNames(elementMappings));
+		            	scrollPane_mappings.setViewportView(list_mappings);
+					}
+					else if(lblObjectName.getForeground().toString().equals("java.awt.Color[r=0,g=178,b=0]")){
+						System.out.println("ddd");
+						ObjectMapping mapping = new ObjectMapping(mappingName, IdentifiableElementType.OBJECT, objectName, className, testCode, requiredMappings_list, null);
 						
 						XmlManipulator xm = new XmlManipulator();
 						try {
 							if(!XmlManipulator.isMappingExisted(XmlManipulator.readXmlFile(xmlPath), mapping)){
-								xm.createMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
+								System.out.println("ddd1");
+								xm.createObjectMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
 							}
 							else{
-								xm.updateMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
+								xm.updateObjectMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
 							}
 						} catch (Exception e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-					}
-					else{
-						ConstraintMapping mapping = new ConstraintMapping(mappingName, type, elementName, testCode, requiredMappings_list, null, null, null, null, null, null, stateInvariant_list);
-						XmlManipulator xm = new XmlManipulator();
-
+						
+						//update the object mappings list
+						//add the data in the list_objectMappings
 						try {
-								xm.createConstraintMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
-						} catch (TransformerException e1) {
-							e1.printStackTrace();
+							objectMappings = XmlManipulator.getObjectMappings(xmlPath);
 						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
-	
+						
+						list_objectMappings.setListData(JavaSupporter.getMappingNames(objectMappings));
+		            	scrollPane_objectMappings.setViewportView(list_objectMappings);
 					}
-					
-					//update the mapping list
-					try {
-						elementMappings = XmlManipulator.getMappingsByElementName(xmlPath, elementName);
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-	            	list_mappings.setListData(JavaSupporter.getMappingNames(elementMappings));
-	            	scrollPane_mappings.setViewportView(list_mappings);
 				}
 			}
 		});
@@ -874,6 +933,7 @@ public class TafUserInterface {
 						e1.printStackTrace();
 					}
 					 
+					comboBox_elementType.setSelectedItem(objectMapping.getType());
 					textField_objectName.setText(objectMapping.getIdentifiableElementName());				
 					textField_className.setText(objectMapping.getClassType());
 					textField_mappingName.setText(objectMapping.getMappingName());
@@ -977,7 +1037,7 @@ public class TafUserInterface {
 				            	 if(elementMappings.size() >= 1){
 				            		 Mapping mapping = elementMappings.get(0);
 				            		 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
-									 comboBox_elementType.setSelectedItem(mapping.getType().toString());
+									 comboBox_elementType.setSelectedItem(mapping.getType());
 									 textField_mappingName.setText(mapping.getMappingName());
 									 textArea_testCode.setText(mapping.getTestCode());
 									 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
@@ -1186,6 +1246,12 @@ public class TafUserInterface {
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
 		StateMachineAccessor stateMachine = new StateMachineAccessor(regions.get(0));
 		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), testCriterion);
+		
+		//print edges, initial nodes, and final nodes
+		System.out.println(stateMachine.getEdges());
+		System.out.println(stateMachine.getInitialStates());
+		System.out.println(stateMachine.getFinalStates());
+		System.out.println(stateMachine.getStateMappings());
 
 		List<edu.gmu.swe.taf.Test> tests = new ArrayList<edu.gmu.swe.taf.Test>();
 		for(int i = 0; i < paths.size();i++){

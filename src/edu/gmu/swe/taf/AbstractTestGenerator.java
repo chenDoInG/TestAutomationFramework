@@ -90,8 +90,13 @@ public class AbstractTestGenerator {
 		
 		if(criterion == TestCoverageCriteria.NODECOVERAGE)
 			return g.findNodeCoverage();	
-		else if(criterion == TestCoverageCriteria.EDGECOVERAGE)
-			return g.findEdgeCoverage();
+		else if(criterion == TestCoverageCriteria.EDGECOVERAGE){
+			List<Path> edgeCoverage = g.findEdgeCoverage();
+			Graph prefix = GraphUtil.getPrefixGraph(edgeCoverage);
+        	Graph bipartite = GraphUtil.getBipartiteGraph(prefix, initialNodes, finalNodes);
+			List<Path> splittedPaths = g.splittedPathsFromSuperString(bipartite.findMinimumPrimePathCoverageViaPrefixGraphOptimized(edgeCoverage).get(0), g.findTestPath());
+			return splittedPaths;
+		}
 		else if(criterion == TestCoverageCriteria.EDGEPAIRCOVERAGE){
 			List<Path> edgePairs = g.findEdgePairs();	
    			Graph prefix = GraphUtil.getPrefixGraph(edgePairs);

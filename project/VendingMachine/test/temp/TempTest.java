@@ -7,9 +7,7 @@ import static org.junit.Assert.*;
 public class TempTest {
 
     public boolean test(){
-        int c = 25;
-        String s = "MM";
-        StringBuffer sb = new StringBuffer(s);
+        int c = 10;
         vendingMachine vm = new vendingMachine();
         vm.coin(25);
         vm.addChoc("MM");
@@ -17,7 +15,7 @@ public class TempTest {
         vm.coin(c);
         vm.coin(25);
         vm.coin(25);
-        vm.getChoc(sb);
-        return (vm.getStock().size() == 1) && (vm.getCredit() == 0);
+        vm.getChoc(new StringBuffer("none"));
+        return vm.getCredit() == 0;
     }
 }

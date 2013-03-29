@@ -452,7 +452,7 @@ public class XmlManipulator {
 				if(!stateinvariants.equals(""))
 					stateinvariants += ",";
 					
-				stateinvariants += p;
+				stateinvariants += p.trim();
 		}
 				
 		Text stateinvariantsText = doc.createTextNode(stateinvariants);
@@ -563,6 +563,76 @@ public class XmlManipulator {
 
 			rewriteXml(doc,path);
 			return true;
+		}else{
+			System.out.println("The mapping is not existed; should create a new mapping instead of the update");
+		}
+		return false;
+	}
+	
+	/**
+	 * Updates a {@link ObjectMapping} in an {@link org.w3c.dom.Document} object and writes the new {@link org.w3c.dom.Document} object 
+	 * to an XML file specified by the argument path.
+	 * The XML file will only be modified if there exists an old mapping that has the same as that of the new one.
+	 * 
+	 * @param doc		an {@link org.w3c.dom.Document} object in which a new mapping will be inserted
+	 * @param mapping	a {@link ObjectMapping} object that will be inserted in an {@link org.w3c.dom.Document} object specified by doc 	
+	 * @throws TransformerException
+	 */
+	public boolean updateObjectMapping(Document doc, ObjectMapping mapping, String path) throws TransformerException{
+		
+		//continue if this mapping has existed
+		if(isMappingExisted(doc, mapping)){
+			NodeList mappings = doc.getElementsByTagName("mapping");
+			
+			for(int i = 0; i < mappings.getLength();i++){
+				NodeList nodes = mappings.item(i).getChildNodes();
+				for(int j = 0; j < nodes.getLength();j++){
+					//if the names match, remove this node
+					if(nodes.item(j).getNodeName().equals("name")){
+						if(nodes.item(j).getFirstChild().getNodeValue().equals(mapping.getMappingName())){
+							mappings.item(i).getParentNode().removeChild(mappings.item(i));
+						}
+						else
+							break;
+					}
+				}			
+			}
+			createObjectMapping(doc, mapping, path);
+		}else{
+			System.out.println("The mapping is not existed; should create a new mapping instead of the update");
+		}
+		return false;
+	}
+	
+	/**
+	 * Updates a {@link ConstraintMapping} in an {@link org.w3c.dom.Document} object and writes the new {@link org.w3c.dom.Document} object 
+	 * to an XML file specified by the argument path.
+	 * The XML file will only be modified if there exists an old mapping that has the same as that of the new one.
+	 * 
+	 * @param doc		an {@link org.w3c.dom.Document} object in which a new mapping will be inserted
+	 * @param mapping	a {@link ConstraintMapping} object that will be inserted in an {@link org.w3c.dom.Document} object specified by doc 	
+	 * @throws TransformerException
+	 */
+	public boolean updateConstraintMapping(Document doc, ConstraintMapping mapping, String path) throws TransformerException{
+		
+		//continue if this mapping has existed
+		if(isMappingExisted(doc, mapping)){
+			NodeList mappings = doc.getElementsByTagName("mapping");
+			
+			for(int i = 0; i < mappings.getLength();i++){
+				NodeList nodes = mappings.item(i).getChildNodes();
+				for(int j = 0; j < nodes.getLength();j++){
+					//if the names match, remove this node
+					if(nodes.item(j).getNodeName().equals("name")){
+						if(nodes.item(j).getFirstChild().getNodeValue().equals(mapping.getMappingName())){
+							mappings.item(i).getParentNode().removeChild(mappings.item(i));
+						}
+						else
+							break;
+					}
+				}			
+			}
+			createConstraintMapping(doc, mapping, path);
 		}else{
 			System.out.println("The mapping is not existed; should create a new mapping instead of the update");
 		}
