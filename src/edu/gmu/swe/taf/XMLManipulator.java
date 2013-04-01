@@ -639,6 +639,36 @@ public class XmlManipulator {
 		return false;
 	}
 	
+	/**
+	 * Removes a mapping specified by a mapping name.
+	 * @param doc
+	 * @param mappingName
+	 * @param path
+	 * @return				true if the mapping is removed;otherwise, return false;
+	 * @throws TransformerException 
+	 */
+	public static boolean removeMapping(Document doc, String mappingName, String path) throws TransformerException{
+
+		NodeList mappings = doc.getElementsByTagName("mapping");
+			
+		for(int i = 0; i < mappings.getLength();i++){
+			NodeList nodes = mappings.item(i).getChildNodes();
+			for(int j = 0; j < nodes.getLength();j++){
+				//if the names match, remove this node
+				if(nodes.item(j).getNodeName().equals("name")){
+					if(nodes.item(j).getFirstChild().getNodeValue().equals(mappingName)){
+						mappings.item(i).getParentNode().removeChild(mappings.item(i));
+						rewriteXml(doc,path);
+						return true;
+					}
+					else
+						break;
+				}
+			}			
+		}
+
+		return false;
+	}
 	/*
 	public boolean updateMapping(Document doc, Mapping mapping, String path) throws TransformerException{
 		if(!isMappingExisted(doc, mapping)){

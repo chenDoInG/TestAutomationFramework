@@ -134,8 +134,13 @@ public class ConcreteTestGenerator {
 	 * @throws IOException	throws an IOException if the tests cannot be written in a JUnit test case
 	 */
 	public boolean createConcreteTestCase(String directory, File file, List<? extends Test> tests) throws IOException{
+		File packageDirectory = new File(directory + "test/" + JavaSupporter.returnPackages(packageName));
+		if(!packageDirectory.exists()){
+			packageDirectory.mkdirs();
+		}
 		
 		file = new File(directory + "test/" + JavaSupporter.returnPackages(packageName) + name + ".java");
+		file.createNewFile();
 		//a package name may need to be specified
 
 		FileOutputStream fop = new FileOutputStream(file);
@@ -205,7 +210,7 @@ public class ConcreteTestGenerator {
 		List<Mapping> mappings = test.getMappings();
 		for(Mapping mapping: mappings){
 			//System.out.println(mapping.getIdentifiableElementName());
-			System.out.println(mapping.getMappingName());
+			//(mapping.getMappingName());
 		}
 		
 		List<Mapping> finalMappings = new ArrayList<Mapping>();
@@ -252,7 +257,7 @@ public class ConcreteTestGenerator {
 						//get all mappings for the element right ahead of the constraint
 						//to be updated for any element, not just transition
 						List<Mapping> nodes = XmlManipulator.getMappingsByTransition(xmlPath, currentMapping.getIdentifiableElementName());
-						System.out.println("available mappings for " + currentMapping.getIdentifiableElementName() + " is " + nodes.size());
+						//("available mappings for " + currentMapping.getIdentifiableElementName() + " is " + nodes.size());
 						boolean[] isMappingSatisfied = new boolean[nextMappings.size()];
 						
 
@@ -271,7 +276,7 @@ public class ConcreteTestGenerator {
 								finalMappings.remove(finalMappings.size() - 1);
 								
 								finalMappings.add(m);
-								System.out.println("nextMappings size: " + nextMappings.size());
+								//System.out.println("nextMappings size: " + nextMappings.size());
 								//check every constraint
 								for(int x = 0; x < nextMappings.size();x++){
 									finalMappings.add(nextMappings.get(x));
@@ -283,7 +288,7 @@ public class ConcreteTestGenerator {
 									}
 									finalMappings.remove(finalMappings.size() - 1);
 								}
-								//System.out.println("after more mappings checking0: " + finalMappings.size());
+								///("after more mappings checking0: " + finalMappings.size());
 								boolean isConstraintSatisfied = true;
 								for(int x = 0; x < nextMappings.size();x++){
 									if(isMappingSatisfied[x]  == false)
@@ -311,7 +316,7 @@ public class ConcreteTestGenerator {
 						//show the error messages
 						for(int y = 0; y < nextMappings.size(); y++){
 							if(isMappingSatisfied[y] == false){
-								System.err.println("The constraint " + nextMappings.get(y).getMappingName() +  " in " + nextMappings.get(y).getIdentifiableElementName() + " cannot be satisfied after the following path: ");
+								System.err.println("The constraint " + nextMappings.get(y).getMappingName() +  " in " + nextMappings.get(y).getIdentifiableElementName() + " cannot be satisfied in the following path of test " + test.getTestName() + " :");
 								
 								for(int z = 0; z < finalMappings.size(); z++){
 									if(z > 0){
@@ -352,7 +357,7 @@ public class ConcreteTestGenerator {
 		
 		StringBuffer testCode = new StringBuffer("");		
 		for(int i = 0;i < finalMappings.size();i++){
-			System.out.println(finalMappings.get(i).getMappingName());
+			//System.out.println(finalMappings.get(i).getMappingName());
 			//the if branch is to be updated for test oracle
 			if((finalMappings.get(i).getType() == IdentifiableElementType.PRECONDITION) || (finalMappings.get(i).getType() == IdentifiableElementType.STATEINVARIANT)){
 				if(i == (finalMappings.size() - 1)){
@@ -638,9 +643,9 @@ public class ConcreteTestGenerator {
 				testCode.append("\n");*/
 			}
 		}
-		System.out.println("mapping size: " + mappings.size());
-		for(Mapping mapping : mappings)
-			System.out.println(mapping.getMappingName());
+		//System.out.println("mapping size: " + mappings.size());
+		//for(Mapping mapping : mappings)
+			//System.out.println(mapping.getMappingName());
 		//System.out.println(testCode.toString());
 		File file = writeTempTest(testCode.toString());
 		compileJavaFile(directory + "class/", file);
@@ -662,8 +667,6 @@ public class ConcreteTestGenerator {
 		List<File> jarFiles = JavaSupporter.returnAllJarFiles(directory + "class/");
 		
 		for(File jar : jarFiles){
-			System.out.println(jar.getName());
-			System.out.println(jar.getAbsolutePath());
 			JavaSupporter.addURL(jar.toURL());
 		}
 		
@@ -691,7 +694,7 @@ public class ConcreteTestGenerator {
 			Method m = methods[0];
 			m.setAccessible(true);
 			Object o = m.invoke(c.newInstance(), new Object[]{});
-			System.out.println("temp file result: " + o.toString());
+			//System.out.println("temp file result: " + o.toString());
 			returnValue = Boolean.valueOf(o.toString());
 		}
 		else{

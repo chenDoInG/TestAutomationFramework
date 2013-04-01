@@ -9,14 +9,8 @@
 		<transition-name>addCoinAtLeastNinty</transition-name>
 		<code>vm.coin(100);</code>
 		<required-mappings>vMachineInit</required-mappings></mapping><mapping><name>initializeVendingMachine</name><transition-name>initialize</transition-name><code>vendingMachine vm = new vendingMachine();</code></mapping><mapping><name>getChocolate</name><transition-name>getChocs</transition-name><code>vm.getChoc(sb);
-</code><required-mappings>vMachineInit, stringBufferInit</required-mappings></mapping><mapping><name>stringBufferInit</name><object-name>sb</object-name><class-name>StringBuffer</class-name><code>StringBuffer sb = new StringBuffer(s);</code>
-	<required-mappings>stringInit</required-mappings>
-	<parameters>stringInit</parameters></mapping><mapping><name>vMachineInit</name><object-name>vm</object-name><class-name>vendingMachine</class-name><code>vendingMachine vm = new vendingMachine();</code></mapping>
-	<mapping>
-		<name>stringInit</name>
-		<object-name>s</object-name>
-		<class-name>String</class-name>
-		<code>"MM"</code></mapping><mapping><name>intCInit</name><object-name>c</object-name><class-name>int</class-name><code>10,25</code></mapping><mapping><name>constraintStockOne</name><constraint-name>ConstraintStockOne</constraint-name><code>vm.getStock().size() == 1;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>State4,State5,State6</stateinvariants></mapping>
+</code><required-mappings>vMachineInit, stringBufferInit</required-mappings></mapping><mapping><name>vMachineInit</name><object-name>vm</object-name><class-name>vendingMachine</class-name><code>vendingMachine vm = new vendingMachine();</code></mapping>
+	<mapping><name>intCInit</name><object-name>c</object-name><class-name>int</class-name><code>10,25</code></mapping><mapping><name>constraintStockOne</name><constraint-name>ConstraintStockOne</constraint-name><code>vm.getStock().size() == 1;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>State4,State5,State6</stateinvariants></mapping>
 	<mapping>
 		<name>addTenChocolates</name>
 		<transition-name>addChocs</transition-name>
@@ -31,20 +25,7 @@ vm.addChoc("MM");
 vm.addChoc("MM");
 vm.addChoc("MM");</code>
 		<required-mappings>vMachineInit</required-mappings></mapping>
-	<mapping>
-		<name>getNineChocolates</name>
-		<transition-name>getChocs</transition-name>
-		<code>vm.getChoc(sb);
-		vm.getChoc(sb);
-		vm.getChoc(sb);
-		vm.getChoc(sb);
-		vm.getChoc(sb);
-		vm.getChoc(sb);
-		vm.getChoc(sb);
-		vm.getChoc(sb);
-		vm.getChoc(sb);
-		</code>
-		<required-mappings>vMachineInit, stringBufferInit</required-mappings></mapping>
+	
 	<mapping>
 		<name>doingNothing</name>
 		<transition-name>none</transition-name>
@@ -67,9 +48,14 @@ vm.addChoc("MM");</code>
 		<constraint-name>ConstraintCreditZero</constraint-name>
 		<code>vm.getCredit() == 0;</code>
 		<required-mappings>vMachineInit</required-mappings>
-		<stateinvariants>State1,State4,State7</stateinvariants></mapping><mapping><name>getChocolateNotInStock</name><transition-name>getChocs</transition-name><code>vm.getChoc(new StringBuffer("none"));</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>addChocolate</name><transition-name>addChocs</transition-name><code>vm.addChoc("MM");</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>constraintCreditAtLeastNinty</name><constraint-name>ConstraintCreditGTNinty</constraint-name><code>vm.getCredit() &gt;= 90;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>State3,State6,State9</stateinvariants></mapping><mapping><name>coinOneDollarAndTen</name><transition-name>coin</transition-name><code>vm.coin(10);
+		<stateinvariants>State1,State4,State7</stateinvariants></mapping><mapping><name>addChocolate</name><transition-name>addChocs</transition-name><code>vm.addChoc("MM");</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>constraintCreditAtLeastNinty</name><constraint-name>ConstraintCreditGTNinty</constraint-name><code>vm.getCredit() &gt;= 90;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>State3,State6,State9</stateinvariants></mapping><mapping><name>coinOneDollarAndTen</name><transition-name>coin</transition-name><code>vm.coin(10);
 vm.coin(25);
 vm.coin(25);
 vm.coin(25);
-vm.coin(25);</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>coinTwoValuesLessThanNinty</name><transition-name>coin</transition-name><code>vm.coin(c);</code><required-mappings>vMachineInit, intCInit</required-mappings></mapping><mapping><name>coinFifty</name><transition-name>coin</transition-name><code>vm.coin(25);
-vm.coin(25);</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>test1</name><object-name>ss</object-name><class-name>String</class-name><code>"MM"</code></mapping><mapping><name>test</name><object-name>s</object-name><class-name>Stringsss</class-name><code>"MM"</code></mapping><mapping><name>constraintStockOneToTenMapping</name><constraint-name>ConstraintStockBetweenOneToTen</constraint-name><code>vm.getStock().size() &gt; 1 &amp;&amp; vm.getStock().size() &lt; 10;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>State7,State8,State9</stateinvariants></mapping></mappings>
+vm.coin(25);</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>coinFifty</name><transition-name>coin</transition-name><code>vm.coin(25);
+vm.coin(25);</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>constraintStockOneToTenMapping</name><constraint-name>ConstraintStockBetweenOneToTen</constraint-name><code>vm.getStock().size() &gt; 1 &amp;&amp; vm.getStock().size() &lt; 10;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>State7,State8,State9</stateinvariants></mapping><mapping><name>coinTwoValuesLessThanNinty</name><transition-name>coin</transition-name><code>vm.coin(25);</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>stringBufferInit</name><object-name>sb</object-name><class-name>StringBuffer</class-name><code>StringBuffer sb = new StringBuffer("MM");</code></mapping><mapping><name>getTwoChocolates</name><transition-name>getChocs</transition-name><code>vm.getChoc(sb);
+vm.coin(100);
+vm.getChoc(sb);
+
+
+		</code><required-mappings>vMachineInit,stringBufferInit</required-mappings></mapping></mappings>

@@ -7,15 +7,19 @@ import static org.junit.Assert.*;
 public class TempTest {
 
     public boolean test(){
-        int c = 10;
+        StringBuffer sb = new StringBuffer("MM");
         vendingMachine vm = new vendingMachine();
         vm.coin(25);
         vm.addChoc("MM");
         vm.addChoc("MM");
-        vm.coin(c);
         vm.coin(25);
         vm.coin(25);
-        vm.getChoc(new StringBuffer("none"));
-        return vm.getCredit() == 0;
+        vm.coin(10);
+        vm.coin(25);
+        vm.coin(25);
+        vm.coin(25);
+        vm.coin(25);
+        vm.getChoc(sb);
+        return (vm.getStock().size() == 1) && (vm.getCredit() == 0);
     }
 }

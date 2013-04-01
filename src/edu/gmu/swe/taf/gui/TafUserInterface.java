@@ -54,7 +54,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.AncestorListener;
 import javax.swing.event.AncestorEvent;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Region;
 import org.eclipse.uml2.uml.StateMachine;
@@ -65,11 +67,15 @@ import coverage.graph.Path;
 import coverage.web.InvalidInputException;
 
 import javax.swing.JTextArea;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import javax.swing.SwingConstants;
 import org.apache.log4j.Logger;
+
+import com.google.common.io.Files;
+import javax.swing.DropMode;
 public class TafUserInterface {
 
 	private JFrame frame;
@@ -95,7 +101,6 @@ public class TafUserInterface {
 	private JScrollPane scrollPane_mappings;
 	private JTextField textField_mappingName;
 	private JTextField textField_requiredMappings;
-	private JTextArea textArea_testCode;
 	private JPanel panel_models;
 	private JLabel lblProjectNameInModelPanel;
 	private int criterionIndex = 0;
@@ -121,11 +126,12 @@ public class TafUserInterface {
 	private JTextField textField_packageName;
 	private JLabel lblEnterImportedDeclarations;
 	private JTextArea textArea_importDeclarations;
-	private JList list;
-	private JScrollPane scrollPane_exceptions;
+	private JTextArea textArea_testCode;
 
 	static Logger log = Logger.getLogger(
             TafUserInterface.class);
+	private JLabel lblEgImportComgoogle;
+	private JButton btnDeleteMapping;
 	/**
 	 * Launch the application.
 	 */
@@ -185,7 +191,6 @@ public class TafUserInterface {
 		final JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.addAncestorListener(new AncestorListener() {
 			public void ancestorAdded(AncestorEvent event) {
-				System.out.println("frame created");
 				List<File> directoryFiles = JavaSupporter.returnAllDirectories(directoryName);
 				if(directoryFiles == null || directoryFiles.size() == 0){
 					lblThereAreNo.setVisible(true);
@@ -204,7 +209,7 @@ public class TafUserInterface {
 					list_projects.setListData(projectNames.toArray());
 					
 					//handle the case in which there is only one project
-					if(projectNames.size() == 1){
+					if(projectNames.size() >= 1){
 						projectName = projectNames.get(0);
 						List<File> files = JavaSupporter.returnAllUmlFiles(directoryName + projectName + "/model/"); 
 						Object[] models = JavaSupporter.getFileNames(files);
@@ -260,11 +265,7 @@ public class TafUserInterface {
 										 textArea_testCode.setText(mapping.getTestCode());
 										 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
 										 
-										 lblElementName.setForeground(Color.GREEN.darker());
-										 lblElementType.setForeground(Color.GREEN.darker());
-										 lblMappingName.setForeground(Color.GREEN.darker());
-										 lblTestCode.setForeground(Color.GREEN.darker());
-										 lblRequiredMappings.setForeground(Color.GREEN.darker());
+									     setElementMappingGreen();
 										 
 										 if(mapping.getType() == IdentifiableElementType.CONSTRAINT){
 											 textField_stateInvariants.setVisible(true);
@@ -338,34 +339,23 @@ public class TafUserInterface {
 				 if(e.getClickCount() == 2){
 					 int index = list_projects.locationToIndex(e.getPoint());
 					 projectName = (String) list_projects.getSelectedValue();
-		             System.out.println("Double clicked on Item " + index);
-		             List<File> files = JavaSupporter.returnAllUmlFiles(directoryName + projectName + "/model/"); 
-		             Object[] models = JavaSupporter.getFileNames(files);
-		             list_models.setListData(models);
-		             scrollPane_models.setViewportView(list_models);
-		             lblProjectNameInModelPanel.setText(projectName);
-		             lblProjectNameInModelPanel.setSize(projectName.length() * 8, lblProjectNameInModelPanel.getHeight());
+
+					 	List<File> files = JavaSupporter.returnAllUmlFiles(directoryName + projectName + "/model/"); 
+						Object[] models = JavaSupporter.getFileNames(files);
+				        list_models.setListData(models);
+				        scrollPane_models.setViewportView(list_models);
+				        lblProjectNameInModelPanel.setText(projectName);
+				        lblProjectNameInModelPanel.setSize(projectName.length() * 8, lblProjectNameInModelPanel.getHeight());
 		             
 			            //handle the case in which there is only one mode for this project
 			            if(models.length >= 1){
 			            	modelName = (String)models[0];
-			            	Object[] elements = null;
-			            	try {
-			            		elements = returnElementNames(directoryName + projectName + "/model/" + modelName);
-								list_elements.setListData(elements);
-								scrollPane_elements.setViewportView(list_elements);
-									
-								lblModelNameForElementList.setSize(modelName.length() * 8, lblModelNameForElementList.getHeight());
-								lblModelNameForElementList.setText(modelName);
-								
-							} catch (IOException e1) {
-								e1.printStackTrace();
-							}
+			            	Object [] tempElements = refreshElementList();
 			            	
 			            	xmlPath = directoryName + projectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml";
 			            	
 			            	/*** initialization of comboBox for elementName ***/
-							
+
 							if(directoryName != null && projectName != null && modelName != null){
 								if(directoryName.length() > 0 && projectName.length() > 0 && modelName.length() > 0){
 									Object[] elementNames = null;
@@ -374,6 +364,7 @@ public class TafUserInterface {
 									} catch (IOException e1) {
 										e1.printStackTrace();
 									}
+									comboBox_elementName.removeAllItems();
 									for(Object o : elementNames){
 										comboBox_elementName.addItem(o);
 									}
@@ -382,75 +373,12 @@ public class TafUserInterface {
 			            	
 			            	if(new File(xmlPath).isFile()){
 				            	//add the data in the list_objectMappings
-								try {
-									objectMappings = XmlManipulator.getObjectMappings(xmlPath);
-								} catch (Exception e1) {
-									e1.printStackTrace();
-								}
-								
-								list_objectMappings.setListData(JavaSupporter.getMappingNames(objectMappings));
-				            	scrollPane_objectMappings.setViewportView(list_objectMappings);
+			            		refreshObjectMappingList();
 				            	//show the mappings created for the first identifiable element
-				            	if(elements.length >= 1){
-				            		String elementName = (String)elements[0];
-				            		try {
-						            	 elementMappings = XmlManipulator.getMappingsByElementName(xmlPath, elementName);
-						            	 list_mappings.setListData(JavaSupporter.getMappingNames(elementMappings));
-						            	 scrollPane_mappings.setViewportView(list_mappings);
-										
-						            	 lblElementNameForMappingList.setSize(elementName.length() * 8, lblElementNameForMappingList.getHeight());
-						            	 lblElementNameForMappingList.setText(elementName);
-						            	 
-						            	 //show the content of the mapping if there is only one mapping
-						            	 if(elementMappings.size() >= 1){
-						            		 Mapping mapping = elementMappings.get(0);
-						            		 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
-											 comboBox_elementType.setSelectedItem(mapping.getType());
-											 textField_mappingName.setText(mapping.getMappingName());
-											 textArea_testCode.setText(mapping.getTestCode());
-											 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
-											 
-											 lblElementName.setForeground(Color.GREEN.darker());
-											 lblElementType.setForeground(Color.GREEN.darker());
-											 lblMappingName.setForeground(Color.GREEN.darker());
-											 lblTestCode.setForeground(Color.GREEN.darker());
-											 lblRequiredMappings.setForeground(Color.GREEN.darker());
-											 
-											 if(mapping.getType() == IdentifiableElementType.CONSTRAINT){
-												 textField_stateInvariants.setVisible(true);
-												 textField_stateInvariants.setEnabled(true);
-												 lblStateInvariants.setVisible(true);
-												 lblStateInvariants.setEnabled(true);
-												 
-												 ConstraintMapping cm = null;
-												 try {
-													cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getMappingName());
-												} catch (Exception e1) {
-													e1.printStackTrace();
-												}
-												 textField_stateInvariants.setText(JavaSupporter.removeBrackets(cm.getStateinvariants().toString()));
-												 lblStateInvariants.setForeground(Color.GREEN.darker());
-											 }
-						            	 }
-									} catch (IOException e1) {
-										e1.printStackTrace();
-									} catch (Exception e1) {
-										e1.printStackTrace();
-									}
-				            	}
-				            }else{
-				            	 textField_mappingName.setText("");
-								 textArea_testCode.setText("");
-								 textField_requiredMappings.setText("");
-								 textField_stateInvariants.setText("");
-								 textField_objectName.setText("");
-								 textField_className.setText("");
-								 
-								 setElementMappingBlack();
-								 setObjectMappingBlack();
-				            }
+			            		refreshMappingList(tempElements);
+			            	}
 			            }
-				 }
+			      }
 			}
 		});
 		
@@ -463,7 +391,7 @@ public class TafUserInterface {
 		layeredPane.add(lblProjectName);
 		
 		textField_projectName = new JTextField();
-		textField_projectName.setText(System.getProperty("java.home"));
+		//textField_projectName.setText(System.getProperty("java.home"));
 		textField_projectName.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -522,18 +450,15 @@ public class TafUserInterface {
 		btnGenerateTests.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if("generate tests".equals(e.getActionCommand())){
-					//System.out.println("button is clicked");
-					try {
-						
+					long start = System.nanoTime();
+					try {					
 						generateTests(directoryName + projectName + "/model/" + modelName, xmlPath, 
 								projectName + "Test", directoryName + projectName + "/", getCriterionType(criterionIndex), textField_packageName.getText(),textArea_importDeclarations.getText());
+						long end = System.nanoTime();
+	            	    long duration = end - start;
+	            	    System.out.println("Time for generating tests = " + duration + " nano seconds");
+	            	    System.out.println("Time for generating tests = " + duration / 1000000000 + " seconds");
 					} catch (Exception e1) {
-						if(e1.getCause() != null)
-							list = new JList(new Object[]{e1.getCause().toString()});
-						else
-							list = new JList(e1.getStackTrace());
-						textArea_importDeclarations.setText(e1.getLocalizedMessage() + "\n" + e1.getMessage() + "\n" + e1.toString() + "\n" + e1.getStackTrace());
-						scrollPane_exceptions.setViewportView(list);
 						e1.printStackTrace();
 					}
 				}
@@ -543,16 +468,42 @@ public class TafUserInterface {
 		panel_generateTest.add(btnGenerateTests);
 		
 		lblEnterImportedDeclarations = new JLabel("Enter import declarations:");
-		lblEnterImportedDeclarations.setBounds(486, 23, 172, 16);
+		lblEnterImportedDeclarations.setBounds(466, 23, 172, 16);
 		panel_generateTest.add(lblEnterImportedDeclarations);
 		
 		textArea_importDeclarations = new JTextArea();
-		textArea_importDeclarations.setBounds(670, 23, 328, 69);
+		textArea_importDeclarations.setBounds(709, 23, 328, 69);
 		panel_generateTest.add(textArea_importDeclarations);
 		
-		JButton btnRema = new JButton("remove the selected project");
-		btnRema.setBounds(451, 34, 211, 29);
-		layeredPane.add(btnRema);
+		lblEgImportComgoogle = new JLabel("e.g. import com.google.common.io.*;");
+		lblEgImportComgoogle.setBounds(466, 51, 245, 16);
+		panel_generateTest.add(lblEgImportComgoogle);
+		
+		JButton btnRemoveProject = new JButton("Remove the selected project");
+		btnRemoveProject.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {
+				String selectedProject = (String) list_projects.getSelectedValue();				
+				File toBeRemovedProject = new File(directoryName + "/" + selectedProject);
+				try {
+					Files.deleteRecursively(toBeRemovedProject);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				textField_projectName.setText("");
+				System.out.println("Project " + selectedProject + "has been removed.");
+				
+				//update the project list
+				refreshProjectList();
+				refreshModelList();
+				refreshElementList();
+				refreshObjectMappingList();
+			}
+		});
+		btnRemoveProject.setBounds(451, 34, 211, 29);
+		layeredPane.add(btnRemoveProject);
 		
 		
 		TitledBorder title_models = BorderFactory.createTitledBorder(blackline, "Show, add, and remove models");
@@ -565,13 +516,13 @@ public class TafUserInterface {
 		panel_models.setBorder(title_models);
 		
 		
-		JLabel lblLoadModels = new JLabel("Click on the button below and select a UML model in the prompted file chooser(*) :");
-		lblLoadModels.setBounds(275, 27, 521, 16);
-		panel_models.add(lblLoadModels);
+		JLabel lblLoadModelsForNewProject = new JLabel("Add a UML model for a new project in a prompted file chooser(*) :");
+		lblLoadModelsForNewProject.setBounds(275, 27, 430, 16);
+		panel_models.add(lblLoadModelsForNewProject);
 		
-		final JButton btnLoadModels = new JButton("Add a Model");
-		btnLoadModels.setBounds(275, 55, 122, 29);
-		panel_models.add(btnLoadModels);
+		final JButton btnLoadModelsForNewProject = new JButton("Add a model for a new project");
+		btnLoadModelsForNewProject.setBounds(275, 55, 214, 29);
+		panel_models.add(btnLoadModelsForNewProject);
 		
 		
 		scrollPane_models = new JScrollPane();
@@ -590,8 +541,8 @@ public class TafUserInterface {
 		lblProjectNameInModelPanel.setBounds(152, 27, 100, 16);
 		panel_models.add(lblProjectNameInModelPanel);
 		
-		lblEnterAPackage = new JLabel("Enter a package name (e.g.: edu.gmu.swe):");
-		lblEnterAPackage.setBounds(820, 27, 272, 16);
+		lblEnterAPackage = new JLabel("Enter a package name (e.g.: package edu.gmu.swe;):");
+		lblEnterAPackage.setBounds(820, 27, 334, 16);
 		panel_models.add(lblEnterAPackage);
 		lblEnterAPackage.setVerticalAlignment(SwingConstants.TOP);
 		
@@ -600,12 +551,13 @@ public class TafUserInterface {
 		panel_models.add(textField_packageName);
 		textField_packageName.setColumns(10);
 		
-		scrollPane_exceptions = new JScrollPane();
-		scrollPane_exceptions.setBounds(457, 55, 293, 83);
-		panel_models.add(scrollPane_exceptions);
+		JLabel lblNewLabel = new JLabel("Add a UML model for an existing project:");
+		lblNewLabel.setBounds(275, 96, 266, 16);
+		panel_models.add(lblNewLabel);
 		
-		list = new JList();
-		scrollPane_exceptions.setViewportView(list);
+		JButton btnNewButton = new JButton("Add a model for an existing project");
+		btnNewButton.setBounds(275, 124, 266, 29);
+		panel_models.add(btnNewButton);
 		
 		
 		TitledBorder title_mappings = BorderFactory.createTitledBorder(blackline, "Elements and mappings");
@@ -660,6 +612,20 @@ public class TafUserInterface {
 					 setConstraintMappingBlack();
 					 setObjectMappingBlack();
 					 setElementMappingGreen();
+					 
+					 textField_objectName.setText("");
+					 textField_className.setText("");
+					 textArea_testCode.setText("");
+					 textField_requiredMappings.setText("");
+				}
+				else if(comboBox_elementType.getSelectedItem() == IdentifiableElementType.OBJECT){
+					 textField_stateInvariants.setVisible(false);
+					 textField_stateInvariants.setEnabled(false);
+					 lblStateInvariants.setVisible(false);
+					 lblStateInvariants.setEnabled(false);
+					 
+					 setConstraintMappingBlack();
+					 setObjectMappingGreen();
 					 
 					 textField_objectName.setText("");
 					 textField_className.setText("");
@@ -726,15 +692,6 @@ public class TafUserInterface {
 		lblRequiredMappings = new JLabel("Required Mappings:");
 		lblRequiredMappings.setBounds(554, 253, 134, 16);
 		panel_mappings.add(lblRequiredMappings);
-		
-		JScrollPane scrollPane_testCode = new JScrollPane();
-		scrollPane_testCode.setBounds(556, 166, 334, 85);
-		panel_mappings.add(scrollPane_testCode);
-		scrollPane_testCode.setEnabled(true);
-		
-		textArea_testCode = new JTextArea();
-		scrollPane_testCode.setRowHeaderView(textArea_testCode);
-		textArea_testCode.setEditable(true);
 		
 		lblTestCode = new JLabel("Test Code:");
 		lblTestCode.setBounds(556, 138, 78, 16);
@@ -883,13 +840,11 @@ public class TafUserInterface {
 		            	scrollPane_mappings.setViewportView(list_mappings);
 					}
 					else if(lblObjectName.getForeground().toString().equals("java.awt.Color[r=0,g=178,b=0]")){
-						System.out.println("ddd");
 						ObjectMapping mapping = new ObjectMapping(mappingName, IdentifiableElementType.OBJECT, objectName, className, testCode, requiredMappings_list, null);
 						
 						XmlManipulator xm = new XmlManipulator();
 						try {
 							if(!XmlManipulator.isMappingExisted(XmlManipulator.readXmlFile(xmlPath), mapping)){
-								System.out.println("ddd1");
 								xm.createObjectMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
 							}
 							else{
@@ -913,7 +868,7 @@ public class TafUserInterface {
 				}
 			}
 		});
-		btnNewButton_save.setBounds(697, 373, 117, 29);
+		btnNewButton_save.setBounds(664, 373, 117, 29);
 		panel_mappings.add(btnNewButton_save);
 		
 		scrollPane_objectMappings = new JScrollPane();
@@ -975,6 +930,47 @@ public class TafUserInterface {
 		panel_mappings.add(textField_className);
 		textField_className.setColumns(10);
 		
+		JScrollPane scrollPane_testCode = new JScrollPane();
+		scrollPane_testCode.setBounds(554, 166, 336, 85);
+		panel_mappings.add(scrollPane_testCode);
+		
+		textArea_testCode = new JTextArea();
+		scrollPane_testCode.setViewportView(textArea_testCode);
+		
+		btnDeleteMapping = new JButton("delete");
+		btnDeleteMapping.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String tobeRemovedMapping = textField_mappingName.getText();
+
+				if(tobeRemovedMapping != null && tobeRemovedMapping.trim().length() > 0){
+					try {
+						XmlManipulator.removeMapping(XmlManipulator.readXmlFile(xmlPath), tobeRemovedMapping, xmlPath);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+
+				if(lblElementName.getForeground().toString().equals("java.awt.Color[r=0,g=178,b=0]")){
+					refreshMappingList((String)comboBox_elementName.getSelectedItem());
+					textField_mappingName.setText("");
+					 textArea_testCode.setText("");
+					 textField_requiredMappings.setText("");
+					 textField_stateInvariants.setText("");
+				}
+				else if(lblObjectName.getForeground().toString().equals("java.awt.Color[r=0,g=178,b=0]")){
+					refreshObjectMappingList();
+					textField_mappingName.setText("");
+					 textArea_testCode.setText("");
+					 textField_requiredMappings.setText("");
+					 textField_objectName.setText("");
+					 textField_className.setText("");
+				}
+			}
+		});
+		btnDeleteMapping.setBounds(779, 373, 117, 29);
+		panel_mappings.add(btnDeleteMapping);
+		
 		list_models.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -1005,6 +1001,8 @@ public class TafUserInterface {
 							} catch (IOException e1) {
 								e1.printStackTrace();
 							}
+							
+							comboBox_elementName.removeAllItems();
 							for(Object o : elementNames){
 								comboBox_elementName.addItem(o);
 							}
@@ -1089,9 +1087,9 @@ public class TafUserInterface {
 				 }
 			}
 		});
-		btnLoadModels.addActionListener(new ActionListener() {
+		btnLoadModelsForNewProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(e.getSource() == btnLoadModels){
+				if(e.getSource() == btnLoadModelsForNewProject){
 					//let users to choose a UML model and add it to the project
 					JFileChooser fc = new JFileChooser();
 					int returnVal = fc.showDialog(layeredPane, "Load");
@@ -1100,32 +1098,60 @@ public class TafUserInterface {
 		                //System.out.println(file.getName());
 		                
 		                //create a directory
-		                String projectName = textField_projectName.getText();
-		                if(projectName == null || projectName.trim().equals(""))
+		                String newProjectName = textField_projectName.getText();
+		                if(newProjectName == null || newProjectName.trim().equals(""))
 		                	lblMustEnterA.setVisible(true);
 		                else{
-			                File directory = new File(directoryName + projectName + "/model/");
-			                System.out.println(directoryName + projectName + "/model/");
-			                System.out.println(directory.getAbsolutePath());
+			                File directory = new File(directoryName + newProjectName + "/model/");
+			                //System.out.println(directoryName + projectName + "/model/");
+			                //System.out.println(directory.getAbsolutePath());
 			                if(!directory.exists()){
 			                	if(directory.mkdirs()){
-			                		System.out.println("Directory is created!");
-			                		File destinationFile = new File(directoryName + projectName + "/model/" + file.getName());
+			                		System.out.println("Directory " + directoryName + newProjectName + " is created!");
 			                		
+			                		//copy the selected model to the project model folder
+			                		File destinationFile = new File(directoryName + newProjectName + "/model/" + file.getName());			                		
 			                		try {
 										JavaSupporter.copyFile(file, destinationFile);
 									} catch (IOException e1) {
 										e1.printStackTrace();
 									}
 			                		
-			                		List<File> umlFiles = JavaSupporter.returnAllUmlFiles(directoryName + projectName + "/model"); 
-			                		/*
-			                		List<String> umlFileNames = new ArrayList<String>();
-			                		for(File umlFile : umlFiles){
-			                			umlFileNames.add(umlFile.getName());
-			                		}
-			                		*/
-			                		list_models.setListData(JavaSupporter.getFileNames(umlFiles));
+			                		//create other folders test, class, xml
+			                		File classFolder = new File(directoryName + newProjectName + "/class/");
+			                		if(!classFolder.exists())
+			                			classFolder.mkdirs();
+			                		
+			                		File testFolder = new File(directoryName + newProjectName + "/test/temp/");
+			                		if(!testFolder.exists())
+			                			testFolder.mkdirs();
+			                		
+			                		File xmlFolder = new File(directoryName + newProjectName + "/xml/");
+			                		if(!xmlFolder.exists())
+			                			xmlFolder.mkdirs();
+			                		
+			                		String modelName = file.getName().substring(0, file.getName().lastIndexOf("."));
+			                		File mappingFile = new File(directoryName + newProjectName + "/xml/" + modelName + ".xml");
+			                		if(!mappingFile.exists())
+										try {
+											XmlManipulator.createXmlFile(directoryName + newProjectName + "/xml/", modelName);
+										} catch (ParserConfigurationException e2) {
+											// TODO Auto-generated catch block
+											e2.printStackTrace();
+										} catch (TransformerException e2) {
+											// TODO Auto-generated catch block
+											e2.printStackTrace();
+										}
+		
+			        				refreshProjectList();
+			        				projectName = newProjectName;
+			        				
+			        				refreshModelList();
+			        				refreshElementList();
+			        				refreshObjectMappingList();
+						            
+						            //empty the text field for the project name
+						            textField_projectName.setText("");
 			        			} else {
 			        				System.out.println("Failed to create directory!");
 			        			}
@@ -1165,6 +1191,7 @@ public class TafUserInterface {
 							 textField_mappingName.setText(mapping.getMappingName());
 							 textArea_testCode.setText(mapping.getTestCode());
 							 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
+							 setElementMappingGreen();
 							 
 							 if(mapping.getType() == IdentifiableElementType.CONSTRAINT){
 								 textField_stateInvariants.setVisible(true);
@@ -1179,26 +1206,38 @@ public class TafUserInterface {
 									e1.printStackTrace();
 								}
 								 textField_stateInvariants.setText(JavaSupporter.removeBrackets(cm.getStateinvariants().toString()));
+								 setConstraintMappingGreen();
 							 }
 		            	 }
 		            	 else{
 		            		 List<NamedElement> elements = returnElements(directoryName + projectName + "/model/" + modelName);
 		            		 for(NamedElement element : elements){
 		            			 if(element.getName().equals(elementName)){
-		            				if(element.toString().indexOf("Transition") != -1)
+		            				if(element.toString().indexOf("Transition") != -1){
 		            					comboBox_elementType.setSelectedItem(IdentifiableElementType.TRANSITION);
-		            				else if(element.toString().indexOf("Constraint") != -1)
+		            					setElementMappingGreen();
+		            				}
+		            				else if(element.toString().indexOf("Constraint") != -1){
 		            					comboBox_elementType.setSelectedItem(IdentifiableElementType.CONSTRAINT);
+		            					setConstraintMappingGreen();
+		            					
+		            					 //update the state invariants, retrieve the constrained elements from the model
+		            					String constrainedElements = returnConstrainedElements(directoryName + projectName + "/model/" + modelName, elementName);
+		            					if(constrainedElements == null)
+		            						textField_stateInvariants.setText("");
+		            					else
+		            						textField_stateInvariants.setText(constrainedElements.toString());
+		            				}
 		            				else if(element.toString().indexOf("State") != -1)
 		            					comboBox_elementType.setSelectedItem(IdentifiableElementType.STATE);
 		            			 }
 		            		 }
 		            		 comboBox_elementName.setSelectedItem(elementName);
-		            		
 		            		 textField_mappingName.setText("");
 		            		 textArea_testCode.setText("");
 		            		 textField_requiredMappings.setText("");
-		            		 textField_stateInvariants.setText("");
+		            		  		 
+		            		
 		            	 }
 					} catch (IOException e1) {
 						e1.printStackTrace();
@@ -1240,6 +1279,48 @@ public class TafUserInterface {
 		return elements;
 	}
 	
+	/**
+	 * Finds the constrained elements in the model and return elements in a String format.
+	 * @param path
+	 * @param constraintName
+	 * @return
+	 * @throws IOException
+	 */
+	public String returnConstrainedElements(String path, String constraintName) throws IOException{
+		EObject object = ModelAccessor.getModelObject(path);
+		List<StateMachine> statemachines = ModelAccessor.getStateMachines(object);
+		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
+		EList<Element> constrainedElements = StateMachineAccessor.getConstraint(regions.get(0), constraintName);
+		
+		if(constrainedElements == null)
+			return null;
+		else{
+			String elements = "";
+			if(constrainedElements.get(0) instanceof NamedElement)
+				elements = ((NamedElement)constrainedElements.get(0)).getName();
+			
+			for(int i = 1; i < constrainedElements.size(); i++){
+				if(constrainedElements.get(i) instanceof NamedElement){
+					elements += ",";
+					elements += ((NamedElement)constrainedElements.get(i)).getName();
+				}
+			}
+			return elements;
+		}
+		
+	}
+	
+	/**
+	 * Generates test paths.
+	 * @param modelPath
+	 * @param xmlPath
+	 * @param testName
+	 * @param directory
+	 * @param testCriterion
+	 * @param packageName
+	 * @param imports
+	 * @throws Exception
+	 */
 	public void generateTests(String modelPath, String xmlPath, String testName, String directory, TestCoverageCriteria testCriterion, String packageName, String imports) throws Exception{
 		EObject object = StateMachineAccessor.getModelObject(modelPath);
 		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
@@ -1248,14 +1329,14 @@ public class TafUserInterface {
 		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), testCriterion);
 		
 		//print edges, initial nodes, and final nodes
-		System.out.println(stateMachine.getEdges());
-		System.out.println(stateMachine.getInitialStates());
-		System.out.println(stateMachine.getFinalStates());
-		System.out.println(stateMachine.getStateMappings());
+		//System.out.println(stateMachine.getEdges());
+		//System.out.println(stateMachine.getInitialStates());
+		//System.out.println(stateMachine.getFinalStates());
+		//System.out.println(stateMachine.getStateMappings());
 
 		List<edu.gmu.swe.taf.Test> tests = new ArrayList<edu.gmu.swe.taf.Test>();
 		for(int i = 0; i < paths.size();i++){
-			System.out.println("path: " + paths.get(i));
+			//System.out.println("path: " + paths.get(i));
 			AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
 			List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(i), stateMachine), stateMachine);		
 			
@@ -1322,6 +1403,184 @@ public class TafUserInterface {
 		return null;
 	}
 	
+	/**
+	 * Updates the project list.
+	 */
+	public void refreshProjectList(){
+		List<File> directoryFiles = JavaSupporter.returnAllDirectories(directoryName);
+		List<String> projectNames = new ArrayList<String>();
+		for(File projectFile : directoryFiles){
+			projectNames.add(projectFile.getName());
+		}
+		list_projects.setListData(projectNames.toArray());
+		
+		//handle the case in which there is only one project
+		if(projectNames.size() >= 1){
+			projectName = projectNames.get(0);
+		}
+	}
+	
+	public void refreshModelList(){
+		List<File> files = JavaSupporter.returnAllUmlFiles(directoryName + projectName + "/model/"); 
+		Object[] models = JavaSupporter.getFileNames(files);
+        list_models.setListData(models);
+        scrollPane_models.setViewportView(list_models);
+        lblProjectNameInModelPanel.setText(projectName);
+        lblProjectNameInModelPanel.setSize(projectName.length() * 8, lblProjectNameInModelPanel.getHeight());
+        
+        if(models.length >= 1){
+        	modelName = (String)models[0];
+        }
+	}
+	
+	public Object[] refreshElementList(){
+		Object[] elements = null;
+    	try {
+    		elements = returnElementNames(directoryName + projectName + "/model/" + modelName);
+			list_elements.setListData(elements);
+			scrollPane_elements.setViewportView(list_elements);
+				
+			lblModelNameForElementList.setSize(modelName.length() * 8, lblModelNameForElementList.getHeight());
+			lblModelNameForElementList.setText(modelName);
+		
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+    	return elements;
+	}
+	
+	public void refreshMappingList(Object[] elements){
+    	if(elements.length >= 1){
+    		
+    		String elementName = (String)elements[0];
+    		xmlPath = directoryName + projectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml";
+    		
+    		try {
+            	 elementMappings = XmlManipulator.getMappingsByElementName(xmlPath, elementName);
+            	 list_mappings.setListData(JavaSupporter.getMappingNames(elementMappings));
+            	 scrollPane_mappings.setViewportView(list_mappings);
+				
+            	 lblElementNameForMappingList.setSize(elementName.length() * 8, lblElementNameForMappingList.getHeight());
+            	 lblElementNameForMappingList.setText(elementName);
+            	 
+            	 //show the content of the mapping if there is only one mapping
+            	 if(elementMappings.size() >= 1){
+            		 Mapping mapping = elementMappings.get(0);
+            		 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
+					 comboBox_elementType.setSelectedItem(mapping.getType());
+					 textField_mappingName.setText(mapping.getMappingName());
+					 textArea_testCode.setText(mapping.getTestCode());
+					 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
+					 setElementMappingGreen();
+					 
+					 if(mapping.getType() == IdentifiableElementType.CONSTRAINT){
+						 textField_stateInvariants.setVisible(true);
+						 textField_stateInvariants.setEnabled(true);
+						 lblStateInvariants.setVisible(true);
+						 lblStateInvariants.setEnabled(true);
+						 
+						 ConstraintMapping cm = null;
+						 try {
+							cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getMappingName());
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+						 textField_stateInvariants.setText(JavaSupporter.removeBrackets(cm.getStateinvariants().toString()));
+						 lblStateInvariants.setForeground(Color.GREEN.darker());
+					 }
+            	 }
+            	 else{
+	            	 textField_mappingName.setText("");
+					 textArea_testCode.setText("");
+					 textField_requiredMappings.setText("");
+					 textField_stateInvariants.setText("");
+					 textField_objectName.setText("");
+					 textField_className.setText("");
+					 
+					 setElementMappingBlack();
+					 setObjectMappingBlack();
+            	 }
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+    	}
+	}
+	
+	public void refreshMappingList(String element){
+    		String elementName = element;
+    		xmlPath = directoryName + projectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml";
+    		
+    		try {
+            	 elementMappings = XmlManipulator.getMappingsByElementName(xmlPath, elementName);
+            	 list_mappings.setListData(JavaSupporter.getMappingNames(elementMappings));
+            	 scrollPane_mappings.setViewportView(list_mappings);
+				
+            	 lblElementNameForMappingList.setSize(elementName.length() * 8, lblElementNameForMappingList.getHeight());
+            	 lblElementNameForMappingList.setText(elementName);
+            	 
+            	 //show the content of the mapping if there is only one mapping
+            	 if(elementMappings.size() >= 1){
+            		 Mapping mapping = elementMappings.get(0);
+            		 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
+					 comboBox_elementType.setSelectedItem(mapping.getType());
+					 textField_mappingName.setText(mapping.getMappingName());
+					 textArea_testCode.setText(mapping.getTestCode());
+					 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
+					 setElementMappingGreen();
+					 
+					 if(mapping.getType() == IdentifiableElementType.CONSTRAINT){
+						 textField_stateInvariants.setVisible(true);
+						 textField_stateInvariants.setEnabled(true);
+						 lblStateInvariants.setVisible(true);
+						 lblStateInvariants.setEnabled(true);
+						 
+						 ConstraintMapping cm = null;
+						 try {
+							cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getMappingName());
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+						 textField_stateInvariants.setText(JavaSupporter.removeBrackets(cm.getStateinvariants().toString()));
+						 lblStateInvariants.setForeground(Color.GREEN.darker());
+					 }
+            	 }
+            	 else{
+	            	 textField_mappingName.setText("");
+					 textArea_testCode.setText("");
+					 textField_requiredMappings.setText("");
+					 textField_stateInvariants.setText("");
+					 textField_objectName.setText("");
+					 textField_className.setText("");
+					 
+					 setElementMappingBlack();
+					 setObjectMappingBlack();
+            	 }
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+	}
+	
+	public void refreshObjectMappingList(){
+		xmlPath = directoryName + projectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml";
+    	
+    	//add the data in the list_objectMappings
+		if(new File(xmlPath).exists()){
+			try {
+				objectMappings = XmlManipulator.getObjectMappings(xmlPath);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}else{
+			objectMappings = new ArrayList<ObjectMapping>();
+		}
+		
+		list_objectMappings.setListData(JavaSupporter.getMappingNames(objectMappings));
+    	scrollPane_objectMappings.setViewportView(list_objectMappings);
+	}
 	/**
 	 * Sets the colors of labels for the element mappings green.
 	 */

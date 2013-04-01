@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.uml2.uml.Constraint;
+import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.FinalState;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Pseudostate;
@@ -511,7 +512,8 @@ public class StateMachineAccessor extends ModelAccessor {
 		List<NamedElement> result = new ArrayList<NamedElement>();
 		
 		//add distinct transitions to the result
-		EList<Transition> transitions = region.getTransitions();
+		//EList<Transition> transitions = region.getTransitions();
+		List<Transition> transitions = findAllTransitions(region);
 		for(Transition transition: transitions){
 			boolean hasSameName = false;
 			for(NamedElement element: result){
@@ -519,7 +521,7 @@ public class StateMachineAccessor extends ModelAccessor {
 					hasSameName = true;
 				}
 			}
-			if(hasSameName == false)
+			if(hasSameName == false && !transition.getName().trim().equals(""))
 				result.add(transition);
 		}
 		
@@ -537,6 +539,7 @@ public class StateMachineAccessor extends ModelAccessor {
 		}
 		
 		//add distinct vertices to the result
+		/*
 		EList<Vertex> vertices = region.getSubvertices();
 		for(Vertex vertex: vertices){
 			boolean hasSameName = false;
@@ -561,8 +564,63 @@ public class StateMachineAccessor extends ModelAccessor {
 			}
 			
 		}
+		*/
+		return result;
+	}
+	
+	/**
+	 * Finds all transitions in a state machine.
+	 * @param region
+	 * @return
+	 */
+	public static List<Transition> findAllTransitions(Region region){
+		EList<Transition> transitions = region.getTransitions();
+		//add the transitions at the first level
+		List<Transition> result = new ArrayList<Transition>();
+		for(Transition t : transitions)
+			result.add(t);
+		
+		List<Vertex> compoStates = new ArrayList<Vertex>();
+		
+		for(Vertex vertex : region.getSubvertices()){
+			if(vertex instanceof State && ((State)vertex).isComposite()){
+				compoStates.add(vertex);				
+			}
+		}
+		//add transitions in the composite states
+		if(compoStates.size() > 0){
+			do{				
+				Vertex compo = compoStates.get(0);
+				result.addAll(((State)compo).getRegions().get(0).getTransitions());
+				for(Vertex vertex : ((State)compo).getRegions().get(0).getSubvertices()){
+					if(vertex instanceof State && ((State)vertex).isComposite()){
+						compoStates.add(vertex);				
+					}
+				}
+				compoStates.remove(0);
+				
+			}while(compoStates.size() > 0);
+		}
 		
 		return result;
+	}
+	
+	/**
+	 * Finds the constraint in the model specified by a constraint name and returns its constrained elements
+	 * 
+	 * @param region			a {@link org.eclipse.uml2.uml.Region} object
+	 * @param constraintName	the name of a constraint
+	 * @return					a list of {@link org.eclipse.uml2.uml.Element} objects
+	 */
+	public static EList<Element> getConstraint(Region region, String constraintName){
+		//find the constraint in the model
+		EList<Constraint> constraints = region.getOwnedRules();
+		for(Constraint constraint: constraints){
+			if(constraintName.equals(constraint.getName())){
+				return constraint.getConstrainedElements();
+			}
+		}
+		return null;
 	}
 	
 	/**

@@ -144,14 +144,14 @@ public class JavaSupporter {
 		
 		File folder = new File(path);
 		File[] files = folder.listFiles();
-		System.out.println("file size: " + files.length);
+		//System.out.println("file size: " + files.length);
 		List<File> results = new ArrayList<File>();
 		
 		for(File file: files){
 			if(file.isDirectory())
 				results.add(file);
 		}
-		System.out.println("result size: " + results.size());
+		//System.out.println("result size: " + results.size());
 		return results;
 	}
 	
