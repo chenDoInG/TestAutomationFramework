@@ -127,6 +127,7 @@ public class TafUserInterface {
 	private JLabel lblEnterImportedDeclarations;
 	private JTextArea textArea_importDeclarations;
 	private JTextArea textArea_testCode;
+	private JButton btnRemoveProject;
 
 	static Logger log = Logger.getLogger(
             TafUserInterface.class);
@@ -196,11 +197,13 @@ public class TafUserInterface {
 					lblThereAreNo.setVisible(true);
 					lblAvailableProjects.setVisible(false);
 					scrollPane_projects.setVisible(false);
+					btnRemoveProject.setVisible(false);
 				}
 				else{
 					lblThereAreNo.setVisible(false);
 					lblAvailableProjects.setVisible(true);
 					scrollPane_projects.setVisible(true);
+					btnRemoveProject.setVisible(true);
 					
 					List<String> projectNames = new ArrayList<String>();
 					for(File projectFile : directoryFiles){
@@ -479,7 +482,7 @@ public class TafUserInterface {
 		lblEgImportComgoogle.setBounds(466, 51, 245, 16);
 		panel_generateTest.add(lblEgImportComgoogle);
 		
-		JButton btnRemoveProject = new JButton("Remove the selected project");
+		btnRemoveProject = new JButton("Remove the selected project");
 		btnRemoveProject.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
@@ -496,10 +499,43 @@ public class TafUserInterface {
 				System.out.println("Project " + selectedProject + "has been removed.");
 				
 				//update the project list
-				refreshProjectList();
-				refreshModelList();
-				refreshElementList();
-				refreshObjectMappingList();
+				List<File> directoryFiles = JavaSupporter.returnAllDirectories(directoryName);
+				List<String> projectNames = new ArrayList<String>();
+				for(File projectFile : directoryFiles){
+					projectNames.add(projectFile.getName());
+				}
+				list_projects.setListData(projectNames.toArray());
+				
+				//handle the case in which there is only one project
+				if(projectNames.size() >= 1){
+					projectName = projectNames.get(0);
+					refreshModelList();
+					refreshElementList();
+					refreshObjectMappingList();
+				}else{
+					projectName = "";
+					lblThereAreNo.setVisible(true);
+					lblAvailableProjects.setVisible(false);
+					scrollPane_projects.setVisible(false);
+					btnRemoveProject.setVisible(false);
+					list_models.setListData(new Object[]{});
+					list_elements.setListData(new Object[]{});
+					list_mappings.setListData(new Object[]{});
+					list_objectMappings.setListData(new Object[]{});
+					
+					 textField_mappingName.setText("");
+					 textArea_testCode.setText("");
+					 textField_requiredMappings.setText("");
+					 textField_stateInvariants.setText("");
+					 textField_objectName.setText("");
+					 textField_className.setText("");
+					comboBox_elementName.removeAllItems();
+					 
+					 setElementMappingBlack();
+					 setObjectMappingBlack();
+				}
+				
+
 			}
 		});
 		btnRemoveProject.setBounds(451, 34, 211, 29);
@@ -631,6 +667,17 @@ public class TafUserInterface {
 					 textField_className.setText("");
 					 textArea_testCode.setText("");
 					 textField_requiredMappings.setText("");
+					 
+					//add the data in the list_objectMappings
+						try {
+							objectMappings = XmlManipulator.getObjectMappings(xmlPath);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+						if(objectMappings == null)
+							textField_mappingName.setText("");
+						else if(objectMappings.size() == 0)
+							textField_mappingName.setText("");
 				}
 			}
 		});
@@ -1142,13 +1189,35 @@ public class TafUserInterface {
 											// TODO Auto-generated catch block
 											e2.printStackTrace();
 										}
-		
+			                		
+			                		lblThereAreNo.setVisible(false);
+			    					lblAvailableProjects.setVisible(true);
+			    					scrollPane_projects.setVisible(true);
+			    					btnRemoveProject.setVisible(true);
+			    					
 			        				refreshProjectList();
 			        				projectName = newProjectName;
 			        				
 			        				refreshModelList();
 			        				refreshElementList();
 			        				refreshObjectMappingList();
+			        				
+			    		            //update the elements in comboBox_elementName while a model is selected 
+			    					if(directoryName != null && projectName != null && modelName != null){
+			    						if(directoryName.length() > 0 && projectName.length() > 0 && modelName.length() > 0){
+			    							Object[] elementNames = null;
+			    							try {
+			    								elementNames = returnElementNames(directoryName + projectName + "/model/" + modelName);
+			    							} catch (IOException e1) {
+			    								e1.printStackTrace();
+			    							}
+			    							
+			    							comboBox_elementName.removeAllItems();
+			    							for(Object o : elementNames){
+			    								comboBox_elementName.addItem(o);
+			    							}
+			    						}
+			    					}	
 						            
 						            //empty the text field for the project name
 						            textField_projectName.setText("");
@@ -1417,6 +1486,8 @@ public class TafUserInterface {
 		//handle the case in which there is only one project
 		if(projectNames.size() >= 1){
 			projectName = projectNames.get(0);
+		}else{
+			projectName = "";
 		}
 	}
 	

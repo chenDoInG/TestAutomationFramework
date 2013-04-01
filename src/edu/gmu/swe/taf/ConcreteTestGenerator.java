@@ -764,12 +764,14 @@ public class ConcreteTestGenerator {
 		//find all jar files in the class folder of the directory
 		List<File> jarFiles = JavaSupporter.returnAllJarFiles(directory);
 		String jarPath = "";
-		for(File jar : jarFiles)
-			jarPath += ":" + directory + jar.getName();
+		for(File jar : jarFiles){
+			//jarPath += ":" + directory + jar.getName();
+			jarPath += ";" + directory + jar.getName(); // used for Windows
+		}
 		
 		List<String> optionList = new ArrayList<String>();
-		optionList.addAll(Arrays.asList("-classpath", directory + ":" + System.getProperty("java.class.path") + jarPath));
-		//optionList.addAll(Arrays.asList("-classpath", System.getProperty("java.class.path")));
+		//optionList.addAll(Arrays.asList("-classpath", directory + ":" + System.getProperty("java.class.path") + jarPath));
+		optionList.addAll(Arrays.asList("-classpath", directory + ";" + System.getProperty("java.class.path") + jarPath)); // used for Windows
 		
 		//System.out.println("classpath: " + System.getProperty("java.class.path"));
 		boolean status = compiler.getTask(null, fileManager, diagnostics, optionList, null, compilationUnits).call();

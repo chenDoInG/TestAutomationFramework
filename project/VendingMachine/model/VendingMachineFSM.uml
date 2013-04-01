@@ -89,9 +89,9 @@ stock = 1</body>
       <transition xmi:id="_llC18NwDEeGsQfAO8BUOaA" name="addCoinAtLeastNinty" source="_UwgQ0NmJEeGa16tZvsIA1w" target="_E1RPUNtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_pfkx0NwDEeGsQfAO8BUOaA" name="addCoinAtLeastNinty" source="_FVPI0NtOEeGbQut3CdTx2Q" target="_G5iNINtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_0jZCEPgyEeGHgLRm2DTQnQ" name="getChocs" target="_FVPI0NtOEeGbQut3CdTx2Q"/>
-      <transition xmi:id="_jZSREPgzEeGHgLRm2DTQnQ" name="none" source="_FVPI0NtOEeGbQut3CdTx2Q" target="_jdY8ANmJEeGa16tZvsIA1w"/>
-      <transition xmi:id="_kZ5ZgPgzEeGHgLRm2DTQnQ" name="none" source="_UwgQ0NmJEeGa16tZvsIA1w" target="_jdY8ANmJEeGa16tZvsIA1w"/>
-      <transition xmi:id="_lYAnkPgzEeGHgLRm2DTQnQ" name="none" source="_VpKXINmJEeGa16tZvsIA1w" target="_jdY8ANmJEeGa16tZvsIA1w"/>
+      <transition xmi:id="_jZSREPgzEeGHgLRm2DTQnQ" name="" source="_FVPI0NtOEeGbQut3CdTx2Q" target="_jdY8ANmJEeGa16tZvsIA1w"/>
+      <transition xmi:id="_kZ5ZgPgzEeGHgLRm2DTQnQ" name="" source="_UwgQ0NmJEeGa16tZvsIA1w" target="_jdY8ANmJEeGa16tZvsIA1w"/>
+      <transition xmi:id="_lYAnkPgzEeGHgLRm2DTQnQ" name="" source="_VpKXINmJEeGa16tZvsIA1w" target="_jdY8ANmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_paIZMPgzEeGHgLRm2DTQnQ" name="initialize" source="_TEbwkNmJEeGa16tZvsIA1w" target="_VpKXINmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_U5jyoPwZEeGT0I2oeClwrg" name="addChocs" source="_WGTmINmJEeGa16tZvsIA1w" target="_mZ6XgNmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_eOceYPwZEeGT0I2oeClwrg" name="coin" kind="internal" source="_WGTmINmJEeGa16tZvsIA1w" target="_WGTmINmJEeGa16tZvsIA1w"/>
