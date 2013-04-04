@@ -20,6 +20,6 @@ public class TempTest {
         vm.coin(25);
         vm.coin(25);
         vm.getChoc(sb);
-        return (vm.getStock().size() == 1) && (vm.getCredit() == 0);
+        return (vm.getCredit() == 0) && (vm.getStock().size() == 1);
     }
 }

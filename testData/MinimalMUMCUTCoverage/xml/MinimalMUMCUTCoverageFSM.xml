@@ -32,7 +32,7 @@
 		final HtmlTextInput textInputInfeasibleLiterals = form.getInputByName("infeasibleLiterals");
 		final HtmlTextInput textInputMaxTestSetSize = form.getInputByName("maxTestSetSize");
 		</code><required-mappings></required-mappings></mapping>
-<mapping><name>enterExpressionAndLiteralsMapping</name><transition-name>enterExpressionAndLiterals</transition-name><code>textInputExpression.setText(&quot;a &amp; b&quot;); textInputInfeasibleLiterals.setText("");</code><required-mappings></required-mappings></mapping>
+<mapping><name>enterExpressionAndLiteralsMapping</name><transition-name>enterExpressionAndLiterals</transition-name><code>textInputExpression.setText(&quot;a &amp; b&quot;); textInputInfeasibleLiterals.setText("a=1,b=1");</code><required-mappings></required-mappings></mapping>
 <mapping><name>enterWrongExpressionMapping</name><transition-name>enterWrongExpression</transition-name><code>textInputExpression.setText(&quot;a &amp;&amp; b&quot;);textInputInfeasibleLiterals.setText("");</code><required-mappings></required-mappings></mapping>
 <mapping><name>enterIntegerMapping</name>
 	<transition-name>enterInteger</transition-name>

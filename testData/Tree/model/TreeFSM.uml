@@ -15,8 +15,8 @@
       <transition xmi:id="_duTiwIxFEeKScqx4hHBCig" name="find" source="_ueHK8IwkEeKScqx4hHBCig" target="_atTP4IxFEeKScqx4hHBCig"/>
       <transition xmi:id="_fiEmcIxFEeKScqx4hHBCig" name="traverse" source="_ueHK8IwkEeKScqx4hHBCig" target="_YnlgkIxFEeKScqx4hHBCig"/>
       <transition xmi:id="_g7AvUIxFEeKScqx4hHBCig" name="show" source="_ueHK8IwkEeKScqx4hHBCig" target="_38RSAIwlEeKScqx4hHBCig"/>
-      <transition xmi:id="_mzx5gIxFEeKScqx4hHBCig" name="Insert" source="_ueHK8IwkEeKScqx4hHBCig" target="_k-2YMIxFEeKScqx4hHBCig"/>
-      <transition xmi:id="_ob_NcIxFEeKScqx4hHBCig" name="Delete" source="_k-2YMIxFEeKScqx4hHBCig" target="_ueHK8IwkEeKScqx4hHBCig"/>
+      <transition xmi:id="_mzx5gIxFEeKScqx4hHBCig" name="insert" source="_ueHK8IwkEeKScqx4hHBCig" target="_k-2YMIxFEeKScqx4hHBCig"/>
+      <transition xmi:id="_ob_NcIxFEeKScqx4hHBCig" name="delete" source="_k-2YMIxFEeKScqx4hHBCig" target="_ueHK8IwkEeKScqx4hHBCig"/>
       <transition xmi:id="_FpEysIxGEeKScqx4hHBCig" name="traverse" source="_k-2YMIxFEeKScqx4hHBCig" target="_9KLTwIxFEeKScqx4hHBCig"/>
       <transition xmi:id="_HJGbAIxGEeKScqx4hHBCig" name="show" source="_k-2YMIxFEeKScqx4hHBCig" target="__ZaLcIxFEeKScqx4hHBCig"/>
       <transition xmi:id="_IJXlMIxGEeKScqx4hHBCig" name="find" source="_k-2YMIxFEeKScqx4hHBCig" target="_A7x9IIxGEeKScqx4hHBCig"/>

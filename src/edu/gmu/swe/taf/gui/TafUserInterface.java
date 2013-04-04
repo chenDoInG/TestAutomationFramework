@@ -128,6 +128,7 @@ public class TafUserInterface {
 	private JTextArea textArea_importDeclarations;
 	private JTextArea textArea_testCode;
 	private JButton btnRemoveProject;
+	private JScrollPane scrollPane;
 
 	static Logger log = Logger.getLogger(
             TafUserInterface.class);
@@ -474,13 +475,16 @@ public class TafUserInterface {
 		lblEnterImportedDeclarations.setBounds(466, 23, 172, 16);
 		panel_generateTest.add(lblEnterImportedDeclarations);
 		
-		textArea_importDeclarations = new JTextArea();
-		textArea_importDeclarations.setBounds(709, 23, 328, 69);
-		panel_generateTest.add(textArea_importDeclarations);
-		
 		lblEgImportComgoogle = new JLabel("e.g. import com.google.common.io.*;");
 		lblEgImportComgoogle.setBounds(466, 51, 245, 16);
 		panel_generateTest.add(lblEgImportComgoogle);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(723, 19, 302, 74);
+		panel_generateTest.add(scrollPane);
+		
+		textArea_importDeclarations = new JTextArea();
+		scrollPane.setViewportView(textArea_importDeclarations);
 		
 		btnRemoveProject = new JButton("Remove the selected project");
 		btnRemoveProject.addActionListener(new ActionListener() {
@@ -779,7 +783,7 @@ public class TafUserInterface {
 		panel_mappings.add(lblAvailableMappingsFor);
 		
 		lblElementNameForMappingList = new JLabel("");
-		lblElementNameForMappingList.setBounds(408, 49, 61, 16);
+		lblElementNameForMappingList.setBounds(408, 49, 122, 16);
 		panel_mappings.add(lblElementNameForMappingList);
 		
 		lblStateInvariants = new JLabel("State Invariants (States separated by comma):");
@@ -1177,11 +1181,11 @@ public class TafUserInterface {
 			                		if(!xmlFolder.exists())
 			                			xmlFolder.mkdirs();
 			                		
-			                		String modelName = file.getName().substring(0, file.getName().lastIndexOf("."));
-			                		File mappingFile = new File(directoryName + newProjectName + "/xml/" + modelName + ".xml");
+			                		String modelName = file.getName();
+			                		File mappingFile = new File(directoryName + newProjectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml");
 			                		if(!mappingFile.exists())
 										try {
-											XmlManipulator.createXmlFile(directoryName + newProjectName + "/xml/", modelName);
+											XmlManipulator.createXmlFile(directoryName + newProjectName + "/xml/", modelName.substring(0, modelName.lastIndexOf(".")));
 										} catch (ParserConfigurationException e2) {
 											// TODO Auto-generated catch block
 											e2.printStackTrace();
@@ -1198,9 +1202,7 @@ public class TafUserInterface {
 			        				refreshProjectList();
 			        				projectName = newProjectName;
 			        				
-			        				refreshModelList();
-			        				refreshElementList();
-			        				refreshObjectMappingList();
+			        				refreshModelList();		        				
 			        				
 			    		            //update the elements in comboBox_elementName while a model is selected 
 			    					if(directoryName != null && projectName != null && modelName != null){
@@ -1212,6 +1214,14 @@ public class TafUserInterface {
 			    								e1.printStackTrace();
 			    							}
 			    							
+			    							list_elements.setListData(elementNames);
+			    							scrollPane_elements.setViewportView(list_elements);
+			    								
+			    							lblModelNameForElementList.setSize(modelName.length() * 8, lblModelNameForElementList.getHeight());
+			    							lblModelNameForElementList.setText(modelName);
+			    							
+			    							refreshMappingList(elementNames);
+			    							
 			    							comboBox_elementName.removeAllItems();
 			    							for(Object o : elementNames){
 			    								comboBox_elementName.addItem(o);
@@ -1219,6 +1229,8 @@ public class TafUserInterface {
 			    						}
 			    					}	
 						            
+			    					
+			    					refreshObjectMappingList();
 						            //empty the text field for the project name
 						            textField_projectName.setText("");
 			        			} else {
@@ -1402,6 +1414,7 @@ public class TafUserInterface {
 		//System.out.println(stateMachine.getInitialStates());
 		//System.out.println(stateMachine.getFinalStates());
 		//System.out.println(stateMachine.getStateMappings());
+		//System.out.println(paths);
 
 		List<edu.gmu.swe.taf.Test> tests = new ArrayList<edu.gmu.swe.taf.Test>();
 		for(int i = 0; i < paths.size();i++){
@@ -1570,6 +1583,7 @@ public class TafUserInterface {
 					 
 					 setElementMappingBlack();
 					 setObjectMappingBlack();
+					 setConstraintMappingBlack();
             	 }
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -1651,6 +1665,12 @@ public class TafUserInterface {
 		
 		list_objectMappings.setListData(JavaSupporter.getMappingNames(objectMappings));
     	scrollPane_objectMappings.setViewportView(list_objectMappings);
+    	
+    	if(objectMappings == null)
+    		textField_mappingName.setText("");
+    	else if(objectMappings.size() == 0)
+    		textField_mappingName.setText("");
+    	
 	}
 	/**
 	 * Sets the colors of labels for the element mappings green.

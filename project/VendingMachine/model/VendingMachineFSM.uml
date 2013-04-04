@@ -100,16 +100,16 @@ stock = 1</body>
       <transition xmi:id="_aYAQsJaKEeKvu58QNkWm_g" name="addChocs" kind="internal" source="_GpBr8NtOEeGbQut3CdTx2Q" target="_GpBr8NtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_cd60UJaKEeKvu58QNkWm_g" name="addChocs" kind="internal" source="_G5iNINtOEeGbQut3CdTx2Q" target="_G5iNINtOEeGbQut3CdTx2Q"/>
       <subvertex xmi:type="uml:Pseudostate" xmi:id="_TEbwkNmJEeGa16tZvsIA1w" name="Initial"/>
-      <subvertex xmi:type="uml:State" xmi:id="_UwgQ0NmJEeGa16tZvsIA1w" name="State4"/>
-      <subvertex xmi:type="uml:State" xmi:id="_VpKXINmJEeGa16tZvsIA1w" name="State1"/>
-      <subvertex xmi:type="uml:State" xmi:id="_WGTmINmJEeGa16tZvsIA1w" name="State2"/>
+      <subvertex xmi:type="uml:State" xmi:id="_UwgQ0NmJEeGa16tZvsIA1w" name="Credit0Stock1"/>
+      <subvertex xmi:type="uml:State" xmi:id="_VpKXINmJEeGa16tZvsIA1w" name="Credit0Stock0"/>
+      <subvertex xmi:type="uml:State" xmi:id="_WGTmINmJEeGa16tZvsIA1w" name="Credit0To90Stock0"/>
       <subvertex xmi:type="uml:FinalState" xmi:id="_jdY8ANmJEeGa16tZvsIA1w" name="Final"/>
-      <subvertex xmi:type="uml:State" xmi:id="_mZ6XgNmJEeGa16tZvsIA1w" name="State5"/>
-      <subvertex xmi:type="uml:State" xmi:id="_BkAS4NtOEeGbQut3CdTx2Q" name="State3"/>
-      <subvertex xmi:type="uml:State" xmi:id="_E1RPUNtOEeGbQut3CdTx2Q" name="State6"/>
-      <subvertex xmi:type="uml:State" xmi:id="_FVPI0NtOEeGbQut3CdTx2Q" name="State7"/>
-      <subvertex xmi:type="uml:State" xmi:id="_GpBr8NtOEeGbQut3CdTx2Q" name="State8"/>
-      <subvertex xmi:type="uml:State" xmi:id="_G5iNINtOEeGbQut3CdTx2Q" name="State9"/>
+      <subvertex xmi:type="uml:State" xmi:id="_mZ6XgNmJEeGa16tZvsIA1w" name="Credit0To90Stock1"/>
+      <subvertex xmi:type="uml:State" xmi:id="_BkAS4NtOEeGbQut3CdTx2Q" name="Credit90Stock0"/>
+      <subvertex xmi:type="uml:State" xmi:id="_E1RPUNtOEeGbQut3CdTx2Q" name="Credit90Stock1"/>
+      <subvertex xmi:type="uml:State" xmi:id="_FVPI0NtOEeGbQut3CdTx2Q" name="Credit0Stock1To10"/>
+      <subvertex xmi:type="uml:State" xmi:id="_GpBr8NtOEeGbQut3CdTx2Q" name="Credit0To90Stock1To10"/>
+      <subvertex xmi:type="uml:State" xmi:id="_G5iNINtOEeGbQut3CdTx2Q" name="Credit90Stock1To10"/>
     </region>
   </packagedElement>
 </uml:Model>

@@ -406,6 +406,21 @@
             <element xmi:type="uml:FinalState" href="minimalMUMCUTCoverageFSM.uml#_KLbggPqvEeGiTshj0_JGOw"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_KLfK4fqvEeGiTshj0_JGOw" x="886" y="498"/>
           </children>
+          <children xmi:type="notation:Shape" xmi:id="_zDOGMJx9EeKKIvooD09qMA" type="668" fontName="Lucida Grande" fontHeight="11" lineColor="0">
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_zDRJgJx9EeKKIvooD09qMA" source="ShadowFigure">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_zDRJgZx9EeKKIvooD09qMA" key="ShadowFigure_Value" value="false"/>
+            </eAnnotations>
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_zDRJgpx9EeKKIvooD09qMA" source="displayNameLabelIcon">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_zDRJg5x9EeKKIvooD09qMA" key="displayNameLabelIcon_value" value="false"/>
+            </eAnnotations>
+            <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_zDRwkJx9EeKKIvooD09qMA" source="QualifiedName">
+              <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_zDRwkZx9EeKKIvooD09qMA" key="QualifiedNameDepth" value="1000"/>
+            </eAnnotations>
+            <children xmi:type="notation:DecorationNode" xmi:id="_zDRwkpx9EeKKIvooD09qMA" type="6668"/>
+            <children xmi:type="notation:DecorationNode" xmi:id="_zDRwk5x9EeKKIvooD09qMA" type="6669"/>
+            <element xmi:type="uml:Constraint" href="minimalMUMCUTCoverageFSM.uml#_zCrToJx9EeKKIvooD09qMA"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_zDOtQJx9EeKKIvooD09qMA" x="1153" y="438"/>
+          </children>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0zbxpfqVEeGiTshj0_JGOw"/>
         </children>
         <element xmi:type="uml:Region" href="minimalMUMCUTCoverageFSM.uml#_0zajcfqVEeGiTshj0_JGOw"/>

@@ -2,6 +2,9 @@
 <uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_0zW5EPqVEeGiTshj0_JGOw" name="model">
   <packagedElement xmi:type="uml:StateMachine" xmi:id="_0zajcPqVEeGiTshj0_JGOw" name="StateMachine0">
     <region xmi:id="_0zajcfqVEeGiTshj0_JGOw" name="Region0">
+      <ownedRule xmi:id="_zCrToJx9EeKKIvooD09qMA" name="ConstraintExceptionNotNull" constrainedElement="_MB-X8PqaEeGiTshj0_JGOw">
+        <specification xmi:type="uml:LiteralString" xmi:id="_zCvlEJx9EeKKIvooD09qMA" value=""/>
+      </ownedRule>
       <transition xmi:id="_sWfIgPqXEeGiTshj0_JGOw" name="initialize" source="_WMUMYPqXEeGiTshj0_JGOw" target="_p7N_8PqXEeGiTshj0_JGOw"/>
       <transition xmi:id="_9LIDAPqaEeGiTshj0_JGOw" name="enterWrongExpression" source="_p7N_8PqXEeGiTshj0_JGOw" target="_4_lXAPqXEeGiTshj0_JGOw"/>
       <transition xmi:id="_CoH3MPqbEeGiTshj0_JGOw" name="enterExpressionAndWrongLiterals" source="_p7N_8PqXEeGiTshj0_JGOw" target="_5Q9a4PqXEeGiTshj0_JGOw"/>

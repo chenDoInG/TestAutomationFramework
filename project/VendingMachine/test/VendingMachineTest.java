@@ -7,16 +7,15 @@ import static org.junit.Assert.*;
 public class VendingMachineTest {
 
     @Test
-    /* The test for the path Initial initialize State1 none Final  */ 
+    /* The test for the path Initial initialize Credit0Stock0  Final  */ 
     public void test0(){
         /*** test code of initializeVendingMachine for the element initialize ***/
         vendingMachine vm = new vendingMachine();
-        /*** test code of doingNothing for the element none ***/
-        
+        assertEquals(true, vm.getCredit() == 0);
     }
 
     @Test
-    /* The test for the path Initial initialize State1 addChocs State4 addChocs State7 addChocs State7 none Final  */ 
+    /* The test for the path Initial initialize Credit0Stock0 addChocs Credit0Stock1 addChocs Credit0Stock1To10 addChocs Credit0Stock1To10  Final  */ 
     public void test1(){
         /*** test code of initializeVendingMachine for the element initialize ***/
         vendingMachine vm = new vendingMachine();
@@ -26,12 +25,11 @@ public class VendingMachineTest {
         vm.addChoc("MM");
         /*** test code of addChocolate for the element addChocs ***/
         vm.addChoc("MM");
-        /*** test code of doingNothing for the element none ***/
-        
+        assertEquals(true, vm.getStock().size() > 1 && vm.getStock().size() < 10);
     }
 
     @Test
-    /* The test for the path Initial initialize State1 addCoinAtLeastNinty State3 addChocs State6 getChocs State1 addChocs State4 none Final  */ 
+    /* The test for the path Initial initialize Credit0Stock0 addCoinAtLeastNinty Credit90Stock0 addChocs Credit90Stock1 getChocs Credit0Stock0 addChocs Credit0Stock1  Final  */ 
     public void test2(){
         StringBuffer sb = new StringBuffer("MM");
 
@@ -45,12 +43,11 @@ public class VendingMachineTest {
         vm.getChoc(sb);
         /*** test code of addChocolate for the element addChocs ***/
         vm.addChoc("MM");
-        /*** test code of doingNothing for the element none ***/
-        
+        assertEquals(true, vm.getStock().size() == 1);
     }
 
     @Test
-    /* The test for the path Initial initialize State1 addChocs State4 addCoinAtLeastNinty State6 getChocs State1 addChocs State4 none Final  */ 
+    /* The test for the path Initial initialize Credit0Stock0 addChocs Credit0Stock1 addCoinAtLeastNinty Credit90Stock1 getChocs Credit0Stock0 addChocs Credit0Stock1  Final  */ 
     public void test3(){
         StringBuffer sb = new StringBuffer("MM");
 
@@ -64,12 +61,11 @@ public class VendingMachineTest {
         vm.getChoc(sb);
         /*** test code of addChocolate for the element addChocs ***/
         vm.addChoc("MM");
-        /*** test code of doingNothing for the element none ***/
-        
+        assertEquals(true, vm.getStock().size() == 1);
     }
 
     @Test
-    /* The test for the path Initial initialize State1 addChocs State4 addChocs State7 addCoinAtLeastNinty State9 getChocs State4 none Final  */ 
+    /* The test for the path Initial initialize Credit0Stock0 addChocs Credit0Stock1 addChocs Credit0Stock1To10 addCoinAtLeastNinty Credit90Stock1To10 getChocs Credit0Stock1  Final  */ 
     public void test4(){
         StringBuffer sb = new StringBuffer("MM");
 
@@ -83,12 +79,11 @@ public class VendingMachineTest {
         vm.coin(100);
         /*** test code of getChocolate for the element getChocs ***/
         vm.getChoc(sb);
-        /*** test code of doingNothing for the element none ***/
-        
+        assertEquals(true, vm.getStock().size() == 1);
     }
 
     @Test
-    /* The test for the path Initial initialize State1 addCoinAtLeastNinty State3 addChocs State6 addChocs State9 addChocs State9 getChocs State4 none Final  */ 
+    /* The test for the path Initial initialize Credit0Stock0 addCoinAtLeastNinty Credit90Stock0 addChocs Credit90Stock1 addChocs Credit90Stock1To10 addChocs Credit90Stock1To10 getChocs Credit0Stock1  Final  */ 
     public void test5(){
         StringBuffer sb = new StringBuffer("MM");
 
@@ -109,12 +104,11 @@ public class VendingMachineTest {
         
         
         
-        /*** test code of doingNothing for the element none ***/
-        
+        assertEquals(true, vm.getStock().size() == 1);
     }
 
     @Test
-    /* The test for the path Initial initialize State1 addChocs State4 addCoinLessThanNinty State5 coin State6 getChocs State1 addChocs State4 none Final  */ 
+    /* The test for the path Initial initialize Credit0Stock0 addChocs Credit0Stock1 addCoinLessThanNinty Credit0To90Stock1 coin Credit90Stock1 getChocs Credit0Stock0 addChocs Credit0Stock1  Final  */ 
     public void test6(){
         StringBuffer sb = new StringBuffer("MM");
 
@@ -134,12 +128,11 @@ public class VendingMachineTest {
         vm.getChoc(sb);
         /*** test code of addChocolate for the element addChocs ***/
         vm.addChoc("MM");
-        /*** test code of doingNothing for the element none ***/
-        
+        assertEquals(true, vm.getStock().size() == 1);
     }
 
     @Test
-    /* The test for the path Initial initialize State1 addChocs State4 addChocs State7 addCoinLessThanNinty State8 coin State9 getChocs State4 none Final  */ 
+    /* The test for the path Initial initialize Credit0Stock0 addChocs Credit0Stock1 addChocs Credit0Stock1To10 addCoinLessThanNinty Credit0To90Stock1To10 coin Credit90Stock1To10 getChocs Credit0Stock1  Final  */ 
     public void test7(){
         StringBuffer sb = new StringBuffer("MM");
 
@@ -159,12 +152,11 @@ public class VendingMachineTest {
         vm.coin(25);
         /*** test code of getChocolate for the element getChocs ***/
         vm.getChoc(sb);
-        /*** test code of doingNothing for the element none ***/
-        
+        assertEquals(true, vm.getStock().size() == 1);
     }
 
     @Test
-    /* The test for the path Initial initialize State1 addCoinLessThanNinty State2 coin State2 coin State3 addChocs State6 getChocs State1 addChocs State4 none Final  */ 
+    /* The test for the path Initial initialize Credit0Stock0 addCoinLessThanNinty Credit0To90Stock0 coin Credit0To90Stock0 coin Credit90Stock0 addChocs Credit90Stock1 getChocs Credit0Stock0 addChocs Credit0Stock1  Final  */ 
     public void test8(){
         StringBuffer sb = new StringBuffer("MM");
 
@@ -187,12 +179,11 @@ public class VendingMachineTest {
         vm.getChoc(sb);
         /*** test code of addChocolate for the element addChocs ***/
         vm.addChoc("MM");
-        /*** test code of doingNothing for the element none ***/
-        
+        assertEquals(true, vm.getStock().size() == 1);
     }
 
     @Test
-    /* The test for the path Initial initialize State1 addCoinLessThanNinty State2 addChocs State5 coin State5 coin State6 getChocs State1 addChocs State4 none Final  */ 
+    /* The test for the path Initial initialize Credit0Stock0 addCoinLessThanNinty Credit0To90Stock0 addChocs Credit0To90Stock1 coin Credit0To90Stock1 coin Credit90Stock1 getChocs Credit0Stock0 addChocs Credit0Stock1  Final  */ 
     public void test9(){
         StringBuffer sb = new StringBuffer("MM");
 
@@ -215,12 +206,11 @@ public class VendingMachineTest {
         vm.getChoc(sb);
         /*** test code of addChocolate for the element addChocs ***/
         vm.addChoc("MM");
-        /*** test code of doingNothing for the element none ***/
-        
+        assertEquals(true, vm.getStock().size() == 1);
     }
 
     @Test
-    /* The test for the path Initial initialize State1 addCoinLessThanNinty State2 addChocs State5 addChocs State8 coin State8 coin State9 getChocs State4 none Final  */ 
+    /* The test for the path Initial initialize Credit0Stock0 addCoinLessThanNinty Credit0To90Stock0 addChocs Credit0To90Stock1 addChocs Credit0To90Stock1To10 coin Credit0To90Stock1To10 coin Credit90Stock1To10 getChocs Credit0Stock1  Final  */ 
     public void test10(){
         StringBuffer sb = new StringBuffer("MM");
 
@@ -243,8 +233,7 @@ public class VendingMachineTest {
         vm.coin(25);
         /*** test code of getChocolate for the element getChocs ***/
         vm.getChoc(sb);
-        /*** test code of doingNothing for the element none ***/
-        
+        assertEquals(true, vm.getStock().size() == 1);
     }
 
 }

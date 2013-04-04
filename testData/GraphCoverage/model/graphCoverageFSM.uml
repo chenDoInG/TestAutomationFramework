@@ -5,7 +5,7 @@
   </packageImport>
   <packagedElement xmi:type="uml:StateMachine" xmi:id="_BTp1QPXSEeGNG5LRRk6-LQ" name="StateMachine0">
     <region xmi:id="_BTzmQPXSEeGNG5LRRk6-LQ" name="Region0">
-      <ownedRule xmi:id="_aqLkQJFEEeKyNsSwXKsqkQ" name="ConstraintResultNotNull" constrainedElement="_ay3vvfXUEeGNG5LRRk6-LQ _cpvKsPXUEeGNG5LRRk6-LQ _dgo9gPXUEeGNG5LRRk6-LQ _fP6iwPXUEeGNG5LRRk6-LQ _gj-LoPXUEeGNG5LRRk6-LQ">
+      <ownedRule xmi:id="_aqLkQJFEEeKyNsSwXKsqkQ" name="ConstraintResultNotNull" constrainedElement="_ay3vvfXUEeGNG5LRRk6-LQ _cpvKsPXUEeGNG5LRRk6-LQ _dgo9gPXUEeGNG5LRRk6-LQ _fP6iwPXUEeGNG5LRRk6-LQ _gj-LoPXUEeGNG5LRRk6-LQ _kbkS3fXVEeGNG5LRRk6-LQ _pKxM4PXVEeGNG5LRRk6-LQ _qQYxIPXVEeGNG5LRRk6-LQ _sXBtgPXVEeGNG5LRRk6-LQ">
         <specification xmi:type="uml:LiteralString" xmi:id="_aqRq4JFEEeKyNsSwXKsqkQ" value=""/>
       </ownedRule>
       <transition xmi:id="_w_AFkPXSEeGNG5LRRk6-LQ" name="initialize" source="_hNt-IPXSEeGNG5LRRk6-LQ" target="_rUbvcPXSEeGNG5LRRk6-LQ"/>

@@ -45,7 +45,7 @@ public class TempTest {
         final HtmlTextInput textInputInfeasibleLiterals = form.getInputByName("infeasibleLiterals");
         final HtmlTextInput textInputMaxTestSetSize = form.getInputByName("maxTestSetSize");
         
-        textInputExpression.setText("a & b"); textInputInfeasibleLiterals.setText("");
+        textInputExpression.setText("a & b"); textInputInfeasibleLiterals.setText("a=1,b=1");
         textInputMaxTestSetSize.setText("-1");
         try {
         page = buttonMUTPH.click();
