@@ -78,17 +78,17 @@
               <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_6Vr8xfEfEeGRDc0UHqwrug" key="QualifiedNameDepth" value="1000"/>
             </eAnnotations>
             <children xmi:type="notation:DecorationNode" xmi:id="_6Vr8xvEfEeGRDc0UHqwrug" type="6001">
-              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_8rIKIPEfEeGRDc0UHqwrug" width="77" height="22"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_8rIKIPEfEeGRDc0UHqwrug" width="77" height="11"/>
             </children>
             <children xmi:type="notation:DecorationNode" xmi:id="_6Vr8x_EfEeGRDc0UHqwrug" type="6002">
-              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_6Vr8yPEfEeGRDc0UHqwrug" y="22" width="77" height="52"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_6Vr8yPEfEeGRDc0UHqwrug" y="11" width="77" height="52"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_DxjaQPEgEeGRDc0UHqwrug" type="680" fontName="Segoe UI" lineColor="0">
               <element xmi:type="uml:Transition" href="BlackJackFSM.uml#_BhD-UPEgEeGRDc0UHqwrug"/>
               <layoutConstraint xmi:type="notation:Location" xmi:id="_DxjaQfEgEeGRDc0UHqwrug" x="-452" y="-158"/>
             </children>
             <element xmi:type="uml:State" href="BlackJackFSM.uml#_6VquoPEfEeGRDc0UHqwrug"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_6VrVsfEfEeGRDc0UHqwrug" x="462" y="90" width="77" height="74"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_6VrVsfEfEeGRDc0UHqwrug" x="462" y="90" width="77" height="63"/>
           </children>
           <children xmi:type="notation:Shape" xmi:id="_Ppq3wPEgEeGRDc0UHqwrug" type="6000" fontName="Segoe UI" lineColor="0">
             <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Ppre0PEgEeGRDc0UHqwrug" source="ShadowFigure">
@@ -210,12 +210,12 @@
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_U5EKSfEfEeGRDc0UHqwrug"/>
         </children>
         <element xmi:type="uml:Region" href="BlackJackFSM.uml#_UquMQPEfEeGRDc0UHqwrug"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_U5EKSvEfEeGRDc0UHqwrug" x="-3" y="-1" width="727" height="426"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_U5EKSvEfEeGRDc0UHqwrug" x="-3" y="-1" width="727" height="446"/>
       </children>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_U5EKS_EfEeGRDc0UHqwrug" y="11" width="727" height="426"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_U5EKS_EfEeGRDc0UHqwrug" y="11" width="727" height="446"/>
     </children>
     <element xmi:type="uml:StateMachine" href="BlackJackFSM.uml#_UqaqQPEfEeGRDc0UHqwrug"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_U5EKTPEfEeGRDc0UHqwrug" x="30" y="30" width="727" height="437"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_U5EKTPEfEeGRDc0UHqwrug" x="30" y="30" width="727" height="457"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_U5EKTfEfEeGRDc0UHqwrug"/>
   <element xmi:type="uml:StateMachine" href="BlackJackFSM.uml#_UqaqQPEfEeGRDc0UHqwrug"/>

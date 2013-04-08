@@ -1,5 +1,6 @@
 package edu.gmu.swe.taf.gui;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.BorderFactory;
@@ -76,6 +77,8 @@ import org.apache.log4j.Logger;
 
 import com.google.common.io.Files;
 import javax.swing.DropMode;
+import javax.swing.ScrollPaneConstants;
+import net.miginfocom.swing.MigLayout;
 public class TafUserInterface {
 
 	private JFrame frame;
@@ -128,7 +131,9 @@ public class TafUserInterface {
 	private JTextArea textArea_importDeclarations;
 	private JTextArea textArea_testCode;
 	private JButton btnRemoveProject;
-	private JScrollPane scrollPane;
+	private JScrollPane scrollPane_importDeclarations;
+	private JScrollPane scrollPane_mappingsAndTests;
+	private JPanel panel_projects;
 
 	static Logger log = Logger.getLogger(
             TafUserInterface.class);
@@ -143,6 +148,7 @@ public class TafUserInterface {
 			public void run() {
 				try {
 					TafUserInterface window = new TafUserInterface();
+					
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -163,25 +169,16 @@ public class TafUserInterface {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1280, 900);
+		frame.setBounds(100, 100, 1280, 846);
+		//frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
-		
-		JMenuItem mntmNewProject = new JMenuItem("New Project");
-		mntmNewProject.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		mnFile.add(mntmNewProject);
-		
-		JMenuItem mntmLoadProject = new JMenuItem("Load Project");
-		mnFile.add(mntmLoadProject);
 		
 		JMenu mnSearch = new JMenu("Search");
 		menuBar.add(mnSearch);
@@ -320,20 +317,59 @@ public class TafUserInterface {
 			public void ancestorRemoved(AncestorEvent event) {
 			}
 		});
-		frame.getContentPane().add(layeredPane);
-		//frame.getContentPane().add(layeredPane);
+		JScrollPane sp = new JScrollPane(layeredPane);
+		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		sp.setViewportView(layeredPane);
+		frame.getContentPane().add(sp);	
+		
+		Border blackline = BorderFactory.createLineBorder(Color.black);
+		TitledBorder title_testGeneration = BorderFactory.createTitledBorder(blackline, "Test generation");
+		title_testGeneration.setTitleJustification(TitledBorder.LEFT);
+		
+		TitledBorder title_projects = BorderFactory.createTitledBorder(blackline, "Projects");
+		title_projects.setTitleJustification(TitledBorder.LEFT);
+		
+		TitledBorder title_models = BorderFactory.createTitledBorder(blackline, "Show, add, and remove models");
+		title_models.setTitleJustification(TitledBorder.LEFT);
+		
+		TitledBorder title_mappings = BorderFactory.createTitledBorder(blackline, "Elements and mappings");
+		title_mappings.setTitleJustification(TitledBorder.LEFT);
+		layeredPane.setLayout(new MigLayout("", "[1280px]", "[188.00px][163.00px][409.00px][102.00px]"));
+		
+		panel_projects = new JPanel();
+		//panel_projects.setBounds(6, 6, 1257, 178);
+		panel_projects.setPreferredSize(new Dimension(100, 200));
+		layeredPane.add(panel_projects, "cell 0 0,grow");
+		panel_projects.setLayout(null);
+		panel_projects.setBorder(title_projects);
+		
+		//scrollPane_mappingsAndTests = new JScrollPane(layeredPane, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+	    //    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		//scrollPane_mappingsAndTests.setViewportView(layeredPane);
+		//scrollPane_mappingsAndTests.setBounds(6, 340, 1257, 405);
+		//scrollPane_mappingsAndTests.setVisible(true);
+		
+		//frame.getContentPane().add(scrollPane_mappingsAndTests);
 		
 		lblAvailableProjects = new JLabel("Available Projects: ");
-		lblAvailableProjects.setBounds(16, 39, 134, 16);
-		layeredPane.add(lblAvailableProjects);
+		lblAvailableProjects.setBounds(22, 38, 119, 16);
+		panel_projects.add(lblAvailableProjects);
 		
 		lblThereAreNo = new JLabel("There are no projects available. Please create a new project below.");
-		lblThereAreNo.setBounds(16, 6, 424, 16);
-		layeredPane.add(lblThereAreNo);
+		lblThereAreNo.setBounds(71, 10, 414, 16);
+		panel_projects.add(lblThereAreNo);
+		
+		btnRemoveProject = new JButton("Remove the selected project");
+		btnRemoveProject.setBounds(449, 33, 221, 29);
+		panel_projects.add(btnRemoveProject);
+		
+		JLabel lblProjectInstruction = new JLabel("Creating a new project starts from here. A directory for the project will be created after entering a project name and choosing a model for this project.");
+		lblProjectInstruction.setBounds(22, 108, 943, 16);
+		panel_projects.add(lblProjectInstruction);
 		
 		scrollPane_projects = new JScrollPane();
-		scrollPane_projects.setBounds(169, 39, 271, 70);
-		layeredPane.add(scrollPane_projects);
+		scrollPane_projects.setBounds(164, 26, 260, 81);
+		panel_projects.add(scrollPane_projects);
 		
 		list_projects = new JList<Object>();
 		scrollPane_projects.setViewportView(list_projects);
@@ -386,15 +422,13 @@ public class TafUserInterface {
 			}
 		});
 		
-		JLabel lblProjectInstruction = new JLabel("Creating a new project starts from here. A directory for the project will be created after entering a project name and choosing a model for this project.");
-		lblProjectInstruction.setBounds(16, 111, 949, 22);
-		layeredPane.add(lblProjectInstruction);
-		
 		JLabel lblProjectName = new JLabel("Enter project name (*) : ");
-		lblProjectName.setBounds(16, 138, 148, 16);
-		layeredPane.add(lblProjectName);
+		lblProjectName.setBounds(22, 136, 148, 16);
+		panel_projects.add(lblProjectName);
 		
 		textField_projectName = new JTextField();
+		textField_projectName.setBounds(174, 130, 134, 28);
+		panel_projects.add(textField_projectName);
 		//textField_projectName.setText(System.getProperty("java.home"));
 		textField_projectName.addKeyListener(new KeyAdapter() {
 			@Override
@@ -403,90 +437,19 @@ public class TafUserInterface {
 				lblTheProjectDirectory.setVisible(false);
 			}
 		});
-		textField_projectName.setBounds(169, 132, 134, 28);
-		layeredPane.add(textField_projectName);
 		textField_projectName.setColumns(10);
 		
 		lblMustEnterA = new JLabel("Must enter a name");
+		lblMustEnterA.setBounds(320, 136, 116, 16);
+		panel_projects.add(lblMustEnterA);
 		lblMustEnterA.setForeground(Color.RED);
-		lblMustEnterA.setBounds(315, 138, 116, 16);
-		lblMustEnterA.setVisible(false);
-		layeredPane.add(lblMustEnterA);
 		
 		lblTheProjectDirectory = new JLabel("The project directory has existed. Please type a different project name.");
+		lblTheProjectDirectory.setBounds(22, 157, 449, 16);
+		panel_projects.add(lblTheProjectDirectory);
 		lblTheProjectDirectory.setForeground(Color.RED);
-		lblTheProjectDirectory.setBounds(16, 156, 449, 16);
 		lblTheProjectDirectory.setVisible(false);
-		layeredPane.add(lblTheProjectDirectory);
-		
-		
-		Border blackline = BorderFactory.createLineBorder(Color.black);
-		TitledBorder title_testGeneration = BorderFactory.createTitledBorder(blackline, "Test generation");
-		title_testGeneration.setTitleJustification(TitledBorder.LEFT);
-		
-		JPanel panel_generateTest = new JPanel();
-		panel_generateTest.setBounds(6, 746, 1257, 103);
-		panel_generateTest.setBorder(title_testGeneration);
-		layeredPane.add(panel_generateTest);
-		panel_generateTest.setLayout(null);
-		
-		JLabel lblNewLabel_5 = new JLabel("Please select a coverage criterion and click the generate tests button.");
-		lblNewLabel_5.setBounds(6, 23, 448, 16);
-		panel_generateTest.add(lblNewLabel_5);
-		
-		JLabel lblNewLabel_4 = new JLabel("Coverage criteria:");
-		lblNewLabel_4.setBounds(6, 51, 110, 16);
-		//layeredPane.add(lblNewLabel_4);
-		panel_generateTest.add(lblNewLabel_4);
-		
-		String[] coverageCriteria = {"node coverage", "edge coverage", "edge-pair coverage", "prime path coverage"};
-		JComboBox comboBox = new JComboBox(coverageCriteria);
-		comboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				criterionIndex = ((JComboBox)e.getSource()).getSelectedIndex();
-			}
-		});
-		comboBox.setBounds(116, 47, 184, 27);
-		panel_generateTest.add(comboBox);
-		
-		JButton btnGenerateTests = new JButton("Generate tests");
-		btnGenerateTests.setActionCommand("generate tests");
-		btnGenerateTests.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if("generate tests".equals(e.getActionCommand())){
-					long start = System.nanoTime();
-					try {					
-						generateTests(directoryName + projectName + "/model/" + modelName, xmlPath, 
-								projectName + "Test", directoryName + projectName + "/", getCriterionType(criterionIndex), textField_packageName.getText(),textArea_importDeclarations.getText());
-						long end = System.nanoTime();
-	            	    long duration = end - start;
-	            	    System.out.println("Time for generating tests = " + duration + " nano seconds");
-	            	    System.out.println("Time for generating tests = " + duration / 1000000000 + " seconds");
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-				}
-			}
-		});
-		btnGenerateTests.setBounds(299, 46, 134, 29);
-		panel_generateTest.add(btnGenerateTests);
-		
-		lblEnterImportedDeclarations = new JLabel("Enter import declarations:");
-		lblEnterImportedDeclarations.setBounds(466, 23, 172, 16);
-		panel_generateTest.add(lblEnterImportedDeclarations);
-		
-		lblEgImportComgoogle = new JLabel("e.g. import com.google.common.io.*;");
-		lblEgImportComgoogle.setBounds(466, 51, 245, 16);
-		panel_generateTest.add(lblEgImportComgoogle);
-		
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(723, 19, 302, 74);
-		panel_generateTest.add(scrollPane);
-		
-		textArea_importDeclarations = new JTextArea();
-		scrollPane.setViewportView(textArea_importDeclarations);
-		
-		btnRemoveProject = new JButton("Remove the selected project");
+		lblMustEnterA.setVisible(false);
 		btnRemoveProject.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
@@ -542,16 +505,10 @@ public class TafUserInterface {
 
 			}
 		});
-		btnRemoveProject.setBounds(451, 34, 211, 29);
-		layeredPane.add(btnRemoveProject);
-		
-		
-		TitledBorder title_models = BorderFactory.createTitledBorder(blackline, "Show, add, and remove models");
-		title_models.setTitleJustification(TitledBorder.LEFT);
 		
 		panel_models = new JPanel();
 		panel_models.setBounds(6, 184, 1257, 157);
-		layeredPane.add(panel_models);
+		layeredPane.add(panel_models, "cell 0 1,grow");
 		panel_models.setLayout(null);
 		panel_models.setBorder(title_models);
 		
@@ -600,30 +557,247 @@ public class TafUserInterface {
 		panel_models.add(btnNewButton);
 		
 		
-		TitledBorder title_mappings = BorderFactory.createTitledBorder(blackline, "Elements and mappings");
-		title_mappings.setTitleJustification(TitledBorder.LEFT);
+		list_models.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			 if(e.getClickCount() == 2){
+				 int index = list_models.locationToIndex(e.getPoint());
+		             //System.out.println("Double clicked on Item " + index);
+		             modelName = (String) list_models.getSelectedValue();
+		             
+		             xmlPath = directoryName + projectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml";
+		             Object[] elements = null;
+		             //add data in the list_elements
+		             try {
+		            	elements = returnElementNames(directoryName + projectName + "/model/" + modelName);
+					list_elements.setListData(elements);
+					scrollPane_elements.setViewportView(list_elements);
+					
+					lblModelNameForElementList.setSize(modelName.length() * 8, lblModelNameForElementList.getHeight());
+					lblModelNameForElementList.setText(modelName);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+		            //update the elements in comboBox_elementName while a model is selected 
+				if(directoryName != null && projectName != null && modelName != null){
+					if(directoryName.length() > 0 && projectName.length() > 0 && modelName.length() > 0){
+						Object[] elementNames = null;
+						try {
+							elementNames = returnElementNames(directoryName + projectName + "/model/" + modelName);
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+						
+						comboBox_elementName.removeAllItems();
+						for(Object o : elementNames){
+							comboBox_elementName.addItem(o);
+						}
+					}
+				}	
+				
+				if(new File(xmlPath).isFile()){
+					//add the data in the list_objectMappings
+					try {
+						objectMappings = XmlManipulator.getObjectMappings(xmlPath);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					
+					list_objectMappings.setListData(JavaSupporter.getMappingNames(objectMappings));
+		            	scrollPane_objectMappings.setViewportView(list_objectMappings);
+		            	
+		            	//show the mappings created for the first identifiable element
+		            	if(elements.length >= 1){
+		            		String elementName = (String)elements[0];
+		            		try {
+			            	 elementMappings = XmlManipulator.getMappingsByElementName(xmlPath, elementName);
+			            	 list_mappings.setListData(JavaSupporter.getMappingNames(elementMappings));
+			            	 scrollPane_mappings.setViewportView(list_mappings);
+							
+			            	 lblElementNameForMappingList.setSize(elementName.length() * 8, lblElementNameForMappingList.getHeight());
+			            	 lblElementNameForMappingList.setText(elementName);
+			            	 
+			            	 //show the content of the mapping if there is only one mapping
+			            	 if(elementMappings.size() >= 1){
+			            		 Mapping mapping = elementMappings.get(0);
+			            		 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
+								 comboBox_elementType.setSelectedItem(mapping.getType());
+								 textField_mappingName.setText(mapping.getMappingName());
+								 textArea_testCode.setText(mapping.getTestCode());
+								 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
+								 
+								 lblElementName.setForeground(Color.GREEN.darker());
+								 lblElementType.setForeground(Color.GREEN.darker());
+								 lblMappingName.setForeground(Color.GREEN.darker());
+								 lblTestCode.setForeground(Color.GREEN.darker());
+								 lblRequiredMappings.setForeground(Color.GREEN.darker());
+								 
+								 if(mapping.getType() == IdentifiableElementType.CONSTRAINT){
+									 textField_stateInvariants.setVisible(true);
+									 textField_stateInvariants.setEnabled(true);
+									 lblStateInvariants.setVisible(true);
+									 lblStateInvariants.setEnabled(true);
+									 
+									 ConstraintMapping cm = null;
+									 try {
+										cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getMappingName());
+									} catch (Exception e1) {
+										e1.printStackTrace();
+									}
+									 textField_stateInvariants.setText(JavaSupporter.removeBrackets(cm.getStateinvariants().toString()));
+									 lblStateInvariants.setForeground(Color.GREEN.darker());
+								 }
+			            	 }
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+		            	}
+		            	
+				}else{
+					 textField_mappingName.setText("");
+					 textArea_testCode.setText("");
+					 textField_requiredMappings.setText("");
+					 textField_stateInvariants.setText("");
+					 textField_objectName.setText("");
+					 textField_className.setText("");
+					 list_mappings.setListData(new Object[]{});
+		            	 scrollPane_mappings.setViewportView(list_mappings);
+		            	 
+					 setElementMappingBlack();
+					 setObjectMappingBlack();
+	            	}
+			 }
+		}
+		});
+		btnLoadModelsForNewProject.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource() == btnLoadModelsForNewProject){
+					//let users to choose a UML model and add it to the project
+					JFileChooser fc = new JFileChooser();
+					int returnVal = fc.showDialog(layeredPane, "Load");
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+		                File file = fc.getSelectedFile();
+		                //System.out.println(file.getName());
+		                
+		                //create a directory
+		                String newProjectName = textField_projectName.getText();
+		                if(newProjectName == null || newProjectName.trim().equals(""))
+		                	lblMustEnterA.setVisible(true);
+		                else{
+			                File directory = new File(directoryName + newProjectName + "/model/");
+			                //System.out.println(directoryName + projectName + "/model/");
+			                //System.out.println(directory.getAbsolutePath());
+			                if(!directory.exists()){
+			                	if(directory.mkdirs()){
+			                		System.out.println("Directory " + directoryName + newProjectName + " is created!");
+			                		
+			                		//copy the selected model to the project model folder
+			                		File destinationFile = new File(directoryName + newProjectName + "/model/" + file.getName());			                		
+			                		try {
+										JavaSupporter.copyFile(file, destinationFile);
+									} catch (IOException e1) {
+										e1.printStackTrace();
+									}
+			                		
+			                		//create other folders test, class, xml
+			                		File classFolder = new File(directoryName + newProjectName + "/class/");
+			                		if(!classFolder.exists())
+			                			classFolder.mkdirs();
+			                		
+			                		File testFolder = new File(directoryName + newProjectName + "/test/temp/");
+			                		if(!testFolder.exists())
+			                			testFolder.mkdirs();
+			                		
+			                		File xmlFolder = new File(directoryName + newProjectName + "/xml/");
+			                		if(!xmlFolder.exists())
+			                			xmlFolder.mkdirs();
+			                		
+			                		String modelName = file.getName();
+			                		File mappingFile = new File(directoryName + newProjectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml");
+			                		if(!mappingFile.exists())
+										try {
+											XmlManipulator.createXmlFile(directoryName + newProjectName + "/xml/", modelName.substring(0, modelName.lastIndexOf(".")));
+										} catch (ParserConfigurationException e2) {
+											// TODO Auto-generated catch block
+											e2.printStackTrace();
+										} catch (TransformerException e2) {
+											// TODO Auto-generated catch block
+											e2.printStackTrace();
+										}
+			                		
+			                		lblThereAreNo.setVisible(false);
+			    					lblAvailableProjects.setVisible(true);
+			    					scrollPane_projects.setVisible(true);
+			    					btnRemoveProject.setVisible(true);
+			    					
+			        				refreshProjectList();
+			        				projectName = newProjectName;
+			        				
+			        				refreshModelList();		        				
+			        				
+			    		            //update the elements in comboBox_elementName while a model is selected 
+			    					if(directoryName != null && projectName != null && modelName != null){
+			    						if(directoryName.length() > 0 && projectName.length() > 0 && modelName.length() > 0){
+			    							Object[] elementNames = null;
+			    							try {
+			    								elementNames = returnElementNames(directoryName + projectName + "/model/" + modelName);
+			    							} catch (IOException e1) {
+			    								e1.printStackTrace();
+			    							}
+			    							
+			    							list_elements.setListData(elementNames);
+			    							scrollPane_elements.setViewportView(list_elements);
+			    								
+			    							lblModelNameForElementList.setSize(modelName.length() * 8, lblModelNameForElementList.getHeight());
+			    							lblModelNameForElementList.setText(modelName);
+			    							
+			    							refreshMappingList(elementNames);
+			    							
+			    							comboBox_elementName.removeAllItems();
+			    							for(Object o : elementNames){
+			    								comboBox_elementName.addItem(o);
+			    							}
+			    						}
+			    					}	
+						            
+			    					
+			    					refreshObjectMappingList();
+						            //empty the text field for the project name
+						            textField_projectName.setText("");
+			        			} else {
+			        				System.out.println("Failed to create directory!");
+			        			}
+		                	}else{
+			                	System.out.println("The directory has existed!");
+			                	lblTheProjectDirectory.setVisible(true);
+			                }
+						}
+					}
+				}
+			}
+		});
 		
 		JPanel panel_mappings = new JPanel();
-		panel_mappings.setBounds(6, 340, 1257, 405);
-		layeredPane.add(panel_mappings);
+		//panel_mappings.setBounds(6, 340, 1257, 405);
+		layeredPane.add(panel_mappings, "cell 0 2,grow");
 		panel_mappings.setLayout(null);
 		panel_mappings.setBorder(title_mappings);
 		
 		scrollPane_mappings = new JScrollPane();
 		scrollPane_mappings.setBounds(293, 69, 237, 287);
 		panel_mappings.add(scrollPane_mappings);
-		
-		/*** initialization of comboBox for elementName ***/
 		comboBox_elementName = new JComboBox();
 		comboBox_elementName.setBounds(664, 17, 226, 27);
 		panel_mappings.add(comboBox_elementName);
 		
 		/*** initialization of comboBox for element type ***/
-		//String [] elementTypes = {IdentifiableElementType.TRANSITION.toString(), IdentifiableElementType.CONSTRAINT.toString(), IdentifiableElementType.GUARD.toString(), IdentifiableElementType.OBJECT.toString(), IdentifiableElementType.PARAMETER.toString(),
-		//		IdentifiableElementType.POSTCONDITION.toString(), IdentifiableElementType.PRECONDITION.toString(), IdentifiableElementType.STATEINVARIANT.toString(), IdentifiableElementType.STATE.toString()};
-
 		IdentifiableElementType [] elementTypes = {IdentifiableElementType.TRANSITION, IdentifiableElementType.CONSTRAINT, IdentifiableElementType.GUARD, IdentifiableElementType.OBJECT, IdentifiableElementType.PARAMETER,
 				IdentifiableElementType.POSTCONDITION, IdentifiableElementType.PRECONDITION, IdentifiableElementType.STATEINVARIANT, IdentifiableElementType.STATE};
+
 		
 		comboBox_elementType = new JComboBox(elementTypes);
 		comboBox_elementType.addItemListener(new ItemListener() {
@@ -1022,230 +1196,75 @@ public class TafUserInterface {
 		btnDeleteMapping.setBounds(779, 373, 117, 29);
 		panel_mappings.add(btnDeleteMapping);
 		
-		list_models.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				 if(e.getClickCount() == 2){
-					 int index = list_models.locationToIndex(e.getPoint());
-		             //System.out.println("Double clicked on Item " + index);
-		             modelName = (String) list_models.getSelectedValue();
-		             
-		             xmlPath = directoryName + projectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml";
-		             Object[] elements = null;
-		             //add data in the list_elements
-		             try {
-		            	elements = returnElementNames(directoryName + projectName + "/model/" + modelName);
-						list_elements.setListData(elements);
-						scrollPane_elements.setViewportView(list_elements);
-						
-						lblModelNameForElementList.setSize(modelName.length() * 8, lblModelNameForElementList.getHeight());
-						lblModelNameForElementList.setText(modelName);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-		            //update the elements in comboBox_elementName while a model is selected 
-					if(directoryName != null && projectName != null && modelName != null){
-						if(directoryName.length() > 0 && projectName.length() > 0 && modelName.length() > 0){
-							Object[] elementNames = null;
-							try {
-								elementNames = returnElementNames(directoryName + projectName + "/model/" + modelName);
-							} catch (IOException e1) {
-								e1.printStackTrace();
-							}
-							
-							comboBox_elementName.removeAllItems();
-							for(Object o : elementNames){
-								comboBox_elementName.addItem(o);
-							}
-						}
-					}	
-					
-					if(new File(xmlPath).isFile()){
-						//add the data in the list_objectMappings
-						try {
-							objectMappings = XmlManipulator.getObjectMappings(xmlPath);
-						} catch (Exception e1) {
-							e1.printStackTrace();
-						}
-						
-						list_objectMappings.setListData(JavaSupporter.getMappingNames(objectMappings));
-		            	scrollPane_objectMappings.setViewportView(list_objectMappings);
-		            	
-		            	//show the mappings created for the first identifiable element
-		            	if(elements.length >= 1){
-		            		String elementName = (String)elements[0];
-		            		try {
-				            	 elementMappings = XmlManipulator.getMappingsByElementName(xmlPath, elementName);
-				            	 list_mappings.setListData(JavaSupporter.getMappingNames(elementMappings));
-				            	 scrollPane_mappings.setViewportView(list_mappings);
-								
-				            	 lblElementNameForMappingList.setSize(elementName.length() * 8, lblElementNameForMappingList.getHeight());
-				            	 lblElementNameForMappingList.setText(elementName);
-				            	 
-				            	 //show the content of the mapping if there is only one mapping
-				            	 if(elementMappings.size() >= 1){
-				            		 Mapping mapping = elementMappings.get(0);
-				            		 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
-									 comboBox_elementType.setSelectedItem(mapping.getType());
-									 textField_mappingName.setText(mapping.getMappingName());
-									 textArea_testCode.setText(mapping.getTestCode());
-									 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
-									 
-									 lblElementName.setForeground(Color.GREEN.darker());
-									 lblElementType.setForeground(Color.GREEN.darker());
-									 lblMappingName.setForeground(Color.GREEN.darker());
-									 lblTestCode.setForeground(Color.GREEN.darker());
-									 lblRequiredMappings.setForeground(Color.GREEN.darker());
-									 
-									 if(mapping.getType() == IdentifiableElementType.CONSTRAINT){
-										 textField_stateInvariants.setVisible(true);
-										 textField_stateInvariants.setEnabled(true);
-										 lblStateInvariants.setVisible(true);
-										 lblStateInvariants.setEnabled(true);
-										 
-										 ConstraintMapping cm = null;
-										 try {
-											cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getMappingName());
-										} catch (Exception e1) {
-											e1.printStackTrace();
-										}
-										 textField_stateInvariants.setText(JavaSupporter.removeBrackets(cm.getStateinvariants().toString()));
-										 lblStateInvariants.setForeground(Color.GREEN.darker());
-									 }
-				            	 }
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-		            	}
-		            	
-					}else{
-						 textField_mappingName.setText("");
-						 textArea_testCode.setText("");
-						 textField_requiredMappings.setText("");
-						 textField_stateInvariants.setText("");
-						 textField_objectName.setText("");
-						 textField_className.setText("");
-						 list_mappings.setListData(new Object[]{});
-		            	 scrollPane_mappings.setViewportView(list_mappings);
-		            	 
-						 setElementMappingBlack();
-						 setObjectMappingBlack();
-	            	}
-				 }
+		//scrollPane_mappingsAndTests = new JScrollPane(panel_mappings, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+		 //        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		//scrollPane_mappingsAndTests.setBounds(6, 340, 1257, 305);
+		//scrollPane_mappingsAndTests.setPreferredSize(new Dimension(1257,300));
+		//scrollPane_mappingsAndTests.setVisible(true);
+		//layeredPane.add(scrollPane_mappingsAndTests);
+		
+		JPanel panel_generateTest = new JPanel();
+		panel_generateTest.setBounds(6, 746, 1257, 103);
+		panel_generateTest.setBorder(title_testGeneration);
+		layeredPane.add(panel_generateTest, "cell 0 3,grow");
+		panel_generateTest.setLayout(null);
+		
+		JLabel lblNewLabel_5 = new JLabel("Please select a coverage criterion and click the generate tests button.");
+		lblNewLabel_5.setBounds(6, 23, 448, 16);
+		panel_generateTest.add(lblNewLabel_5);
+		
+		JLabel lblNewLabel_4 = new JLabel("Coverage criteria:");
+		lblNewLabel_4.setBounds(6, 51, 110, 16);
+		//layeredPane.add(lblNewLabel_4);
+		panel_generateTest.add(lblNewLabel_4);
+		
+		String[] coverageCriteria = {"node coverage", "edge coverage", "edge-pair coverage", "prime path coverage"};
+		JComboBox comboBox = new JComboBox(coverageCriteria);
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				criterionIndex = ((JComboBox)e.getSource()).getSelectedIndex();
 			}
 		});
-		btnLoadModelsForNewProject.addActionListener(new ActionListener() {
+		comboBox.setBounds(116, 47, 184, 27);
+		panel_generateTest.add(comboBox);
+		
+		JButton btnGenerateTests = new JButton("Generate tests");
+		btnGenerateTests.setActionCommand("generate tests");
+		btnGenerateTests.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(e.getSource() == btnLoadModelsForNewProject){
-					//let users to choose a UML model and add it to the project
-					JFileChooser fc = new JFileChooser();
-					int returnVal = fc.showDialog(layeredPane, "Load");
-					if (returnVal == JFileChooser.APPROVE_OPTION) {
-		                File file = fc.getSelectedFile();
-		                //System.out.println(file.getName());
-		                
-		                //create a directory
-		                String newProjectName = textField_projectName.getText();
-		                if(newProjectName == null || newProjectName.trim().equals(""))
-		                	lblMustEnterA.setVisible(true);
-		                else{
-			                File directory = new File(directoryName + newProjectName + "/model/");
-			                //System.out.println(directoryName + projectName + "/model/");
-			                //System.out.println(directory.getAbsolutePath());
-			                if(!directory.exists()){
-			                	if(directory.mkdirs()){
-			                		System.out.println("Directory " + directoryName + newProjectName + " is created!");
-			                		
-			                		//copy the selected model to the project model folder
-			                		File destinationFile = new File(directoryName + newProjectName + "/model/" + file.getName());			                		
-			                		try {
-										JavaSupporter.copyFile(file, destinationFile);
-									} catch (IOException e1) {
-										e1.printStackTrace();
-									}
-			                		
-			                		//create other folders test, class, xml
-			                		File classFolder = new File(directoryName + newProjectName + "/class/");
-			                		if(!classFolder.exists())
-			                			classFolder.mkdirs();
-			                		
-			                		File testFolder = new File(directoryName + newProjectName + "/test/temp/");
-			                		if(!testFolder.exists())
-			                			testFolder.mkdirs();
-			                		
-			                		File xmlFolder = new File(directoryName + newProjectName + "/xml/");
-			                		if(!xmlFolder.exists())
-			                			xmlFolder.mkdirs();
-			                		
-			                		String modelName = file.getName();
-			                		File mappingFile = new File(directoryName + newProjectName + "/xml/" + modelName.substring(0, modelName.lastIndexOf(".")) + ".xml");
-			                		if(!mappingFile.exists())
-										try {
-											XmlManipulator.createXmlFile(directoryName + newProjectName + "/xml/", modelName.substring(0, modelName.lastIndexOf(".")));
-										} catch (ParserConfigurationException e2) {
-											// TODO Auto-generated catch block
-											e2.printStackTrace();
-										} catch (TransformerException e2) {
-											// TODO Auto-generated catch block
-											e2.printStackTrace();
-										}
-			                		
-			                		lblThereAreNo.setVisible(false);
-			    					lblAvailableProjects.setVisible(true);
-			    					scrollPane_projects.setVisible(true);
-			    					btnRemoveProject.setVisible(true);
-			    					
-			        				refreshProjectList();
-			        				projectName = newProjectName;
-			        				
-			        				refreshModelList();		        				
-			        				
-			    		            //update the elements in comboBox_elementName while a model is selected 
-			    					if(directoryName != null && projectName != null && modelName != null){
-			    						if(directoryName.length() > 0 && projectName.length() > 0 && modelName.length() > 0){
-			    							Object[] elementNames = null;
-			    							try {
-			    								elementNames = returnElementNames(directoryName + projectName + "/model/" + modelName);
-			    							} catch (IOException e1) {
-			    								e1.printStackTrace();
-			    							}
-			    							
-			    							list_elements.setListData(elementNames);
-			    							scrollPane_elements.setViewportView(list_elements);
-			    								
-			    							lblModelNameForElementList.setSize(modelName.length() * 8, lblModelNameForElementList.getHeight());
-			    							lblModelNameForElementList.setText(modelName);
-			    							
-			    							refreshMappingList(elementNames);
-			    							
-			    							comboBox_elementName.removeAllItems();
-			    							for(Object o : elementNames){
-			    								comboBox_elementName.addItem(o);
-			    							}
-			    						}
-			    					}	
-						            
-			    					
-			    					refreshObjectMappingList();
-						            //empty the text field for the project name
-						            textField_projectName.setText("");
-			        			} else {
-			        				System.out.println("Failed to create directory!");
-			        			}
-		                	}else{
-			                	System.out.println("The directory has existed!");
-			                	lblTheProjectDirectory.setVisible(true);
-			                }
-						}
+				if("generate tests".equals(e.getActionCommand())){
+					long start = System.nanoTime();
+					try {					
+						generateTests(directoryName + projectName + "/model/" + modelName, xmlPath, 
+								projectName + "Test", directoryName + projectName + "/", getCriterionType(criterionIndex), textField_packageName.getText(),textArea_importDeclarations.getText());
+						long end = System.nanoTime();
+	            	    long duration = end - start;
+	            	    System.out.println("Time for generating tests = " + duration + " nano seconds");
+	            	    System.out.println("Time for generating tests = " + duration / 1000000000 + " seconds");
+					} catch (Exception e1) {
+						e1.printStackTrace();
 					}
 				}
 			}
 		});
+		btnGenerateTests.setBounds(299, 46, 134, 29);
+		panel_generateTest.add(btnGenerateTests);
 		
+		lblEnterImportedDeclarations = new JLabel("Enter import declarations:");
+		lblEnterImportedDeclarations.setBounds(466, 23, 172, 16);
+		panel_generateTest.add(lblEnterImportedDeclarations);
+		
+		lblEgImportComgoogle = new JLabel("e.g. import com.google.common.io.*;");
+		lblEgImportComgoogle.setBounds(466, 51, 245, 16);
+		panel_generateTest.add(lblEgImportComgoogle);
+		
+		scrollPane_importDeclarations = new JScrollPane();
+		scrollPane_importDeclarations.setBounds(723, 19, 302, 74);
+		panel_generateTest.add(scrollPane_importDeclarations);
+		
+		textArea_importDeclarations = new JTextArea();
+		scrollPane_importDeclarations.setViewportView(textArea_importDeclarations);
+				
 		list_elements = new JList<Object>();
 		list_elements.setBounds(16, 386, 233, 230);
 		list_elements.addMouseListener(new MouseAdapter() {
@@ -1413,8 +1432,8 @@ public class TafUserInterface {
 		//System.out.println(stateMachine.getEdges());
 		//System.out.println(stateMachine.getInitialStates());
 		//System.out.println(stateMachine.getFinalStates());
-		//System.out.println(stateMachine.getStateMappings());
-		//System.out.println(paths);
+		System.out.println(stateMachine.getStateMappings());
+		System.out.println(paths);
 
 		List<edu.gmu.swe.taf.Test> tests = new ArrayList<edu.gmu.swe.taf.Test>();
 		for(int i = 0; i < paths.size();i++){

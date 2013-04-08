@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><mappings>
 	<mapping>
 		<name>coinQuarter</name>
-		<transition-name>addCoinLessThanNinty</transition-name>
+		<transition-name>coin</transition-name>
 		<code>vm.coin(25);</code>
 		<required-mappings>vMachineInit</required-mappings></mapping>
 	<mapping>
@@ -11,20 +11,7 @@
 		<required-mappings>vMachineInit</required-mappings></mapping><mapping><name>initializeVendingMachine</name><transition-name>initialize</transition-name><code>vendingMachine vm = new vendingMachine();</code></mapping><mapping><name>getChocolate</name><transition-name>getChocs</transition-name><code>vm.getChoc(sb);
 </code><required-mappings>vMachineInit, stringBufferInit</required-mappings></mapping><mapping><name>vMachineInit</name><object-name>vm</object-name><class-name>vendingMachine</class-name><code>vendingMachine vm = new vendingMachine();</code></mapping>
 	<mapping><name>intCInit</name><object-name>c</object-name><class-name>int</class-name><code>10,25</code></mapping>
-	<mapping>
-		<name>addTenChocolates</name>
-		<transition-name>addChocs</transition-name>
-		<code>vm.addChoc("MM");
-vm.addChoc("MM");
-vm.addChoc("MM");
-vm.addChoc("MM");
-vm.addChoc("MM");
-vm.addChoc("MM");
-vm.addChoc("MM");
-vm.addChoc("MM");
-vm.addChoc("MM");
-vm.addChoc("MM");</code>
-		<required-mappings>vMachineInit</required-mappings></mapping>
+	
 	
 	<mapping>
 		<name>doingNothing</name>
@@ -38,9 +25,9 @@ vm.coin(25);
 vm.coin(25);
 vm.coin(25);
 vm.coin(25);</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>coinFifty</name><transition-name>coin</transition-name><code>vm.coin(25);
-vm.coin(25);</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>coinTwoValuesLessThanNinty</name><transition-name>coin</transition-name><code>vm.coin(25);</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>stringBufferInit</name><object-name>sb</object-name><class-name>StringBuffer</class-name><code>StringBuffer sb = new StringBuffer("MM");</code></mapping><mapping><name>getTwoChocolates</name><transition-name>getChocs</transition-name><code>vm.getChoc(sb);
+vm.coin(25);</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>stringBufferInit</name><object-name>sb</object-name><class-name>StringBuffer</class-name><code>StringBuffer sb = new StringBuffer("MM");</code></mapping><mapping><name>getTwoChocolates</name><transition-name>getChocs</transition-name><code>vm.getChoc(sb);
 vm.coin(100);
 vm.getChoc(sb);
 
 
-		</code><required-mappings>vMachineInit,stringBufferInit</required-mappings></mapping><mapping><name>constraintStockEqualsZero</name><constraint-name>ConstraintStockZero</constraint-name><code>vm.getStock().size() == 0;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>Credit0Stock0,Credit0To90Stock0,Credit90Stock0</stateinvariants></mapping><mapping><name>constraintCreditEqualsZero</name><constraint-name>ConstraintCreditZero</constraint-name><code>vm.getCredit() == 0;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>Credit0Stock0,Credit0Stock1,Credit0Stock1To10</stateinvariants></mapping><mapping><name>constraintCreditZeroToNinty</name><constraint-name>ConstraintCreditZeroToNinty</constraint-name><code>vm.getCredit() &gt; 0 &amp;&amp; vm.getCredit() &lt; 90;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>Credit0To90Stock0,Credit0To90Stock1,Credit0To90Stock1To10</stateinvariants></mapping><mapping><name>constraintCreditAtLeastNinty</name><constraint-name>ConstraintCreditGTNinty</constraint-name><code>vm.getCredit() &gt;= 90;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>Credit90Stock0,Credit90Stock1,Credit90Stock1To10</stateinvariants></mapping><mapping><name>constraintStockOneToTenMapping</name><constraint-name>ConstraintStockBetweenOneToTen</constraint-name><code>vm.getStock().size() &gt; 1 &amp;&amp; vm.getStock().size() &lt; 10;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>Credit0Stock1To10,Credit0To90Stock1To10,Credit90Stock1To10</stateinvariants></mapping><mapping><name>constraintStockOne</name><constraint-name>ConstraintStocKOne</constraint-name><code>vm.getStock().size() == 1;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>Credit0Stock1,Credit0To90Stock1,Credit90Stock1</stateinvariants></mapping></mappings>
+		</code><required-mappings>vMachineInit,stringBufferInit</required-mappings></mapping><mapping><name>constraintStockEqualsZero</name><constraint-name>ConstraintStockZero</constraint-name><code>vm.getStock().size() == 0;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>Credit0Stock0,Credit0To90Stock0,Credit90Stock0</stateinvariants></mapping><mapping><name>constraintCreditEqualsZero</name><constraint-name>ConstraintCreditZero</constraint-name><code>vm.getCredit() == 0;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>Credit0Stock0,Credit0Stock1,Credit0Stock1To10</stateinvariants></mapping><mapping><name>constraintCreditZeroToNinety</name><constraint-name>ConstraintCreditZeroToNinety</constraint-name><code>vm.getCredit() &gt; 0 &amp;&amp; vm.getCredit() &lt; 90;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>Credit0To90Stock0,Credit0To90Stock1,Credit0To90Stock1To10</stateinvariants></mapping><mapping><name>constraintCreditAtLeastNinety</name><constraint-name>ConstraintCreditGTNinety</constraint-name><code>vm.getCredit() &gt;= 90;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>Credit90Stock0,Credit90Stock1,Credit90Stock1To10</stateinvariants></mapping><mapping><name>constraintStockOneToTenMapping</name><constraint-name>ConstraintStockOneToTen</constraint-name><code>vm.getStock().size() &gt; 1 &amp;&amp; vm.getStock().size() &lt; 10;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>Credit0Stock1To10,Credit0To90Stock1To10,Credit90Stock1To10</stateinvariants></mapping><mapping><name>constraintStockOne</name><constraint-name>ConstraintStocKOne</constraint-name><code>vm.getStock().size() == 1;</code><required-mappings>vMachineInit</required-mappings><stateinvariants>Credit0Stock1,Credit0To90Stock1,Credit90Stock1</stateinvariants></mapping></mappings>

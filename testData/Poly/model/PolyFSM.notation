@@ -155,17 +155,17 @@
               <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_ZnnyB_FJEeGDUr5Jikhy1w" key="QualifiedNameDepth" value="1000"/>
             </eAnnotations>
             <children xmi:type="notation:DecorationNode" xmi:id="_ZnnyCPFJEeGDUr5Jikhy1w" type="6001">
-              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_TXCuMIysEeKhkdNvmyRIwg" width="133" height="22"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_TXCuMIysEeKhkdNvmyRIwg" width="133" height="11"/>
             </children>
             <children xmi:type="notation:DecorationNode" xmi:id="_ZnnyCfFJEeGDUr5Jikhy1w" type="6002">
-              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ZnnyCvFJEeGDUr5Jikhy1w" y="22" width="133" height="54"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ZnnyCvFJEeGDUr5Jikhy1w" y="11" width="133" height="54"/>
             </children>
             <children xmi:type="notation:Shape" xmi:id="_OoyQcPFKEeGDUr5Jikhy1w" type="680" fontName="Segoe UI" lineColor="0">
               <element xmi:type="uml:Transition" href="PolyFSM.uml#_NvvIkPFKEeGDUr5Jikhy1w"/>
               <layoutConstraint xmi:type="notation:Location" xmi:id="_OoyQcfFKEeGDUr5Jikhy1w" x="-408" y="-372"/>
             </children>
             <element xmi:type="uml:State" href="PolyFSM.uml#_Znmj4PFJEeGDUr5Jikhy1w"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ZnnyAfFJEeGDUr5Jikhy1w" x="357" y="382" width="133" height="76"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ZnnyAfFJEeGDUr5Jikhy1w" x="357" y="382" width="133" height="65"/>
           </children>
           <children xmi:type="notation:Shape" xmi:id="_T2FbwPFKEeGDUr5Jikhy1w" type="5000" fontName="Segoe UI" lineColor="0">
             <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_T2GC0fFKEeGDUr5Jikhy1w" source="ShadowFigure">
@@ -234,12 +234,12 @@
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fPaWdfFIEeGRDc0UHqwrug"/>
         </children>
         <element xmi:type="uml:Region" href="PolyFSM.uml#_fPZIQfFIEeGRDc0UHqwrug"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fPaWdvFIEeGRDc0UHqwrug" x="-96" y="-4" width="880" height="586"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fPaWdvFIEeGRDc0UHqwrug" x="-96" y="-4" width="880" height="554"/>
       </children>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fPaWd_FIEeGRDc0UHqwrug" y="11" width="880" height="586"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fPaWd_FIEeGRDc0UHqwrug" y="11" width="880" height="554"/>
     </children>
     <element xmi:type="uml:StateMachine" href="PolyFSM.uml#_fPZIQPFIEeGRDc0UHqwrug"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fPaWePFIEeGRDc0UHqwrug" x="30" y="30" width="880" height="597"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fPaWePFIEeGRDc0UHqwrug" x="30" y="30" width="880" height="565"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_fPaWefFIEeGRDc0UHqwrug"/>
   <element xmi:type="uml:StateMachine" href="PolyFSM.uml#_fPZIQPFIEeGRDc0UHqwrug"/>

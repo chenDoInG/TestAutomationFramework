@@ -119,7 +119,7 @@
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_x_ad0ot8EeK7EpFvLJIW6A"/>
             </children>
             <element xmi:type="uml:State" href="TicTacToeFSM.uml#_x_YooIt8EeK7EpFvLJIW6A"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_x_Z2wYt8EeK7EpFvLJIW6A" x="168" y="173"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_x_Z2wYt8EeK7EpFvLJIW6A" x="150" y="173"/>
           </children>
           <children xmi:type="notation:Shape" xmi:id="_1ToAkIt8EeK7EpFvLJIW6A" type="6000" fontName="Lucida Grande" fontHeight="11" lineColor="0">
             <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_1TonoIt8EeK7EpFvLJIW6A" source="ShadowFigure">
@@ -136,7 +136,7 @@
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1TonqIt8EeK7EpFvLJIW6A"/>
             </children>
             <element xmi:type="uml:State" href="TicTacToeFSM.uml#_1TmycIt8EeK7EpFvLJIW6A"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1ToAkYt8EeK7EpFvLJIW6A" x="280" y="181"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1ToAkYt8EeK7EpFvLJIW6A" x="249" y="173"/>
           </children>
           <children xmi:type="notation:Shape" xmi:id="_24sg8It8EeK7EpFvLJIW6A" type="6000" fontName="Lucida Grande" fontHeight="11" lineColor="0">
             <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_24sg8ot8EeK7EpFvLJIW6A" source="ShadowFigure">
@@ -284,7 +284,7 @@
     <styles xmi:type="notation:FontStyle" xmi:id="_6v6qIYt8EeK7EpFvLJIW6A" fontName="Lucida Grande" fontHeight="11"/>
     <element xmi:type="uml:Transition" href="TicTacToeFSM.uml#_6v4N4It8EeK7EpFvLJIW6A"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_6v6qIot8EeK7EpFvLJIW6A" points="[20, 20, -49, -47]$[66, 60, -3, -7]"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_6v-7kIt8EeK7EpFvLJIW6A" id="(0.4,0.175)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_6v-7kIt8EeK7EpFvLJIW6A" id="(0.1,0.075)"/>
   </edges>
   <edges xmi:type="notation:Connector" xmi:id="_7jO9cIt8EeK7EpFvLJIW6A" type="7000" source="_oPZVQIt8EeK7EpFvLJIW6A" target="_24sg8It8EeK7EpFvLJIW6A" lineColor="0">
     <children xmi:type="notation:DecorationNode" xmi:id="_7jPkgIt8EeK7EpFvLJIW6A" type="7001">
@@ -374,7 +374,7 @@
     <element xmi:type="uml:Transition" href="TicTacToeFSM.uml#__aAzAIuCEeK7EpFvLJIW6A"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="__aEdYouCEeK7EpFvLJIW6A" points="[0, 0, 57, 52]$[-51, -51, 6, 1]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="__aIu0IuCEeK7EpFvLJIW6A" id="(0.75,0.0)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="__aIu0YuCEeK7EpFvLJIW6A" id="(0.90625,0.7)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="__aIu0YuCEeK7EpFvLJIW6A" id="(0.90625,0.875)"/>
   </edges>
   <edges xmi:type="notation:Connector" xmi:id="_CNUBEIuDEeK7EpFvLJIW6A" type="7000" source="_24sg8It8EeK7EpFvLJIW6A" target="_oPZVQIt8EeK7EpFvLJIW6A" lineColor="0">
     <children xmi:type="notation:DecorationNode" xmi:id="_CNUoIIuDEeK7EpFvLJIW6A" type="7001">

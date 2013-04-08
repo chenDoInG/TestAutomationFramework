@@ -13,7 +13,6 @@ public class TempTest {
         vm.addChoc("MM");
         vm.addChoc("MM");
         vm.coin(25);
-        vm.coin(25);
         vm.coin(10);
         vm.coin(25);
         vm.coin(25);

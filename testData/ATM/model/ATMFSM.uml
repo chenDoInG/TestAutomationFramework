@@ -5,7 +5,7 @@
   </packageImport>
   <packagedElement xmi:type="uml:StateMachine" xmi:id="_YwZ2sOChEeGnT4WBUDdcyw" name="StateMachine0">
     <region xmi:id="_cYQuMOChEeGnT4WBUDdcyw" name="Region0">
-      <ownedRule xmi:id="_o3TP8I2DEeKAa8oujpoLGw" name="ConstraintAuthenticationValid" constrainedElement="_0HmRUOChEeGnT4WBUDdcyw">
+      <ownedRule xmi:id="_o3TP8I2DEeKAa8oujpoLGw" name="ConstraintAuthenticationValid" visibility="package" constrainedElement="_0HmRUOChEeGnT4WBUDdcyw">
         <specification xmi:type="uml:LiteralString" xmi:id="_o3TP8Y2DEeKAa8oujpoLGw" value=""/>
       </ownedRule>
       <ownedRule xmi:id="_tDh_0I2DEeKAa8oujpoLGw" name="ConstraintAuthenticationNotValid" constrainedElement="_OqBxsOCjEeGnT4WBUDdcyw">

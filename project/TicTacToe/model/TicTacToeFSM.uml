@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_x3s-MIt6EeK7EpFvLJIW6A" name="model">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_x31hEIt6EeK7EpFvLJIW6A" name="StateMachine0">
+    <region xmi:id="_x339UIt6EeK7EpFvLJIW6A" name="Region0">
+      <ownedRule xmi:id="_4xSOsIuGEeK7EpFvLJIW6A" name="ConstraintXWin" visibility="private" constrainedElement="_x_YooIt8EeK7EpFvLJIW6A">
+        <specification xmi:type="uml:LiteralString" xmi:id="_4xV5EIuGEeK7EpFvLJIW6A" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_-iO5oIuGEeK7EpFvLJIW6A" name="ConstraintOWin" constrainedElement="_1TmycIt8EeK7EpFvLJIW6A">
+        <specification xmi:type="uml:LiteralString" xmi:id="_-iPgsIuGEeK7EpFvLJIW6A" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_C8oBUIuHEeK7EpFvLJIW6A" name="ConstraintDraw" constrainedElement="_24qrwIt8EeK7EpFvLJIW6A">
+        <specification xmi:type="uml:LiteralString" xmi:id="_C8ooYIuHEeK7EpFvLJIW6A" value=""/>
+      </ownedRule>
+      <transition xmi:id="_D4wv4It7EeK7EpFvLJIW6A" name="start" source="_2aX4IIt6EeK7EpFvLJIW6A" target="_Ax7h0It7EeK7EpFvLJIW6A"/>
+      <transition xmi:id="_rijIEIt8EeK7EpFvLJIW6A" name="exit" source="_Ax7h0It7EeK7EpFvLJIW6A" target="_q61AwIt8EeK7EpFvLJIW6A"/>
+      <transition xmi:id="_vbHVEIt8EeK7EpFvLJIW6A" name="new" source="_Ax7h0It7EeK7EpFvLJIW6A" target="_oPYHIIt8EeK7EpFvLJIW6A"/>
+      <transition xmi:id="_4EN44It8EeK7EpFvLJIW6A" name="moves" source="_oPYHIIt8EeK7EpFvLJIW6A" target="_x_YooIt8EeK7EpFvLJIW6A"/>
+      <transition xmi:id="_6v4N4It8EeK7EpFvLJIW6A" name="moves" source="_oPYHIIt8EeK7EpFvLJIW6A" target="_1TmycIt8EeK7EpFvLJIW6A"/>
+      <transition xmi:id="_7jKsAIt8EeK7EpFvLJIW6A" name="moves" source="_oPYHIIt8EeK7EpFvLJIW6A" target="_24qrwIt8EeK7EpFvLJIW6A"/>
+      <transition xmi:id="__CAxcIt8EeK7EpFvLJIW6A" name="exit" source="_x_YooIt8EeK7EpFvLJIW6A" target="_q61AwIt8EeK7EpFvLJIW6A"/>
+      <transition xmi:id="_A7O84It9EeK7EpFvLJIW6A" name="exit" source="_1TmycIt8EeK7EpFvLJIW6A" target="_q61AwIt8EeK7EpFvLJIW6A"/>
+      <transition xmi:id="_CvHVUIt9EeK7EpFvLJIW6A" name="exit" source="_24qrwIt8EeK7EpFvLJIW6A" target="_q61AwIt8EeK7EpFvLJIW6A"/>
+      <transition xmi:id="_15rsQIuCEeK7EpFvLJIW6A" name="new" source="_x_YooIt8EeK7EpFvLJIW6A" target="_oPYHIIt8EeK7EpFvLJIW6A"/>
+      <transition xmi:id="__aAzAIuCEeK7EpFvLJIW6A" name="new" source="_1TmycIt8EeK7EpFvLJIW6A" target="_oPYHIIt8EeK7EpFvLJIW6A"/>
+      <transition xmi:id="_CNSL4IuDEeK7EpFvLJIW6A" name="new" source="_24qrwIt8EeK7EpFvLJIW6A" target="_oPYHIIt8EeK7EpFvLJIW6A"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_2aX4IIt6EeK7EpFvLJIW6A" name="Initial0"/>
+      <subvertex xmi:type="uml:State" xmi:id="_Ax7h0It7EeK7EpFvLJIW6A" name="Started"/>
+      <subvertex xmi:type="uml:State" xmi:id="_oPYHIIt8EeK7EpFvLJIW6A" name="NewGame"/>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_q61AwIt8EeK7EpFvLJIW6A" name="FinalState0"/>
+      <subvertex xmi:type="uml:State" xmi:id="_x_YooIt8EeK7EpFvLJIW6A" name="XWin"/>
+      <subvertex xmi:type="uml:State" xmi:id="_1TmycIt8EeK7EpFvLJIW6A" name="OWin"/>
+      <subvertex xmi:type="uml:State" xmi:id="_24qrwIt8EeK7EpFvLJIW6A" name="Draw"/>
+    </region>
+  </packagedElement>
+</uml:Model>

@@ -53,16 +53,16 @@ stock = 1</body>
         <body>credit = 0&#xD;
 1&lt; stock &lt;= 10</body>
       </ownedComment>
-      <ownedRule xmi:id="_4tHQkPxQEeGT0I2oeClwrg" name="ConstraintStockBetweenOneToTen" constrainedElement="_FVPI0NtOEeGbQut3CdTx2Q _GpBr8NtOEeGbQut3CdTx2Q _G5iNINtOEeGbQut3CdTx2Q">
+      <ownedRule xmi:id="_4tHQkPxQEeGT0I2oeClwrg" name="ConstraintStockOneToTen" constrainedElement="_FVPI0NtOEeGbQut3CdTx2Q _GpBr8NtOEeGbQut3CdTx2Q _G5iNINtOEeGbQut3CdTx2Q">
         <specification xmi:type="uml:LiteralString" xmi:id="_4tH3oPxQEeGT0I2oeClwrg" name="number of stock" value="stockOfVendingMachine =10"/>
       </ownedRule>
       <ownedRule xmi:id="_rVgWQPxQEeGT0I2oeClwrg" name="ConstraintStocKOne" constrainedElement="_UwgQ0NmJEeGa16tZvsIA1w _mZ6XgNmJEeGa16tZvsIA1w _E1RPUNtOEeGbQut3CdTx2Q">
         <specification xmi:type="uml:LiteralString" xmi:id="_rViLcPxQEeGT0I2oeClwrg" name="number of the stock" value="1 &lt; stockOfVendingMachine &lt; 10"/>
       </ownedRule>
-      <ownedRule xmi:id="_Cjsu4NwKEeGsQfAO8BUOaA" name="ConstraintCreditGTNinty" constrainedElement="_BkAS4NtOEeGbQut3CdTx2Q _E1RPUNtOEeGbQut3CdTx2Q _G5iNINtOEeGbQut3CdTx2Q">
+      <ownedRule xmi:id="_Cjsu4NwKEeGsQfAO8BUOaA" name="ConstraintCreditGTNinety" constrainedElement="_BkAS4NtOEeGbQut3CdTx2Q _E1RPUNtOEeGbQut3CdTx2Q _G5iNINtOEeGbQut3CdTx2Q">
         <specification xmi:type="uml:LiteralString" xmi:id="_Cj3G8NwKEeGsQfAO8BUOaA" name="credit" value="creditOfVendingMachine >= 90"/>
       </ownedRule>
-      <ownedRule xmi:id="_Qmqe4H-TEeKzZ85bW5cs7g" name="ConstraintCreditZeroToNinty" constrainedElement="_WGTmINmJEeGa16tZvsIA1w _mZ6XgNmJEeGa16tZvsIA1w _GpBr8NtOEeGbQut3CdTx2Q">
+      <ownedRule xmi:id="_Qmqe4H-TEeKzZ85bW5cs7g" name="ConstraintCreditZeroToNinety" constrainedElement="_WGTmINmJEeGa16tZvsIA1w _mZ6XgNmJEeGa16tZvsIA1w _GpBr8NtOEeGbQut3CdTx2Q">
         <specification xmi:type="uml:LiteralString" xmi:id="_oio6YH-UEeKzZ85bW5cs7g" name="stock" value="0 &lt; stockOfVendingMachine &lt; 90"/>
       </ownedRule>
       <ownedRule xmi:id="_2PZlUH-UEeKzZ85bW5cs7g" name="ConstraintCreditZero" constrainedElement="_VpKXINmJEeGa16tZvsIA1w _UwgQ0NmJEeGa16tZvsIA1w _FVPI0NtOEeGbQut3CdTx2Q">
@@ -72,11 +72,11 @@ stock = 1</body>
         <specification xmi:type="uml:LiteralString" xmi:id="_CjplMH-VEeKzZ85bW5cs7g" name="stock" value=""/>
       </ownedRule>
       <transition xmi:id="_KfiJ0NtWEeGbQut3CdTx2Q" name="coin" source="_WGTmINmJEeGa16tZvsIA1w" target="_BkAS4NtOEeGbQut3CdTx2Q"/>
-      <transition xmi:id="_adWRYNtWEeGbQut3CdTx2Q" name="addCoinLessThanNinty" source="_VpKXINmJEeGa16tZvsIA1w" target="_WGTmINmJEeGa16tZvsIA1w"/>
-      <transition xmi:id="_h41ykNtWEeGbQut3CdTx2Q" name="addCoinLessThanNinty" source="_UwgQ0NmJEeGa16tZvsIA1w" target="_mZ6XgNmJEeGa16tZvsIA1w"/>
+      <transition xmi:id="_adWRYNtWEeGbQut3CdTx2Q" name="coin" source="_VpKXINmJEeGa16tZvsIA1w" target="_WGTmINmJEeGa16tZvsIA1w"/>
+      <transition xmi:id="_h41ykNtWEeGbQut3CdTx2Q" name="coin" source="_UwgQ0NmJEeGa16tZvsIA1w" target="_mZ6XgNmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_11l04NtWEeGbQut3CdTx2Q" name="coin" source="_mZ6XgNmJEeGa16tZvsIA1w" target="_E1RPUNtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_LxtG4NtXEeGbQut3CdTx2Q" name="addChocs" source="_UwgQ0NmJEeGa16tZvsIA1w" target="_FVPI0NtOEeGbQut3CdTx2Q"/>
-      <transition xmi:id="_Mm0J8NtXEeGbQut3CdTx2Q" name="addCoinLessThanNinty" source="_FVPI0NtOEeGbQut3CdTx2Q" target="_GpBr8NtOEeGbQut3CdTx2Q"/>
+      <transition xmi:id="_Mm0J8NtXEeGbQut3CdTx2Q" name="coin" source="_FVPI0NtOEeGbQut3CdTx2Q" target="_GpBr8NtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_NSEtcNtXEeGbQut3CdTx2Q" name="coin" source="_GpBr8NtOEeGbQut3CdTx2Q" target="_G5iNINtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_N1BCcNtXEeGbQut3CdTx2Q" name="addChocs" source="_mZ6XgNmJEeGa16tZvsIA1w" target="_GpBr8NtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_OXKtQNtXEeGbQut3CdTx2Q" name="addChocs" source="_E1RPUNtOEeGbQut3CdTx2Q" target="_G5iNINtOEeGbQut3CdTx2Q"/>
@@ -85,26 +85,25 @@ stock = 1</body>
       <transition xmi:id="_QQpXINv2EeGsQfAO8BUOaA" name="addChocs" source="_BkAS4NtOEeGbQut3CdTx2Q" target="_E1RPUNtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_bVngcNv2EeGsQfAO8BUOaA" name="coin" kind="internal" source="_GpBr8NtOEeGbQut3CdTx2Q" target="_GpBr8NtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_m2DAQNwCEeGsQfAO8BUOaA" name="coin" kind="internal" source="_mZ6XgNmJEeGa16tZvsIA1w" target="_mZ6XgNmJEeGa16tZvsIA1w"/>
-      <transition xmi:id="_AeKC4NwDEeGsQfAO8BUOaA" name="getChocs" source="_E1RPUNtOEeGbQut3CdTx2Q" target="_VpKXINmJEeGa16tZvsIA1w"/>
-      <transition xmi:id="_llC18NwDEeGsQfAO8BUOaA" name="addCoinAtLeastNinty" source="_UwgQ0NmJEeGa16tZvsIA1w" target="_E1RPUNtOEeGbQut3CdTx2Q"/>
-      <transition xmi:id="_pfkx0NwDEeGsQfAO8BUOaA" name="addCoinAtLeastNinty" source="_FVPI0NtOEeGbQut3CdTx2Q" target="_G5iNINtOEeGbQut3CdTx2Q"/>
-      <transition xmi:id="_0jZCEPgyEeGHgLRm2DTQnQ" name="getChocs" target="_FVPI0NtOEeGbQut3CdTx2Q"/>
+      <transition xmi:id="_llC18NwDEeGsQfAO8BUOaA" name="coin" source="_UwgQ0NmJEeGa16tZvsIA1w" target="_E1RPUNtOEeGbQut3CdTx2Q"/>
+      <transition xmi:id="_pfkx0NwDEeGsQfAO8BUOaA" name="coin" source="_FVPI0NtOEeGbQut3CdTx2Q" target="_G5iNINtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_jZSREPgzEeGHgLRm2DTQnQ" name="" source="_FVPI0NtOEeGbQut3CdTx2Q" target="_jdY8ANmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_kZ5ZgPgzEeGHgLRm2DTQnQ" name="" source="_UwgQ0NmJEeGa16tZvsIA1w" target="_jdY8ANmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_lYAnkPgzEeGHgLRm2DTQnQ" name="" source="_VpKXINmJEeGa16tZvsIA1w" target="_jdY8ANmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_paIZMPgzEeGHgLRm2DTQnQ" name="initialize" source="_TEbwkNmJEeGa16tZvsIA1w" target="_VpKXINmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_U5jyoPwZEeGT0I2oeClwrg" name="addChocs" source="_WGTmINmJEeGa16tZvsIA1w" target="_mZ6XgNmJEeGa16tZvsIA1w"/>
       <transition xmi:id="_eOceYPwZEeGT0I2oeClwrg" name="coin" kind="internal" source="_WGTmINmJEeGa16tZvsIA1w" target="_WGTmINmJEeGa16tZvsIA1w"/>
-      <transition xmi:id="_6hqugPw8EeGT0I2oeClwrg" name="addCoinAtLeastNinty" source="_VpKXINmJEeGa16tZvsIA1w" target="_BkAS4NtOEeGbQut3CdTx2Q"/>
+      <transition xmi:id="_6hqugPw8EeGT0I2oeClwrg" name="coin" source="_VpKXINmJEeGa16tZvsIA1w" target="_BkAS4NtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_W_mxgJaKEeKvu58QNkWm_g" name="addChocs" kind="internal" source="_FVPI0NtOEeGbQut3CdTx2Q" target="_FVPI0NtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_aYAQsJaKEeKvu58QNkWm_g" name="addChocs" kind="internal" source="_GpBr8NtOEeGbQut3CdTx2Q" target="_GpBr8NtOEeGbQut3CdTx2Q"/>
       <transition xmi:id="_cd60UJaKEeKvu58QNkWm_g" name="addChocs" kind="internal" source="_G5iNINtOEeGbQut3CdTx2Q" target="_G5iNINtOEeGbQut3CdTx2Q"/>
+      <transition xmi:id="_4GUEAJ0qEeKWc9MwHB8ToQ" name="getChocs" source="_E1RPUNtOEeGbQut3CdTx2Q" target="_VpKXINmJEeGa16tZvsIA1w"/>
       <subvertex xmi:type="uml:Pseudostate" xmi:id="_TEbwkNmJEeGa16tZvsIA1w" name="Initial"/>
       <subvertex xmi:type="uml:State" xmi:id="_UwgQ0NmJEeGa16tZvsIA1w" name="Credit0Stock1"/>
       <subvertex xmi:type="uml:State" xmi:id="_VpKXINmJEeGa16tZvsIA1w" name="Credit0Stock0"/>
       <subvertex xmi:type="uml:State" xmi:id="_WGTmINmJEeGa16tZvsIA1w" name="Credit0To90Stock0"/>
       <subvertex xmi:type="uml:FinalState" xmi:id="_jdY8ANmJEeGa16tZvsIA1w" name="Final"/>
-      <subvertex xmi:type="uml:State" xmi:id="_mZ6XgNmJEeGa16tZvsIA1w" name="Credit0To90Stock1"/>
+      <subvertex xmi:type="uml:State" xmi:id="_mZ6XgNmJEeGa16tZvsIA1w" name="Credit0To90Stock1" visibility="package"/>
       <subvertex xmi:type="uml:State" xmi:id="_BkAS4NtOEeGbQut3CdTx2Q" name="Credit90Stock0"/>
       <subvertex xmi:type="uml:State" xmi:id="_E1RPUNtOEeGbQut3CdTx2Q" name="Credit90Stock1"/>
       <subvertex xmi:type="uml:State" xmi:id="_FVPI0NtOEeGbQut3CdTx2Q" name="Credit0Stock1To10"/>

@@ -4,12 +4,9 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 
-public class AtmTest {
+public class TempTest {
 
-    @Test
-    /* The test for the path Initial0 initialize Idle authenticate AuthenticationValid withdraw Withdrawn  Idle authenticate AuthenticationNotValid  FinalState0  */ 
-    public void test1(){
-        /*** test code of initializeMapping for the element initialize ***/
+    public boolean test(){
         boolean userAuthenticated = false; // user is not authenticated to start
         int currentAccountNumber = 0; // no current account number to start
         String input = "1\n\n10";
@@ -20,13 +17,10 @@ public class AtmTest {
         DepositSlot depositSlot = new DepositSlot(); // create deposit slot
         BankDatabase bankDatabase = new BankDatabase(); // create acct info database
         Transaction currentTransaction = null;
-        /*** test code of authenticateMapping for the element authenticate ***/
         userAuthenticated = bankDatabase.authenticateUser( 12345, 54321 );
-        /*** test code of withdrawMapping for the element withdraw ***/
         currentTransaction = new Deposit( 12345, screen, bankDatabase, keypad, depositSlot );
         currentTransaction.execute();
-        /*** test code of notAuthenticateMapping for the element authenticate ***/
         userAuthenticated = bankDatabase.authenticateUser( 12345, 54320 );
-        assertEquals(true, userAuthenticated == false);
+        return userAuthenticated == false;
     }
 }
