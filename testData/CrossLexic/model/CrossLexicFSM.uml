@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_SApb8OybEeGXtusAZo_4EA" name="model">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_SAqDAOybEeGXtusAZo_4EA" name="StateMachine0">
+    <region xmi:id="_SAqDAeybEeGXtusAZo_4EA" name="Region0">
+      <ownedComment xmi:id="_omTIQOydEeGXtusAZo_4EA">
+        <body>back transition can consist of three keys: space, backspace, and delete&#xD;
+the name of a state is in such a format: the length of the word / the number of filled words</body>
+      </ownedComment>
+      <ownedRule xmi:id="_GikBYKB8EeKXi7eFw3wS7Q" name="ConstraintWordLength20" constrainedElement="_reJKAOybEeGXtusAZo_4EA _xf0_oOybEeGXtusAZo_4EA __Lal4OybEeGXtusAZo_4EA">
+        <specification xmi:type="uml:LiteralString" xmi:id="_Gipg8KB8EeKXi7eFw3wS7Q" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_KsOlcKB8EeKXi7eFw3wS7Q" name="ConstraintWordLength1To10" constrainedElement="_E8sA8OycEeGXtusAZo_4EA _LCgIoOycEeGXtusAZo_4EA">
+        <specification xmi:type="uml:LiteralString" xmi:id="_KsPMgKB8EeKXi7eFw3wS7Q" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_RAXdAKB8EeKXi7eFw3wS7Q" name="ConstraintWordLength11To19" constrainedElement="_Cs36cOycEeGXtusAZo_4EA _HKOPgOycEeGXtusAZo_4EA _JC7dkOycEeGXtusAZo_4EA">
+        <specification xmi:type="uml:LiteralString" xmi:id="_RAYEEKB8EeKXi7eFw3wS7Q" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_wSW_oKCEEeKXi7eFw3wS7Q" name="Constraint0Letters" constrainedElement="_reJKAOybEeGXtusAZo_4EA _Cs36cOycEeGXtusAZo_4EA _E8sA8OycEeGXtusAZo_4EA">
+        <specification xmi:type="uml:LiteralString" xmi:id="_wSW_oaCEEeKXi7eFw3wS7Q" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_NCKL8KCFEeKXi7eFw3wS7Q" name="Constraint1To10Letters" constrainedElement="_xf0_oOybEeGXtusAZo_4EA _HKOPgOycEeGXtusAZo_4EA _LCgIoOycEeGXtusAZo_4EA">
+        <specification xmi:type="uml:LiteralString" xmi:id="_NCKL8aCFEeKXi7eFw3wS7Q" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_VjodwKCFEeKXi7eFw3wS7Q" name="ConstraintMoreThen10Letters" constrainedElement="__Lal4OybEeGXtusAZo_4EA _JC7dkOycEeGXtusAZo_4EA">
+        <specification xmi:type="uml:LiteralString" xmi:id="_VjpE0KCFEeKXi7eFw3wS7Q" value=""/>
+      </ownedRule>
+      <transition xmi:id="_oMMREOybEeGXtusAZo_4EA" name="initialize" kind="local" source="_lH8c8OybEeGXtusAZo_4EA" target="_mVAF8OybEeGXtusAZo_4EA"/>
+      <transition xmi:id="_HbkowOydEeGXtusAZo_4EA" name="search" source="_mVAF8OybEeGXtusAZo_4EA" target="_FvdFMOydEeGXtusAZo_4EA"/>
+      <transition xmi:id="_H5KjsOydEeGXtusAZo_4EA" name="clear" source="_FvdFMOydEeGXtusAZo_4EA" target="_CHzpEOydEeGXtusAZo_4EA"/>
+      <transition xmi:id="_IpUOQOydEeGXtusAZo_4EA" name="clear" source="_mVAF8OybEeGXtusAZo_4EA" target="_CHzpEOydEeGXtusAZo_4EA"/>
+      <transition xmi:id="_JPigwOydEeGXtusAZo_4EA" name="backToTyping" source="_CHzpEOydEeGXtusAZo_4EA" target="_mVAF8OybEeGXtusAZo_4EA"/>
+      <transition xmi:id="_i8Oe0POXEeGS79NysAzmvA" name="" source="_FvdFMOydEeGXtusAZo_4EA" target="_igtAcPOXEeGS79NysAzmvA"/>
+      <transition xmi:id="_jU42cPOXEeGS79NysAzmvA" name="" source="_mVAF8OybEeGXtusAZo_4EA" target="_igtAcPOXEeGS79NysAzmvA"/>
+      <transition xmi:id="_kuLkoPOXEeGS79NysAzmvA" name="" source="_CHzpEOydEeGXtusAZo_4EA" target="_igtAcPOXEeGS79NysAzmvA"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_lH8c8OybEeGXtusAZo_4EA" name="Initial0"/>
+      <subvertex xmi:type="uml:State" xmi:id="_mVAF8OybEeGXtusAZo_4EA" name="Typing">
+        <region xmi:id="_qxEBkOybEeGXtusAZo_4EA" name="Region0">
+          <transition xmi:id="_uuNMkOybEeGXtusAZo_4EA" name="" source="_qxFPtOybEeGXtusAZo_4EA" target="_reJKAOybEeGXtusAZo_4EA"/>
+          <transition xmi:id="_mTgbsOycEeGXtusAZo_4EA" name="typeLetters" source="_reJKAOybEeGXtusAZo_4EA" target="_xf0_oOybEeGXtusAZo_4EA"/>
+          <transition xmi:id="_myPmIOycEeGXtusAZo_4EA" name="typeLetters" source="_xf0_oOybEeGXtusAZo_4EA" target="__Lal4OybEeGXtusAZo_4EA"/>
+          <transition xmi:id="_oBsb0OycEeGXtusAZo_4EA" name="typeLetters" source="_Cs36cOycEeGXtusAZo_4EA" target="_HKOPgOycEeGXtusAZo_4EA"/>
+          <transition xmi:id="_ofgZMOycEeGXtusAZo_4EA" name="typeLetters" source="_HKOPgOycEeGXtusAZo_4EA" target="_JC7dkOycEeGXtusAZo_4EA"/>
+          <transition xmi:id="_qGu1sOycEeGXtusAZo_4EA" name="typeLetters" source="_E8sA8OycEeGXtusAZo_4EA" target="_LCgIoOycEeGXtusAZo_4EA"/>
+          <transition xmi:id="_xxoE0OycEeGXtusAZo_4EA" name="back" source="_xf0_oOybEeGXtusAZo_4EA" target="_reJKAOybEeGXtusAZo_4EA"/>
+          <transition xmi:id="_0GaK4OycEeGXtusAZo_4EA" name="back" source="__Lal4OybEeGXtusAZo_4EA" target="_xf0_oOybEeGXtusAZo_4EA"/>
+          <transition xmi:id="_0joSYOycEeGXtusAZo_4EA" name="back" source="_HKOPgOycEeGXtusAZo_4EA" target="_Cs36cOycEeGXtusAZo_4EA"/>
+          <transition xmi:id="_08k94OycEeGXtusAZo_4EA" name="back" source="_JC7dkOycEeGXtusAZo_4EA" target="_HKOPgOycEeGXtusAZo_4EA"/>
+          <transition xmi:id="_1bGs8OycEeGXtusAZo_4EA" name="back" source="_LCgIoOycEeGXtusAZo_4EA" target="_E8sA8OycEeGXtusAZo_4EA"/>
+          <transition xmi:id="_LvxB0OydEeGXtusAZo_4EA" name="switch" source="__Lal4OybEeGXtusAZo_4EA" target="_JC7dkOycEeGXtusAZo_4EA"/>
+          <transition xmi:id="_O1_L4OydEeGXtusAZo_4EA" name="switch" source="_xf0_oOybEeGXtusAZo_4EA" target="_HKOPgOycEeGXtusAZo_4EA"/>
+          <transition xmi:id="_P_oUgOydEeGXtusAZo_4EA" name="switch" source="_reJKAOybEeGXtusAZo_4EA" target="_Cs36cOycEeGXtusAZo_4EA"/>
+          <transition xmi:id="_QfgHYOydEeGXtusAZo_4EA" name="switch" source="_Cs36cOycEeGXtusAZo_4EA" target="_E8sA8OycEeGXtusAZo_4EA"/>
+          <transition xmi:id="_UFxDcOydEeGXtusAZo_4EA" name="switch" source="_HKOPgOycEeGXtusAZo_4EA" target="_LCgIoOycEeGXtusAZo_4EA"/>
+          <transition xmi:id="_XigQEOydEeGXtusAZo_4EA" name="switch" source="_JC7dkOycEeGXtusAZo_4EA" target="_LCgIoOycEeGXtusAZo_4EA"/>
+          <transition xmi:id="_YlBdAOydEeGXtusAZo_4EA" name="switch" source="_E8sA8OycEeGXtusAZo_4EA" target="_Cs36cOycEeGXtusAZo_4EA"/>
+          <transition xmi:id="_ZEsbkOydEeGXtusAZo_4EA" name="switch" source="_Cs36cOycEeGXtusAZo_4EA" target="_reJKAOybEeGXtusAZo_4EA"/>
+          <transition xmi:id="_ZjcNEOydEeGXtusAZo_4EA" name="switch" source="_LCgIoOycEeGXtusAZo_4EA" target="_HKOPgOycEeGXtusAZo_4EA"/>
+          <transition xmi:id="_aIIOgOydEeGXtusAZo_4EA" name="switch" source="_HKOPgOycEeGXtusAZo_4EA" target="_xf0_oOybEeGXtusAZo_4EA"/>
+          <transition xmi:id="_a597IOydEeGXtusAZo_4EA" name="switch" source="_JC7dkOycEeGXtusAZo_4EA" target="__Lal4OybEeGXtusAZo_4EA"/>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_qxFPtOybEeGXtusAZo_4EA" name="InitialInTyping"/>
+          <subvertex xmi:type="uml:State" xmi:id="_reJKAOybEeGXtusAZo_4EA" name="20/0"/>
+          <subvertex xmi:type="uml:State" xmi:id="_xf0_oOybEeGXtusAZo_4EA" name="20/1-10"/>
+          <subvertex xmi:type="uml:State" xmi:id="__Lal4OybEeGXtusAZo_4EA" name="20/11-20"/>
+          <subvertex xmi:type="uml:State" xmi:id="_Cs36cOycEeGXtusAZo_4EA" name="11-19/0"/>
+          <subvertex xmi:type="uml:State" xmi:id="_E8sA8OycEeGXtusAZo_4EA" name="1-10/0"/>
+          <subvertex xmi:type="uml:State" xmi:id="_HKOPgOycEeGXtusAZo_4EA" name="11-19/1-10"/>
+          <subvertex xmi:type="uml:State" xmi:id="_JC7dkOycEeGXtusAZo_4EA" name="11-19/11-19"/>
+          <subvertex xmi:type="uml:State" xmi:id="_LCgIoOycEeGXtusAZo_4EA" name="1-10/1-10"/>
+        </region>
+      </subvertex>
+      <subvertex xmi:type="uml:State" xmi:id="_CHzpEOydEeGXtusAZo_4EA" name="Clear"/>
+      <subvertex xmi:type="uml:State" xmi:id="_FvdFMOydEeGXtusAZo_4EA" name="Searching"/>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_igtAcPOXEeGS79NysAzmvA" name="FinalState0"/>
+    </region>
+  </packagedElement>
+</uml:Model>
