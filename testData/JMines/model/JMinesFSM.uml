@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_GP4d8PBcEeGBfdnYq3szoQ" name="model">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_GP4d8fBcEeGBfdnYq3szoQ" name="StateMachine0">
+    <region xmi:id="_GP4d8vBcEeGBfdnYq3szoQ" name="Region0">
+      <transition xmi:id="_pL6mMPBgEeGBfdnYq3szoQ" name="initialize" source="_IIPtwPBcEeGBfdnYq3szoQ" target="_nZOgkPBgEeGBfdnYq3szoQ"/>
+      <transition xmi:id="_7taxgPBrEeGBfdnYq3szoQ" name="" source="_nZOgkPBgEeGBfdnYq3szoQ" target="_K1eJAPBcEeGBfdnYq3szoQ"/>
+      <transition xmi:id="_CNZFoPBsEeGBfdnYq3szoQ" name="newGame" source="_K1eJAPBcEeGBfdnYq3szoQ" target="_nZOgkPBgEeGBfdnYq3szoQ"/>
+      <transition xmi:id="_jA7NIPBsEeGBfdnYq3szoQ" name="newGame" kind="internal" source="_nZOgkPBgEeGBfdnYq3szoQ" target="_nZOgkPBgEeGBfdnYq3szoQ"/>
+      <transition xmi:id="_0n6qQPByEeGBfdnYq3szoQ" name="Transition1" source="_nZOgkPBgEeGBfdnYq3szoQ"/>
+      <transition xmi:id="_5GuicPBzEeGBfdnYq3szoQ" name="play" source="_nZOgkPBgEeGBfdnYq3szoQ" target="_a73oAPBgEeGBfdnYq3szoQ"/>
+      <transition xmi:id="_5sx10PBzEeGBfdnYq3szoQ" name="newGame" source="_a73oAPBgEeGBfdnYq3szoQ" target="_nZOgkPBgEeGBfdnYq3szoQ"/>
+      <transition xmi:id="_BFFgIPB0EeGBfdnYq3szoQ" name="click a tile" guard="_NcYX4Pz0EeGayOoHc31Utw">
+        <ownedRule xmi:id="_NcYX4Pz0EeGayOoHc31Utw" name="click all tiles that do not have mines"/>
+      </transition>
+      <transition xmi:id="_EudakPB0EeGBfdnYq3szoQ" name="newGame" source="__2u2oPBzEeGBfdnYq3szoQ" target="_nZOgkPBgEeGBfdnYq3szoQ"/>
+      <transition xmi:id="_edBSMPLfEeG-JcpQuxjkQw" name="" source="__2u2oPBzEeGBfdnYq3szoQ" target="_dlJ2EPLfEeG-JcpQuxjkQw"/>
+      <transition xmi:id="_AbJYIKOmEeKLuO0e64xBSg" name="" source="_a73oAPBgEeGBfdnYq3szoQ" target="__2u2oPBzEeGBfdnYq3szoQ"/>
+      <transition xmi:id="_RL2VMKOmEeKLuO0e64xBSg" name="robotPlay" source="_nZOgkPBgEeGBfdnYq3szoQ" target="_lPF2gKOlEeKLuO0e64xBSg"/>
+      <transition xmi:id="_TIavkKOmEeKLuO0e64xBSg" name="newGame" source="_lPF2gKOlEeKLuO0e64xBSg" target="_nZOgkPBgEeGBfdnYq3szoQ"/>
+      <transition xmi:id="_wz6vIKOmEeKLuO0e64xBSg" name="play" source="_K1eJAPBcEeGBfdnYq3szoQ" target="_a73oAPBgEeGBfdnYq3szoQ"/>
+      <transition xmi:id="_zj3HMKOmEeKLuO0e64xBSg" name="robotPlay" source="_K1eJAPBcEeGBfdnYq3szoQ" target="_lPF2gKOlEeKLuO0e64xBSg"/>
+      <transition xmi:id="_nCkUYKOnEeKLuO0e64xBSg" name="expert" source="_ipjb0KOeEeKLuO0e64xBSg" target="_EEUicKOfEeKLuO0e64xBSg"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_IIPtwPBcEeGBfdnYq3szoQ" name="Initial"/>
+      <subvertex xmi:type="uml:State" xmi:id="_K1eJAPBcEeGBfdnYq3szoQ" name="Setting">
+        <region xmi:id="_q2zPIPBqEeGBfdnYq3szoQ" name="Region0">
+          <transition xmi:id="_HhVg8PBrEeGBfdnYq3szoQ" name="expert" source="_q21EUPBqEeGBfdnYq3szoQ" target="_r9NdkPBqEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_MqqLMPBrEeGBfdnYq3szoQ" name="intermediate" source="_q21EUPBqEeGBfdnYq3szoQ" target="_rWElEPBqEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_SFk7wPBrEeGBfdnYq3szoQ" name="beginner" source="_r9NdkPBqEeGBfdnYq3szoQ" target="_q21EUPBqEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_THz00PBrEeGBfdnYq3szoQ" name="intermediate" source="_r9NdkPBqEeGBfdnYq3szoQ" target="_rWElEPBqEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_U6tV0PBrEeGBfdnYq3szoQ" name="expert" source="_rWElEPBqEeGBfdnYq3szoQ" target="_r9NdkPBqEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_VUCb0PBrEeGBfdnYq3szoQ" name="beginner" source="_rWElEPBqEeGBfdnYq3szoQ" target="_q21EUPBqEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_3qix8PBrEeGBfdnYq3szoQ" name="beginner" source="_1vdlUPBrEeGBfdnYq3szoQ" target="_q21EUPBqEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_cZqyIKOeEeKLuO0e64xBSg" name="spanish" source="_q21EUPBqEeGBfdnYq3szoQ" target="_kd1HwKOcEeKLuO0e64xBSg"/>
+          <transition xmi:id="_fMkXkKOeEeKLuO0e64xBSg" name="otherShape" source="_q21EUPBqEeGBfdnYq3szoQ" target="_quWDkKOcEeKLuO0e64xBSg"/>
+          <transition xmi:id="_t3GSUKOeEeKLuO0e64xBSg" name="spanish" source="_rWElEPBqEeGBfdnYq3szoQ" target="_ipjb0KOeEeKLuO0e64xBSg"/>
+          <transition xmi:id="_u0MMsKOeEeKLuO0e64xBSg" name="otherShape" source="_rWElEPBqEeGBfdnYq3szoQ" target="_pKnVEKOeEeKLuO0e64xBSg"/>
+          <transition xmi:id="_IWilkKOfEeKLuO0e64xBSg" name="spanish" source="_r9NdkPBqEeGBfdnYq3szoQ" target="_EEUicKOfEeKLuO0e64xBSg"/>
+          <transition xmi:id="_KIoOQKOfEeKLuO0e64xBSg" name="otherShape" source="_r9NdkPBqEeGBfdnYq3szoQ" target="_F4TokKOfEeKLuO0e64xBSg"/>
+          <transition xmi:id="_w5CR8KOhEeKLuO0e64xBSg" name="otherShape" source="_kd1HwKOcEeKLuO0e64xBSg" target="_rDpL4KOhEeKLuO0e64xBSg"/>
+          <transition xmi:id="_3SJJEKOhEeKLuO0e64xBSg" name="english" source="_rDpL4KOhEeKLuO0e64xBSg" target="_quWDkKOcEeKLuO0e64xBSg"/>
+          <transition xmi:id="_6RpnIKOhEeKLuO0e64xBSg" name="spanish" source="_quWDkKOcEeKLuO0e64xBSg" target="_rDpL4KOhEeKLuO0e64xBSg"/>
+          <transition xmi:id="_bP_lkKOkEeKLuO0e64xBSg" name="otherShape" source="_ipjb0KOeEeKLuO0e64xBSg" target="_YEKiwKOkEeKLuO0e64xBSg"/>
+          <transition xmi:id="_c08KIKOkEeKLuO0e64xBSg" name="spanish" source="_pKnVEKOeEeKLuO0e64xBSg" target="_YEKiwKOkEeKLuO0e64xBSg"/>
+          <transition xmi:id="_ecdhkKOkEeKLuO0e64xBSg" name="english" source="_YEKiwKOkEeKLuO0e64xBSg" target="_pKnVEKOeEeKLuO0e64xBSg"/>
+          <transition xmi:id="_i8tZoKOkEeKLuO0e64xBSg" name="otherShape" source="_EEUicKOfEeKLuO0e64xBSg" target="_f62LIKOkEeKLuO0e64xBSg"/>
+          <transition xmi:id="_lrJV0KOkEeKLuO0e64xBSg" name="english" source="_f62LIKOkEeKLuO0e64xBSg" target="_F4TokKOfEeKLuO0e64xBSg"/>
+          <transition xmi:id="_nwuiQKOkEeKLuO0e64xBSg" name="spanish" source="_F4TokKOfEeKLuO0e64xBSg" target="_f62LIKOkEeKLuO0e64xBSg"/>
+          <transition xmi:id="_6alZUKOkEeKLuO0e64xBSg" name="english" source="_EEUicKOfEeKLuO0e64xBSg" target="_r9NdkPBqEeGBfdnYq3szoQ"/>
+          <transition xmi:id="__U1FwKOkEeKLuO0e64xBSg" name="english" source="_ipjb0KOeEeKLuO0e64xBSg" target="_rWElEPBqEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_EYM5AKOlEeKLuO0e64xBSg" name="english" source="_kd1HwKOcEeKLuO0e64xBSg" target="_q21EUPBqEeGBfdnYq3szoQ"/>
+          <transition xmi:id="_EuiDcKOnEeKLuO0e64xBSg" name="intermediate" source="_f62LIKOkEeKLuO0e64xBSg" target="_YEKiwKOkEeKLuO0e64xBSg"/>
+          <transition xmi:id="_HZ-WAKOnEeKLuO0e64xBSg" name="expert" source="_YEKiwKOkEeKLuO0e64xBSg" target="_f62LIKOkEeKLuO0e64xBSg"/>
+          <transition xmi:id="_JRq3cKOnEeKLuO0e64xBSg" name="beginner" source="_YEKiwKOkEeKLuO0e64xBSg" target="_rDpL4KOhEeKLuO0e64xBSg"/>
+          <transition xmi:id="_K9p4IKOnEeKLuO0e64xBSg" name="intermediate" source="_rDpL4KOhEeKLuO0e64xBSg" target="_YEKiwKOkEeKLuO0e64xBSg"/>
+          <transition xmi:id="_MZtmcKOnEeKLuO0e64xBSg" name="expert" source="_rDpL4KOhEeKLuO0e64xBSg" target="_f62LIKOkEeKLuO0e64xBSg"/>
+          <transition xmi:id="_N-WB8KOnEeKLuO0e64xBSg" name="beginner" source="_f62LIKOkEeKLuO0e64xBSg" target="_rDpL4KOhEeKLuO0e64xBSg"/>
+          <transition xmi:id="_XFzVsKOnEeKLuO0e64xBSg" name="intermediate" source="_quWDkKOcEeKLuO0e64xBSg" target="_pKnVEKOeEeKLuO0e64xBSg"/>
+          <transition xmi:id="_ZJlLUKOnEeKLuO0e64xBSg" name="beginner" source="_pKnVEKOeEeKLuO0e64xBSg" target="_quWDkKOcEeKLuO0e64xBSg"/>
+          <transition xmi:id="_bTbMsKOnEeKLuO0e64xBSg" name="expert" source="_pKnVEKOeEeKLuO0e64xBSg" target="_F4TokKOfEeKLuO0e64xBSg"/>
+          <transition xmi:id="_c2QRYKOnEeKLuO0e64xBSg" name="intermediate" source="_F4TokKOfEeKLuO0e64xBSg" target="_pKnVEKOeEeKLuO0e64xBSg"/>
+          <transition xmi:id="_f6zngKOnEeKLuO0e64xBSg" name="expert" source="_quWDkKOcEeKLuO0e64xBSg" target="_F4TokKOfEeKLuO0e64xBSg"/>
+          <transition xmi:id="_h2LvEKOnEeKLuO0e64xBSg" name="beginner" source="_F4TokKOfEeKLuO0e64xBSg" target="_quWDkKOcEeKLuO0e64xBSg"/>
+          <transition xmi:id="_pRzzIKOnEeKLuO0e64xBSg" name="intermediate" source="_EEUicKOfEeKLuO0e64xBSg" target="_ipjb0KOeEeKLuO0e64xBSg"/>
+          <transition xmi:id="_umQvUKOnEeKLuO0e64xBSg" name="beginner" source="_ipjb0KOeEeKLuO0e64xBSg" target="_kd1HwKOcEeKLuO0e64xBSg"/>
+          <transition xmi:id="_ymdOUKOnEeKLuO0e64xBSg" name="intermediate" source="_kd1HwKOcEeKLuO0e64xBSg" target="_ipjb0KOeEeKLuO0e64xBSg"/>
+          <transition xmi:id="_1v8u0KOnEeKLuO0e64xBSg" name="expert" source="_kd1HwKOcEeKLuO0e64xBSg" target="_EEUicKOfEeKLuO0e64xBSg"/>
+          <transition xmi:id="_3rB7cKOnEeKLuO0e64xBSg" name="beginner" source="_EEUicKOfEeKLuO0e64xBSg" target="_kd1HwKOcEeKLuO0e64xBSg"/>
+          <subvertex xmi:type="uml:State" xmi:id="_q21EUPBqEeGBfdnYq3szoQ" name="Beginner"/>
+          <subvertex xmi:type="uml:State" xmi:id="_rWElEPBqEeGBfdnYq3szoQ" name="Intermediate"/>
+          <subvertex xmi:type="uml:State" xmi:id="_r9NdkPBqEeGBfdnYq3szoQ" name="Expert"/>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_1vdlUPBrEeGBfdnYq3szoQ" name="InitialInDifficulty"/>
+          <subvertex xmi:type="uml:State" xmi:id="_kd1HwKOcEeKLuO0e64xBSg" name="BegineerSpanish"/>
+          <subvertex xmi:type="uml:State" xmi:id="_quWDkKOcEeKLuO0e64xBSg" name="BeginnerOtherShape"/>
+          <subvertex xmi:type="uml:State" xmi:id="_ipjb0KOeEeKLuO0e64xBSg" name="IntermediateSpanish"/>
+          <subvertex xmi:type="uml:State" xmi:id="_pKnVEKOeEeKLuO0e64xBSg" name="IntermediateOtherShape"/>
+          <subvertex xmi:type="uml:State" xmi:id="_EEUicKOfEeKLuO0e64xBSg" name="ExpertSpanish"/>
+          <subvertex xmi:type="uml:State" xmi:id="_F4TokKOfEeKLuO0e64xBSg" name="ExpertOtherShape"/>
+          <subvertex xmi:type="uml:State" xmi:id="_rDpL4KOhEeKLuO0e64xBSg" name="BeginnerSpanishOtherShape"/>
+          <subvertex xmi:type="uml:State" xmi:id="_YEKiwKOkEeKLuO0e64xBSg" name="IntermediateSpaishOtherShape"/>
+          <subvertex xmi:type="uml:State" xmi:id="_f62LIKOkEeKLuO0e64xBSg" name="ExpertSpanishOtherShape"/>
+        </region>
+      </subvertex>
+      <subvertex xmi:type="uml:State" xmi:id="_YBVJgPBgEeGBfdnYq3szoQ" name="RobotMenu"/>
+      <subvertex xmi:type="uml:State" xmi:id="_a73oAPBgEeGBfdnYq3szoQ" name="HumanPlaying"/>
+      <subvertex xmi:type="uml:State" xmi:id="_nZOgkPBgEeGBfdnYq3szoQ" name="NewGame"/>
+      <subvertex xmi:type="uml:State" xmi:id="_mLB_YPBxEeGBfdnYq3szoQ" name="State0"/>
+      <subvertex xmi:type="uml:State" xmi:id="__2u2oPBzEeGBfdnYq3szoQ" name="Result"/>
+      <subvertex xmi:type="uml:State" xmi:id="_CaS_kPB0EeGBfdnYq3szoQ" name="State1"/>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_dlJ2EPLfEeG-JcpQuxjkQw" name="FinalState"/>
+      <subvertex xmi:type="uml:State" xmi:id="_lPF2gKOlEeKLuO0e64xBSg" name="RobotPlaying"/>
+    </region>
+  </packagedElement>
+</uml:Model>

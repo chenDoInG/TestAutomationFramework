@@ -16,40 +16,40 @@
 			e.printStackTrace();
 		}
 		
-		HtmlForm form = page.getFormByName("minimalMUMCUTCoverageForm");
+		HtmlForm form = page.getFormByName(&quot;minimalMUMCUTCoverageForm&quot;);
 
-		final HtmlSubmitInput buttonMUTPH = form.getInputByValue("MUTP Heuristic");
+		final HtmlSubmitInput buttonMUTPH = form.getInputByValue(&quot;MUTP Heuristic&quot;);
 		
-		final HtmlSubmitInput buttonFDM = form.getInputByValue("Fault Detection Maximization");
+		final HtmlSubmitInput buttonFDM = form.getInputByValue(&quot;Fault Detection Maximization&quot;);
 		
-		final HtmlSubmitInput buttonNewExpression = form.getInputByValue("New Expression");
+		final HtmlSubmitInput buttonNewExpression = form.getInputByValue(&quot;New Expression&quot;);
 		
-		final HtmlSubmitInput buttonGraphCoverage = form.getInputByValue("Graph Coverage");
-		final HtmlSubmitInput buttonDataFlowCoverage = form.getInputByValue("Data Flow Coverage");
-		final HtmlSubmitInput buttonLogicCoverage = form.getInputByValue("Logic Coverage");
+		final HtmlSubmitInput buttonGraphCoverage = form.getInputByValue(&quot;Graph Coverage&quot;);
+		final HtmlSubmitInput buttonDataFlowCoverage = form.getInputByValue(&quot;Data Flow Coverage&quot;);
+		final HtmlSubmitInput buttonLogicCoverage = form.getInputByValue(&quot;Logic Coverage&quot;);
 		
-		final HtmlTextInput textInputExpression = form.getInputByName("expression");
-		final HtmlTextInput textInputInfeasibleLiterals = form.getInputByName("infeasibleLiterals");
-		final HtmlTextInput textInputMaxTestSetSize = form.getInputByName("maxTestSetSize");
+		final HtmlTextInput textInputExpression = form.getInputByName(&quot;expression&quot;);
+		final HtmlTextInput textInputInfeasibleLiterals = form.getInputByName(&quot;infeasibleLiterals&quot;);
+		final HtmlTextInput textInputMaxTestSetSize = form.getInputByName(&quot;maxTestSetSize&quot;);
 		</code><required-mappings></required-mappings></mapping>
-<mapping><name>enterExpressionAndLiteralsMapping</name><transition-name>enterExpressionAndLiterals</transition-name><code>textInputExpression.setText(&quot;a &amp; b&quot;); textInputInfeasibleLiterals.setText("a=1,b=1");</code><required-mappings></required-mappings></mapping>
-<mapping><name>enterWrongExpressionMapping</name><transition-name>enterWrongExpression</transition-name><code>textInputExpression.setText(&quot;a &amp;&amp; b&quot;);textInputInfeasibleLiterals.setText("");</code><required-mappings></required-mappings></mapping>
+<mapping><name>enterExpressionAndLiteralsMapping</name><transition-name>enterExpressionAndLiterals</transition-name><code>textInputExpression.setText(&quot;a &amp; b&quot;); textInputInfeasibleLiterals.setText(&quot;a=1,b=1&quot;);</code><required-mappings></required-mappings></mapping>
+<mapping><name>enterWrongExpressionMapping</name><transition-name>enterWrongExpression</transition-name><code>textInputExpression.setText(&quot;a &amp;&amp; b&quot;);textInputInfeasibleLiterals.setText(&quot;&quot;);</code><required-mappings></required-mappings></mapping>
 <mapping><name>enterIntegerMapping</name>
 	<transition-name>enterInteger</transition-name>
-	<code>textInputMaxTestSetSize.setText("1");</code><required-mappings></required-mappings></mapping>
+	<code>textInputMaxTestSetSize.setText(&quot;1&quot;);</code><required-mappings></required-mappings></mapping>
 <mapping><name>clearIntegerMapping</name>
 	<transition-name>clearInteger</transition-name>
-	<code>textInputMaxTestSetSize.setText("");</code><required-mappings></required-mappings></mapping>
+	<code>textInputMaxTestSetSize.setText(&quot;&quot;);</code><required-mappings></required-mappings></mapping>
 	<mapping>
 		<name>enterWrongIntegerMapping</name>
 		<transition-name>enterWrongInteger</transition-name>
-		<code>textInputMaxTestSetSize.setText("-1");</code></mapping>
+		<code>textInputMaxTestSetSize.setText(&quot;-1&quot;);</code></mapping>
 	<mapping>
 		<name>enterExpressionAndWrongLiteralsMapping</name>
 		<transition-name>enterExpressionAndWrongLiterals</transition-name>
 		<code>
 			textInputExpression.setText(&quot;a &amp; b&quot;);
-			textInputInfeasibleLiterals.setText("a = 0");
+			textInputInfeasibleLiterals.setText(&quot;a = 0&quot;);
 		</code></mapping>
 	<mapping>
 		<name>mUTPHMapping</name>

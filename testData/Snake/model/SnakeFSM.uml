@@ -33,7 +33,7 @@
       <transition xmi:id="_ZgF74I50EeK5BuI19e9FRQ" name="newGame" source="_dKVOcI5zEeK5BuI19e9FRQ" target="_4LdhMI5tEeK5BuI19e9FRQ"/>
       <transition xmi:id="_bXgJcI50EeK5BuI19e9FRQ" name="checkScores" source="_4LdhMI5tEeK5BuI19e9FRQ" target="_dKVOcI5zEeK5BuI19e9FRQ"/>
       <transition xmi:id="_0gUA8I50EeK5BuI19e9FRQ" name="chooseDifficulty" source="_dKVOcI5zEeK5BuI19e9FRQ" target="_8HRPcI5tEeK5BuI19e9FRQ"/>
-      <transition xmi:id="_ULL3QI51EeK5BuI19e9FRQ" name="NewGame" source="_MXvJEI51EeK5BuI19e9FRQ" target="_IzKd0I5vEeK5BuI19e9FRQ"/>
+      <transition xmi:id="_ULL3QI51EeK5BuI19e9FRQ" name="newGame" source="_MXvJEI51EeK5BuI19e9FRQ" target="_IzKd0I5vEeK5BuI19e9FRQ"/>
       <transition xmi:id="_WIgfkI51EeK5BuI19e9FRQ" name="checkScores" source="_IzKd0I5vEeK5BuI19e9FRQ" target="_MXvJEI51EeK5BuI19e9FRQ"/>
       <transition xmi:id="_XrsJkI51EeK5BuI19e9FRQ" name="chooseDifficulty" source="_MXvJEI51EeK5BuI19e9FRQ" target="_-Tz_gI5tEeK5BuI19e9FRQ"/>
       <transition xmi:id="_flewUI51EeK5BuI19e9FRQ" name="newGame" source="_DDqVoI51EeK5BuI19e9FRQ" target="_JdU1II5vEeK5BuI19e9FRQ"/>

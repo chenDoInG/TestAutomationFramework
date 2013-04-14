@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><mappings>
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings>
 	<mapping>
 		<name>coinQuarter</name>
 		<transition-name>coin</transition-name>
@@ -16,16 +17,16 @@
 	<mapping>
 		<name>doingNothing</name>
 		<transition-name>none</transition-name>
-		<code/></mapping>
+		<code></code></mapping>
 	
 	
 	
-	<mapping><name>addChocolate</name><transition-name>addChocs</transition-name><code>vm.addChoc("MM");</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>coinOneDollarAndTen</name><transition-name>coin</transition-name><code>vm.coin(10);
+	<mapping><name>addChocolate</name><transition-name>addChocs</transition-name><code>vm.addChoc(&quot;MM&quot;);</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>coinOneDollarAndTen</name><transition-name>coin</transition-name><code>vm.coin(10);
 vm.coin(25);
 vm.coin(25);
 vm.coin(25);
 vm.coin(25);</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>coinFifty</name><transition-name>coin</transition-name><code>vm.coin(25);
-vm.coin(25);</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>stringBufferInit</name><object-name>sb</object-name><class-name>StringBuffer</class-name><code>StringBuffer sb = new StringBuffer("MM");</code></mapping><mapping><name>getTwoChocolates</name><transition-name>getChocs</transition-name><code>vm.getChoc(sb);
+vm.coin(25);</code><required-mappings>vMachineInit</required-mappings></mapping><mapping><name>stringBufferInit</name><object-name>sb</object-name><class-name>StringBuffer</class-name><code>StringBuffer sb = new StringBuffer(&quot;MM&quot;);</code></mapping><mapping><name>getTwoChocolates</name><transition-name>getChocs</transition-name><code>vm.getChoc(sb);
 vm.coin(100);
 vm.getChoc(sb);
 

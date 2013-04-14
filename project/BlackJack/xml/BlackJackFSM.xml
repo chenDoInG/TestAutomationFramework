@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><mappings><mapping><name>dealMapping</name><transition-name>deal</transition-name><code>frame.getDealButton().doClick();</code></mapping><mapping><name>hitHitHitMapping</name><transition-name>hitHitHit</transition-name><code>frame.getHitButton().doClick();
+frame.getHitButton().doClick();
+frame.getHitButton().doClick();</code></mapping><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>BlackjackGUI frame = new BlackjackGUI();
+frame.display();</code></mapping><mapping><name>stayStayStayMapping</name><transition-name>stayStayStay</transition-name><code>frame.getStayButton().doClick();
+frame.getStayButton().doClick();
+frame.getStayButton().doClick();</code></mapping><mapping><name>againMapping</name><transition-name>again</transition-name><code>frame.getPlayAgainButton().doClick();</code></mapping><mapping><name>hitHitStayMapping</name><transition-name>hitHitStay</transition-name><code>frame.getHitButton().doClick();
+frame.getHitButton().doClick();
+frame.getStayButton().doClick();</code></mapping><mapping><name>hitStayHitMapping</name><transition-name>hitStayHit</transition-name><code>frame.getHitButton().doClick();
+frame.getStayButton().doClick();
+frame.getHitButton().doClick();</code></mapping><mapping><name>hitStayStayMapping</name><transition-name>hitStayStay</transition-name><code>frame.getHitButton().doClick();
+frame.getStayButton().doClick();
+frame.getStayButton().doClick();</code></mapping><mapping><name>stayStayHitMapping</name><transition-name>stayStayHit</transition-name><code>frame.getStayButton().doClick();
+frame.getStayButton().doClick();
+frame.getHitButton().doClick();</code></mapping><mapping><name>stayHitStayMapping</name><transition-name>stayHitStay</transition-name><code>frame.getStayButton().doClick();
+frame.getHitButton().doClick();
+frame.getStayButton().doClick();</code></mapping><mapping><name>stayHitHitMapping</name><transition-name>stayHitHit</transition-name><code>frame.getStayButton().doClick();
+frame.getHitButton().doClick();
+frame.getHitButton().doClick();</code></mapping><mapping><name>ConstraintResultMapping</name><constraint-name>ConstraintResult</constraint-name><code>frame.getWinLoseBox().getText().trim().equals("") == false;</code><stateinvariants>Result</stateinvariants></mapping></mappings>

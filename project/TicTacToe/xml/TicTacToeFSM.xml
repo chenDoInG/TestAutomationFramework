@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><mappings><mapping><name>startMapping</name><transition-name>start</transition-name><code>//board values
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings><mapping><name>startMapping</name><transition-name>start</transition-name><code>//board values
 		int[][] Amap = { {0,0,0} , {0,0,0} , {0,0,0}  }; //Available Spots on the board
 		int[][] Xmap = { {0,0,0} , {0,0,0} , {0,0,0}  }; //location of &amp;apos;X&amp;apos; Pieces
 		int[][] Omap = { {0,0,0} , {0,0,0} , {0,0,0}  }; //location of &amp;apos;O&amp;apos; Pieces
@@ -7,21 +8,21 @@
 		int WhosTurn = 1;
 				
 		TicTacToe ttt = new TicTacToe();
-		ttt.Welcome();</code></mapping><mapping><name>newMapping</name><transition-name>new</transition-name><code>System.setIn(new ByteArrayInputStream("y".getBytes()));	
+		ttt.Welcome();</code></mapping><mapping><name>newMapping</name><transition-name>new</transition-name><code>System.setIn(new ByteArrayInputStream(&quot;y&quot;.getBytes()));	
 		try {
 			ttt.NewGame(Amap, Xmap, Omap);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ttt.ShowGameBoard(Amap, Xmap, Omap);</code></mapping><mapping><name>exitMapping</name><transition-name>exit</transition-name><code>System.setIn(new ByteArrayInputStream("n".getBytes()));
+		ttt.ShowGameBoard(Amap, Xmap, Omap);</code></mapping><mapping><name>exitMapping</name><transition-name>exit</transition-name><code>System.setIn(new ByteArrayInputStream(&quot;n&quot;.getBytes()));
         try {
 			ttt.CheckWin(Amap, Xmap, Omap);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}</code></mapping><mapping><name>ConstraintXWinMapping</name><constraint-name>ConstraintXWin</constraint-name><code>ttt.getWinner().equals("eXes") == true;</code><stateinvariants>XWin</stateinvariants></mapping><mapping><name>movesOWinMapping</name><transition-name>moves</transition-name><code>//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("b2".getBytes()));	
+		}</code></mapping><mapping><name>ConstraintXWinMapping</name><constraint-name>ConstraintXWin</constraint-name><code>ttt.getWinner().equals(&quot;eXes&quot;) == true;</code><stateinvariants>XWin</stateinvariants></mapping><mapping><name>movesOWinMapping</name><transition-name>moves</transition-name><code>//this code is used to simulate the system input from the command line
+		System.setIn(new ByteArrayInputStream(&quot;b2&quot;.getBytes()));	
 		
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -38,7 +39,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("a1".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;a1&quot;.getBytes()));
 		
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -55,7 +56,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("a2".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;a2&quot;.getBytes()));
 		
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -72,7 +73,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("c2".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;c2&quot;.getBytes()));
 		
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -89,7 +90,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("b3".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;b3&quot;.getBytes()));
 				
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -106,7 +107,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("b1".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;b1&quot;.getBytes()));
 						
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -123,7 +124,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("a3".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;a3&quot;.getBytes()));
 								
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -140,7 +141,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("c1".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;c1&quot;.getBytes()));
 										
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -149,13 +150,13 @@
 			e.printStackTrace();
 		}
 		//this code is used to simulate the system input from the command line
-		//System.setIn(new ByteArrayInputStream("n".getBytes()));
+		//System.setIn(new ByteArrayInputStream(&quot;n&quot;.getBytes()));
 		try {
 			ttt.CheckWin(Amap, Xmap, Omap);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}</code></mapping><mapping><name>ConstraintOWinMapping</name><constraint-name>ConstraintOWin</constraint-name><code>ttt.getWinner().equals("Ohes") == true;</code><stateinvariants>OWin</stateinvariants></mapping><mapping><name>ConstraintDrawMapping</name><constraint-name>ConstraintDraw</constraint-name><code>ttt.getWinner().equals("BOARD FULL! STALEMATE - NO") == true;</code><stateinvariants>Draw</stateinvariants></mapping><mapping><name>movesXWinMapping</name><transition-name>moves</transition-name><code>System.setIn(new ByteArrayInputStream("y".getBytes()));	
+		}</code></mapping><mapping><name>ConstraintOWinMapping</name><constraint-name>ConstraintOWin</constraint-name><code>ttt.getWinner().equals(&quot;Ohes&quot;) == true;</code><stateinvariants>OWin</stateinvariants></mapping><mapping><name>ConstraintDrawMapping</name><constraint-name>ConstraintDraw</constraint-name><code>ttt.getWinner().equals(&quot;BOARD FULL! STALEMATE - NO&quot;) == true;</code><stateinvariants>Draw</stateinvariants></mapping><mapping><name>movesXWinMapping</name><transition-name>moves</transition-name><code>System.setIn(new ByteArrayInputStream(&quot;y&quot;.getBytes()));	
 		try {
 			ttt.NewGame(Amap, Xmap, Omap);
 		} catch (IOException e) {
@@ -165,7 +166,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("a1".getBytes()));	
+		System.setIn(new ByteArrayInputStream(&quot;a1&quot;.getBytes()));	
 		
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -182,7 +183,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("a2".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;a2&quot;.getBytes()));
 		
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -199,7 +200,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("b2".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;b2&quot;.getBytes()));
 		
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -216,7 +217,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("c3".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;c3&quot;.getBytes()));
 		
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -233,7 +234,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("b1".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;b1&quot;.getBytes()));
 				
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -250,7 +251,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("b3".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;b3&quot;.getBytes()));
 						
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -267,7 +268,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		
-		System.setIn(new ByteArrayInputStream("c1".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;c1&quot;.getBytes()));
 		
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -280,24 +281,7 @@
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}</code></mapping><mapping><name>movesDrawMapping</name><transition-name>moves</transition-name><code>System.setIn(new ByteArrayInputStream("a1".getBytes()));	
-		
-		try {
-			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			ttt.CheckWin(Amap, Xmap, Omap);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		ttt.ShowGameBoard(Amap, Xmap, Omap);
-		
-		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("a2".getBytes()));
+		}</code></mapping><mapping><name>movesDrawMapping</name><transition-name>moves</transition-name><code>System.setIn(new ByteArrayInputStream(&quot;a1&quot;.getBytes()));	
 		
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -314,7 +298,24 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("a3".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;a2&quot;.getBytes()));
+		
+		try {
+			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ttt.CheckWin(Amap, Xmap, Omap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ttt.ShowGameBoard(Amap, Xmap, Omap);
+		
+		//this code is used to simulate the system input from the command line
+		System.setIn(new ByteArrayInputStream(&quot;a3&quot;.getBytes()));
 		
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -331,7 +332,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("b2".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;b2&quot;.getBytes()));
 		
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -348,7 +349,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("c2".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;c2&quot;.getBytes()));
 				
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -365,7 +366,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("b1".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;b1&quot;.getBytes()));
 						
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -382,7 +383,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("b3".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;b3&quot;.getBytes()));
 								
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -399,7 +400,7 @@
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 		
 		//this code is used to simulate the system input from the command line
-		System.setIn(new ByteArrayInputStream("c1".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;c1&quot;.getBytes()));
 										
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -410,7 +411,7 @@
 		}
 		ttt.ShowGameBoard(Amap, Xmap, Omap);
 
-		System.setIn(new ByteArrayInputStream("c3".getBytes()));
+		System.setIn(new ByteArrayInputStream(&quot;c3&quot;.getBytes()));
 										
 		try {
 			WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);

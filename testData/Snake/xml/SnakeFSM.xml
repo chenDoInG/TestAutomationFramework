@@ -69,17 +69,18 @@
 	<mapping>
 		<name>playMapping</name>
 		<transition-name>play</transition-name>
-		<code>		while (gp.getStatus() != Status.LOSE)
+		<code>		
+		int i = 0;
+		while (gp.getStatus() != Status.LOSE)
 	    {
-			try{
-			 int osfp = Helper.findNearestPickUp(gp.getPickUps(gp.getPickUps()), gp.getPlayer());
-			 Helper.getRobotDirection(gp.getPickUps().get(osfp),game.getGamePanel().getPlayer(), robot);
-			} catch(Exception e){
-				System.err.println(e.getMessage());
+	    	robot.keyPress(KeyEvent.VK_RIGHT);
+	    	robot.keyRelease(KeyEvent.VK_RIGHT);
+	    	 try {
+				 Thread.sleep(200);
+			 } catch (InterruptedException e) {
+				 e.printStackTrace();
 			}
-	        try {
-				Thread.sleep(200);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+	    	 i ++;
+	    	 if(i == 10)
+	    		 gp.setStatus(Status.LOSE);
 	    }</code></mapping></mappings>

@@ -21,7 +21,7 @@ the name of a state is in such a format: the length of the word / the number of 
       <ownedRule xmi:id="_NCKL8KCFEeKXi7eFw3wS7Q" name="Constraint1To10Letters" constrainedElement="_xf0_oOybEeGXtusAZo_4EA _HKOPgOycEeGXtusAZo_4EA _LCgIoOycEeGXtusAZo_4EA">
         <specification xmi:type="uml:LiteralString" xmi:id="_NCKL8aCFEeKXi7eFw3wS7Q" value=""/>
       </ownedRule>
-      <ownedRule xmi:id="_VjodwKCFEeKXi7eFw3wS7Q" name="ConstraintMoreThen10Letters" constrainedElement="__Lal4OybEeGXtusAZo_4EA _JC7dkOycEeGXtusAZo_4EA">
+      <ownedRule xmi:id="_VjodwKCFEeKXi7eFw3wS7Q" name="ConstraintMoreThan10Letters" constrainedElement="__Lal4OybEeGXtusAZo_4EA _JC7dkOycEeGXtusAZo_4EA">
         <specification xmi:type="uml:LiteralString" xmi:id="_VjpE0KCFEeKXi7eFw3wS7Q" value=""/>
       </ownedRule>
       <transition xmi:id="_oMMREOybEeGXtusAZo_4EA" name="initialize" kind="local" source="_lH8c8OybEeGXtusAZo_4EA" target="_mVAF8OybEeGXtusAZo_4EA"/>

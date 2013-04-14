@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mappings><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>		Crosslexic cl = new Crosslexic();
 		JComboBox comboBox = cl.getWordlengthComboBox();</code><required-mappings></required-mappings></mapping>
-<mapping><name>typeSixLettersMapping</name><transition-name>typeLetters</transition-name><code>cl.getLetterText()[0].setText("a");
-		cl.getLetterText()[1].setText("b");
-		cl.getLetterText()[2].setText("c");
-		cl.getLetterText()[3].setText("d");
-		cl.getLetterText()[4].setText("e");
-		cl.getLetterText()[5].setText("f");</code><required-mappings></required-mappings></mapping>
+<mapping><name>typeSixLettersMapping</name><transition-name>typeLetters</transition-name><code>cl.getLetterText()[0].setText(&quot;a&quot;);
+		cl.getLetterText()[1].setText(&quot;b&quot;);
+		cl.getLetterText()[2].setText(&quot;c&quot;);
+		cl.getLetterText()[3].setText(&quot;d&quot;);
+		cl.getLetterText()[4].setText(&quot;e&quot;);
+		cl.getLetterText()[5].setText(&quot;f&quot;);</code><required-mappings></required-mappings></mapping>
 <mapping><name>typeThirteenLettersMapping</name><transition-name>typeLetters</transition-name><code>		
-		cl.getLetterText()[0].setText("a");
-		cl.getLetterText()[1].setText("b");
-		cl.getLetterText()[2].setText("c");
-		cl.getLetterText()[3].setText("d");
-		cl.getLetterText()[4].setText("e");
-		cl.getLetterText()[5].setText("f");
-		cl.getLetterText()[6].setText("f");
-		cl.getLetterText()[7].setText("f");
-		cl.getLetterText()[8].setText("f");
-		cl.getLetterText()[9].setText("f");
-		cl.getLetterText()[10].setText("f");
-		cl.getLetterText()[11].setText("f");
-		cl.getLetterText()[12].setText("f");</code><required-mappings></required-mappings></mapping>
+		cl.getLetterText()[0].setText(&quot;a&quot;);
+		cl.getLetterText()[1].setText(&quot;b&quot;);
+		cl.getLetterText()[2].setText(&quot;c&quot;);
+		cl.getLetterText()[3].setText(&quot;d&quot;);
+		cl.getLetterText()[4].setText(&quot;e&quot;);
+		cl.getLetterText()[5].setText(&quot;f&quot;);
+		cl.getLetterText()[6].setText(&quot;f&quot;);
+		cl.getLetterText()[7].setText(&quot;f&quot;);
+		cl.getLetterText()[8].setText(&quot;f&quot;);
+		cl.getLetterText()[9].setText(&quot;f&quot;);
+		cl.getLetterText()[10].setText(&quot;f&quot;);
+		cl.getLetterText()[11].setText(&quot;f&quot;);
+		cl.getLetterText()[12].setText(&quot;f&quot;);</code><required-mappings></required-mappings></mapping>
 <mapping><name>ConstraintWordLength20Mapping</name><constraint-name>ConstraintWordLength20</constraint-name><code>cl.getWordlength() == 20;</code><required-mappings></required-mappings><stateinvariants>20/0,20/1-10,20/11-20</stateinvariants></mapping>
 <mapping><name>ConstraintWordLength11To19Mapping</name><constraint-name>ConstraintWordLength11To19</constraint-name><code>cl.getWordlength() &gt; 10 &amp;&amp; cl.getWordlength() &lt; 20;</code><required-mappings></required-mappings><stateinvariants>11-19/0,11-19/1-10,11-19/11-19</stateinvariants></mapping>
 	<mapping>
 		<name>deleteTenLettersMapping</name>
 		<transition-name>back</transition-name>
-		<code>cl.getLetterText()[3].setText("");
-		cl.getLetterText()[4].setText("");
-		cl.getLetterText()[5].setText("");
-		cl.getLetterText()[6].setText("");
-		cl.getLetterText()[7].setText("");
-		cl.getLetterText()[8].setText("");
-		cl.getLetterText()[9].setText("");
-		cl.getLetterText()[10].setText("");
-		cl.getLetterText()[11].setText("");
-		cl.getLetterText()[12].setText("");</code></mapping>
+		<code>cl.getLetterText()[3].setText(&quot;&quot;);
+		cl.getLetterText()[4].setText(&quot;&quot;);
+		cl.getLetterText()[5].setText(&quot;&quot;);
+		cl.getLetterText()[6].setText(&quot;&quot;);
+		cl.getLetterText()[7].setText(&quot;&quot;);
+		cl.getLetterText()[8].setText(&quot;&quot;);
+		cl.getLetterText()[9].setText(&quot;&quot;);
+		cl.getLetterText()[10].setText(&quot;&quot;);
+		cl.getLetterText()[11].setText(&quot;&quot;);
+		cl.getLetterText()[12].setText(&quot;&quot;);</code></mapping>
 	<mapping>
 		<name>deleteThirteenLettersMapping</name>
 		<transition-name>back</transition-name>
 		<code>
-		cl.getLetterText()[0].setText("");
-		cl.getLetterText()[1].setText("");
-		cl.getLetterText()[2].setText("");
-		cl.getLetterText()[3].setText("");
-		cl.getLetterText()[4].setText("");
-		cl.getLetterText()[5].setText("");
-		cl.getLetterText()[6].setText("");
-		cl.getLetterText()[7].setText("");
-		cl.getLetterText()[8].setText("");
-		cl.getLetterText()[9].setText("");
-		cl.getLetterText()[10].setText("");
-		cl.getLetterText()[11].setText("");
-		cl.getLetterText()[12].setText("");</code></mapping>
+		cl.getLetterText()[0].setText(&quot;&quot;);
+		cl.getLetterText()[1].setText(&quot;&quot;);
+		cl.getLetterText()[2].setText(&quot;&quot;);
+		cl.getLetterText()[3].setText(&quot;&quot;);
+		cl.getLetterText()[4].setText(&quot;&quot;);
+		cl.getLetterText()[5].setText(&quot;&quot;);
+		cl.getLetterText()[6].setText(&quot;&quot;);
+		cl.getLetterText()[7].setText(&quot;&quot;);
+		cl.getLetterText()[8].setText(&quot;&quot;);
+		cl.getLetterText()[9].setText(&quot;&quot;);
+		cl.getLetterText()[10].setText(&quot;&quot;);
+		cl.getLetterText()[11].setText(&quot;&quot;);
+		cl.getLetterText()[12].setText(&quot;&quot;);</code></mapping>
 	<mapping>
 		<name>switch20Mapping</name>
 		<transition-name>switch</transition-name>
@@ -75,8 +75,8 @@
 		<name>clearMapping</name>
 		<transition-name>clear</transition-name>
 		
-		<code>cl.getClearButton().doClick();</code>
-		<required-mappings></required-mappings></mapping>
+		
+		<code>cl.getClearButton().doClick();</code><required-mappings></required-mappings></mapping>
 	<mapping>
 		<name>searchMapping</name>
 		<transition-name>search</transition-name>
@@ -91,7 +91,7 @@
 	<mapping>
 		<name>ConstraintMoreThan10LettersMapping</name>
 		<constraint-name>ConstraintMoreThan10Letters</constraint-name>
-		<code>cl.getLettersLength() > 10;</code>
+		<code>cl.getLettersLength() &gt; 10;</code>
 		<required-mappings></required-mappings>
 		<stateinvariants>20/11-20,11-19/11-19</stateinvariants></mapping>
 	<mapping>

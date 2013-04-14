@@ -31,25 +31,28 @@ public class TempTest {
         }
         nvDifficulties.doClick();
         sp.difficultySetter.setSelectedIndex(0);
-        sp.difficultySetter.setSelectedIndex(1);
-        sp.difficultySetter.setSelectedIndex(0);
+        sp.difficultySetter.setSelectedIndex(2);
+        nvNewGame.doClick();
+        nvHighScores.doClick();
+        nvDifficulties.doClick();
         nvNewGame.doClick();
         robot.keyPress(KeyEvent.VK_U);
         robot.keyRelease(KeyEvent.VK_U);
+        
+        int i = 0;
         while (gp.getStatus() != Status.LOSE)
         {
-        try{
-        int osfp = Helper.findNearestPickUp(gp.getPickUps(gp.getPickUps()), gp.getPlayer());
-        Helper.getRobotDirection(gp.getPickUps().get(osfp),game.getGamePanel().getPlayer(), robot);
-        } catch(Exception e){
-        System.err.println(e.getMessage());
-        }
+        robot.keyPress(KeyEvent.VK_RIGHT);
+        robot.keyRelease(KeyEvent.VK_RIGHT);
         try {
         Thread.sleep(200);
         } catch (InterruptedException e) {
         e.printStackTrace();
         }
+        i ++;
+        if(i == 10)
+        gp.setStatus(Status.LOSE);
         }
-        return (Difficulty.EASY == gp.getDifficulty()) == true;
+        return (Difficulty.HARD == gp.getDifficulty()) == true;
     }
 }
