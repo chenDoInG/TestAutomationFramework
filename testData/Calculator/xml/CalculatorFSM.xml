@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings><mapping><name>negatelMapping</name><transition-name>negate</transition-name><code>jbREVERSE.doClick();</code></mapping><mapping><name>digit_0Mapping</name><transition-name>digit_0</transition-name><code>jb0.doClick();</code></mapping><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>		FrmJCalc frm = new FrmJCalc();
+		Component [] components = frm.getFrame().getRootPane().getContentPane().getComponents();
+			
+		JButton jb0 = new JButton();
+		JButton jb2 = new JButton();
+		
+		JButton jbPLUS = new JButton();
+		JButton jbMINUS = new JButton();
+
+		JButton jbPOINT = new JButton();
+		JButton jbREVERSE = new JButton();
+		
+		JButton jbRESULT = new JButton();
+		JButton jbLEFTPARENTHESIS = new JButton();
+		JButton jbRIGHTPARENTHESIS = new JButton();
+		JButton jbCLEAR = new JButton();
+	
+		for(Component component: components){
+			if(component instanceof JButton){
+				if(((JButton) component).getText().equals("0")){
+					jb0 = (JButton) component;
+				}
+				if(((JButton) component).getText().equals("2")){
+					jb2 = (JButton) component;
+				}
+				if(((JButton) component).getText().equals("+")){
+					jbPLUS = (JButton) component;
+				}
+				if(((JButton) component).getText().equals("-")){
+					jbMINUS = (JButton) component;
+				}
+				if(((JButton) component).getText().equals(".")){
+					jbPOINT = (JButton) component;
+				}
+				if(((JButton) component).getText().equals("+/-")){
+					jbREVERSE = (JButton) component;
+				}
+				if(((JButton) component).getText().equals("(")){
+					jbLEFTPARENTHESIS = (JButton) component;
+				}
+				if(((JButton) component).getText().equals(")")){
+					jbRIGHTPARENTHESIS = (JButton) component;
+				}
+				if(((JButton) component).getText().equals("=")){
+					jbRESULT = (JButton) component;
+				}
+				if(((JButton) component).getText().equals("clr")){
+					jbCLEAR = (JButton) component;
+				}
+			}
+		}</code></mapping><mapping><name>digit_1-9Mapping</name><transition-name>digit_1-9</transition-name><code>jb2.doClick();</code></mapping><mapping><name>pointMapping</name><transition-name>point</transition-name><code>jbPOINT.doClick();</code></mapping><mapping><name>digit_0-9Mapping</name><transition-name>digit_0-9</transition-name><code>jb2.doClick();</code></mapping><mapping><name>operMapping</name><transition-name>oper</transition-name><code>jbPLUS.doClick();</code></mapping><mapping><name>leftParenthesisMapping</name><transition-name>leftParenthesis</transition-name><code>jbLEFTPARENTHESIS.doClick();
+</code></mapping><mapping><name>rightParenthesisMapping</name><transition-name>rightParenthesis</transition-name><code>jbRIGHTPARENTHESIS.doClick();
+</code></mapping><mapping><name>clearMapping</name><transition-name>clear</transition-name><code>jbCLEAR.doClick();
+</code></mapping><mapping><name>equalsMapping</name><transition-name>equals</transition-name><code>jbRESULT.doClick();</code></mapping><mapping><name>ConstraintResultMapping</name><constraint-name>ConstraintResult</constraint-name><code>frm.getTxtDisplayContent().length() > 0;</code><required-mappings></required-mappings><stateinvariants>Result</stateinvariants></mapping></mappings>

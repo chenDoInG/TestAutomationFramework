@@ -2,24 +2,20 @@
 <uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_GP4d8PBcEeGBfdnYq3szoQ" name="model">
   <packagedElement xmi:type="uml:StateMachine" xmi:id="_GP4d8fBcEeGBfdnYq3szoQ" name="StateMachine0">
     <region xmi:id="_GP4d8vBcEeGBfdnYq3szoQ" name="Region0">
+      <ownedRule xmi:id="_vYeRcKU-EeK2KMqETu8Tbg" name="ConstraintIntermediate" constrainedElement="_rWElEPBqEeGBfdnYq3szoQ _ipjb0KOeEeKLuO0e64xBSg _pKnVEKOeEeKLuO0e64xBSg _YEKiwKOkEeKLuO0e64xBSg">
+        <specification xmi:type="uml:LiteralString" xmi:id="_vYk_IKU-EeK2KMqETu8Tbg" value=""/>
+      </ownedRule>
       <transition xmi:id="_pL6mMPBgEeGBfdnYq3szoQ" name="initialize" source="_IIPtwPBcEeGBfdnYq3szoQ" target="_nZOgkPBgEeGBfdnYq3szoQ"/>
       <transition xmi:id="_7taxgPBrEeGBfdnYq3szoQ" name="" source="_nZOgkPBgEeGBfdnYq3szoQ" target="_K1eJAPBcEeGBfdnYq3szoQ"/>
       <transition xmi:id="_CNZFoPBsEeGBfdnYq3szoQ" name="newGame" source="_K1eJAPBcEeGBfdnYq3szoQ" target="_nZOgkPBgEeGBfdnYq3szoQ"/>
       <transition xmi:id="_jA7NIPBsEeGBfdnYq3szoQ" name="newGame" kind="internal" source="_nZOgkPBgEeGBfdnYq3szoQ" target="_nZOgkPBgEeGBfdnYq3szoQ"/>
-      <transition xmi:id="_0n6qQPByEeGBfdnYq3szoQ" name="Transition1" source="_nZOgkPBgEeGBfdnYq3szoQ"/>
-      <transition xmi:id="_5GuicPBzEeGBfdnYq3szoQ" name="play" source="_nZOgkPBgEeGBfdnYq3szoQ" target="_a73oAPBgEeGBfdnYq3szoQ"/>
-      <transition xmi:id="_5sx10PBzEeGBfdnYq3szoQ" name="newGame" source="_a73oAPBgEeGBfdnYq3szoQ" target="_nZOgkPBgEeGBfdnYq3szoQ"/>
-      <transition xmi:id="_BFFgIPB0EeGBfdnYq3szoQ" name="click a tile" guard="_NcYX4Pz0EeGayOoHc31Utw">
-        <ownedRule xmi:id="_NcYX4Pz0EeGayOoHc31Utw" name="click all tiles that do not have mines"/>
-      </transition>
       <transition xmi:id="_EudakPB0EeGBfdnYq3szoQ" name="newGame" source="__2u2oPBzEeGBfdnYq3szoQ" target="_nZOgkPBgEeGBfdnYq3szoQ"/>
       <transition xmi:id="_edBSMPLfEeG-JcpQuxjkQw" name="" source="__2u2oPBzEeGBfdnYq3szoQ" target="_dlJ2EPLfEeG-JcpQuxjkQw"/>
-      <transition xmi:id="_AbJYIKOmEeKLuO0e64xBSg" name="" source="_a73oAPBgEeGBfdnYq3szoQ" target="__2u2oPBzEeGBfdnYq3szoQ"/>
       <transition xmi:id="_RL2VMKOmEeKLuO0e64xBSg" name="robotPlay" source="_nZOgkPBgEeGBfdnYq3szoQ" target="_lPF2gKOlEeKLuO0e64xBSg"/>
       <transition xmi:id="_TIavkKOmEeKLuO0e64xBSg" name="newGame" source="_lPF2gKOlEeKLuO0e64xBSg" target="_nZOgkPBgEeGBfdnYq3szoQ"/>
-      <transition xmi:id="_wz6vIKOmEeKLuO0e64xBSg" name="play" source="_K1eJAPBcEeGBfdnYq3szoQ" target="_a73oAPBgEeGBfdnYq3szoQ"/>
       <transition xmi:id="_zj3HMKOmEeKLuO0e64xBSg" name="robotPlay" source="_K1eJAPBcEeGBfdnYq3szoQ" target="_lPF2gKOlEeKLuO0e64xBSg"/>
       <transition xmi:id="_nCkUYKOnEeKLuO0e64xBSg" name="expert" source="_ipjb0KOeEeKLuO0e64xBSg" target="_EEUicKOfEeKLuO0e64xBSg"/>
+      <transition xmi:id="_8gbz8KVDEeK2KMqETu8Tbg" name="" source="_lPF2gKOlEeKLuO0e64xBSg" target="__2u2oPBzEeGBfdnYq3szoQ"/>
       <subvertex xmi:type="uml:Pseudostate" xmi:id="_IIPtwPBcEeGBfdnYq3szoQ" name="Initial"/>
       <subvertex xmi:type="uml:State" xmi:id="_K1eJAPBcEeGBfdnYq3szoQ" name="Setting">
         <region xmi:id="_q2zPIPBqEeGBfdnYq3szoQ" name="Region0">
@@ -76,16 +72,13 @@
           <subvertex xmi:type="uml:State" xmi:id="_EEUicKOfEeKLuO0e64xBSg" name="ExpertSpanish"/>
           <subvertex xmi:type="uml:State" xmi:id="_F4TokKOfEeKLuO0e64xBSg" name="ExpertOtherShape"/>
           <subvertex xmi:type="uml:State" xmi:id="_rDpL4KOhEeKLuO0e64xBSg" name="BeginnerSpanishOtherShape"/>
-          <subvertex xmi:type="uml:State" xmi:id="_YEKiwKOkEeKLuO0e64xBSg" name="IntermediateSpaishOtherShape"/>
+          <subvertex xmi:type="uml:State" xmi:id="_YEKiwKOkEeKLuO0e64xBSg" name="IntermediateSpanishOtherShape"/>
           <subvertex xmi:type="uml:State" xmi:id="_f62LIKOkEeKLuO0e64xBSg" name="ExpertSpanishOtherShape"/>
         </region>
       </subvertex>
       <subvertex xmi:type="uml:State" xmi:id="_YBVJgPBgEeGBfdnYq3szoQ" name="RobotMenu"/>
-      <subvertex xmi:type="uml:State" xmi:id="_a73oAPBgEeGBfdnYq3szoQ" name="HumanPlaying"/>
       <subvertex xmi:type="uml:State" xmi:id="_nZOgkPBgEeGBfdnYq3szoQ" name="NewGame"/>
-      <subvertex xmi:type="uml:State" xmi:id="_mLB_YPBxEeGBfdnYq3szoQ" name="State0"/>
       <subvertex xmi:type="uml:State" xmi:id="__2u2oPBzEeGBfdnYq3szoQ" name="Result"/>
-      <subvertex xmi:type="uml:State" xmi:id="_CaS_kPB0EeGBfdnYq3szoQ" name="State1"/>
       <subvertex xmi:type="uml:FinalState" xmi:id="_dlJ2EPLfEeG-JcpQuxjkQw" name="FinalState"/>
       <subvertex xmi:type="uml:State" xmi:id="_lPF2gKOlEeKLuO0e64xBSg" name="RobotPlaying"/>
     </region>

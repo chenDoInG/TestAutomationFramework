@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mappings><mapping><name>dealMapping</name><transition-name>deal</transition-name><code>frame.getDealButton().doClick();</code></mapping><mapping><name>hitHitHitMapping</name><transition-name>hitHitHit</transition-name><code>frame.getHitButton().doClick();
-frame.getHitButton().doClick();
-frame.getHitButton().doClick();</code></mapping><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>BlackjackGUI frame = new BlackjackGUI();
-frame.display();</code></mapping><mapping><name>stayStayStayMapping</name><transition-name>stayStayStay</transition-name><code>frame.getStayButton().doClick();
-frame.getStayButton().doClick();
-frame.getStayButton().doClick();</code></mapping><mapping><name>againMapping</name><transition-name>again</transition-name><code>frame.getPlayAgainButton().doClick();</code></mapping><mapping><name>hitHitStayMapping</name><transition-name>hitHitStay</transition-name><code>frame.getHitButton().doClick();
-frame.getHitButton().doClick();
-frame.getStayButton().doClick();</code></mapping><mapping><name>hitStayHitMapping</name><transition-name>hitStayHit</transition-name><code>frame.getHitButton().doClick();
-frame.getStayButton().doClick();
-frame.getHitButton().doClick();</code></mapping><mapping><name>hitStayStayMapping</name><transition-name>hitStayStay</transition-name><code>frame.getHitButton().doClick();
-frame.getStayButton().doClick();
-frame.getStayButton().doClick();</code></mapping><mapping><name>stayStayHitMapping</name><transition-name>stayStayHit</transition-name><code>frame.getStayButton().doClick();
-frame.getStayButton().doClick();
-frame.getHitButton().doClick();</code></mapping><mapping><name>stayHitStayMapping</name><transition-name>stayHitStay</transition-name><code>frame.getStayButton().doClick();
-frame.getHitButton().doClick();
-frame.getStayButton().doClick();</code></mapping><mapping><name>stayHitHitMapping</name><transition-name>stayHitHit</transition-name><code>frame.getStayButton().doClick();
-frame.getHitButton().doClick();
-frame.getHitButton().doClick();</code></mapping><mapping><name>ConstraintResultMapping</name><constraint-name>ConstraintResult</constraint-name><code>frame.getWinLoseBox().getText().trim().equals(&quot;&quot;) == false;</code><required-mappings></required-mappings><stateinvariants>Result</stateinvariants></mapping></mappings>
+<mappings><mapping><name>beginnerMapping</name><transition-name>beginner</transition-name><code>gameMenu.getItem(2).doClick();</code></mapping><mapping><name>intermediateMapping</name><transition-name>intermediate</transition-name><code>gameMenu.getItem(3).doClick();</code></mapping><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>		 final Configuration tmpConfiguration = Configuration.getInstance();
+		 Configuration   CONFIGURATION = tmpConfiguration;
+		 String userLookAndFeelClassName = CONFIGURATION.getString(Configuration.KEY_USER_LOOKANDFEEL);
+
+		 MainFrame frame = null;
+		 frame = MainFrame.changeLookAndFeel(UIManager.getLookAndFeel(), frame);
+		 JMenu gameMenu = frame.getMainFrameMenuBar().getGameMenu();
+		 GamePanel gamePanel = frame.getMainPanel().getGamePanel();
+		 final MainPanel mainPanel = frame.getMainPanel();
+		 Thread thread = null;
+		 JMenu languageMenu = frame.getMainFrameMenuBar().getLanguageMenu();
+		 JMenu boardMenu = frame.getMainFrameMenuBar().getBoardMenu();
+		 JMenu robotMenu = frame.getMainFrameMenuBar().getRobotMenu();</code></mapping><mapping><name>expertMapping</name><transition-name>expert</transition-name><code>gameMenu.getItem(4).doClick();</code></mapping><mapping><name>englishMapping</name><transition-name>english</transition-name><code>languageMenu.getItem(0).doClick();</code></mapping><mapping><name>spanishMapping</name><transition-name>spanish</transition-name><code>languageMenu.getItem(1).doClick();</code></mapping><mapping><name>otherShapeMapping</name><transition-name>otherShape</transition-name><code>boardMenu.getItem(0).doClick();</code></mapping><mapping><name>newGameMapping</name><transition-name>newGame</transition-name><code>gameMenu.getItem(0).doClick();</code></mapping><mapping><name>robotPlayMapping</name><transition-name>robotPlay</transition-name><code>robotMenu.getItem(6).doClick();</code></mapping><mapping><name>ConstraintIntermediateMapping</name><constraint-name>ConstraintIntermediate</constraint-name><code>gamePanel.getDifficulty().equals("intermediate");</code><required-mappings></required-mappings><stateinvariants>Intermediate,IntermediateSpanish,IntermediateOtherShape,IntermediateSpanishOtherShape</stateinvariants></mapping></mappings>

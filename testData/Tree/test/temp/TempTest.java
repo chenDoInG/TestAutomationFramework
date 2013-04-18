@@ -1,7 +1,9 @@
 
+
 import java.io.*;
 import org.junit.*;
 import static org.junit.Assert.*;
+
 
 
 public class TempTest {
@@ -10,7 +12,6 @@ public class TempTest {
         Tree tree = new Tree();
         tree.insert(1, 1.0);
         tree.insert(1, 1.0);
-        tree.find(1);
-        return ((tree.getRoot()!= null && (tree.getRoot().leftChild == null || tree.getRoot().rightChild != null)) == true) && ((tree.getRoot()!= null && (tree.getRoot().leftChild == null || tree.getRoot().rightChild != null)) == true);
+        return (tree.getRoot()!= null && (tree.getRoot().leftChild == null || tree.getRoot().rightChild != null)) == true;
     }
 }

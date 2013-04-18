@@ -81,6 +81,9 @@ public class AbstractTestGenerator {
 	public static List<Path> getTestPaths(String edges, String initialNodes, String finalNodes, TestCoverageCriteria criterion) throws InvalidInputException, InvalidGraphException{
 		
 		Graph g = GraphUtil.readGraph(edges, initialNodes, finalNodes);
+		//System.out.println(edges);
+		//System.out.println(initialNodes);
+		//System.out.println(finalNodes);
 		try {
 			g.validate();
 		} catch (InvalidGraphException e) {
@@ -91,10 +94,11 @@ public class AbstractTestGenerator {
 		if(criterion == TestCoverageCriteria.NODECOVERAGE)
 			return g.findNodeCoverage();	
 		else if(criterion == TestCoverageCriteria.EDGECOVERAGE){
-			List<Path> edgeCoverage = g.findEdgeCoverage();
+			List<Path> edgeCoverage = g.findEdges();		
 			Graph prefix = GraphUtil.getPrefixGraph(edgeCoverage);
         	Graph bipartite = GraphUtil.getBipartiteGraph(prefix, initialNodes, finalNodes);
 			List<Path> splittedPaths = g.splittedPathsFromSuperString(bipartite.findMinimumPrimePathCoverageViaPrefixGraphOptimized(edgeCoverage).get(0), g.findTestPath());
+			
 			return splittedPaths;
 		}
 		else if(criterion == TestCoverageCriteria.EDGEPAIRCOVERAGE){
