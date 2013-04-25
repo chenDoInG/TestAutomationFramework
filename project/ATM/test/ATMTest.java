@@ -49,7 +49,7 @@ public class ATMTest {
     }
 
     @Test
-    /* The test for the path Initial0 initialize Idle authenticate AuthenticationValid withdraw Withdrawn  Idle authenticate AuthenticationNotValid  FinalState0  */ 
+    /* The test for the path Initial0 initialize Idle authenticate AuthenticationValid deposit Deposited  Idle authenticate AuthenticationNotValid  FinalState0  */ 
     public void test2(){
         /*** test code of initializeMapping for the element initialize ***/
         boolean userAuthenticated = false; // user is not authenticated to start
@@ -64,7 +64,7 @@ public class ATMTest {
         Transaction currentTransaction = null;
         /*** test code of authenticateMapping for the element authenticate ***/
         userAuthenticated = bankDatabase.authenticateUser( 12345, 54321 );
-        /*** test code of withdrawMapping for the element withdraw ***/
+        /*** test code of depositMapping for the element deposit ***/
         currentTransaction = new Deposit( 12345, screen, bankDatabase, keypad, depositSlot );
         currentTransaction.execute();
         /*** test code of notAuthenticateMapping for the element authenticate ***/
@@ -97,7 +97,7 @@ public class ATMTest {
     }
 
     @Test
-    /* The test for the path Initial0 initialize Idle authenticate AuthenticationValid deposit Deposited  Idle authenticate AuthenticationNotValid  FinalState0  */ 
+    /* The test for the path Initial0 initialize Idle authenticate AuthenticationValid withdraw Withdrawn  Idle authenticate AuthenticationNotValid  FinalState0  */ 
     public void test4(){
         /*** test code of initializeMapping for the element initialize ***/
         boolean userAuthenticated = false; // user is not authenticated to start
@@ -112,7 +112,7 @@ public class ATMTest {
         Transaction currentTransaction = null;
         /*** test code of authenticateMapping for the element authenticate ***/
         userAuthenticated = bankDatabase.authenticateUser( 12345, 54321 );
-        /*** test code of depositMapping for the element deposit ***/
+        /*** test code of withdrawMapping for the element withdraw ***/
         currentTransaction = new Deposit( 12345, screen, bankDatabase, keypad, depositSlot );
         currentTransaction.execute();
         /*** test code of notAuthenticateMapping for the element authenticate ***/

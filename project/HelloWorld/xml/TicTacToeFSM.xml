@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><mappings><mapping><name>ronStart</name><transition-name>start</transition-name><code>TicTacToe TestHomework = new TicTacToe();</code></mapping><mapping><name>ronExit</name><transition-name>exit</transition-name><code/></mapping></mappings>

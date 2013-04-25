@@ -1432,8 +1432,8 @@ public class TafUserInterface {
 		//System.out.println(stateMachine.getEdges());
 		//System.out.println(stateMachine.getInitialStates());
 		//System.out.println(stateMachine.getFinalStates());
-		//System.out.println(stateMachine.getStateMappings());
-		//System.out.println(paths);
+		System.out.println(stateMachine.getStateMappings());
+		System.out.println(paths);
 
 		List<edu.gmu.swe.taf.Test> tests = new ArrayList<edu.gmu.swe.taf.Test>();
 		for(int i = 0; i < paths.size();i++){

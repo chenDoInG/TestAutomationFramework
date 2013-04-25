@@ -25,24 +25,6 @@ public class TempTest {
         e.printStackTrace();
         }
         ttt.ShowGameBoard(Amap, Xmap, Omap);
-        //this code is used to simulate the system input from the command line
-        System.setIn(new ByteArrayInputStream("b2".getBytes()));
-        
-        try {
-        WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
-        } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-        }
-        try {
-        ttt.CheckWin(Amap, Xmap, Omap);
-        } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-        }
-        ttt.ShowGameBoard(Amap, Xmap, Omap);
-        
-        //this code is used to simulate the system input from the command line
         System.setIn(new ByteArrayInputStream("a1".getBytes()));
         
         try {
@@ -64,6 +46,23 @@ public class TempTest {
         
         try {
         WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+        } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+        }
+        try {
+        ttt.CheckWin(Amap, Xmap, Omap);
+        } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+        }
+        ttt.ShowGameBoard(Amap, Xmap, Omap);
+        
+        //this code is used to simulate the system input from the command line
+        System.setIn(new ByteArrayInputStream("a3".getBytes()));
+        
+        try {
+        WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
         } catch (IOException e1) {
         // TODO Auto-generated catch block
         e1.printStackTrace();
@@ -77,7 +76,7 @@ public class TempTest {
         ttt.ShowGameBoard(Amap, Xmap, Omap);
         
         //this code is used to simulate the system input from the command line
-        System.setIn(new ByteArrayInputStream("c2".getBytes()));
+        System.setIn(new ByteArrayInputStream("b2".getBytes()));
         
         try {
         WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -94,7 +93,7 @@ public class TempTest {
         ttt.ShowGameBoard(Amap, Xmap, Omap);
         
         //this code is used to simulate the system input from the command line
-        System.setIn(new ByteArrayInputStream("b3".getBytes()));
+        System.setIn(new ByteArrayInputStream("c2".getBytes()));
         
         try {
         WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -128,7 +127,7 @@ public class TempTest {
         ttt.ShowGameBoard(Amap, Xmap, Omap);
         
         //this code is used to simulate the system input from the command line
-        System.setIn(new ByteArrayInputStream("a3".getBytes()));
+        System.setIn(new ByteArrayInputStream("b3".getBytes()));
         
         try {
         WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
@@ -149,13 +148,22 @@ public class TempTest {
         
         try {
         WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+        ttt.CheckWin(Amap, Xmap, Omap);
         } catch (IOException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
         }
-        //this code is used to simulate the system input from the command line
-        //System.setIn(new ByteArrayInputStream("n".getBytes()));
+        ttt.ShowGameBoard(Amap, Xmap, Omap);
+        
+        System.setIn(new ByteArrayInputStream("c3".getBytes()));
+        
         try {
+        WhosTurn = ttt.GetMove(WhosTurn, Amap, Xmap, Omap);
+        
+        } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+        }try {
         ttt.CheckWin(Amap, Xmap, Omap);
         } catch (IOException e) {
         // TODO Auto-generated catch block
