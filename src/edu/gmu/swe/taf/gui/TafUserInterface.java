@@ -1066,7 +1066,7 @@ public class TafUserInterface {
 					}
 					else if(lblObjectName.getForeground().toString().equals("java.awt.Color[r=0,g=178,b=0]")){
 						ObjectMapping mapping = new ObjectMapping(mappingName, IdentifiableElementType.OBJECT, objectName, className, testCode, requiredMappings_list, null);
-						
+					
 						XmlManipulator xm = new XmlManipulator();
 						try {
 							if(!XmlManipulator.isMappingExisted(XmlManipulator.readXmlFile(xmlPath), mapping)){
@@ -1081,6 +1081,7 @@ public class TafUserInterface {
 						
 						//update the object mappings list
 						//add the data in the list_objectMappings
+						/*
 						try {
 							objectMappings = XmlManipulator.getObjectMappings(xmlPath);
 						} catch (Exception e1) {
@@ -1088,7 +1089,8 @@ public class TafUserInterface {
 						}
 						
 						list_objectMappings.setListData(JavaSupporter.getMappingNames(objectMappings));
-		            	scrollPane_objectMappings.setViewportView(list_objectMappings);
+		            	scrollPane_objectMappings.setViewportView(list_objectMappings);*/
+		            	refreshObjectMappingList();
 					}
 				}
 			}
@@ -1429,13 +1431,19 @@ public class TafUserInterface {
 		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), testCriterion);
 		
 		//print edges, initial nodes, and final nodes
-		//System.out.println(stateMachine.getEdges());
-		//System.out.println(stateMachine.getInitialStates());
-		//System.out.println(stateMachine.getFinalStates());
-		System.out.println(stateMachine.getStateMappings());
+		System.out.println("edge: " + stateMachine.getEdges().length());
+		System.out.println(stateMachine.getEdges());
+		System.out.println(stateMachine.getInitialStates());
+		System.out.println(stateMachine.getFinalStates());
+		System.out.println("state: " + stateMachine.getStateMappings());
+		System.out.println("transitions: " + stateMachine.getTransitions());
 		System.out.println(paths);
 
 		List<edu.gmu.swe.taf.Test> tests = new ArrayList<edu.gmu.swe.taf.Test>();
+		int totalmappings = 0;
+		int constriantNumber = 0;
+		List<Mapping> distinctMappings = new ArrayList<Mapping>();
+
 		for(int i = 0; i < paths.size();i++){
 			//System.out.println("path: " + paths.get(i));
 			AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
@@ -1444,8 +1452,43 @@ public class TafUserInterface {
 			edu.gmu.swe.taf.Test test = new edu.gmu.swe.taf.FsmTest(String.valueOf(i), "The test for the path " + extractTestComment(transitions), transitions);
 			test = abstractTestGenerator.updateTest(xmlPath, test, XmlManipulator.getConstraintMappings(xmlPath));
 			tests.add(test);
+			List<Mapping> mappings = test.getMappings();
+			totalmappings += mappings.size();
+			
+			//System.out.println(i);
+			for(Mapping m : mappings){
+				//System.out.println(m.getMappingName());
+				if(m.getType() == IdentifiableElementType.STATEINVARIANT)
+					constriantNumber += 1;
+				if(distinctMappings.size() == 0){
+					distinctMappings.add(m);
+				}
+				
+				boolean signMapping = true;
+				boolean signElement = true;
+				for(Mapping dm : distinctMappings){
+					if(m.getType() == IdentifiableElementType.STATEINVARIANT){
+						ConstraintMapping cm = XmlManipulator.getConstraintMappingByName(xmlPath, m.getMappingName());
+						ConstraintMapping cm1 = XmlManipulator.getConstraintMappingByName(xmlPath, dm.getMappingName());
+						if(cm.getIdentifiableElementName().equals(cm1.getIdentifiableElementName()))
+							signMapping = false;
+					}
+					else if(m.getIdentifiableElementName().equals(dm.getIdentifiableElementName()))
+						signMapping = false;
+				}
+				if(signMapping == true)
+					distinctMappings.add(m);
+			}
+			
+			//System.out.println();
 		}
-		
+		System.out.println("total mappings: " + totalmappings);
+		System.out.println("total constraint mappings: " + constriantNumber);
+		System.out.println("distinct elements: " + distinctMappings.size());
+		/*
+		for(Mapping m : distinctMappings){
+			System.out.println(m.getIdentifiableElementName() + ", " + m.getType());
+		}*/
 		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(directory, testName, xmlPath, packageName,imports);
 		concreteTestGenerator.generateConcreteTests(tests);
 	}

@@ -495,7 +495,7 @@ public class ConcreteTestGenerator {
 	}
 	
 	/**
-	 * Generates a test value for an object variable and return an object initialization.
+	 * Generates a test value for an object variable and returns an object initialization.
 	 * For a String object, if a regular expression is specified, an arbitrary String satisfying the regular expression will be generated.
 	 * For an int, float, double, Integer, Float, or Double object, both value scopes and relational conditions may exist and they are separated by comma.
 	 * For instance, "10, 25, 100, c>0"

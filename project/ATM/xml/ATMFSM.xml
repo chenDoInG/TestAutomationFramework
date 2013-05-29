@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<mappings><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>boolean userAuthenticated = false; // user is not authenticated to start
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><mappings><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>boolean userAuthenticated = false; // user is not authenticated to start
 		int currentAccountNumber = 0; // no current account number to start
-		String input = &quot;1\n\n10&quot;;
+		String input = "1\n\n10";
 		System.setIn(new ByteArrayInputStream(input.getBytes()));
 		Screen screen = new Screen(); // create screen
 		Keypad keypad = new Keypad(); // create keypad 

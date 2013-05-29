@@ -1178,8 +1178,12 @@ public class XmlManipulator {
 					}
 					
 					if(children.item(j).getNodeName().equals("required-mappings")){
-						String[] required = children.item(j).getFirstChild().getNodeValue().split(",");
-						mapping.setRequiredMappings(Arrays.asList(required));
+						if(children.item(j).getFirstChild() == null)
+							mapping.setRequiredMappings(new ArrayList<String>());
+						else{
+							String[] required = children.item(j).getFirstChild().getNodeValue().split(",");
+							mapping.setRequiredMappings(Arrays.asList(required));
+						}
 						continue;
 					}
 					

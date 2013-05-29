@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_skLQkPomEeGudMe9j8wP0w" name="model">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_smfkwPomEeGudMe9j8wP0w" name="StateMachine0">
+    <region xmi:id="_smvcYPomEeGudMe9j8wP0w" name="Region0">
+      <ownedRule xmi:id="_KgNukJLaEeKi_tcRQ4A42Q" name="ConstraintExceptionNotNull" constrainedElement="_ajp2gPqLEeGiTshj0_JGOw">
+        <specification xmi:type="uml:LiteralString" xmi:id="_KgUcQJLaEeKi_tcRQ4A42Q" value=""/>
+      </ownedRule>
+      <transition xmi:id="__jCHQPomEeGudMe9j8wP0w" name="initialize" source="_4Pr1cPomEeGudMe9j8wP0w" target="_5gvNoPomEeGudMe9j8wP0w"/>
+      <transition xmi:id="_4x0csPonEeGudMe9j8wP0w" name="enterExpression" source="_5gvNoPomEeGudMe9j8wP0w" target="_C--CoPonEeGudMe9j8wP0w"/>
+      <transition xmi:id="_BaosoPooEeGudMe9j8wP0w" name="enterExpression" kind="internal" source="_C--CoPonEeGudMe9j8wP0w" target="_C--CoPonEeGudMe9j8wP0w"/>
+      <transition xmi:id="_p8smEPooEeGudMe9j8wP0w" name="truthTable" source="_C--CoPonEeGudMe9j8wP0w" target="_h8nKEPooEeGudMe9j8wP0w"/>
+      <transition xmi:id="_qZVewPooEeGudMe9j8wP0w" name="gacc" source="_C--CoPonEeGudMe9j8wP0w" target="_PP0TwPooEeGudMe9j8wP0w"/>
+      <transition xmi:id="_sDIHEPooEeGudMe9j8wP0w" name="cacc" source="_h8nKEPooEeGudMe9j8wP0w" target="_Pkm4APooEeGudMe9j8wP0w"/>
+      <transition xmi:id="_sf0qIPooEeGudMe9j8wP0w" name="truthTable" source="_H4rHEPooEeGudMe9j8wP0w" target="_h8nKEPooEeGudMe9j8wP0w"/>
+      <transition xmi:id="_Jm2DoPopEeGudMe9j8wP0w" name="gacc" source="_h8nKEPooEeGudMe9j8wP0w" target="_PP0TwPooEeGudMe9j8wP0w"/>
+      <transition xmi:id="_K4VgsPopEeGudMe9j8wP0w" name="racc" source="_h8nKEPooEeGudMe9j8wP0w" target="_QKi2oPooEeGudMe9j8wP0w"/>
+      <transition xmi:id="_MQrzsPopEeGudMe9j8wP0w" name="gicc" source="_h8nKEPooEeGudMe9j8wP0w" target="_QorkIPooEeGudMe9j8wP0w"/>
+      <transition xmi:id="_NSJQsPopEeGudMe9j8wP0w" name="ricc" source="_h8nKEPooEeGudMe9j8wP0w" target="_Q9bsIPooEeGudMe9j8wP0w"/>
+      <transition xmi:id="_UrjHMPopEeGudMe9j8wP0w" name="cacc" source="_C--CoPonEeGudMe9j8wP0w" target="_Pkm4APooEeGudMe9j8wP0w"/>
+      <transition xmi:id="_Y_qAsPopEeGudMe9j8wP0w" name="racc" source="_C--CoPonEeGudMe9j8wP0w" target="_QKi2oPooEeGudMe9j8wP0w"/>
+      <transition xmi:id="_bl97oPopEeGudMe9j8wP0w" name="gicc" source="_C--CoPonEeGudMe9j8wP0w" target="_QorkIPooEeGudMe9j8wP0w"/>
+      <transition xmi:id="_dERssPopEeGudMe9j8wP0w" name="ricc" source="_C--CoPonEeGudMe9j8wP0w" target="_Q9bsIPooEeGudMe9j8wP0w"/>
+      <transition xmi:id="_n-qWoPopEeGudMe9j8wP0w" name="newExpression" source="_h8nKEPooEeGudMe9j8wP0w" target="_5gvNoPomEeGudMe9j8wP0w"/>
+      <transition xmi:id="_pfG1sPopEeGudMe9j8wP0w" name="enterExpression" source="_H4rHEPooEeGudMe9j8wP0w" target="_5gvNoPomEeGudMe9j8wP0w"/>
+      <transition xmi:id="_YtfdMPoqEeGudMe9j8wP0w" name="graph" source="_5gvNoPomEeGudMe9j8wP0w" target="_2SmWUfopEeGudMe9j8wP0w"/>
+      <transition xmi:id="_larhgPoqEeGudMe9j8wP0w" name="" source="_jIl_kPopEeGudMe9j8wP0w" target="_UQLkYPoqEeGudMe9j8wP0w"/>
+      <transition xmi:id="_l0CcsPoqEeGudMe9j8wP0w" name="" source="_H4rHEPooEeGudMe9j8wP0w" target="_UQLkYPoqEeGudMe9j8wP0w"/>
+      <transition xmi:id="_meLl4PoqEeGudMe9j8wP0w" name="" source="_h8nKEPooEeGudMe9j8wP0w" target="_UQLkYPoqEeGudMe9j8wP0w"/>
+      <transition xmi:id="_aPc9kPqKEeGiTshj0_JGOw" name="dataFlow" source="_5gvNoPomEeGudMe9j8wP0w" target="_4R57oPopEeGudMe9j8wP0w"/>
+      <transition xmi:id="_bScroPqKEeGiTshj0_JGOw" name="minimalMUMCUT" source="_5gvNoPomEeGudMe9j8wP0w" target="_7W0eIPopEeGudMe9j8wP0w"/>
+      <transition xmi:id="_zGiy8PqKEeGiTshj0_JGOw" name="newExpression" source="_C--CoPonEeGudMe9j8wP0w" target="_5gvNoPomEeGudMe9j8wP0w"/>
+      <transition xmi:id="_f3xbgPqLEeGiTshj0_JGOw" name="trOrT" source="_5gvNoPomEeGudMe9j8wP0w" target="_ajp2gPqLEeGiTshj0_JGOw"/>
+      <transition xmi:id="_hi5rIPqMEeGiTshj0_JGOw" name="enterWrongExpression" source="_5gvNoPomEeGudMe9j8wP0w" target="_d9xXgPqMEeGiTshj0_JGOw"/>
+      <transition xmi:id="_uPHfEPqMEeGiTshj0_JGOw" name="" target="_C--CoPonEeGudMe9j8wP0w"/>
+      <transition xmi:id="_8AK0IPqMEeGiTshj0_JGOw" name="enterWrongExpression" kind="internal" source="_d9xXgPqMEeGiTshj0_JGOw" target="_d9xXgPqMEeGiTshj0_JGOw"/>
+      <transition xmi:id="_JfSEoPqNEeGiTshj0_JGOw" name="trOrT" source="_d9xXgPqMEeGiTshj0_JGOw" target="_ajp2gPqLEeGiTshj0_JGOw"/>
+      <transition xmi:id="_QuxKIPqNEeGiTshj0_JGOw" name="enterExpression" source="_ajp2gPqLEeGiTshj0_JGOw" target="_5gvNoPomEeGudMe9j8wP0w"/>
+      <transition xmi:id="_TonsIPqNEeGiTshj0_JGOw" name="enterExpression" source="_ajp2gPqLEeGiTshj0_JGOw" target="_C--CoPonEeGudMe9j8wP0w"/>
+      <transition xmi:id="_fx0SkPqNEeGiTshj0_JGOw" name="enterExpression" source="_d9xXgPqMEeGiTshj0_JGOw" target="_C--CoPonEeGudMe9j8wP0w"/>
+      <transition xmi:id="_n9n2YPqNEeGiTshj0_JGOw" name="enterWrongExpression" source="_C--CoPonEeGudMe9j8wP0w" target="_d9xXgPqMEeGiTshj0_JGOw"/>
+      <transition xmi:id="_rm1jUPqOEeGiTshj0_JGOw" name="enterWrongExpression" source="_ajp2gPqLEeGiTshj0_JGOw" target="_d9xXgPqMEeGiTshj0_JGOw"/>
+      <transition xmi:id="_ZFpqoPqPEeGiTshj0_JGOw" name="newExpression" source="_d9xXgPqMEeGiTshj0_JGOw" target="_5gvNoPomEeGudMe9j8wP0w"/>
+      <transition xmi:id="_B-iTMPqREeGiTshj0_JGOw" name="enterExpression" source="_h8nKEPooEeGudMe9j8wP0w" target="_C--CoPonEeGudMe9j8wP0w"/>
+      <transition xmi:id="_EMbHEPqREeGiTshj0_JGOw" name="enterWrongExpression" source="_h8nKEPooEeGudMe9j8wP0w" target="_d9xXgPqMEeGiTshj0_JGOw"/>
+      <transition xmi:id="_kr_JsPqREeGiTshj0_JGOw" name="enterExpression" source="_H4rHEPooEeGudMe9j8wP0w" target="_C--CoPonEeGudMe9j8wP0w"/>
+      <transition xmi:id="_lNsvoPqREeGiTshj0_JGOw" name="enterWrongExpression" source="_H4rHEPooEeGudMe9j8wP0w" target="_d9xXgPqMEeGiTshj0_JGOw"/>
+      <transition xmi:id="_cUhoIPqUEeGiTshj0_JGOw" name="trOrT" kind="internal" source="_ajp2gPqLEeGiTshj0_JGOw" target="_ajp2gPqLEeGiTshj0_JGOw"/>
+      <transition xmi:id="_P_BrcJI8EeKU1ZnBtU0jIQ" name="graph" source="_d9xXgPqMEeGiTshj0_JGOw" target="_2SmWUfopEeGudMe9j8wP0w"/>
+      <transition xmi:id="_SyU5gJI8EeKU1ZnBtU0jIQ" name="dataFlow" source="_d9xXgPqMEeGiTshj0_JGOw" target="_4R57oPopEeGudMe9j8wP0w"/>
+      <transition xmi:id="_UxR5gJI8EeKU1ZnBtU0jIQ" name="minimalMUMCUT" source="_d9xXgPqMEeGiTshj0_JGOw" target="_7W0eIPopEeGudMe9j8wP0w"/>
+      <transition xmi:id="_dXBnUJI8EeKU1ZnBtU0jIQ" name="graph" source="_C--CoPonEeGudMe9j8wP0w" target="_2SmWUfopEeGudMe9j8wP0w"/>
+      <transition xmi:id="_fE9v0JI8EeKU1ZnBtU0jIQ" name="dataFlow" source="_C--CoPonEeGudMe9j8wP0w" target="_4R57oPopEeGudMe9j8wP0w"/>
+      <transition xmi:id="_hlmgkJI8EeKU1ZnBtU0jIQ" name="minimalMUMCUT" source="_C--CoPonEeGudMe9j8wP0w" target="_7W0eIPopEeGudMe9j8wP0w"/>
+      <transition xmi:id="_4MdYsJI8EeKU1ZnBtU0jIQ" name="graph" source="_H4rHEPooEeGudMe9j8wP0w" target="_2SmWUfopEeGudMe9j8wP0w"/>
+      <transition xmi:id="__V8j4JI8EeKU1ZnBtU0jIQ" name="dataFlow" source="_H4rHEPooEeGudMe9j8wP0w" target="_4R57oPopEeGudMe9j8wP0w"/>
+      <transition xmi:id="_Bt6g0JI9EeKU1ZnBtU0jIQ" name="minimalMUMCUT" source="_H4rHEPooEeGudMe9j8wP0w" target="_7W0eIPopEeGudMe9j8wP0w"/>
+      <transition xmi:id="_N_Ba8JLeEeKi_tcRQ4A42Q" name="trOrT" source="_C--CoPonEeGudMe9j8wP0w" target="_ajp2gPqLEeGiTshj0_JGOw"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_4Pr1cPomEeGudMe9j8wP0w" name="Initial0"/>
+      <subvertex xmi:type="uml:State" xmi:id="_5gvNoPomEeGudMe9j8wP0w" name="Initialized"/>
+      <subvertex xmi:type="uml:State" xmi:id="_C--CoPonEeGudMe9j8wP0w" name="ExpressionEntered"/>
+      <subvertex xmi:type="uml:State" xmi:id="_H4rHEPooEeGudMe9j8wP0w" name="TestsShown">
+        <region xmi:id="_PPyekPooEeGudMe9j8wP0w" name="Region0">
+          <subvertex xmi:type="uml:State" xmi:id="_PP0TwPooEeGudMe9j8wP0w" name="GACC"/>
+          <subvertex xmi:type="uml:State" xmi:id="_Pkm4APooEeGudMe9j8wP0w" name="CACC"/>
+          <subvertex xmi:type="uml:State" xmi:id="_QKi2oPooEeGudMe9j8wP0w" name="RACC"/>
+          <subvertex xmi:type="uml:State" xmi:id="_QorkIPooEeGudMe9j8wP0w" name="GICC"/>
+          <subvertex xmi:type="uml:State" xmi:id="_Q9bsIPooEeGudMe9j8wP0w" name="RICC"/>
+        </region>
+      </subvertex>
+      <subvertex xmi:type="uml:State" xmi:id="_h8nKEPooEeGudMe9j8wP0w" name="TruthTable"/>
+      <subvertex xmi:type="uml:State" xmi:id="_jIl_kPopEeGudMe9j8wP0w" name="otherCoverage">
+        <region xmi:id="_2SkhIPopEeGudMe9j8wP0w" name="Region0">
+          <subvertex xmi:type="uml:State" xmi:id="_2SmWUfopEeGudMe9j8wP0w" name="GraphCoverage"/>
+          <subvertex xmi:type="uml:State" xmi:id="_4R57oPopEeGudMe9j8wP0w" name="DataFlowCoverage"/>
+          <subvertex xmi:type="uml:State" xmi:id="_7W0eIPopEeGudMe9j8wP0w" name="MininalMUMCUTCoverage"/>
+        </region>
+      </subvertex>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_UQLkYPoqEeGudMe9j8wP0w" name="FinalState0"/>
+      <subvertex xmi:type="uml:State" xmi:id="_ajp2gPqLEeGiTshj0_JGOw" name="Error"/>
+      <subvertex xmi:type="uml:State" xmi:id="_d9xXgPqMEeGiTshj0_JGOw" name="WrongExpressionEntered"/>
+    </region>
+  </packagedElement>
+</uml:Model>

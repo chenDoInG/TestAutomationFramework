@@ -74,36 +74,6 @@ public class TempTest {
         // TODO Auto-generated catch block
         e.printStackTrace();
         }
-        try {
-        page = buttonPrimePaths.click();
-        } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-        }
-        try {
-        page = buttonNodeCoverage.click();
-        } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-        }
-        try {
-        page = buttonEdgeCoverage.click();
-        } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-        }
-        try {
-        page = buttonEdgePairCoverage.click();
-        } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-        }
-        try {
-        page = buttonPrimePathCoverage.click();
-        } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-        }
         return (((HtmlTable) page.getHtmlElementById("tableResult")).getCellAt(0, 0).asText() != null);
     }
 }

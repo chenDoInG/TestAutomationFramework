@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><mappings><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>final WebClient webClient = new WebClient();
+		WebRequest request = null;
+		 try {
+			request = new WebRequest( new URL("http://localhost:8080/CoverageWebApplication/coverage/LogicCoverage" ), HttpMethod.POST);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		HtmlPage page = null;
+		try {
+			page = webClient.getPage(request);
+		} catch (FailingHttpStatusCodeException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		HtmlForm form = page.getFormByName("logicCoverageForm");
+		assertEquals("logicCoverageForm", form.getNameAttribute());
+		 
+		final HtmlSubmitInput buttonTruthTable = form.getInputByValue("Truth Table");
+		assertEquals("action", buttonTruthTable.getNameAttribute());
+		
+		final HtmlSubmitInput buttonGacc = form.getInputByValue("GACC");
+		
+		final HtmlSubmitInput buttonCacc = form.getInputByValue("CACC");
+		
+		final HtmlSubmitInput buttonRacc = form.getInputByValue("RACC");
+		
+		final HtmlSubmitInput buttonGicc = form.getInputByValue("GICC");
+		
+		final HtmlSubmitInput buttonNewExpression = form.getInputByValue("New Expression");
+		
+		final HtmlSubmitInput buttonRicc = form.getInputByValue("RICC");
+		
+		final HtmlTextInput textInputExpression = form.getInputByName("expression");
+		
+		final HtmlSubmitInput buttonGraphCoverage = form.getInputByValue("Graph Coverage");
+		final HtmlSubmitInput buttonDataFlowCoverage = form.getInputByValue("Data Flow Coverage");
+		final HtmlSubmitInput buttonMinimalMUMCUTCoverage = form.getInputByValue("Minimal-MUMCUT Coverage");</code></mapping><mapping><name>enterExpressionMapping</name><transition-name>enterExpression</transition-name><code>textInputExpression.setText("a &amp; b");</code></mapping><mapping><name>enterWrongExpressionMapping</name><transition-name>enterWrongExpression</transition-name><code>textInputExpression.setText("a &amp;&amp; b");</code></mapping><mapping><name>trOrTMapping</name><transition-name>trOrT</transition-name><code>try {
+			page = buttonGacc.click();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}</code></mapping><mapping><name>truthTableMapping</name><transition-name>truthTable</transition-name><code>try {
+			page = buttonTruthTable.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping><mapping><name>gaccMapping</name><transition-name>gacc</transition-name><code>try {
+			page = buttonGacc.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping><mapping><name>caccMapping</name><transition-name>cacc</transition-name><code>try {
+			page = buttonCacc.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping><mapping><name>raccMapping</name><transition-name>racc</transition-name><code>try {
+			page = buttonRacc.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping><mapping><name>giccMapping</name><transition-name>gicc</transition-name><code>try {
+			page = buttonGicc.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping><mapping><name>riccMapping</name><transition-name>ricc</transition-name><code>try {
+			page = buttonRicc.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping><mapping><name>dataFlowMapping</name><transition-name>dataFlow</transition-name><code>try {
+			page = buttonDataFlowCoverage.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping><mapping><name>graphMapping</name><transition-name>graph</transition-name><code>try {
+			page = buttonGraphCoverage.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping><mapping><name>minimalMUMCUTMapping</name><transition-name>minimalMUMCUT</transition-name><code>try {
+			page = buttonMinimalMUMCUTCoverage.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping><mapping><name>newExpressionMapping</name><transition-name>newExpression</transition-name><code>try {
+			page = buttonNewExpression.click();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+		}</code></mapping><mapping><name>ConstraintExceptionNotNullMapping</name><constraint-name>ConstraintExceptionNotNull</constraint-name><code>(((HtmlTable) page.getHtmlElementById("tableException")).getCellAt(0, 0).asText() != null);</code><stateinvariants>Error</stateinvariants></mapping></mappings>

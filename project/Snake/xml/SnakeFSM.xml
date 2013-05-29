@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>SnakeApplication game = new SnakeApplication();
+		GamePanel gp = game.getGamePanel();
+		SideNavigationBar sn = game.getSideNavigation();
+		NavButton nvHighScores = sn.getHighScores();
+		NavButton nvNewGame = sn.getNewGame();
+		NavButton nvDifficulties = sn.getSettings();
+		SettingsPanel sp = game.getSettingsPanel();
+		Robot robot = null;
+		try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}</code><required-mappings></required-mappings></mapping>
+<mapping><name>checkScoresMapping</name><transition-name>checkScores</transition-name><code>nvHighScores.doClick();</code><required-mappings></required-mappings></mapping>
+<mapping><name>newGameMapping</name><transition-name>newGame</transition-name><code>nvNewGame.doClick();</code><required-mappings></required-mappings></mapping>
+<mapping><name>chooseDifficultyMapping</name>
+	<transition-name>chooseDifficulty</transition-name>
+	<code>nvDifficulties.doClick();</code><required-mappings></required-mappings></mapping>
+<mapping><name>ConstraintEasyMapping</name><constraint-name>ConstraintEasy</constraint-name><code>(Difficulty.EASY == gp.getDifficulty()) == true;</code><required-mappings></required-mappings><stateinvariants>Easy,EasyNewGame,EasyHighScores,EasyLost,EasyStarted</stateinvariants></mapping>
+	<mapping>
+		<name>easyMapping</name>
+		<transition-name>easy</transition-name>
+		<code>sp.difficultySetter.setSelectedIndex(0);</code></mapping>
+	<mapping>
+		<name>normMapping</name>
+		<transition-name>norm</transition-name>
+		<code>sp.difficultySetter.setSelectedIndex(1);</code></mapping>
+	<mapping>
+		<name>hardMapping</name>
+		<transition-name>hard</transition-name>
+		<code>sp.difficultySetter.setSelectedIndex(2);</code></mapping>
+	<mapping>
+		<name>ConstraintNormalMapping</name>
+		<constraint-name>ConstraintNormal</constraint-name>
+		<code>(Difficulty.NORM == gp.getDifficulty()) == true;</code>
+		<required-mappings></required-mappings>
+		<stateinvariants>Normal,Default,HighScores,NormalLost,NormalStarted</stateinvariants></mapping>
+	<mapping>
+		<name>ConstraintHardMapping</name>
+		<constraint-name>ConstraintHard</constraint-name>
+		
+		
+		<code>(Difficulty.HARD == gp.getDifficulty()) == true;</code>
+		<required-mappings></required-mappings>
+		<stateinvariants>Hard,HardNewGame,HardHighScores,HardLost,HardStarted</stateinvariants></mapping>
+	<mapping>
+		<name>ConstraintExtremeHardMapping</name>
+		<constraint-name>ConstraintExtremeHard</constraint-name>
+		
+		<code>(Difficulty.EXTREME == gp.getDifficulty()) == true;</code>
+		<required-mappings></required-mappings>
+		<stateinvariants>ExtremeHard,ExHardNewGame,ExHardHighScores,ExHardLost,ExHardStarted</stateinvariants></mapping>
+	<mapping>
+		<name>extremeMapping</name>
+		<transition-name>extreme</transition-name>
+		<code>sp.difficultySetter.setSelectedIndex(3);</code></mapping>
+	<mapping>
+		<name>pressKeyMapping</name>
+		<transition-name>pressKey</transition-name>
+		<code>robot.keyPress(KeyEvent.VK_U);
+		robot.keyRelease(KeyEvent.VK_U);</code></mapping>
+	<mapping>
+		<name>playMapping</name>
+		<transition-name>play</transition-name>
+		<code>		
+		int i = 0;
+		while (gp.getStatus() != Status.LOSE)
+	    {
+	    	robot.keyPress(KeyEvent.VK_RIGHT);
+	    	robot.keyRelease(KeyEvent.VK_RIGHT);
+	    	 try {
+				 Thread.sleep(200);
+			 } catch (InterruptedException e) {
+				 e.printStackTrace();
+			}
+	    	 i ++;
+	    	 if(i == 10)
+	    		 gp.setStatus(Status.LOSE);
+	    }</code></mapping></mappings>

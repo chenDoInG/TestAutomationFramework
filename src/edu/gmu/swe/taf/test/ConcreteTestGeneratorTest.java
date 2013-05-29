@@ -571,7 +571,7 @@ public class ConcreteTestGeneratorTest {
 		System.out.println(stateMachine.getStateMappings());
 		
 		AbstractTestGenerator abstractTestGenerator = new AbstractTestGenerator();
-		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(15), stateMachine), stateMachine);
+		List<Transition> transitions = abstractTestGenerator.convertVerticesToTransitions(abstractTestGenerator.getPathByState(paths.get(1), stateMachine), stateMachine);
 	
 		//add the test comments
 		String pathName = "" + transitions.get(0).getSource().getName() + " ";

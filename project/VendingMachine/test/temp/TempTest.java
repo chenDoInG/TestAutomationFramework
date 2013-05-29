@@ -9,16 +9,14 @@ public class TempTest {
     public boolean test(){
         StringBuffer sb = new StringBuffer("MM");
         vendingMachine vm = new vendingMachine();
-        vm.coin(25);
-        vm.addChoc("MM");
-        vm.addChoc("MM");
-        vm.coin(25);
         vm.coin(10);
         vm.coin(25);
         vm.coin(25);
         vm.coin(25);
         vm.coin(25);
+        vm.addChoc("MM");
         vm.getChoc(sb);
-        return (vm.getCredit() == 0) && (vm.getStock().size() == 1);
+        vm.addChoc("MM");
+        return (vm.getStock().size() == 1) && (vm.getCredit() == 0);
     }
 }

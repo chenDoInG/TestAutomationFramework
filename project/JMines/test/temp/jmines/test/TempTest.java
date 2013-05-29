@@ -27,9 +27,11 @@ public class TempTest {
         JMenu boardMenu = frame.getMainFrameMenuBar().getBoardMenu();
         JMenu robotMenu = frame.getMainFrameMenuBar().getRobotMenu();
         gameMenu.getItem(2).doClick();
+        languageMenu.getItem(1).doClick();
+        gameMenu.getItem(4).doClick();
         gameMenu.getItem(3).doClick();
         boardMenu.getItem(0).doClick();
-        languageMenu.getItem(1).doClick();
+        languageMenu.getItem(0).doClick();
         return gamePanel.getDifficulty().equals("intermediate");
     }
 }

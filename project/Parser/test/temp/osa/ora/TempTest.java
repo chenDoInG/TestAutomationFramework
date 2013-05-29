@@ -26,9 +26,10 @@ public class TempTest {
         comboBoxOperation.setSelectedIndex(1);
         buttonParse.doClick();
         checkBoxDirection.doClick();
-        buttonClear.doClick();
         checkBoxDirection.doClick();
-        buttonParse.doClick();
-        return checkBoxDirection.isSelected() == false;
+        checkBoxDirection.doClick();
+        parserView.setOperStrings(new String[]{ "+", "%", "*", "/" });
+        buttonClear.doClick();
+        return checkBoxDirection.isSelected() == true;
     }
 }

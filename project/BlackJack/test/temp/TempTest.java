@@ -10,12 +10,7 @@ public class TempTest {
         BlackjackGUI frame = new BlackjackGUI();
         frame.display();
         frame.getDealButton().doClick();
-        frame.getStayButton().doClick();
         frame.getHitButton().doClick();
-        frame.getHitButton().doClick();
-        frame.getPlayAgainButton().doClick();
-        frame.getDealButton().doClick();
-        frame.getStayButton().doClick();
         frame.getHitButton().doClick();
         frame.getHitButton().doClick();
         return frame.getWinLoseBox().getText().trim().equals("") == false;

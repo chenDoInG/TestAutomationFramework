@@ -2,7 +2,7 @@
 <uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_vnHfYKHmEeKDh-QZNnVqag" name="model">
   <packagedElement xmi:type="uml:StateMachine" xmi:id="_vta7sKHmEeKDh-QZNnVqag" name="StateMachine0">
     <region xmi:id="_vtcw4KHmEeKDh-QZNnVqag" name="Region0">
-      <ownedRule xmi:id="_eRzSAKHpEeKDh-QZNnVqag" name="ConstraintCheck" constrainedElement="_vf95EKHnEeKDh-QZNnVqag _75KqYKHnEeKDh-QZNnVqag">
+      <ownedRule xmi:id="_eRzSAKHpEeKDh-QZNnVqag" name="ConstraintCheck">
         <specification xmi:type="uml:LiteralString" xmi:id="_eR2VUKHpEeKDh-QZNnVqag" value=""/>
       </ownedRule>
       <ownedRule xmi:id="_gSRU8KHpEeKDh-QZNnVqag" name="ConstraintCheckmate" constrainedElement="_yD51cKHnEeKDh-QZNnVqag _DLPw4KHoEeKDh-QZNnVqag">

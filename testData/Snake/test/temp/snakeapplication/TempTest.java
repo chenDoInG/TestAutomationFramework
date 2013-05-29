@@ -29,13 +29,6 @@ public class TempTest {
         // TODO Auto-generated catch block
         e.printStackTrace();
         }
-        nvDifficulties.doClick();
-        sp.difficultySetter.setSelectedIndex(0);
-        sp.difficultySetter.setSelectedIndex(2);
-        nvNewGame.doClick();
-        nvHighScores.doClick();
-        nvDifficulties.doClick();
-        nvNewGame.doClick();
         robot.keyPress(KeyEvent.VK_U);
         robot.keyRelease(KeyEvent.VK_U);
         
@@ -53,6 +46,6 @@ public class TempTest {
         if(i == 10)
         gp.setStatus(Status.LOSE);
         }
-        return (Difficulty.HARD == gp.getDifficulty()) == true;
+        return (Difficulty.NORM == gp.getDifficulty()) == true;
     }
 }

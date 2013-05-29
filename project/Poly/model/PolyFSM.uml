@@ -32,8 +32,6 @@
       </transition>
       <transition xmi:id="_Q3Y2APFKEeGDUr5Jikhy1w" name="addNeg" kind="internal" source="_XEqtEPFJEeGDUr5Jikhy1w" target="_XEqtEPFJEeGDUr5Jikhy1w"/>
       <transition xmi:id="_Ui5ecPFKEeGDUr5Jikhy1w" name="" source="_Znmj4PFJEeGDUr5Jikhy1w" target="_T2ENoPFKEeGDUr5Jikhy1w"/>
-      <transition xmi:id="_W2p0UPFLEeGDUr5Jikhy1w" name="deletePos" source="_Znmj4PFJEeGDUr5Jikhy1w" target="_XEqtEPFJEeGDUr5Jikhy1w"/>
-      <transition xmi:id="_cE1wcPFLEeGDUr5Jikhy1w" name="deleteNeg" source="_Znmj4PFJEeGDUr5Jikhy1w" target="_UPCjwPFJEeGDUr5Jikhy1w"/>
       <transition xmi:id="_eGPAcPFLEeGDUr5Jikhy1w" name="deletePos" source="_UPCjwPFJEeGDUr5Jikhy1w" target="_JDvI8PFJEeGDUr5Jikhy1w"/>
       <transition xmi:id="_gLmKcPFLEeGDUr5Jikhy1w" name="deletePos" source="_JDvI8PFJEeGDUr5Jikhy1w" target="_lCtKsPFIEeGRDc0UHqwrug"/>
       <transition xmi:id="_iBtXgPFLEeGDUr5Jikhy1w" name="deleteNeg" source="_XEqtEPFJEeGDUr5Jikhy1w" target="_JarpUPFJEeGDUr5Jikhy1w"/>

@@ -1,57 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><mappings><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>GameController gc = new GameController();
-		final ChessBoard chessBoard = gc.getChessBoard();
-		chessBoard.initialiseBoard();
-		final JLabel[][] chessLabels = chessBoard.getChessSquareArray();
-		JCheckBox checkBox = chessBoard.getAllowUndoCheckBox();
-		Thread thread2 = null;
-		Thread thread3 = null;
-		Thread thread4 = null;
-		Thread thread5 = null;
-		
-		Robot robot = null;
-		try {
-			robot = new Robot();
-		} catch (AWTException e) {
-			e.printStackTrace();
-		}</code></mapping><mapping><name>disallowUndoMapping</name><transition-name>disallowUndo</transition-name><code>checkBox.doClick();</code></mapping><mapping><name>newGameMapping</name><transition-name>newGame</transition-name><code>try {
-			Thread.sleep(5);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		robot.keyPress(KeyEvent.VK_ENTER);		
-		try {
-			Thread.sleep(5);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		Thread thread = new Thread(){
-			public void run(){
-				Robot robot1 = null;
-				try {
-					robot1 = new Robot();
-				} catch (AWTException e) {
-					e.printStackTrace();
-				}
-				robot1.keyPress(KeyEvent.VK_ENTER);
-				robot1.keyRelease(KeyEvent.VK_ENTER);
-			}
-		};
-		
-		Thread thread1 = new Thread(){
-			public void run(){
-				chessBoard.getNewGameButton().doClick();
-			}
-		};
-		
-		thread1.start();
-		try {
-			Thread.sleep(1);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		thread.start();</code></mapping><mapping><name>checkMapping</name><transition-name>check</transition-name><code>thread2 = new Thread(){
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><mappings><mapping><name>disallowUndoMapping</name><transition-name>disallowUndo</transition-name><code>checkBox.doClick();</code></mapping><mapping><name>checkMapping</name><transition-name>check</transition-name><code>thread2 = new Thread(){
 			public void run(){
 				Robot robot2 = null;
 				try {
@@ -940,4 +887,60 @@
         Thread.sleep(100);
         } catch (InterruptedException e) {
         e.printStackTrace();
-        }</code></mapping><mapping><name>ConstraintCheckmateMapping</name><constraint-name>ConstraintCheckmate</constraint-name><code>gc.isCheckmate();</code><stateinvariants>CheckmateUndoAllowed,CheckmateUndoNotAllowed</stateinvariants></mapping></mappings>
+        }</code></mapping><mapping><name>ConstraintCheckmateMapping</name><constraint-name>ConstraintCheckmate</constraint-name><code>gc.isCheckmate();</code><stateinvariants>CheckmateUndoAllowed,CheckmateUndoNotAllowed</stateinvariants></mapping><mapping><name>newGameMapping</name><transition-name>newGame</transition-name><code>try {
+			Thread.sleep(5);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		robot.keyPress(KeyEvent.VK_ENTER);		
+		try {
+			Thread.sleep(5);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		thread = new Thread(){
+			public void run(){
+				Robot robot1 = null;
+				try {
+					robot1 = new Robot();
+				} catch (AWTException e) {
+					e.printStackTrace();
+				}
+				robot1.keyPress(KeyEvent.VK_ENTER);
+				robot1.keyRelease(KeyEvent.VK_ENTER);
+			}
+		};
+		
+		 thread1 = new Thread(){
+			public void run(){
+				chessBoard.getNewGameButton().doClick();
+			}
+		};
+		
+		thread1.start();
+		try {
+			Thread.sleep(1);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		thread.start();</code></mapping><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>GameController gc = new GameController();
+		final ChessBoard chessBoard = gc.getChessBoard();
+		chessBoard.initialiseBoard();
+		final JLabel[][] chessLabels = chessBoard.getChessSquareArray();
+		JCheckBox checkBox = chessBoard.getAllowUndoCheckBox();
+		
+		Thread thread = null;
+		Thread thread1 = null;
+		Thread thread2 = null;
+		Thread thread3 = null;
+		Thread thread4 = null;
+		Thread thread5 = null;
+		
+		Robot robot = null;
+		try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}</code></mapping></mappings>
