@@ -68,8 +68,11 @@ public class ConcreteTestGenerator {
 		File file = new File(getDirectory() + "test/" + JavaSupporter.returnPackages(packageName) + getTestName() + ".java");
 		
 		List<Test> finalTests = new ArrayList<Test>();
-		for(Test test: tests)
+		for(Test test: tests){
+			System.out.println(test.getTestName());
+			System.out.println(test.getTestComment());
 			finalTests.add(updateConcreteTest(test));
+		}
 		
 		try {
 			createConcreteTestCase(getDirectory(), file, finalTests);	
@@ -645,7 +648,7 @@ public class ConcreteTestGenerator {
 		}
 		//System.out.println("mapping size: " + mappings.size());
 		//for(Mapping mapping : mappings)
-			//System.out.println(mapping.getMappingName());
+		//	System.out.println(mapping.getMappingName());
 		//System.out.println(testCode.toString());
 		File file = writeTempTest(testCode.toString());
 		compileJavaFile(directory + "class/", file);
@@ -692,10 +695,17 @@ public class ConcreteTestGenerator {
 
 		if(methods.length == 1){
 			Method m = methods[0];
+			//System.out.println(m.getName());
 			m.setAccessible(true);
 			Object o = m.invoke(c.newInstance(), new Object[]{});
-			//System.out.println("temp file result: " + o.toString());
-			returnValue = Boolean.valueOf(o.toString());
+			//System.out.println("temp file result: " + o);
+			
+			if(o != null){
+				returnValue = Boolean.valueOf(o.toString());
+			}
+			else{
+				System.err.println("The result of the temp test is NULL.");
+			}
 		}
 		else{
 			throw new Exception("Errors in creating a temparoral Java class");

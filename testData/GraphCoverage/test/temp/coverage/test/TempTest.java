@@ -15,9 +15,8 @@ public class TempTest {
         final WebClient webClient = new WebClient();
         WebRequest request = null;
         try {
-        request = new WebRequest( new URL("http://localhost:8080/CoverageWebApplication/coverage/GraphCoverage" ), HttpMethod.POST);
+        request = new WebRequest( new URL("http://localhost:8080/CoverageWebApplication/coverage/GraphCoverage"), HttpMethod.POST);
         } catch (MalformedURLException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
         }
         
@@ -25,10 +24,8 @@ public class TempTest {
         try {
         page = webClient.getPage(request);
         } catch (FailingHttpStatusCodeException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
         } catch (IOException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
         }
         
@@ -54,6 +51,7 @@ public class TempTest {
         
         final HtmlSubmitInput buttonNewGraph = form.getInputByValue("New Graph");
         
+        final HtmlSubmitInput buttonGraphCoverage = form.getInputByValue("Graph Coverage");
         final HtmlSubmitInput buttonDataFlowCoverage = form.getInputByValue("Data Flow Coverage");
         final HtmlSubmitInput buttonLogicCoverage = form.getInputByValue("Logic Coverage");
         final HtmlSubmitInput buttonMinimalMUMCUTCoverage = form.getInputByValue("Minimal-MUMCUT Coverage");
@@ -63,17 +61,41 @@ public class TempTest {
         final HtmlTextInput textFieldInitialNodes = form.getInputByName("initialNode");
         
         final HtmlTable table = null;
-        
         textAreaEdges.setText("1 2\n");
         textFieldEndNodes.setValueAttribute("2");
         textFieldInitialNodes.setValueAttribute("1");
-        
         try {
         page = buttonNodes.click();
         } catch (IOException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
         }
+        try {
+        page = buttonPrimePaths.click();
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
+        
+        try {
+        page = buttonNodeCoverage.click();
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
+        try {
+        page = buttonPrimePathCoverage.click();
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
+        try {
+        page = buttonNodes.click();
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
+        try {
+        page = buttonPrimePaths.click();
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
+        
         return (((HtmlTable) page.getHtmlElementById("tableResult")).getCellAt(0, 0).asText() != null);
     }
 }

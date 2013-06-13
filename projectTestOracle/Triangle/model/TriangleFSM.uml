@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_DpyBoO0rEeGZx9lBOJ8L_Q" name="model">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_DqE8kO0rEeGZx9lBOJ8L_Q" name="StateMachine0">
+    <region xmi:id="_DqE8ke0rEeGZx9lBOJ8L_Q" name="Region0">
+      <ownedRule xmi:id="_7VUnUIy7EeKhkdNvmyRIwg" name="ConstraintScalene" constrainedElement="_QFRR8O0rEeGZx9lBOJ8L_Q">
+        <specification xmi:type="uml:LiteralString" xmi:id="_7VUnUYy7EeKhkdNvmyRIwg" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_Fwp9wIy8EeKhkdNvmyRIwg" name="ConstraintEquilateral" constrainedElement="_HvxmoO0rEeGZx9lBOJ8L_Q">
+        <specification xmi:type="uml:LiteralString" xmi:id="_Fwp9wYy8EeKhkdNvmyRIwg" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_Jb1PAIy8EeKhkdNvmyRIwg" name="ConstraintImpossible" constrainedElement="_QVMkUO0rEeGZx9lBOJ8L_Q">
+        <specification xmi:type="uml:LiteralString" xmi:id="_Jb1PAYy8EeKhkdNvmyRIwg" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_Mb4foIy8EeKhkdNvmyRIwg" name="ConstraintIsosceles" constrainedElement="_QmJxcO0rEeGZx9lBOJ8L_Q">
+        <specification xmi:type="uml:LiteralString" xmi:id="_Mb4foYy8EeKhkdNvmyRIwg" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_QRW8YIy8EeKhkdNvmyRIwg" name="ConstraintRightAngled" constrainedElement="_Q5VzMO0rEeGZx9lBOJ8L_Q">
+        <specification xmi:type="uml:LiteralString" xmi:id="_QRW8YYy8EeKhkdNvmyRIwg" value=""/>
+      </ownedRule>
+      <transition xmi:id="_wJ5sEO0rEeGZx9lBOJ8L_Q" name="setEquilateral" source="_QFRR8O0rEeGZx9lBOJ8L_Q" target="_HvxmoO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_wtTUEO0rEeGZx9lBOJ8L_Q" name="initialize" source="_GnK_0O0rEeGZx9lBOJ8L_Q" target="_QFRR8O0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_xIh3gO0rEeGZx9lBOJ8L_Q" name="setImpossible" source="_QFRR8O0rEeGZx9lBOJ8L_Q" target="_QVMkUO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_xsrtcO0rEeGZx9lBOJ8L_Q" name="setIsoceles" source="_HvxmoO0rEeGZx9lBOJ8L_Q" target="_QmJxcO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_yPffkO0rEeGZx9lBOJ8L_Q" name="setRightAngled" source="_HvxmoO0rEeGZx9lBOJ8L_Q" target="_Q5VzMO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_zd5zcO0rEeGZx9lBOJ8L_Q" name="setRightAngled" source="_QVMkUO0rEeGZx9lBOJ8L_Q" target="_Q5VzMO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_0AtlkO0rEeGZx9lBOJ8L_Q" name="setScalene" source="_QVMkUO0rEeGZx9lBOJ8L_Q" target="_QFRR8O0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_obDfIO0tEeGZx9lBOJ8L_Q" name="setEquilateral" source="_QVMkUO0rEeGZx9lBOJ8L_Q" target="_HvxmoO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_pZPlsO0tEeGZx9lBOJ8L_Q" name="setIsoceles" source="_QVMkUO0rEeGZx9lBOJ8L_Q" target="_QmJxcO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_7lQDIO0tEeGZx9lBOJ8L_Q" name="setImpossible" source="_Q5VzMO0rEeGZx9lBOJ8L_Q" target="_QVMkUO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_8wOogO0tEeGZx9lBOJ8L_Q" name="setEquilateral" source="_Q5VzMO0rEeGZx9lBOJ8L_Q" target="_HvxmoO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_9PBdUO0tEeGZx9lBOJ8L_Q" name="setEquilateral" source="_QmJxcO0rEeGZx9lBOJ8L_Q" target="_HvxmoO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_DpWccO0uEeGZx9lBOJ8L_Q" name="setScalene" source="_HvxmoO0rEeGZx9lBOJ8L_Q" target="_QFRR8O0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_JeUrwO0uEeGZx9lBOJ8L_Q" name="setScalene" source="_QmJxcO0rEeGZx9lBOJ8L_Q" target="_QFRR8O0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_KDOIkO0uEeGZx9lBOJ8L_Q" name="setScalene" source="_Q5VzMO0rEeGZx9lBOJ8L_Q" target="_QFRR8O0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_OdJWMO0uEeGZx9lBOJ8L_Q" name="setIsoceles" source="_QFRR8O0rEeGZx9lBOJ8L_Q" target="_QmJxcO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_O7zBEO0uEeGZx9lBOJ8L_Q" name="setIsoceles" source="_Q5VzMO0rEeGZx9lBOJ8L_Q" target="_QmJxcO0rEeGZx9lBOJ8L_Q">
+        <ownedComment xmi:id="_TXgXYO0uEeGZx9lBOJ8L_Q">
+          <body>setIsoceles</body>
+        </ownedComment>
+      </transition>
+      <transition xmi:id="_VnqcIO0uEeGZx9lBOJ8L_Q" name="setImpossible" source="_HvxmoO0rEeGZx9lBOJ8L_Q" target="_QVMkUO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_WM3a8O0uEeGZx9lBOJ8L_Q" name="setImpossible" source="_QmJxcO0rEeGZx9lBOJ8L_Q" target="_QVMkUO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_dwYPsO0uEeGZx9lBOJ8L_Q" name="setRightAngled" source="_QFRR8O0rEeGZx9lBOJ8L_Q" target="_Q5VzMO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_ePnwcO0uEeGZx9lBOJ8L_Q" name="setRightAngled" source="_QmJxcO0rEeGZx9lBOJ8L_Q" target="_Q5VzMO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_fYdV4O0wEeGZx9lBOJ8L_Q" name="getPerimeter" kind="internal" source="_QFRR8O0rEeGZx9lBOJ8L_Q" target="_QFRR8O0rEeGZx9lBOJ8L_Q">
+        <ownedComment xmi:id="_-7GQoIy6EeKhkdNvmyRIwg">
+          <body>getPerimeter</body>
+        </ownedComment>
+      </transition>
+      <transition xmi:id="_mx0JEO0wEeGZx9lBOJ8L_Q" name="" kind="internal" source="_QFRR8O0rEeGZx9lBOJ8L_Q" target="_QFRR8O0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_yC7Q8O0wEeGZx9lBOJ8L_Q" name="getPerimeter" kind="internal" source="_QVMkUO0rEeGZx9lBOJ8L_Q" target="_QVMkUO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_zwY4UO0wEeGZx9lBOJ8L_Q" name="getPerimeter" kind="internal" source="_Q5VzMO0rEeGZx9lBOJ8L_Q" target="_Q5VzMO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_1wo40O0wEeGZx9lBOJ8L_Q" name="getPerimeter" kind="internal" source="_QmJxcO0rEeGZx9lBOJ8L_Q" target="_QmJxcO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_3dcY4O0wEeGZx9lBOJ8L_Q" name="getPerimeter" kind="internal" source="_HvxmoO0rEeGZx9lBOJ8L_Q" target="_HvxmoO0rEeGZx9lBOJ8L_Q"/>
+      <transition xmi:id="_zdDTQPLbEeG-JcpQuxjkQw" name="" source="_QVMkUO0rEeGZx9lBOJ8L_Q" target="_y42aAPLbEeG-JcpQuxjkQw"/>
+      <transition xmi:id="_zxXWYPLbEeG-JcpQuxjkQw" name="" source="_Q5VzMO0rEeGZx9lBOJ8L_Q" target="_y42aAPLbEeG-JcpQuxjkQw"/>
+      <transition xmi:id="_0Z_coPLbEeG-JcpQuxjkQw" name="" source="_QFRR8O0rEeGZx9lBOJ8L_Q" target="_y42aAPLbEeG-JcpQuxjkQw"/>
+      <transition xmi:id="_00r0kPLbEeG-JcpQuxjkQw" name="" source="_HvxmoO0rEeGZx9lBOJ8L_Q" target="_y42aAPLbEeG-JcpQuxjkQw"/>
+      <transition xmi:id="_1RTfIPLbEeG-JcpQuxjkQw" name="" source="_QmJxcO0rEeGZx9lBOJ8L_Q" target="_y42aAPLbEeG-JcpQuxjkQw"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_GnK_0O0rEeGZx9lBOJ8L_Q" name="Initial0"/>
+      <subvertex xmi:type="uml:State" xmi:id="_HvxmoO0rEeGZx9lBOJ8L_Q" name="Equilateral"/>
+      <subvertex xmi:type="uml:State" xmi:id="_QFRR8O0rEeGZx9lBOJ8L_Q" name="Scalene"/>
+      <subvertex xmi:type="uml:State" xmi:id="_QVMkUO0rEeGZx9lBOJ8L_Q" name="Impossible"/>
+      <subvertex xmi:type="uml:State" xmi:id="_QmJxcO0rEeGZx9lBOJ8L_Q" name="Isosceles"/>
+      <subvertex xmi:type="uml:State" xmi:id="_Q5VzMO0rEeGZx9lBOJ8L_Q" name="RightAngled"/>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_y42aAPLbEeG-JcpQuxjkQw" name="FinalState0"/>
+    </region>
+  </packagedElement>
+</uml:Model>

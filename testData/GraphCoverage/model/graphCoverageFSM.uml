@@ -16,7 +16,7 @@
       <transition xmi:id="_3xp9wPXVEeGNG5LRRk6-LQ" name="updateGraph" source="_iIutgPXVEeGNG5LRRk6-LQ" target="_WNmqMPXTEeGNG5LRRk6-LQ"/>
       <transition xmi:id="_-czDoPYjEeG9_IvcAhmuTg" name="newGraph" source="_WNmqMPXTEeGNG5LRRk6-LQ" target="_rUbvcPXSEeGNG5LRRk6-LQ"/>
       <transition xmi:id="_TscRMPYkEeG9_IvcAhmuTg" name="dataFlow" source="_rUbvcPXSEeGNG5LRRk6-LQ" target="_15wrkPYjEeG9_IvcAhmuTg"/>
-      <transition xmi:id="_c5cMQPYkEeG9_IvcAhmuTg" name="" source="_WQ6AYPXUEeGNG5LRRk6-LQ" target="_uO9jEPYjEeG9_IvcAhmuTg"/>
+      <transition xmi:id="_c5cMQPYkEeG9_IvcAhmuTg" name="minimalMUMCUT" source="_WQ6AYPXUEeGNG5LRRk6-LQ" target="_5qB4MPYjEeG9_IvcAhmuTg"/>
       <transition xmi:id="_gqc_wPYkEeG9_IvcAhmuTg" name="" source="_uO9jEPYjEeG9_IvcAhmuTg" target="_FoqNYPYkEeG9_IvcAhmuTg"/>
       <transition xmi:id="_hgwVoPYkEeG9_IvcAhmuTg" name="" source="_iIutgPXVEeGNG5LRRk6-LQ" target="_FoqNYPYkEeG9_IvcAhmuTg"/>
       <transition xmi:id="_iV3YsPYkEeG9_IvcAhmuTg" name="" source="_WQ6AYPXUEeGNG5LRRk6-LQ" target="_FoqNYPYkEeG9_IvcAhmuTg"/>
@@ -24,7 +24,7 @@
       <transition xmi:id="_0mLuYPYkEeG9_IvcAhmuTg" name="newGraph" source="_iIutgPXVEeGNG5LRRk6-LQ" target="_rUbvcPXSEeGNG5LRRk6-LQ"/>
       <transition xmi:id="_SmWPAPYoEeG9_IvcAhmuTg" name="" source="_WQ6AYPXUEeGNG5LRRk6-LQ" target="_iIutgPXVEeGNG5LRRk6-LQ"/>
       <transition xmi:id="_TKy_4PYoEeG9_IvcAhmuTg" name="" source="_iIutgPXVEeGNG5LRRk6-LQ" target="_WQ6AYPXUEeGNG5LRRk6-LQ"/>
-      <transition xmi:id="_ox7jkPYsEeG9_IvcAhmuTg" name="newGraph" source="_uO9jEPYjEeG9_IvcAhmuTg" target="_rUbvcPXSEeGNG5LRRk6-LQ"/>
+      <transition xmi:id="_ox7jkPYsEeG9_IvcAhmuTg" name="graph" source="_uO9jEPYjEeG9_IvcAhmuTg" target="_rUbvcPXSEeGNG5LRRk6-LQ"/>
       <transition xmi:id="_DIY1kI_eEeKLtNUJx-djFw" name="logic" source="_rUbvcPXSEeGNG5LRRk6-LQ" target="_4fMcwPYjEeG9_IvcAhmuTg"/>
       <transition xmi:id="_FJZEAI_eEeKLtNUJx-djFw" name="minimalMUMCUT" source="_rUbvcPXSEeGNG5LRRk6-LQ" target="_5qB4MPYjEeG9_IvcAhmuTg"/>
       <transition xmi:id="_3NO1sI_eEeKLtNUJx-djFw" name="dataFlow" source="_WNmqMPXTEeGNG5LRRk6-LQ" target="_15wrkPYjEeG9_IvcAhmuTg"/>
@@ -34,6 +34,8 @@
       <transition xmi:id="_hIJ_gI_fEeKLtNUJx-djFw" name="logic" source="_iIutgPXVEeGNG5LRRk6-LQ" target="_4fMcwPYjEeG9_IvcAhmuTg"/>
       <transition xmi:id="_jHuqkI_fEeKLtNUJx-djFw" name="minimalMUMCUT" source="_iIutgPXVEeGNG5LRRk6-LQ" target="_5qB4MPYjEeG9_IvcAhmuTg"/>
       <transition xmi:id="__S64gI_gEeKLtNUJx-djFw" name="newGraph" source="_WQ6AYPXUEeGNG5LRRk6-LQ" target="_rUbvcPXSEeGNG5LRRk6-LQ"/>
+      <transition xmi:id="_YMYh8NN4EeKG17XGaXBloQ" name="logic" source="_WQ6AYPXUEeGNG5LRRk6-LQ" target="_4fMcwPYjEeG9_IvcAhmuTg"/>
+      <transition xmi:id="_Zex98NN4EeKG17XGaXBloQ" name="dataFlow" source="_WQ6AYPXUEeGNG5LRRk6-LQ" target="_15wrkPYjEeG9_IvcAhmuTg"/>
       <subvertex xmi:type="uml:Pseudostate" xmi:id="_hNt-IPXSEeGNG5LRRk6-LQ" name="Initial0"/>
       <subvertex xmi:type="uml:State" xmi:id="_rUbvcPXSEeGNG5LRRk6-LQ" name="Initialized"/>
       <subvertex xmi:type="uml:State" xmi:id="_WNmqMPXTEeGNG5LRRk6-LQ" name="GraphEntered"/>
@@ -49,7 +51,7 @@
           <transition xmi:id="_Q_MbEI_jEeKLtNUJx-djFw" name="primePath" source="_ay3vvfXUEeGNG5LRRk6-LQ" target="_gj-LoPXUEeGNG5LRRk6-LQ"/>
           <transition xmi:id="_ZqxEEI_jEeKLtNUJx-djFw" name="edgePair" source="_ay3vvfXUEeGNG5LRRk6-LQ" target="_dgo9gPXUEeGNG5LRRk6-LQ"/>
           <transition xmi:id="_h-o-wI_jEeKLtNUJx-djFw" name="simplePath" source="_cpvKsPXUEeGNG5LRRk6-LQ" target="_fP6iwPXUEeGNG5LRRk6-LQ"/>
-          <transition xmi:id="_oUJIQI_jEeKLtNUJx-djFw" name="simplePath" source="_cpvKsPXUEeGNG5LRRk6-LQ" target="_gj-LoPXUEeGNG5LRRk6-LQ"/>
+          <transition xmi:id="_oUJIQI_jEeKLtNUJx-djFw" name="primePath" source="_cpvKsPXUEeGNG5LRRk6-LQ" target="_gj-LoPXUEeGNG5LRRk6-LQ"/>
           <transition xmi:id="_xLT9QI_jEeKLtNUJx-djFw" name="primePath" source="_dgo9gPXUEeGNG5LRRk6-LQ" target="_gj-LoPXUEeGNG5LRRk6-LQ"/>
           <transition xmi:id="_3-uKwI_jEeKLtNUJx-djFw" name="edgePair" source="_fP6iwPXUEeGNG5LRRk6-LQ" target="_dgo9gPXUEeGNG5LRRk6-LQ"/>
           <transition xmi:id="_5uMkUI_jEeKLtNUJx-djFw" name="primePath" source="_fP6iwPXUEeGNG5LRRk6-LQ" target="_gj-LoPXUEeGNG5LRRk6-LQ"/>

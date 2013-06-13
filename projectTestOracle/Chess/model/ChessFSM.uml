@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_vnHfYKHmEeKDh-QZNnVqag" name="model">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_vta7sKHmEeKDh-QZNnVqag" name="StateMachine0">
+    <region xmi:id="_vtcw4KHmEeKDh-QZNnVqag" name="Region0">
+      <ownedRule xmi:id="_eRzSAKHpEeKDh-QZNnVqag" name="ConstraintCheck">
+        <specification xmi:type="uml:LiteralString" xmi:id="_eR2VUKHpEeKDh-QZNnVqag" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_gSRU8KHpEeKDh-QZNnVqag" name="ConstraintCheckmate" constrainedElement="_yD51cKHnEeKDh-QZNnVqag _DLPw4KHoEeKDh-QZNnVqag">
+        <specification xmi:type="uml:LiteralString" xmi:id="_gSR8AKHpEeKDh-QZNnVqag" value=""/>
+      </ownedRule>
+      <transition xmi:id="_dYevQKHnEeKDh-QZNnVqag" name="initialize" source="_XHkK0KHnEeKDh-QZNnVqag" target="_X0KLEKHnEeKDh-QZNnVqag"/>
+      <transition xmi:id="_rZi2QKHnEeKDh-QZNnVqag" name="" source="_X0KLEKHnEeKDh-QZNnVqag" target="_joq68KHnEeKDh-QZNnVqag"/>
+      <transition xmi:id="_sevjwKHnEeKDh-QZNnVqag" name="disallowUndo" source="_X0KLEKHnEeKDh-QZNnVqag" target="_mSSokKHnEeKDh-QZNnVqag"/>
+      <transition xmi:id="_4GfqAKHnEeKDh-QZNnVqag" name="check" source="_joq68KHnEeKDh-QZNnVqag" target="_vf95EKHnEeKDh-QZNnVqag"/>
+      <transition xmi:id="_5LzsQKHnEeKDh-QZNnVqag" name="checkmate" source="_joq68KHnEeKDh-QZNnVqag" target="_yD51cKHnEeKDh-QZNnVqag"/>
+      <transition xmi:id="_Fuw2gKHoEeKDh-QZNnVqag" name="check" source="_mSSokKHnEeKDh-QZNnVqag" target="_75KqYKHnEeKDh-QZNnVqag"/>
+      <transition xmi:id="_GkMCoKHoEeKDh-QZNnVqag" name="checkmate" source="_mSSokKHnEeKDh-QZNnVqag" target="_DLPw4KHoEeKDh-QZNnVqag"/>
+      <transition xmi:id="_Imi78KHoEeKDh-QZNnVqag" name="" source="_DLPw4KHoEeKDh-QZNnVqag" target="_7P98YKHnEeKDh-QZNnVqag"/>
+      <transition xmi:id="_JfGUkKHoEeKDh-QZNnVqag" name="checkmateAfterChecked" source="_75KqYKHnEeKDh-QZNnVqag" target="_DLPw4KHoEeKDh-QZNnVqag"/>
+      <transition xmi:id="_O3LMgKHoEeKDh-QZNnVqag" name="checkmateAfterChecked" source="_vf95EKHnEeKDh-QZNnVqag" target="_yD51cKHnEeKDh-QZNnVqag"/>
+      <transition xmi:id="_V188gKHoEeKDh-QZNnVqag" name="" source="_yD51cKHnEeKDh-QZNnVqag" target="_7P98YKHnEeKDh-QZNnVqag"/>
+      <transition xmi:id="_ard58KHoEeKDh-QZNnVqag" name="newGame" source="_joq68KHnEeKDh-QZNnVqag" target="_X0KLEKHnEeKDh-QZNnVqag"/>
+      <transition xmi:id="_f6bSIKHoEeKDh-QZNnVqag" name="newGame" source="_mSSokKHnEeKDh-QZNnVqag" target="_X0KLEKHnEeKDh-QZNnVqag"/>
+      <transition xmi:id="_kBEXYKHoEeKDh-QZNnVqag" name="newGame" source="_vf95EKHnEeKDh-QZNnVqag" target="_X0KLEKHnEeKDh-QZNnVqag"/>
+      <transition xmi:id="_m2gTcKHoEeKDh-QZNnVqag" name="newGame" source="_DLPw4KHoEeKDh-QZNnVqag" target="_X0KLEKHnEeKDh-QZNnVqag"/>
+      <transition xmi:id="_p8WqEKHoEeKDh-QZNnVqag" name="newGame" source="_75KqYKHnEeKDh-QZNnVqag" target="_X0KLEKHnEeKDh-QZNnVqag"/>
+      <transition xmi:id="_tiYVkKHoEeKDh-QZNnVqag" name="newGame" source="_yD51cKHnEeKDh-QZNnVqag" target="_X0KLEKHnEeKDh-QZNnVqag"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_XHkK0KHnEeKDh-QZNnVqag" name="Initial"/>
+      <subvertex xmi:type="uml:State" xmi:id="_X0KLEKHnEeKDh-QZNnVqag" name="NewGame"/>
+      <subvertex xmi:type="uml:State" xmi:id="_joq68KHnEeKDh-QZNnVqag" name="UndoAllowed"/>
+      <subvertex xmi:type="uml:State" xmi:id="_mSSokKHnEeKDh-QZNnVqag" name="UndoNotallowed"/>
+      <subvertex xmi:type="uml:State" xmi:id="_vf95EKHnEeKDh-QZNnVqag" name="CheckedUndoAllowed"/>
+      <subvertex xmi:type="uml:State" xmi:id="_yD51cKHnEeKDh-QZNnVqag" name="CheckmateUndoAllowed"/>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_7P98YKHnEeKDh-QZNnVqag" name="FinalState"/>
+      <subvertex xmi:type="uml:State" xmi:id="_75KqYKHnEeKDh-QZNnVqag" name="CheckedUndoNotAllowed"/>
+      <subvertex xmi:type="uml:State" xmi:id="_DLPw4KHoEeKDh-QZNnVqag" name="CheckmateUndoNotAllowed"/>
+    </region>
+  </packagedElement>
+</uml:Model>

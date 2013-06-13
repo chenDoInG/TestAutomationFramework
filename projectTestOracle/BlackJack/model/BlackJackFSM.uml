@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_UnVhEPEfEeGRDc0UHqwrug" name="model">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_UqaqQPEfEeGRDc0UHqwrug" name="StateMachine0">
+    <region xmi:id="_UquMQPEfEeGRDc0UHqwrug" name="Region0">
+      <ownedRule xmi:id="_AWus4IzWEeKhkdNvmyRIwg" name="ConstraintResult" constrainedElement="_QlSygPEgEeGRDc0UHqwrug">
+        <specification xmi:type="uml:LiteralString" xmi:id="_AWvT8IzWEeKhkdNvmyRIwg" value=""/>
+      </ownedRule>
+      <transition xmi:id="_lmrXEPEfEeGRDc0UHqwrug" name="initialize" source="_aCIV0PEfEeGRDc0UHqwrug" target="_jrxwoPEfEeGRDc0UHqwrug"/>
+      <transition xmi:id="_vX4LYPEfEeGRDc0UHqwrug" name="deal" source="_jrxwoPEfEeGRDc0UHqwrug" target="_sx_uQPEfEeGRDc0UHqwrug"/>
+      <transition xmi:id="_9URNwPEfEeGRDc0UHqwrug" name="hitHitHit" source="_sx_uQPEfEeGRDc0UHqwrug" target="_6VquoPEfEeGRDc0UHqwrug"/>
+      <transition xmi:id="_SjuOEPEgEeGRDc0UHqwrug" name="stayStayStay" source="_sx_uQPEfEeGRDc0UHqwrug" target="_PpqQsPEgEeGRDc0UHqwrug"/>
+      <transition xmi:id="_S6iLkPEgEeGRDc0UHqwrug" name="" source="_6VquoPEfEeGRDc0UHqwrug" target="_QlSygPEgEeGRDc0UHqwrug"/>
+      <transition xmi:id="_aq8M0PEgEeGRDc0UHqwrug" name="" source="_QlSygPEgEeGRDc0UHqwrug" target="_Z0_cQPEgEeGRDc0UHqwrug"/>
+      <transition xmi:id="_bIdPQPEgEeGRDc0UHqwrug" name="" source="_PpqQsPEgEeGRDc0UHqwrug" target="_QlSygPEgEeGRDc0UHqwrug"/>
+      <transition xmi:id="_kQrikPEhEeGRDc0UHqwrug" name="again" source="_QlSygPEgEeGRDc0UHqwrug" target="_jrxwoPEfEeGRDc0UHqwrug"/>
+      <transition xmi:id="_iqkD4PEiEeGRDc0UHqwrug" name="hitHitStay" source="_sx_uQPEfEeGRDc0UHqwrug" target="_uAAuoPEhEeGRDc0UHqwrug"/>
+      <transition xmi:id="_sDnd8PEiEeGRDc0UHqwrug" name="" source="_uAAuoPEhEeGRDc0UHqwrug" target="_QlSygPEgEeGRDc0UHqwrug"/>
+      <transition xmi:id="_a4FncKEpEeKWjdvvFc6YXw" name="hitStayHit" source="_sx_uQPEfEeGRDc0UHqwrug" target="_TWhTcKEpEeKWjdvvFc6YXw"/>
+      <transition xmi:id="_iom9cKEpEeKWjdvvFc6YXw" name="hitStayStay" source="_sx_uQPEfEeGRDc0UHqwrug" target="_gg1YoKEpEeKWjdvvFc6YXw"/>
+      <transition xmi:id="_k1vjYKEpEeKWjdvvFc6YXw" name="" source="_TWhTcKEpEeKWjdvvFc6YXw" target="_QlSygPEgEeGRDc0UHqwrug"/>
+      <transition xmi:id="_mCYVoKEpEeKWjdvvFc6YXw" name="" source="_gg1YoKEpEeKWjdvvFc6YXw" target="_QlSygPEgEeGRDc0UHqwrug"/>
+      <transition xmi:id="_TXNagKEqEeKWjdvvFc6YXw" name="stayStayHit" source="_sx_uQPEfEeGRDc0UHqwrug" target="_37aMsKEpEeKWjdvvFc6YXw"/>
+      <transition xmi:id="_Vj0cAKEqEeKWjdvvFc6YXw" name="stayHitStay" source="_sx_uQPEfEeGRDc0UHqwrug" target="_5tq0gKEpEeKWjdvvFc6YXw"/>
+      <transition xmi:id="_YNKc0KEqEeKWjdvvFc6YXw" name="stayHitHit" source="_sx_uQPEfEeGRDc0UHqwrug" target="_8IUSAKEpEeKWjdvvFc6YXw"/>
+      <transition xmi:id="_aOUcQKEqEeKWjdvvFc6YXw" name="" source="_37aMsKEpEeKWjdvvFc6YXw" target="_QlSygPEgEeGRDc0UHqwrug"/>
+      <transition xmi:id="_bnYg8KEqEeKWjdvvFc6YXw" name="" source="_5tq0gKEpEeKWjdvvFc6YXw" target="_QlSygPEgEeGRDc0UHqwrug"/>
+      <transition xmi:id="_cpO_gKEqEeKWjdvvFc6YXw" name="" source="_8IUSAKEpEeKWjdvvFc6YXw" target="_QlSygPEgEeGRDc0UHqwrug"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_aCIV0PEfEeGRDc0UHqwrug" name="Initial0"/>
+      <subvertex xmi:type="uml:State" xmi:id="_jrxwoPEfEeGRDc0UHqwrug" name="Initialized"/>
+      <subvertex xmi:type="uml:State" xmi:id="_sx_uQPEfEeGRDc0UHqwrug" name="NewDeal"/>
+      <subvertex xmi:type="uml:State" xmi:id="_6VquoPEfEeGRDc0UHqwrug" name="AfterHitHitHit"/>
+      <subvertex xmi:type="uml:State" xmi:id="_PpqQsPEgEeGRDc0UHqwrug" name="AfterStayStayStay"/>
+      <subvertex xmi:type="uml:State" xmi:id="_QlSygPEgEeGRDc0UHqwrug" name="Result"/>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_Z0_cQPEgEeGRDc0UHqwrug" name="FinalState0"/>
+      <subvertex xmi:type="uml:State" xmi:id="_uAAuoPEhEeGRDc0UHqwrug" name="AfterHitHitStay"/>
+      <subvertex xmi:type="uml:State" xmi:id="_TWhTcKEpEeKWjdvvFc6YXw" name="AfterHitStayHit"/>
+      <subvertex xmi:type="uml:State" xmi:id="_gg1YoKEpEeKWjdvvFc6YXw" name="AfterHitStayStay"/>
+      <subvertex xmi:type="uml:State" xmi:id="_37aMsKEpEeKWjdvvFc6YXw" name="AfterStayStayHit"/>
+      <subvertex xmi:type="uml:State" xmi:id="_5tq0gKEpEeKWjdvvFc6YXw" name="AfterStayHitStay"/>
+      <subvertex xmi:type="uml:State" xmi:id="_8IUSAKEpEeKWjdvvFc6YXw" name="AfterStayHitHit"/>
+    </region>
+  </packagedElement>
+</uml:Model>

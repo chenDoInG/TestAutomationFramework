@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_fPYhMPFIEeGRDc0UHqwrug" name="model">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_fPZIQPFIEeGRDc0UHqwrug" name="StateMachine0">
+    <region xmi:id="_fPZIQfFIEeGRDc0UHqwrug" name="Region0">
+      <ownedRule xmi:id="_VhUGAIyvEeKhkdNvmyRIwg" name="ConstraintZeroDeg" constrainedElement="_lCtKsPFIEeGRDc0UHqwrug">
+        <specification xmi:type="uml:LiteralString" xmi:id="_VhXwYIyvEeKhkdNvmyRIwg" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_X62JMIyvEeKhkdNvmyRIwg" name="ConstraintOneDeg" constrainedElement="_JDvI8PFJEeGDUr5Jikhy1w _JarpUPFJEeGDUr5Jikhy1w">
+        <specification xmi:type="uml:LiteralString" xmi:id="_X62wQIyvEeKhkdNvmyRIwg" value=""/>
+      </ownedRule>
+      <ownedRule xmi:id="_ZdIbUIyvEeKhkdNvmyRIwg" name="ConstraintMoreDeg" constrainedElement="_UPCjwPFJEeGDUr5Jikhy1w _XEqtEPFJEeGDUr5Jikhy1w _Znmj4PFJEeGDUr5Jikhy1w">
+        <specification xmi:type="uml:LiteralString" xmi:id="_ZdJCYIyvEeKhkdNvmyRIwg" value=""/>
+      </ownedRule>
+      <transition xmi:id="_AruVIPFJEeGDUr5Jikhy1w" name="initialize" source="_9uH7kPFIEeGDUr5Jikhy1w" target="_lCtKsPFIEeGRDc0UHqwrug"/>
+      <transition xmi:id="_hTU5cPFJEeGDUr5Jikhy1w" name="addPos" source="_lCtKsPFIEeGRDc0UHqwrug" target="_JDvI8PFJEeGDUr5Jikhy1w"/>
+      <transition xmi:id="_ht5VkPFJEeGDUr5Jikhy1w" name="addNeg" source="_lCtKsPFIEeGRDc0UHqwrug" target="_JarpUPFJEeGDUr5Jikhy1w"/>
+      <transition xmi:id="_ml3xIPFJEeGDUr5Jikhy1w" name="addPos" source="_JDvI8PFJEeGDUr5Jikhy1w" target="_UPCjwPFJEeGDUr5Jikhy1w">
+        <ownedComment xmi:id="_2fhKYPFJEeGDUr5Jikhy1w">
+          <body>addAPositivePoly</body>
+        </ownedComment>
+      </transition>
+      <transition xmi:id="_nhKUsPFJEeGDUr5Jikhy1w" name="addNeg" source="_JarpUPFJEeGDUr5Jikhy1w" target="_XEqtEPFJEeGDUr5Jikhy1w"/>
+      <transition xmi:id="_uN4rYPFJEeGDUr5Jikhy1w" name="addNeg" source="_UPCjwPFJEeGDUr5Jikhy1w" target="_Znmj4PFJEeGDUr5Jikhy1w"/>
+      <transition xmi:id="_vvaIgPFJEeGDUr5Jikhy1w" name="addPos" source="_XEqtEPFJEeGDUr5Jikhy1w" target="_Znmj4PFJEeGDUr5Jikhy1w"/>
+      <transition xmi:id="_yLAoQPFJEeGDUr5Jikhy1w" name="addNeg" source="_JDvI8PFJEeGDUr5Jikhy1w" target="_Znmj4PFJEeGDUr5Jikhy1w"/>
+      <transition xmi:id="_0FQucPFJEeGDUr5Jikhy1w" name="addPos" source="_JarpUPFJEeGDUr5Jikhy1w" target="_Znmj4PFJEeGDUr5Jikhy1w"/>
+      <transition xmi:id="_7GXZsPFJEeGDUr5Jikhy1w" name="addPos" kind="internal" source="_UPCjwPFJEeGDUr5Jikhy1w" target="_UPCjwPFJEeGDUr5Jikhy1w"/>
+      <transition xmi:id="_NvvIkPFKEeGDUr5Jikhy1w" name="addPos" kind="internal" source="_Znmj4PFJEeGDUr5Jikhy1w" target="_Znmj4PFJEeGDUr5Jikhy1w">
+        <ownedComment xmi:id="_OJba8PFKEeGDUr5Jikhy1w">
+          <body>addAPositivePoly</body>
+        </ownedComment>
+      </transition>
+      <transition xmi:id="_Q3Y2APFKEeGDUr5Jikhy1w" name="addNeg" kind="internal" source="_XEqtEPFJEeGDUr5Jikhy1w" target="_XEqtEPFJEeGDUr5Jikhy1w"/>
+      <transition xmi:id="_Ui5ecPFKEeGDUr5Jikhy1w" name="" source="_Znmj4PFJEeGDUr5Jikhy1w" target="_T2ENoPFKEeGDUr5Jikhy1w"/>
+      <transition xmi:id="_eGPAcPFLEeGDUr5Jikhy1w" name="deletePos" source="_UPCjwPFJEeGDUr5Jikhy1w" target="_JDvI8PFJEeGDUr5Jikhy1w"/>
+      <transition xmi:id="_gLmKcPFLEeGDUr5Jikhy1w" name="deletePos" source="_JDvI8PFJEeGDUr5Jikhy1w" target="_lCtKsPFIEeGRDc0UHqwrug"/>
+      <transition xmi:id="_iBtXgPFLEeGDUr5Jikhy1w" name="deleteNeg" source="_XEqtEPFJEeGDUr5Jikhy1w" target="_JarpUPFJEeGDUr5Jikhy1w"/>
+      <transition xmi:id="_i7dqAPFLEeGDUr5Jikhy1w" name="deleteNeg" source="_JarpUPFJEeGDUr5Jikhy1w" target="_lCtKsPFIEeGRDc0UHqwrug"/>
+      <transition xmi:id="_TRYVoIytEeKhkdNvmyRIwg" name="minus" source="_JDvI8PFJEeGDUr5Jikhy1w" target="_JarpUPFJEeGDUr5Jikhy1w"/>
+      <transition xmi:id="_OaAFEIyvEeKhkdNvmyRIwg" name="minus" source="_JarpUPFJEeGDUr5Jikhy1w" target="_JDvI8PFJEeGDUr5Jikhy1w"/>
+      <transition xmi:id="_QTjnsIyvEeKhkdNvmyRIwg" name="minus" source="_XEqtEPFJEeGDUr5Jikhy1w" target="_UPCjwPFJEeGDUr5Jikhy1w"/>
+      <transition xmi:id="_SRvysIyvEeKhkdNvmyRIwg" name="minus" source="_UPCjwPFJEeGDUr5Jikhy1w" target="_XEqtEPFJEeGDUr5Jikhy1w"/>
+      <subvertex xmi:type="uml:State" xmi:id="_lCtKsPFIEeGRDc0UHqwrug" name="ZeroDeg"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_9uH7kPFIEeGDUr5Jikhy1w" name="Initial0"/>
+      <subvertex xmi:type="uml:State" xmi:id="_JDvI8PFJEeGDUr5Jikhy1w" name="OneDegAndPosCoef"/>
+      <subvertex xmi:type="uml:State" xmi:id="_JarpUPFJEeGDUr5Jikhy1w" name="OneDegAndNegCoef"/>
+      <subvertex xmi:type="uml:State" xmi:id="_UPCjwPFJEeGDUr5Jikhy1w" name="MoreDegAndPosCoef"/>
+      <subvertex xmi:type="uml:State" xmi:id="_XEqtEPFJEeGDUr5Jikhy1w" name="MoreDegAndNegCoef"/>
+      <subvertex xmi:type="uml:State" xmi:id="_Znmj4PFJEeGDUr5Jikhy1w" name="MoreDegAndMixCoef"/>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_T2ENoPFKEeGDUr5Jikhy1w" name="FinalState0"/>
+    </region>
+  </packagedElement>
+</uml:Model>

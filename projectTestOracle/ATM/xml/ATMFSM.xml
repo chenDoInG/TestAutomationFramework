@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><mappings><mapping><name>authenticateMapping</name><transition-name>authenticate</transition-name><code>userAuthenticated = bankDatabase.authenticateUser( 12345, 54321 );</code></mapping><mapping><name>inquireMapping</name><transition-name>Inquire</transition-name><code>currentTransaction = new BalanceInquiry( 12345, screen, bankDatabase );
+		currentTransaction.execute();</code></mapping><mapping><name>ConstraintAuthenticationValidMapping</name><constraint-name>ConstraintAuthenticationValid</constraint-name><code>userAuthenticated == true;</code><stateinvariants>AuthenticationValid</stateinvariants></mapping><mapping><name>ConstraintAuthenticationNotValidMapping</name><constraint-name>ConstraintAuthenticationNotValid</constraint-name><code>userAuthenticated == false;</code><stateinvariants>AuthenticationNotValid</stateinvariants></mapping><mapping><name>notAuthenticateMapping</name><transition-name>authenticate</transition-name><code>userAuthenticated = bankDatabase.authenticateUser( 12345, 54320 );</code></mapping><mapping><name>withdrawMapping</name><transition-name>withdraw</transition-name><code>currentTransaction = new Withdrawal( 12345, screen, bankDatabase, keypad, cashDispenser );		
+currentTransaction.execute();</code></mapping><mapping><name>depositMapping</name><transition-name>deposit</transition-name><code>currentTransaction = new Deposit( 12345, screen, bankDatabase, keypad, depositSlot );
+currentTransaction.execute();</code></mapping><mapping><name>initializeMapping</name><transition-name>initialize</transition-name><code>boolean userAuthenticated = false; // user is not authenticated to start
+		int currentAccountNumber = 0; // no current account number to start
+		String input = "1\n\n3\n3\n10";
+		System.setIn(new ByteArrayInputStream(input.getBytes()));
+		Screen screen = new Screen(); // create screen
+		Keypad keypad = new Keypad(); // create keypad 
+		CashDispenser cashDispenser = new CashDispenser(); // create cash dispenser
+		DepositSlot depositSlot = new DepositSlot(); // create deposit slot	
+		BankDatabase bankDatabase = new BankDatabase(); // create acct info database
+		Transaction currentTransaction = null;</code></mapping></mappings>

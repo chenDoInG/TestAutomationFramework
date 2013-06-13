@@ -85,7 +85,8 @@ public class TafUserInterface {
 	private JTextField textField_projectName;
 	private JLabel lblMustEnterA ;
 	private JLabel lblTheProjectDirectory;
-	private String directoryName = "project/";
+	//private String directoryName = "project/";
+	private String directoryName = "projectTestOracle/";
 	private String projectName = "";
 	private String modelName = ".uml";
 	private JLabel lblThereAreNo;
@@ -1431,13 +1432,13 @@ public class TafUserInterface {
 		List<Path> paths = AbstractTestGenerator.getTestPaths(stateMachine.getEdges(), stateMachine.getInitialStates(), stateMachine.getFinalStates(), testCriterion);
 		
 		//print edges, initial nodes, and final nodes
-		System.out.println("edge: " + stateMachine.getEdges().length());
-		System.out.println(stateMachine.getEdges());
-		System.out.println(stateMachine.getInitialStates());
-		System.out.println(stateMachine.getFinalStates());
-		System.out.println("state: " + stateMachine.getStateMappings());
-		System.out.println("transitions: " + stateMachine.getTransitions());
-		System.out.println(paths);
+		//System.out.println("edge: " + stateMachine.getEdges().length());
+		//System.out.println(stateMachine.getEdges());
+		//System.out.println(stateMachine.getInitialStates());
+		//System.out.println(stateMachine.getFinalStates());
+		//System.out.println("state: " + stateMachine.getStateMappings());
+		//System.out.println("transitions: " + stateMachine.getTransitions());
+		//System.out.println(paths);
 
 		List<edu.gmu.swe.taf.Test> tests = new ArrayList<edu.gmu.swe.taf.Test>();
 		int totalmappings = 0;
@@ -1482,9 +1483,9 @@ public class TafUserInterface {
 			
 			//System.out.println();
 		}
-		System.out.println("total mappings: " + totalmappings);
-		System.out.println("total constraint mappings: " + constriantNumber);
-		System.out.println("distinct elements: " + distinctMappings.size());
+		//System.out.println("total mappings: " + totalmappings);
+		//System.out.println("total constraint mappings: " + constriantNumber);
+		//System.out.println("distinct elements: " + distinctMappings.size());
 		/*
 		for(Mapping m : distinctMappings){
 			System.out.println(m.getIdentifiableElementName() + ", " + m.getType());
