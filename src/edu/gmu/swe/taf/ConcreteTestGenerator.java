@@ -42,6 +42,9 @@ public class ConcreteTestGenerator {
 	private String tempTestDirectory;
 	private String packageName;
 	private String imports;
+	//the level of test oracles
+	private TestOracleLevel toLevel;
+	
 	/**
 	 * Construct a ConcreteTestGenerator with the specified directory and class name
 	 */
@@ -53,6 +56,21 @@ public class ConcreteTestGenerator {
 		this.packageName = packageName;
 		this.imports = imports;
 		this.testDirectory = directory + "test/";
+		JavaSupporter.createTestDirectory(tempTestDirectory, packageName);
+	}
+	
+	/**
+	 * Construct a ConcreteTestGenerator with the specified directory and class name
+	 */
+	public ConcreteTestGenerator(String directory, String name, String xmlPath, String packageName, String imports, TestOracleLevel toLevel) {
+		this.directory = directory;
+		this.name = name;
+		this.xmlPath = xmlPath;
+		this.tempTestDirectory = directory + "test/temp/";
+		this.packageName = packageName;
+		this.imports = imports;
+		this.testDirectory = directory + "test/";
+		this.toLevel = toLevel;
 		JavaSupporter.createTestDirectory(tempTestDirectory, packageName);
 	}
 
@@ -69,8 +87,8 @@ public class ConcreteTestGenerator {
 		
 		List<Test> finalTests = new ArrayList<Test>();
 		for(Test test: tests){
-			System.out.println(test.getTestName());
-			System.out.println(test.getTestComment());
+			//System.out.println(test.getTestName());
+			//System.out.println(test.getTestComment());
 			finalTests.add(updateConcreteTest(test));
 		}
 		
@@ -272,7 +290,7 @@ public class ConcreteTestGenerator {
 							//System.out.println("mappings after: " + finalMappings.size());
 							//System.out.println("m.getMappingName(): " + m.getMappingName() + "currentMapping.getMappingName(): " + currentMapping.getMappingName());
 							//use a different mapping to solve the constraint
-							if(!m.getMappingName().equals(currentMapping.getMappingName())){
+							if(!m.getName().equals(currentMapping.getName())){
 								for(Mapping mappingRemoved: nextMappings){
 									finalMappings.remove(finalMappings.size() - 1);
 								}
@@ -319,7 +337,7 @@ public class ConcreteTestGenerator {
 						//show the error messages
 						for(int y = 0; y < nextMappings.size(); y++){
 							if(isMappingSatisfied[y] == false){
-								System.err.println("The constraint " + nextMappings.get(y).getMappingName() +  " in " + nextMappings.get(y).getIdentifiableElementName() + " cannot be satisfied in the following path of test " + test.getTestName() + " :");
+								System.err.println("The constraint " + nextMappings.get(y).getName() +  " in " + nextMappings.get(y).getIdentifiableElementName() + " cannot be satisfied in the following path of test " + test.getTestName() + " :");
 								
 								for(int z = 0; z < finalMappings.size(); z++){
 									if(z > 0){
@@ -370,14 +388,30 @@ public class ConcreteTestGenerator {
 					testCode.append(");");
 					testCode.append("\n");
 				}
-			}else{
+			}
+			else{
+				//write test sequences
 				testCode.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
-				testCode.append("/*** test code of " + finalMappings.get(i).getMappingName());
+				testCode.append("/*** test code of " + finalMappings.get(i).getName());
 				testCode.append(" for the element ");
 				testCode.append(finalMappings.get(i).getIdentifiableElementName());
 				testCode.append(" ***/");
 				testCode.append("\n");
 				String[] code = finalMappings.get(i).getTestCode().split("\n");
+				for(String s: code){
+					testCode.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
+					testCode.append(s.trim());
+					testCode.append("\n");
+				}
+				
+				//add test oracles
+				testCode.append("\n");
+				testCode.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
+				testCode.append("/*** test oracle level " + toLevel +"  for " + finalMappings.get(i).getName() + "***/");
+
+				TestOracleMapping toMapping = XmlManipulator.getTestOracleMapping(xmlPath, finalMappings.get(i).getName(), toLevel);
+				code = null;
+				code = toMapping.getTestCode().split("\n");
 				for(String s: code){
 					testCode.append(JunitTestWriter.INDENTATIONFORMETHODCONTENT);
 					testCode.append(s.trim());
@@ -489,7 +523,7 @@ public class ConcreteTestGenerator {
 		//Remove redundant mappings
 		for(int i = finalMappings.size() - 1; i >= 0;i--){
 			for(int j = i - 1; j >= 0;j--){
-				if(finalMappings.get(i).getMappingName().equals(finalMappings.get(j).getMappingName()))
+				if(finalMappings.get(i).getName().equals(finalMappings.get(j).getName()))
 					finalMappings.remove(i);
 			}
 		}

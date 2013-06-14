@@ -189,7 +189,7 @@ public class JavaSupporter {
 	public static Object[] getMappingNames(List<? extends Mapping> mappings){
 		List<String> mappingNames = new ArrayList<String>();
 		for(Mapping mapping : mappings){
-			mappingNames.add(mapping.getMappingName());
+			mappingNames.add(mapping.getName());
 		}
 		return mappingNames.toArray();
 	}

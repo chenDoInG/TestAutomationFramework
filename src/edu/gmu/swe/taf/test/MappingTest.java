@@ -49,7 +49,7 @@ public class MappingTest {
 		
 		Mapping mapping = new Mapping(mappingName, type, identifiedElementName, testCode, mappings, parameters, null, null);
 		
-		assertEquals(mapping.getMappingName(), "vMachineInit");
+		assertEquals(mapping.getName(), "vMachineInit");
 		assertEquals(mapping.getIdentifiableElementName(), "vm");
 		assertEquals(mapping.getType(), IdentifiableElementType.CLASS);
 		assertEquals(mapping.getTestCode(), "vendingMachine vm = new vendingMachine();");

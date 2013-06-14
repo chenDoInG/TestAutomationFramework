@@ -149,7 +149,7 @@ public class XmlManipulator {
 
 			//add mapping name node
 			Element nameNode = doc.createElement("name");
-			Text nameText = doc.createTextNode(mapping.getMappingName());
+			Text nameText = doc.createTextNode(mapping.getName());
 			nameNode.appendChild(nameText);
 			mappingNode.appendChild(nameNode);
 			
@@ -225,6 +225,7 @@ public class XmlManipulator {
 	 * 
 	 * @param doc		an {@link org.w3c.dom.Document} object in which a new mapping will be inserted
 	 * @param mapping	a {@link Mapping} object that will be inserted in an {@link org.w3c.dom.Document} object specified by doc 	
+	 * @param path			a String representation of the path of an XML file
 	 * @throws TransformerException
 	 */
 	public boolean createMapping(Document doc, Mapping mapping, String path) throws TransformerException{
@@ -235,7 +236,7 @@ public class XmlManipulator {
 
 			//add mapping name node
 			Element nameNode = doc.createElement("name");
-			Text nameText = doc.createTextNode(mapping.getMappingName());
+			Text nameText = doc.createTextNode(mapping.getName());
 			nameNode.appendChild(nameText);
 			mappingNode.appendChild(nameNode);
 			
@@ -303,6 +304,68 @@ public class XmlManipulator {
 	}
 	
 	/**
+	 * Inserts a {@link TestOracleMapping} to an {@link org.w3c.dom.Document} object and writes the {@link org.w3c.dom.Document} object 
+	 * to an XML file specified by the argument path.
+	 * If the mapping has been existed, the original XML file will not be affected.
+	 * 
+	 * @param doc			an {@link org.w3c.dom.Document} object in which a new mapping will be inserted
+	 * @param testOracle	a {@link Mapping} object that will be inserted in an {@link org.w3c.dom.Document} object specified by doc 	
+	 * @param path			a String representation of the path of an XML file
+	 * @throws Exception 
+	 */
+	public boolean createTestOracleMapping(Document doc, TestOracleMapping mapping, String path) throws Exception{
+		
+		if(!isMappingExisted(doc, mapping)){
+			Element root = doc.getDocumentElement();
+			Element mappingNode = doc.createElement("mapping");
+
+			//add mapping name node
+			Element nameNode = doc.createElement("name");
+			Text nameText = doc.createTextNode(mapping.getName());
+			nameNode.appendChild(nameText);
+			mappingNode.appendChild(nameNode);
+			
+			//retrieve the mapping for the test oracle
+			Mapping tempMapping = getMappingByName(path, mapping.getMappingName());
+			
+			//add type node
+			String type = "";
+			type = getTypeName(tempMapping.getType());
+			
+			Element typeNode = doc.createElement(type);
+			Text typeText = doc.createTextNode(tempMapping.getIdentifiableElementName());
+			typeNode.appendChild(typeText);
+			mappingNode.appendChild(typeNode);
+
+			//add test code node
+			Element codeNode = doc.createElement("code");
+			Text codeText = doc.createTextNode(mapping.getTestCode());
+			codeNode.appendChild(codeText);
+			mappingNode.appendChild(codeNode);
+			//System.out.println(mapping.getTestCode());
+			
+			//add mapping name
+			Element mappingNameNode = doc.createElement("mapping-name");
+			Text mappingNameText = doc.createTextNode(mapping.getMappingName());
+			mappingNameNode.appendChild(mappingNameText);
+			mappingNode.appendChild(mappingNameNode);
+			
+			//add test oracle level
+			Element testOracleLevelNode = doc.createElement("testOracleLevel");
+			Text testOracleLevelText = doc.createTextNode(mapping.getToLevel().toString());
+			testOracleLevelNode.appendChild(testOracleLevelText);
+			mappingNode.appendChild(testOracleLevelNode);
+						
+			root.appendChild(mappingNode);
+
+			rewriteXml(doc,path);
+			return true;
+		}
+		System.out.println("The user account has existed");
+		return false;
+	}
+	
+	/**
 	 * Inserts a {@link ConstraintMapping} to an {@link org.w3c.dom.Document} object and writes the {@link org.w3c.dom.Document} object 
 	 * to an XML file specified by the argument path.
 	 * 
@@ -320,7 +383,7 @@ public class XmlManipulator {
 				for(int j = 0; j < nodes.getLength();j++){
 					//if the names match, remove this node
 					if(nodes.item(j).getNodeName().equals("name")){
-						if(nodes.item(j).getFirstChild().getNodeValue().equals(mapping.getMappingName())){
+						if(nodes.item(j).getFirstChild().getNodeValue().equals(mapping.getName())){
 							mappings.item(i).getParentNode().removeChild(mappings.item(i));
 						}
 						else
@@ -336,7 +399,7 @@ public class XmlManipulator {
 
 		//add mapping name node
 		Element nameNode = doc.createElement("name");
-		Text nameText = doc.createTextNode(mapping.getMappingName());
+		Text nameText = doc.createTextNode(mapping.getName());
 		nameNode.appendChild(nameText);
 		mappingNode.appendChild(nameNode);
 			
@@ -487,7 +550,7 @@ public class XmlManipulator {
 				for(int j = 0; j < nodes.getLength();j++){
 					//if the names match, remove this node
 					if(nodes.item(j).getNodeName().equals("name")){
-						if(nodes.item(j).getFirstChild().getNodeValue().equals(mapping.getMappingName())){
+						if(nodes.item(j).getFirstChild().getNodeValue().equals(mapping.getName())){
 							mappings.item(i).getParentNode().removeChild(mappings.item(i));
 						}
 						else
@@ -502,7 +565,7 @@ public class XmlManipulator {
 
 			//add mapping name node
 			Element nameNode = doc.createElement("name");
-			Text nameText = doc.createTextNode(mapping.getMappingName());
+			Text nameText = doc.createTextNode(mapping.getName());
 			nameNode.appendChild(nameText);
 			mappingNode.appendChild(nameNode);
 			
@@ -589,7 +652,7 @@ public class XmlManipulator {
 				for(int j = 0; j < nodes.getLength();j++){
 					//if the names match, remove this node
 					if(nodes.item(j).getNodeName().equals("name")){
-						if(nodes.item(j).getFirstChild().getNodeValue().equals(mapping.getMappingName())){
+						if(nodes.item(j).getFirstChild().getNodeValue().equals(mapping.getName())){
 							mappings.item(i).getParentNode().removeChild(mappings.item(i));
 						}
 						else
@@ -598,6 +661,41 @@ public class XmlManipulator {
 				}			
 			}
 			createObjectMapping(doc, mapping, path);
+		}else{
+			System.out.println("The mapping is not existed; should create a new mapping instead of the update");
+		}
+		return false;
+	}
+	
+	/**
+	 * Updates a {@link TestOracleMapping} in an {@link org.w3c.dom.Document} object and writes the new {@link org.w3c.dom.Document} object 
+	 * to an XML file specified by the argument path.
+	 * The XML file will only be modified if there exists an old mapping that has the same as that of the new one.
+	 * 
+	 * @param doc		an {@link org.w3c.dom.Document} object in which a new mapping will be inserted
+	 * @param mapping	a {@link TestOracleMapping} object that will be inserted in an {@link org.w3c.dom.Document} object specified by doc 	
+	 * @throws Exception 
+	 */
+	public boolean updateTestOracleMapping(Document doc, TestOracleMapping mapping, String path) throws Exception{
+		
+		//continue if this mapping has existed
+		if(isMappingExisted(doc, mapping)){
+			NodeList mappings = doc.getElementsByTagName("mapping");
+			
+			for(int i = 0; i < mappings.getLength();i++){
+				NodeList nodes = mappings.item(i).getChildNodes();
+				for(int j = 0; j < nodes.getLength();j++){
+					//if the names match, remove this node
+					if(nodes.item(j).getNodeName().equals("name")){
+						if(nodes.item(j).getFirstChild().getNodeValue().equals(mapping.getName())){
+							mappings.item(i).getParentNode().removeChild(mappings.item(i));
+						}
+						else
+							break;
+					}
+				}			
+			}
+			createTestOracleMapping(doc, mapping, path);
 		}else{
 			System.out.println("The mapping is not existed; should create a new mapping instead of the update");
 		}
@@ -624,7 +722,7 @@ public class XmlManipulator {
 				for(int j = 0; j < nodes.getLength();j++){
 					//if the names match, remove this node
 					if(nodes.item(j).getNodeName().equals("name")){
-						if(nodes.item(j).getFirstChild().getNodeValue().equals(mapping.getMappingName())){
+						if(nodes.item(j).getFirstChild().getNodeValue().equals(mapping.getName())){
 							mappings.item(i).getParentNode().removeChild(mappings.item(i));
 						}
 						else
@@ -715,6 +813,9 @@ public class XmlManipulator {
 		case FIELD:
 			type = "field-name";
 			break;
+		case TESTORACLE:
+			type = "transition-name";
+			break;
 		}
 		
 		return type;
@@ -749,13 +850,14 @@ public class XmlManipulator {
 		NodeList sectionUserName = doc.getElementsByTagName("name");
 		for(int i = 0; i < sectionUserName.getLength();i++){
 			//System.out.println(sectionUserName.item(i).getFirstChild().getNodeValue());
-			if(sectionUserName.item(i).getFirstChild().getNodeValue().equalsIgnoreCase(mapping.getMappingName())){
+			if(sectionUserName.item(i).getFirstChild().getNodeValue().equalsIgnoreCase(mapping.getName())){
 				isExisted = true;
 				return true;
 			}
 		}
 		return false;
 	}
+	
 	
 	/**
 	 * Returns the mappings created for the identifiable element, specified by name
@@ -807,7 +909,7 @@ public class XmlManipulator {
 			for(int j = 0; j < nodes.getLength();j++){
 				
 				if(nodes.item(j).getNodeName().equals("name")){
-					mapping.setMappingName(nodes.item(j).getFirstChild().getNodeValue());
+					mapping.setName(nodes.item(j).getFirstChild().getNodeValue());
 					continue;
 				}
 				
@@ -854,6 +956,94 @@ public class XmlManipulator {
 	}
 	
 	/**
+	 * Returns the test oracle mapping created for the identifiable element, specified by name
+	 * @param path 		a String representation of the path of an XML file
+	 * @param name      a String representation of the name of a mapping in an XML model
+	 * @param toLevel	the test oracle level
+	 * @return     a list of {edu.gmu.swe.taf.Mapping} objects
+	 * @throws Exception 
+	 */
+	public static TestOracleMapping getTestOracleMapping(String path, String name, TestOracleLevel toLevel) throws Exception{
+		Document doc = readXmlFile(path);
+		NodeList nodes = doc.getElementsByTagName("mapping-name");
+		
+		//A TestOracleMapping object to be returned
+		TestOracleMapping mapping = new TestOracleMapping();
+		for(int i = 0; i < nodes.getLength();i++){
+			//if the names match, add the values into the mapping; otherwise, go through the text node
+			//System.out.println("nodes.item(i).getFirstChild().getNodeValue(): "+ nodes.item(i).getFirstChild().getNodeValue());
+			//System.out.println("name: "+ name);
+
+			if(nodes.item(i).getFirstChild().getNodeValue().trim().equals(name.trim())){
+				NodeList children = nodes.item(i).getParentNode().getChildNodes();	
+
+				for(int j = 0; j < children.getLength();j++){
+					if(children.item(j).getNodeName().equals("name")){
+						mapping.setName(children.item(j).getFirstChild().getNodeValue());
+						continue;
+					}
+
+					if(children.item(j).getNodeName().equals("transition-name")){				
+						mapping.setIdentifiableElementName(children.item(j).getFirstChild().getNodeValue());
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("code")){
+						if(children.item(j).getFirstChild() == null)
+							mapping.setTestCode("");
+						else
+							mapping.setTestCode(children.item(j).getFirstChild().getNodeValue());
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("mapping-name")){				
+						mapping.setMappingName(children.item(j).getFirstChild().getNodeValue());
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("testOracleLevel")){	
+						if(children.item(j).getFirstChild().getNodeValue().equals(toLevel.toString())){
+							mapping.setToLevel(toLevel);
+							mapping.setType(IdentifiableElementType.TESTORACLE1);
+						}
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("required-mappings")){
+						if(children.item(j).getFirstChild() == null)
+							mapping.setRequiredMappings(new ArrayList<String>());
+						else{
+							String[] required = children.item(j).getFirstChild().getNodeValue().split(",");
+							mapping.setRequiredMappings(Arrays.asList(required));
+						}
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("parameters")){
+						if(children.item(j).getFirstChild() == null)
+							mapping.setParameters(new ArrayList<String>());
+						else{
+							String[] parameters = children.item(j).getFirstChild().getNodeValue().split(",");
+							mapping.setParameters(Arrays.asList(parameters));
+						}
+					}
+				}
+			}
+		}
+		
+		//handle the cases in which there are no test code or required mappings or parameters saved
+		if(mapping.getTestCode() == null)
+			mapping.setTestCode("");
+		
+		if(mapping.getRequiredMappings() == null)
+			mapping.setRequiredMappings(new ArrayList<String>());
+		
+		if(mapping.getParameters() == null)
+			mapping.setParameters(new ArrayList<String>());
+		return mapping;
+	}
+	
+	/**
 	 * Returns the mappings created for the identifiable element, specified by name.
 	 * @param path a String representation of the path of an XML file
 	 * @param name a String representation of the name of an element in an XML model
@@ -871,12 +1061,13 @@ public class XmlManipulator {
 		for(int i = 0; i < mappings.getLength();i++){
 			NodeList nodes = mappings.item(i).getChildNodes();
 			Mapping mapping = new Mapping();
+			//Mapping testOracleMapping = new TestOracleMapping();
 			//if this boolean sign is true, the element is the one we are looking for
 			boolean isElement = false;
 			for(int j = 0; j < nodes.getLength();j++){
 				
 				if(nodes.item(j).getNodeName().equals("name")){
-					mapping.setMappingName(nodes.item(j).getFirstChild().getNodeValue());
+					mapping.setName(nodes.item(j).getFirstChild().getNodeValue());
 					continue;
 				}
 				
@@ -950,6 +1141,33 @@ public class XmlManipulator {
 						mapping.setParameters(Arrays.asList(parameters));
 					}
 				}
+				
+				if(nodes.item(j).getNodeName().equals("mapping-name")){
+					mapping = new TestOracleMapping(mapping.getName(), mapping.getTestCode(), nodes.item(j).getFirstChild().getNodeValue(), mapping.getIdentifiableElementName(), null);
+				}
+				
+				if(nodes.item(j).getNodeName().equals("testOracleLevel")){
+					switch(nodes.item(j).getFirstChild().getNodeValue()){
+					case "TO1":
+						mapping.setType(IdentifiableElementType.TESTORACLE1);
+						break;
+					case "TO2":
+						mapping.setType(IdentifiableElementType.TESTORACLE2);
+						break;
+					case "TO3":
+						mapping.setType(IdentifiableElementType.TESTORACLE3);
+						break;
+					case "TO4":
+						mapping.setType(IdentifiableElementType.TESTORACLE4);
+						break;
+					case "TO5":
+						mapping.setType(IdentifiableElementType.TESTORACLE5);
+						break;
+					default:
+						mapping.setType(IdentifiableElementType.TESTORACLE1);
+						break;
+					}
+				}
 				//may add more nodes if a mapping has more
 			}
 			if(isElement == false)
@@ -991,7 +1209,7 @@ public class XmlManipulator {
 			for(int j = 0; j < nodes.getLength();j++){
 				
 				if(nodes.item(j).getNodeName().equals("name")){
-					mapping.setMappingName(nodes.item(j).getFirstChild().getNodeValue());
+					mapping.setName(nodes.item(j).getFirstChild().getNodeValue());
 					continue;
 				}
 				
@@ -1078,7 +1296,7 @@ public class XmlManipulator {
 
 				for(int j = 0; j < children.getLength();j++){
 					if(children.item(j).getNodeName().equals("name")){
-						mapping.setMappingName(children.item(j).getFirstChild().getNodeValue());
+						mapping.setName(children.item(j).getFirstChild().getNodeValue());
 						continue;
 					}
 					
@@ -1139,6 +1357,82 @@ public class XmlManipulator {
 	}
 	
 	/**
+	 * Returns a {edu.gmu.swe.taf.ObjectMapping} object based on the specified mapping name
+	 * @param path a String representation of the path of an XML file
+	 * @param name a String representation of the name of a mapping in an XML model
+	 * @return     a {edu.gmu.swe.taf.IdentifiableElementType} object
+	 * @throws Exception 
+	 */
+	public static Mapping getMappingByName(String path, String name) throws Exception{
+		
+		Document doc = readXmlFile(path);
+		NodeList nodes = doc.getElementsByTagName("name");
+		
+		//A ClassMapping object to be returned
+		Mapping mapping = new Mapping();
+		for(int i = 0; i < nodes.getLength();i++){
+			//if the names match, add the values into the mapping; otherwise, go through the text node
+			//System.out.println("nodes.item(i).getFirstChild().getNodeValue(): "+ nodes.item(i).getFirstChild().getNodeValue());
+			//System.out.println("name: "+ name);
+
+			if(nodes.item(i).getFirstChild().getNodeValue().trim().equals(name.trim())){
+				NodeList children = nodes.item(i).getParentNode().getChildNodes();	
+
+				for(int j = 0; j < children.getLength();j++){
+					if(children.item(j).getNodeName().equals("name")){
+						mapping.setName(children.item(j).getFirstChild().getNodeValue());
+						continue;
+					}
+
+					if(children.item(j).getNodeName().equals("transition-name")){				
+						mapping.setIdentifiableElementName(children.item(j).getFirstChild().getNodeValue());
+						mapping.setType(IdentifiableElementType.TRANSITION);
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("code")){
+						if(children.item(j).getFirstChild() == null)
+							mapping.setTestCode("");
+						else
+							mapping.setTestCode(children.item(j).getFirstChild().getNodeValue());
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("required-mappings")){
+						if(children.item(j).getFirstChild() == null)
+							mapping.setRequiredMappings(new ArrayList<String>());
+						else{
+							String[] required = children.item(j).getFirstChild().getNodeValue().split(",");
+							mapping.setRequiredMappings(Arrays.asList(required));
+						}
+						continue;
+					}
+					
+					if(children.item(j).getNodeName().equals("parameters")){
+						if(children.item(j).getFirstChild() == null)
+							mapping.setParameters(new ArrayList<String>());
+						else{
+							String[] parameters = children.item(j).getFirstChild().getNodeValue().split(",");
+							mapping.setParameters(Arrays.asList(parameters));
+						}
+					}
+				}
+			}
+		}
+		
+		//handle the cases in which there are no test code or required mappings or parameters saved
+		if(mapping.getTestCode() == null)
+			mapping.setTestCode("");
+		
+		if(mapping.getRequiredMappings() == null)
+			mapping.setRequiredMappings(new ArrayList<String>());
+		
+		if(mapping.getParameters() == null)
+			mapping.setParameters(new ArrayList<String>());
+		return mapping;
+	}
+	
+	/**
 	 * Returns a {edu.gmu.swe.taf.ConstraintMapping} object based on the specified mapping name
 	 * @param path a String representation of the path of an XML file
 	 * @param name a String representation of the name of an element in an XML model
@@ -1162,7 +1456,7 @@ public class XmlManipulator {
 
 				for(int j = 0; j < children.getLength();j++){
 					if(children.item(j).getNodeName().equals("name")){
-						mapping.setMappingName(children.item(j).getFirstChild().getNodeValue());
+						mapping.setName(children.item(j).getFirstChild().getNodeValue());
 						continue;
 					}
 					
@@ -1242,7 +1536,7 @@ public class XmlManipulator {
 			for(int j = 0; j < nodes.getLength();j++){
 				
 				if(nodes.item(j).getNodeName().equals("name")){
-					mapping.setMappingName(nodes.item(j).getFirstChild().getNodeValue());
+					mapping.setName(nodes.item(j).getFirstChild().getNodeValue());
 					continue;
 				}
 				

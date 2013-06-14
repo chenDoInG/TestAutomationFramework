@@ -10,4 +10,7 @@ currentTransaction.execute();</code></mapping><mapping><name>initializeMapping</
 		CashDispenser cashDispenser = new CashDispenser(); // create cash dispenser
 		DepositSlot depositSlot = new DepositSlot(); // create deposit slot	
 		BankDatabase bankDatabase = new BankDatabase(); // create acct info database
-		Transaction currentTransaction = null;</code></mapping></mappings>
+		Transaction currentTransaction = null;</code></mapping><mapping><name>TO1InitializeMapping</name><transition-name>initialize</transition-name><code>assertTrue(currentTransaction == null);
+assertTrue(currentAccountNumber == 0);</code><mapping-name>initializeMapping</mapping-name><testOracleLevel>TO1</testOracleLevel></mapping><mapping><name>TO2InitializeMapping</name><transition-name>initialize</transition-name><code>assertTrue(currentTransaction == null);
+assertTrue(currentAccountNumber == 0);
+assertEquals(1, keypad.getInput());</code><mapping-name>initializeMapping</mapping-name><testOracleLevel>TO2</testOracleLevel></mapping></mappings>

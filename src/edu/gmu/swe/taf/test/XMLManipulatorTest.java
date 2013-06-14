@@ -21,6 +21,8 @@ import edu.gmu.swe.taf.ObjectMapping;
 import edu.gmu.swe.taf.IdentifiableElementType;
 import edu.gmu.swe.taf.Mapping;
 import edu.gmu.swe.taf.Parameter;
+import edu.gmu.swe.taf.TestOracleLevel;
+import edu.gmu.swe.taf.TestOracleMapping;
 import edu.gmu.swe.taf.XmlManipulator;
 
 /**
@@ -314,6 +316,48 @@ public class XmlManipulatorTest {
 	}
 	
 	/**
+	 * Tests the method CreateTestOracleMapping()
+	 * @throws Exception
+	 */
+	@Test
+	public void testCreateTestOracleMapping() throws Exception{
+		String name = "testOracle1ForinitializeMapping";
+		String mappingName = "initializeVendingMachine";
+		String identifiedElementName = "initialize";
+		IdentifiableElementType type = IdentifiableElementType.TESTORACLE;
+		String testCode = "assertNotNull(vm);";
+		
+		TestOracleMapping mapping = new TestOracleMapping(name, testCode, mappingName, TestOracleLevel.TO1);
+
+		Document doc = XmlManipulator.readXmlFile(xmlPath);
+		
+		XmlManipulator xm = new XmlManipulator();
+
+		xm.createTestOracleMapping(doc, mapping, xmlPath);
+	}
+	
+	/**
+	 * Tests the method updateTestOracleMapping()
+	 * @throws Exception
+	 */
+	@Test
+	public void testUpdateTestOracleMapping() throws Exception{
+		String name = "testOracle1ForinitializeMapping";
+		String mappingName = "initializeVendingMachine";
+		String identifiedElementName = "initialize";
+		IdentifiableElementType type = IdentifiableElementType.TESTORACLE;
+		String testCode = "assertNotNull(vm);";
+		
+		TestOracleMapping mapping = new TestOracleMapping(name, testCode, mappingName, TestOracleLevel.TO1);
+
+		Document doc = XmlManipulator.readXmlFile(xmlPath);
+		
+		XmlManipulator xm = new XmlManipulator();
+
+		xm.updateTestOracleMapping(doc, mapping, xmlPath);
+	}
+	
+	/**
 	 * Tests the method CreateObjectMapping()
 	 * @throws Exception
 	 */
@@ -411,7 +455,7 @@ public class XmlManipulatorTest {
 			
 			for(int j = 0; j < allFields.getLength();j++){
 				if(allFields.item(j).getNodeName().equalsIgnoreCase("name")){
-					if(allFields.item(j).getTextContent().equalsIgnoreCase(mapping.getMappingName())){
+					if(allFields.item(j).getTextContent().equalsIgnoreCase(mapping.getName())){
 						
 						node.getParentNode().removeChild(node);
 						doc.normalize();
@@ -457,7 +501,7 @@ public class XmlManipulatorTest {
 				//System.out.println(allFields.item(j).getNodeName() + ": " + allFields.item(j).getTextContent());
 				
 				if(allFields.item(j).getNodeName().equalsIgnoreCase("name")){
-					if(allFields.item(j).getTextContent().equalsIgnoreCase(mapping.getMappingName())){
+					if(allFields.item(j).getTextContent().equalsIgnoreCase(mapping.getName())){
 						flag = true;
 					}
 					else{
@@ -555,7 +599,7 @@ public class XmlManipulatorTest {
 	public void testGetObjectMappingByName() throws Exception{
 
 		Mapping cm = XmlManipulator.getObjectMappingByName(xmlPath, "vMachineInit");
-		assertEquals(cm.getMappingName(), "vMachineInit");
+		assertEquals(cm.getName(), "vMachineInit");
 	}
 
 }

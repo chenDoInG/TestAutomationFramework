@@ -18,7 +18,7 @@ public class TempTest {
         BankDatabase bankDatabase = new BankDatabase(); // create acct info database
         Transaction currentTransaction = null;
         userAuthenticated = bankDatabase.authenticateUser( 12345, 54321 );
-        currentTransaction = new Withdrawal( 12345, screen, bankDatabase, keypad, cashDispenser );
+        currentTransaction = new Deposit( 12345, screen, bankDatabase, keypad, depositSlot );
         currentTransaction.execute();
         userAuthenticated = bankDatabase.authenticateUser( 12345, 54320 );
         return userAuthenticated == false;

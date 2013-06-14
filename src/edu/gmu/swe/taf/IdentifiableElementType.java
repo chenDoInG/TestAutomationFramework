@@ -9,6 +9,7 @@ package edu.gmu.swe.taf;
  * 
  * @author Nan Li
  * @version 1.0 Nov 12, 2012
+ * @update  June 13, 2013
  */
 public enum IdentifiableElementType {
 	CLASS, 
@@ -24,6 +25,11 @@ public enum IdentifiableElementType {
 	FIELD,
 	PRECONDITION,
 	POSTCONDITION,
-	STATEINVARIANT;
-	
+	STATEINVARIANT,
+	TESTORACLE,
+	TESTORACLE1,
+	TESTORACLE2,
+	TESTORACLE3,
+	TESTORACLE4,
+	TESTORACLE5;
 }

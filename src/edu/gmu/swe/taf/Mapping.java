@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Mapping {
 	//name of the mapping
-	private String mappingName;
+	private String name;
 	//type of the mapped identifiable element
 	private IdentifiableElementType type;
 	//name of the identifiable element
@@ -45,7 +45,7 @@ public class Mapping {
 	 */
 	public Mapping(String mappingName, IdentifiableElementType type, String identifiableElementName, String testCode,
 			List<String> requiredMappings, List<String> parameters, List<String> callers, List<String> returnObjects){
-		this.mappingName = mappingName;
+		this.name = mappingName;
 		this.type = type;
 		this.identifiableElementName = identifiableElementName;
 		this.testCode = testCode;
@@ -66,16 +66,16 @@ public class Mapping {
 	 * Gets the mapping name
 	 * @return the mapping name
 	 */
-	public String getMappingName() {
-		return mappingName;
+	public String getName() {
+		return name;
 	}
 	
 	/**
 	 * Sets the mapping name
 	 * @param mappingName		the name of the mapping
 	 */
-	public void setMappingName(String mappingName) {
-		this.mappingName = mappingName;
+	public void setName(String mappingName) {
+		this.name = mappingName;
 	}
 	
 	/**

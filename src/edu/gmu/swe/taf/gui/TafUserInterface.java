@@ -33,6 +33,8 @@ import edu.gmu.swe.taf.ModelAccessor;
 import edu.gmu.swe.taf.ObjectMapping;
 import edu.gmu.swe.taf.StateMachineAccessor;
 import edu.gmu.swe.taf.TestCoverageCriteria;
+import edu.gmu.swe.taf.TestOracleLevel;
+import edu.gmu.swe.taf.TestOracleMapping;
 import edu.gmu.swe.taf.XmlManipulator;
 import edu.gmu.swe.taf.util.JavaSupporter;
 
@@ -107,7 +109,8 @@ public class TafUserInterface {
 	private JTextField textField_requiredMappings;
 	private JPanel panel_models;
 	private JLabel lblProjectNameInModelPanel;
-	private int criterionIndex = 0;
+	private int criterionIndex = 0;		//the index for the coverage criteria
+	private TestOracleLevel toLevel = TestOracleLevel.TO1;		//the test oracle level
 	private JComboBox comboBox_elementType;
 	private JComboBox comboBox_elementName;
 	private JTextField textField_stateInvariants;
@@ -135,6 +138,8 @@ public class TafUserInterface {
 	private JScrollPane scrollPane_importDeclarations;
 	private JScrollPane scrollPane_mappingsAndTests;
 	private JPanel panel_projects;
+	private JLabel lblNewLabel_testOracleLevel;
+	private JComboBox comboBox_testOracleLevel;
 
 	static Logger log = Logger.getLogger(
             TafUserInterface.class);
@@ -170,7 +175,7 @@ public class TafUserInterface {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1280, 846);
+		frame.setBounds(100, 100, 1280, 946);
 		//frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -263,7 +268,7 @@ public class TafUserInterface {
 					            		 Mapping mapping = elementMappings.get(0);
 					            		 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
 										 comboBox_elementType.setSelectedItem(mapping.getType());
-										 textField_mappingName.setText(mapping.getMappingName());
+										 textField_mappingName.setText(mapping.getName());
 										 textArea_testCode.setText(mapping.getTestCode());
 										 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
 										 
@@ -277,7 +282,7 @@ public class TafUserInterface {
 											 
 											 ConstraintMapping cm = null;
 											 try {
-												cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getMappingName());
+												cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getName());
 											} catch (Exception e1) {
 												e1.printStackTrace();
 											}
@@ -623,7 +628,7 @@ public class TafUserInterface {
 			            		 Mapping mapping = elementMappings.get(0);
 			            		 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
 								 comboBox_elementType.setSelectedItem(mapping.getType());
-								 textField_mappingName.setText(mapping.getMappingName());
+								 textField_mappingName.setText(mapping.getName());
 								 textArea_testCode.setText(mapping.getTestCode());
 								 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
 								 
@@ -641,7 +646,7 @@ public class TafUserInterface {
 									 
 									 ConstraintMapping cm = null;
 									 try {
-										cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getMappingName());
+										cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getName());
 									} catch (Exception e1) {
 										e1.printStackTrace();
 									}
@@ -764,8 +769,7 @@ public class TafUserInterface {
 			    							}
 			    						}
 			    					}	
-						            
-			    					
+						     		    					
 			    					refreshObjectMappingList();
 						            //empty the text field for the project name
 						            textField_projectName.setText("");
@@ -796,7 +800,9 @@ public class TafUserInterface {
 		panel_mappings.add(comboBox_elementName);
 		
 		/*** initialization of comboBox for element type ***/
-		IdentifiableElementType [] elementTypes = {IdentifiableElementType.TRANSITION, IdentifiableElementType.CONSTRAINT, IdentifiableElementType.GUARD, IdentifiableElementType.OBJECT, IdentifiableElementType.PARAMETER,
+		IdentifiableElementType [] elementTypes = {IdentifiableElementType.TRANSITION, IdentifiableElementType.CONSTRAINT, IdentifiableElementType.OBJECT, 
+				IdentifiableElementType.TESTORACLE1, IdentifiableElementType.TESTORACLE2, IdentifiableElementType.TESTORACLE3, IdentifiableElementType.TESTORACLE4, IdentifiableElementType.TESTORACLE5,
+				IdentifiableElementType.GUARD, IdentifiableElementType.PARAMETER,
 				IdentifiableElementType.POSTCONDITION, IdentifiableElementType.PRECONDITION, IdentifiableElementType.STATEINVARIANT, IdentifiableElementType.STATE};
 
 		
@@ -858,6 +864,23 @@ public class TafUserInterface {
 						else if(objectMappings.size() == 0)
 							textField_mappingName.setText("");
 				}
+				else if(comboBox_elementType.getSelectedItem() == IdentifiableElementType.TESTORACLE1 || comboBox_elementType.getSelectedItem() == IdentifiableElementType.TESTORACLE2
+						|| comboBox_elementType.getSelectedItem() == IdentifiableElementType.TESTORACLE3 || comboBox_elementType.getSelectedItem() == IdentifiableElementType.TESTORACLE4
+						|| comboBox_elementType.getSelectedItem() == IdentifiableElementType.TESTORACLE5){
+					 textField_stateInvariants.setVisible(false);
+					 textField_stateInvariants.setEnabled(false);
+					 lblStateInvariants.setVisible(false);
+					 lblStateInvariants.setEnabled(false);	
+					 
+					 textField_objectName.setText("");
+					 textField_className.setText("");
+					 textArea_testCode.setText("");
+					 textField_requiredMappings.setText("");
+					 
+					 setConstraintMappingBlack();
+					 setObjectMappingBlack();
+					 setTestOracleMappingGreen();
+				}
 			}
 		});
 		comboBox_elementType.setBounds(664, 49, 226, 27);
@@ -873,22 +896,32 @@ public class TafUserInterface {
 		             //System.out.println("Double clicked on Item " + index);
 					 if(index <= elementMappings.size()){
 						 Mapping mapping = elementMappings.get(index);
-						 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
-						 //System.out.println("mapping.getType().toString(): " + mapping.getType().toString());
-						 comboBox_elementType.setSelectedItem(mapping.getType());
-						 textField_mappingName.setText(mapping.getMappingName());
-						 textArea_testCode.setText(mapping.getTestCode());
-						 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
 						 
-						 lblElementName.setForeground(Color.GREEN.darker());
-						 lblElementType.setForeground(Color.GREEN.darker());
-						 lblMappingName.setForeground(Color.GREEN.darker());
-						 lblTestCode.setForeground(Color.GREEN.darker());
-						 lblRequiredMappings.setForeground(Color.GREEN.darker());
-						 lblObjectName.setForeground(Color.BLACK);
-						 lblClassName.setForeground(Color.BLACK);
-						 textField_objectName.setText("");
-						 textField_className.setText("");
+	            		 if(mapping instanceof TestOracleMapping){
+	            			 setObjectMappingBlack();
+							 setTestOracleMappingGreen();
+	            			 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
+	            			 comboBox_elementType.setSelectedItem(mapping.getType());
+	            			 textField_mappingName.setText(mapping.getName());
+	            			 textArea_testCode.setText(mapping.getTestCode());
+	            			 textField_requiredMappings.setText(((TestOracleMapping) mapping).getMappingName());
+	            			 textField_objectName.setText("");
+							 textField_className.setText("");
+	            		 }
+	            		 else{
+							 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
+							 //System.out.println("mapping.getType().toString(): " + mapping.getType().toString());
+							 comboBox_elementType.setSelectedItem(mapping.getType());
+							 textField_mappingName.setText(mapping.getName());
+							 textArea_testCode.setText(mapping.getTestCode());
+							 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
+							 
+							 setObjectMappingBlack();
+							 setElementMappingGreen();
+	
+							 textField_objectName.setText("");
+							 textField_className.setText("");
+	            		 }
 						 
 						 if(mapping.getType() == IdentifiableElementType.CONSTRAINT){
 							 textField_stateInvariants.setVisible(true);
@@ -898,7 +931,7 @@ public class TafUserInterface {
 							 
 							 ConstraintMapping cm = null;
 							 try {
-								cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getMappingName());
+								cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getName());
 							} catch (Exception e1) {
 								e1.printStackTrace();
 							}
@@ -1015,33 +1048,72 @@ public class TafUserInterface {
 					
 					String stateInvariants = null;
 					List<String> stateInvariant_list = new ArrayList<String>();
+					XmlManipulator xm = new XmlManipulator();
 					
+					//If the element name label is in green, save it as an element mapping; otherwise, it will be saved as an object mapping
 					if(lblElementName.getForeground().toString().equals("java.awt.Color[r=0,g=178,b=0]")){
 						
 						if(textField_stateInvariants.isVisible() == true && textField_stateInvariants.isEnabled() == true){
 							stateInvariants = textField_stateInvariants.getText();
 							stateInvariant_list = Arrays.asList(stateInvariants.split(","));
 						}
-						
+						//if there are state invariants, save a regular element mapping;otherwise, save a constraint mapping
 						if(stateInvariants == null){
-							Mapping mapping = new Mapping(mappingName, type, elementName, testCode, requiredMappings_list, null, null, null);
-							
-							XmlManipulator xm = new XmlManipulator();
-							try {
-								if(!XmlManipulator.isMappingExisted(XmlManipulator.readXmlFile(xmlPath), mapping)){
-									xm.createMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
+							if(lblMappingName.getText().equals("Mapping Name:")){
+								Mapping mapping = new Mapping(mappingName, type, elementName, testCode, requiredMappings_list, null, null, null);
+								
+								try {
+									if(!XmlManipulator.isMappingExisted(XmlManipulator.readXmlFile(xmlPath), mapping)){
+										xm.createMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
+									}
+									else{
+										xm.updateMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
+									}
+								} catch (Exception e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
 								}
-								else{
-									xm.updateMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
+							}
+							else if(lblMappingName.getText().equals("Name:")){
+								TestOracleLevel tol;
+								switch(type){
+									case TESTORACLE1:
+										tol = TestOracleLevel.TO1;
+										break;
+									case TESTORACLE2:
+								    	tol = TestOracleLevel.TO2;
+										break;	
+									case TESTORACLE3:
+									    tol = TestOracleLevel.TO3;
+										break;
+									case TESTORACLE4:
+								    	tol = TestOracleLevel.TO4;
+										break;
+									case TESTORACLE5:
+								    	tol = TestOracleLevel.TO5;
+										break;
+									default:
+										tol = TestOracleLevel.TO1;
+										break;
+								};
+								TestOracleMapping mapping = new TestOracleMapping(mappingName, testCode, requiredMappings_textField, tol);
+								
+								try {
+									if(!XmlManipulator.isMappingExisted(XmlManipulator.readXmlFile(xmlPath), mapping)){
+										xm.createTestOracleMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
+									}else{
+										xm.updateTestOracleMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
+									}
+								} catch (TransformerException e1) {
+									e1.printStackTrace();
+								} catch (Exception e1) {
+									e1.printStackTrace();
 								}
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
 							}
 						}
 						else{
 							ConstraintMapping mapping = new ConstraintMapping(mappingName, type, elementName, testCode, requiredMappings_list, null, null, null, null, null, null, stateInvariant_list);
-							XmlManipulator xm = new XmlManipulator();
+							//XmlManipulator xm = new XmlManipulator();
 	
 							try {
 								if(!XmlManipulator.isMappingExisted(XmlManipulator.readXmlFile(xmlPath), mapping)){
@@ -1068,7 +1140,7 @@ public class TafUserInterface {
 					else if(lblObjectName.getForeground().toString().equals("java.awt.Color[r=0,g=178,b=0]")){
 						ObjectMapping mapping = new ObjectMapping(mappingName, IdentifiableElementType.OBJECT, objectName, className, testCode, requiredMappings_list, null);
 					
-						XmlManipulator xm = new XmlManipulator();
+						//XmlManipulator xm = new XmlManipulator();
 						try {
 							if(!XmlManipulator.isMappingExisted(XmlManipulator.readXmlFile(xmlPath), mapping)){
 								xm.createObjectMapping(XmlManipulator.readXmlFile(xmlPath), mapping, xmlPath);
@@ -1119,7 +1191,7 @@ public class TafUserInterface {
 					comboBox_elementType.setSelectedItem(objectMapping.getType());
 					textField_objectName.setText(objectMapping.getIdentifiableElementName());				
 					textField_className.setText(objectMapping.getClassType());
-					textField_mappingName.setText(objectMapping.getMappingName());
+					textField_mappingName.setText(objectMapping.getName());
 					textArea_testCode.setText(objectMapping.getTestCode());
 					textField_requiredMappings.setText(JavaSupporter.removeBrackets(objectMapping.getRequiredMappings().toString()));
 					
@@ -1238,8 +1310,10 @@ public class TafUserInterface {
 				if("generate tests".equals(e.getActionCommand())){
 					long start = System.nanoTime();
 					try {					
+						
+						//
 						generateTests(directoryName + projectName + "/model/" + modelName, xmlPath, 
-								projectName + "Test", directoryName + projectName + "/", getCriterionType(criterionIndex), textField_packageName.getText(),textArea_importDeclarations.getText());
+								projectName + "Test", directoryName + projectName + "/", getCriterionType(criterionIndex), textField_packageName.getText(),textArea_importDeclarations.getText(), toLevel);
 						long end = System.nanoTime();
 	            	    long duration = end - start;
 	            	    System.out.println("Time for generating tests = " + duration + " nano seconds");
@@ -1267,6 +1341,30 @@ public class TafUserInterface {
 		
 		textArea_importDeclarations = new JTextArea();
 		scrollPane_importDeclarations.setViewportView(textArea_importDeclarations);
+		
+		lblNewLabel_testOracleLevel = new JLabel("Test Oracle Level:");
+		lblNewLabel_testOracleLevel.setBounds(1037, 23, 119, 16);
+		panel_generateTest.add(lblNewLabel_testOracleLevel);
+		
+		TestOracleLevel [] toLevels = {TestOracleLevel.TO1, TestOracleLevel.TO2, TestOracleLevel.TO3, TestOracleLevel.TO4, TestOracleLevel.TO5};
+		comboBox_testOracleLevel = new JComboBox(toLevels);
+		comboBox_testOracleLevel.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(comboBox_testOracleLevel.getSelectedItem() == TestOracleLevel.TO1){
+					toLevel = TestOracleLevel.TO1;
+				}else if(comboBox_testOracleLevel.getSelectedItem() == TestOracleLevel.TO2){
+					toLevel = TestOracleLevel.TO2;
+				}else if(comboBox_testOracleLevel.getSelectedItem() == TestOracleLevel.TO3){
+					toLevel = TestOracleLevel.TO3;
+				}else if(comboBox_testOracleLevel.getSelectedItem() == TestOracleLevel.TO4){
+					toLevel = TestOracleLevel.TO4;
+				}else if(comboBox_testOracleLevel.getSelectedItem() == TestOracleLevel.TO5){
+					toLevel = TestOracleLevel.TO5;
+				}
+			}
+		});
+		comboBox_testOracleLevel.setBounds(1037, 47, 92, 27);
+		panel_generateTest.add(comboBox_testOracleLevel);
 				
 		list_elements = new JList<Object>();
 		list_elements.setBounds(16, 386, 233, 230);
@@ -1289,13 +1387,14 @@ public class TafUserInterface {
 		            	 
 		            	 if(elementMappings.size() >= 1){
 							 Mapping mapping = elementMappings.get(0);
-							 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
-							 comboBox_elementType.setSelectedItem(mapping.getType());
-							 textField_mappingName.setText(mapping.getMappingName());
-							 textArea_testCode.setText(mapping.getTestCode());
-							 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
-							 setElementMappingGreen();
-							 
+		
+								 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
+								 comboBox_elementType.setSelectedItem(mapping.getType());
+								 textField_mappingName.setText(mapping.getName());
+								 textArea_testCode.setText(mapping.getTestCode());
+								 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
+								 setElementMappingGreen();
+
 							 if(mapping.getType() == IdentifiableElementType.CONSTRAINT){
 								 textField_stateInvariants.setVisible(true);
 								 textField_stateInvariants.setEnabled(true);
@@ -1304,7 +1403,7 @@ public class TafUserInterface {
 								 
 								 ConstraintMapping cm = null;
 								 try {
-									cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getMappingName());
+									cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getName());
 								} catch (Exception e1) {
 									e1.printStackTrace();
 								}
@@ -1422,9 +1521,10 @@ public class TafUserInterface {
 	 * @param testCriterion
 	 * @param packageName
 	 * @param imports
+	 * @param toLevel TODO
 	 * @throws Exception
 	 */
-	public void generateTests(String modelPath, String xmlPath, String testName, String directory, TestCoverageCriteria testCriterion, String packageName, String imports) throws Exception{
+	public void generateTests(String modelPath, String xmlPath, String testName, String directory, TestCoverageCriteria testCriterion, String packageName, String imports, TestOracleLevel toLevel) throws Exception{
 		EObject object = StateMachineAccessor.getModelObject(modelPath);
 		List<StateMachine> statemachines = StateMachineAccessor.getStateMachines(object);
 		List<Region> regions = StateMachineAccessor.getRegions(statemachines.get(0));
@@ -1469,8 +1569,8 @@ public class TafUserInterface {
 				boolean signElement = true;
 				for(Mapping dm : distinctMappings){
 					if(m.getType() == IdentifiableElementType.STATEINVARIANT){
-						ConstraintMapping cm = XmlManipulator.getConstraintMappingByName(xmlPath, m.getMappingName());
-						ConstraintMapping cm1 = XmlManipulator.getConstraintMappingByName(xmlPath, dm.getMappingName());
+						ConstraintMapping cm = XmlManipulator.getConstraintMappingByName(xmlPath, m.getName());
+						ConstraintMapping cm1 = XmlManipulator.getConstraintMappingByName(xmlPath, dm.getName());
 						if(cm.getIdentifiableElementName().equals(cm1.getIdentifiableElementName()))
 							signMapping = false;
 					}
@@ -1490,7 +1590,8 @@ public class TafUserInterface {
 		for(Mapping m : distinctMappings){
 			System.out.println(m.getIdentifiableElementName() + ", " + m.getType());
 		}*/
-		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(directory, testName, xmlPath, packageName,imports);
+
+		ConcreteTestGenerator concreteTestGenerator = new ConcreteTestGenerator(directory, testName, xmlPath, packageName,imports, toLevel);
 		concreteTestGenerator.generateConcreteTests(tests);
 	}
 	
@@ -1504,10 +1605,10 @@ public class TafUserInterface {
 		if(mappings != null){
 			
 			if(mappings.size() > 0)
-				result = mappings.get(0).getMappingName();
+				result = mappings.get(0).getName();
 			
 			for(int i = 1; i < mappings.size();i++){
-				result += "," + mappings.get(i).getMappingName();
+				result += "," + mappings.get(i).getName();
 			}
 		}
 		
@@ -1615,7 +1716,7 @@ public class TafUserInterface {
             		 Mapping mapping = elementMappings.get(0);
             		 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
 					 comboBox_elementType.setSelectedItem(mapping.getType());
-					 textField_mappingName.setText(mapping.getMappingName());
+					 textField_mappingName.setText(mapping.getName());
 					 textArea_testCode.setText(mapping.getTestCode());
 					 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
 					 setElementMappingGreen();
@@ -1628,7 +1729,7 @@ public class TafUserInterface {
 						 
 						 ConstraintMapping cm = null;
 						 try {
-							cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getMappingName());
+							cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getName());
 						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
@@ -1673,7 +1774,7 @@ public class TafUserInterface {
             		 Mapping mapping = elementMappings.get(0);
             		 comboBox_elementName.setSelectedItem(mapping.getIdentifiableElementName());
 					 comboBox_elementType.setSelectedItem(mapping.getType());
-					 textField_mappingName.setText(mapping.getMappingName());
+					 textField_mappingName.setText(mapping.getName());
 					 textArea_testCode.setText(mapping.getTestCode());
 					 textField_requiredMappings.setText(JavaSupporter.removeBrackets(mapping.getRequiredMappings().toString()));
 					 setElementMappingGreen();
@@ -1686,7 +1787,7 @@ public class TafUserInterface {
 						 
 						 ConstraintMapping cm = null;
 						 try {
-							cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getMappingName());
+							cm = XmlManipulator.getConstraintMappingByName(xmlPath, mapping.getName());
 						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
@@ -1733,8 +1834,8 @@ public class TafUserInterface {
     		textField_mappingName.setText("");
     	else if(objectMappings.size() == 0)
     		textField_mappingName.setText("");
-    	
 	}
+	
 	/**
 	 * Sets the colors of labels for the element mappings green.
 	 */
@@ -1744,6 +1845,21 @@ public class TafUserInterface {
 		 lblMappingName.setForeground(Color.GREEN.darker());
 		 lblTestCode.setForeground(Color.GREEN.darker());
 		 lblRequiredMappings.setForeground(Color.GREEN.darker());
+		 lblMappingName.setText("Mapping Name:");
+		 lblRequiredMappings.setText("Required Mappings:");
+	}
+	
+	/**
+	 * Sets the colors of labels for the element mappings green.
+	 */
+	public void setTestOracleMappingGreen(){
+		 lblElementName.setForeground(Color.GREEN.darker());
+		 lblElementType.setForeground(Color.GREEN.darker());
+		 lblMappingName.setForeground(Color.GREEN.darker());
+		 lblMappingName.setText("Name:");
+		 lblTestCode.setForeground(Color.GREEN.darker());
+		 lblRequiredMappings.setForeground(Color.GREEN.darker());
+		 lblRequiredMappings.setText("Mapping name:");
 	}
 	
 	/**
@@ -1755,6 +1871,8 @@ public class TafUserInterface {
 		 lblMappingName.setForeground(Color.BLACK);
 		 lblTestCode.setForeground(Color.BLACK);
 		 lblRequiredMappings.setForeground(Color.BLACK);
+		 lblMappingName.setText("Mapping Name:");
+		 lblRequiredMappings.setText("Required Mappings:");
 	}
 	
 	/**
@@ -1767,6 +1885,8 @@ public class TafUserInterface {
 		 lblTestCode.setForeground(Color.GREEN.darker());
 		 lblRequiredMappings.setForeground(Color.GREEN.darker());
 		 lblStateInvariants.setForeground(Color.GREEN.darker());
+		 lblMappingName.setText("Mapping Name:");
+		 lblRequiredMappings.setText("Required Mappings:");
 	}
 	
 	/**
@@ -1779,6 +1899,8 @@ public class TafUserInterface {
 		 lblTestCode.setForeground(Color.BLACK);
 		 lblRequiredMappings.setForeground(Color.BLACK);
 		 lblStateInvariants.setForeground(Color.BLACK);
+		 lblMappingName.setText("Mapping Name:");
+		 lblRequiredMappings.setText("Required Mappings:");
 	}
 	
 	/**
@@ -1790,6 +1912,8 @@ public class TafUserInterface {
 		 lblMappingName.setForeground(Color.BLACK);
 		 lblTestCode.setForeground(Color.BLACK);
 		 lblRequiredMappings.setForeground(Color.BLACK);
+		 lblMappingName.setText("Mapping Name:");
+		 lblRequiredMappings.setText("Required Mappings:");
 	}
 	
 	/**
@@ -1801,5 +1925,7 @@ public class TafUserInterface {
 		 lblMappingName.setForeground(Color.GREEN.darker());
 		 lblTestCode.setForeground(Color.GREEN.darker());
 		 lblRequiredMappings.setForeground(Color.GREEN.darker());
+		 lblMappingName.setText("Mapping Name:");
+		 lblRequiredMappings.setText("Required Mappings:");
 	}
 }

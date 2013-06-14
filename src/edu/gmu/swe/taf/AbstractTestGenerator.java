@@ -361,7 +361,7 @@ public class AbstractTestGenerator {
 				if(constraint.getPreconditions() != null){
 					if(constraint.getPreconditions().size() > 0){
 						for(String precondition: constraint.getPreconditions()){
-							mappings.add(new Mapping(constraint.getMappingName(), IdentifiableElementType.PRECONDITION, precondition, constraint.getTestCode(), 
+							mappings.add(new Mapping(constraint.getName(), IdentifiableElementType.PRECONDITION, precondition, constraint.getTestCode(), 
 									constraint.getRequiredMappings(), constraint.getParameters(), constraint.getCallers(), constraint.getReturnObjects()));
 						}
 					}
@@ -370,7 +370,7 @@ public class AbstractTestGenerator {
 				if(constraint.getStateinvariants() != null){
 					if(constraint.getStateinvariants().size() > 0){
 						for(String stateinvariant: constraint.getStateinvariants()){
-							mappings.add(new Mapping(constraint.getMappingName(), IdentifiableElementType.STATEINVARIANT, stateinvariant, constraint.getTestCode(), 
+							mappings.add(new Mapping(constraint.getName(), IdentifiableElementType.STATEINVARIANT, stateinvariant, constraint.getTestCode(), 
 									constraint.getRequiredMappings(), constraint.getParameters(), constraint.getCallers(), constraint.getReturnObjects()));
 						}
 					}
@@ -379,7 +379,7 @@ public class AbstractTestGenerator {
 				if(constraint.getPostconditions() != null){
 					if(constraint.getPostconditions().size() > 0){
 						for(String postcondition: constraint.getPostconditions()){
-							mappings.add(new Mapping(constraint.getMappingName(), IdentifiableElementType.POSTCONDITION, postcondition, constraint.getTestCode(), 
+							mappings.add(new Mapping(constraint.getName(), IdentifiableElementType.POSTCONDITION, postcondition, constraint.getTestCode(), 
 									constraint.getRequiredMappings(), constraint.getParameters(), constraint.getCallers(), constraint.getReturnObjects()));
 						}
 					}
